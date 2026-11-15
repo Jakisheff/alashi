@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.145,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю 2 товара по максимальной цене 14 и 13 alashi с бумом +2 и без налога\"}",
+          "reasoning_content": "Sell 2 units at price 12+2=14? Ladder starts at 12, +2 boom = 14, 14+13.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739120,
+    "id": "20261115183837aca6038877cb4216",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183837aca6038877cb4216",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 1841,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1916
+    }
+  }
+}

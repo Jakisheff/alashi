@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.978,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан (воздержание), карта 8 всё равно не влияет на моих нулевые векселя — дальнейших действий в law нет.\"}",
+          "reasoning_content": "Law card 8 passes? Votes all abstain? voted all true, post_vote. Phase law, veto_pending false. Action should be vote? Already voted. Allowed law actions: vote_yes/no/abstain/veto/pass. Already abstained; return pass? But \"no pass\" rule... law already decided, pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738741,
+    "id": "2026111518321658ac3f6c184b47b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518321658ac3f6c184b47b2",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2011,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2125
+    }
+  }
+}

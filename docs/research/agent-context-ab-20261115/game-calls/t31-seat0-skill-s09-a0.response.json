@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.073,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Shuttle при 25% риска даёт ожидаемые 3 товара — как бесплатный produce, но без риска потери груза, поэтому выбираю безопасный produce.\"}",
+          "reasoning_content": "Action phase round 3. Cash 41.54. Produce gives 3 goods. Shuttle gives 4 goods with confiscation risk. Donkey costs 1, gives 1. Best: shuttle gives 4 goods vs produce 3, but 25% confiscation risk (grey). At favorable border risk: pay tribute instead. Tariff? Black tariff protects. Expected value: shuttle 4 goods * ~7-8 alashi each later... but risk 25% losing all. Expected shuttle: 0.75*4=3 goods. Equal to produce 3. Also possibly tribute. Produce is safe, equal EV. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739595,
+    "id": "20261115184629727b0b1caccc47c3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184629727b0b1caccc47c3",
+    "usage": {
+      "completion_tokens": 178,
+      "completion_tokens_details": {
+        "reasoning_tokens": 134
+      },
+      "prompt_tokens": 2545,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2723
+    }
+  }
+}

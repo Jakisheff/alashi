@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.108,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта даёт +1 влияния богатейшему — при равном нуле выигрываю тай-брейк и усиливаю позиции.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. All equal cash=0, tie_order favors... I'm idx 0, likely first in tie. If I get influence, helps final bonus and votes. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737959,
+    "id": "20261115181917ca99c1d3b2584cac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181917ca99c1d3b2584cac",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 1438,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1526
+    }
+  }
+}

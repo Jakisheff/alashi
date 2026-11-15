@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бум +2 держится: 3 единицы через шаттл дают больше ожидаемой выручки, чем 2 от produce, несмотря на риск конфискации ~25%.\"}",
+          "reasoning_content": "I'm player 0, cash 21M, goods 0. Action phase round 2. Others have goods 2 (p1) — wait seen: [0,2,1],[0,2,1]... my cash 21M, goods 0. Best: shuttle gives 3 goods, ~25% confiscation risk, but I have no tariff protection. Or donkey: 1 alashi per 1 good. Cash is good. Boom +2 prices next market still (boom persists? active_boom=2). Produce gives 2 free goods.\n\nShuttle 3 goods with 25% confiscation risk vs produce 2 free. Expected: shuttle 2.25 goods but confiscation means losing all? Probably confiscate the grey goods. Produce is safe, 2 goods. Difference is small; plus border tribute at favorable border only. Standard border: 25% lose. Expected value of produce ≈ shuttle slightly less. Take produce? Shuttle expected goods 2.25, price ~10 each ≈ 2.5 alashi extra minus risk. I'll take shuttle for expected gain... but confiscation of all 3 would hurt next round. Prices with boom high, expected value favors shuttle slightly. I'll pick shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738397,
+    "id": "20261115182628fb566e915edf4c38",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182628fb566e915edf4c38",
+    "usage": {
+      "completion_tokens": 315,
+      "completion_tokens_details": {
+        "reasoning_tokens": 262
+      },
+      "prompt_tokens": 1680,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1995
+    }
+  }
+}

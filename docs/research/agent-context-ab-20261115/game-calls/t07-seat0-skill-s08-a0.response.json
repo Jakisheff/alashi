@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.858,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт 2 товара на продажу у стартовой лестницы следующего раунда, сохраняя кассу ~22 alashi под ставку за лицензию в R4.\"}",
+          "reasoning_content": "I have 21.92 cash, no goods. Next round R4 bid. Best action: produce gives 2 goods free? produce gives 2 goods, sell next round. Donkey gives 1 for 1 alashi. Produce is free. Do produce.\n\nWait, others may produce too. Produce gives 2+subsidy goods. Yes, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738228,
+    "id": "20261115182344b318f23ce4d94175",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182344b318f23ce4d94175",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 2464,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2591
+    }
+  }
+}

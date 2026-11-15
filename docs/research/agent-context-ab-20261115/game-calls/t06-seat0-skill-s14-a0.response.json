@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.213,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные векселя — у меня их нет, а у соперников могут быть, поэтому списание мне выгодно.\"}",
+          "reasoning_content": "Law card 8: списывает promissory — у меня нет sell_credit. Others may have? Unknown. Passing it neutral; but risk: card 8 wipes others' promissory (good for me) or mine (I have none). Actually wiping promissory hurts those who used sell_credit — likely opponents did. I have none, so vote yes. Opponents already voted (voted true). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738229,
+    "id": "20261115182345fc3c75792efe4c75",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182345fc3c75792efe4c75",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 3116,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3247
+    }
+  }
+}

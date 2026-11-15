@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.042,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатный шаттл даёт 3+ товара против 2 у produce, риск конфискации мал.\"}",
+          "reasoning_content": "Round 2 action. Cash 24, goods 0. Options: produce (2 goods), donkey (1 alashi → 1 good), shuttle (3+ goods, risk confiscation ~25%, no cash cost?). Shuttle has no listed cost; fine. Shuttle gave 3 last time. Expected value: 2.25 goods vs produce 2. Shuttle slightly better, no downside. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738604,
+    "id": "20261115183001971ec0a9dad1497c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183001971ec0a9dad1497c",
+    "usage": {
+      "completion_tokens": 122,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2292
+    }
+  }
+}

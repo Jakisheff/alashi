@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.944,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 3*0.75=2.25 товара выше, чем 2 у produce, выручку продам в следующем раунде через sell_credit.\"}",
+          "reasoning_content": "I'm idx 0, round 3 action, cash 13M. Choices: produce (2 goods), donkey (1 good, 1 cost), shuttle (3 goods, 25% confiscation). Shuttle EV 2.25 goods. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738112,
+    "id": "202611151821493ad7f93d41f94c13",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821493ad7f93d41f94c13",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3139,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3243
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.337,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, в post_vote доступен только pass; карта субсидии на результат уже не влияет.\"}",
+          "reasoning_content": "post_vote — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737873,
+    "id": "2026111518174411660ac358534805",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518174411660ac358534805",
+    "usage": {
+      "completion_tokens": 39,
+      "completion_tokens_details": {
+        "reasoning_tokens": 5
+      },
+      "prompt_tokens": 3390,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3429
+    }
+  }
+}

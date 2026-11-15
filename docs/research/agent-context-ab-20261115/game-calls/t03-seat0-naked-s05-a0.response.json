@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.33,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Денег нет на donkey, бесплатное производство даёт 2 товара для продажи\"}",
+          "reasoning_content": "Wait, I sold 2 via credit but state shows goods[0]=0 for me? seen arrays — my cash 0? Hmm, seen [0,0,1] then sold credit... Actually sold_counter=6 suggests others sold. My goods=0, credit pending. My cash 0. Action phase: I have 0 cash, produce gives 2 goods (subsidy 0). Donkey needs 1 alashi — no cash. So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737970,
+    "id": "20261115181927a49144421d4e4282",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181927a49144421d4e4282",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 1676,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1802
+    }
+  }
+}

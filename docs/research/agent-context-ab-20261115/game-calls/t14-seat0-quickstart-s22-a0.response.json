@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.006,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даст +1 влияния беднейшему сопернику — мне это ничего не даёт, а моё лидерство по влиянию (6) всё равно сохраняется, поэтому отклоняю.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest (21.6M vs 21.5M vs 35.7M — actually idx2 has 21508648, I have 21596946, so idx2 is poorest). Poorest gets +1 influence; final influence bonus 5% of bank goes to max influence — I have 6, no threat. Passing law gives opponent influence, reducing... my 5% bonus is by max influence, I have 6, +1 to opponent makes 3 — harmless. But vote weight doesn't matter anymore? It's the last law. The 5% commission bonus goes to max influence; I have 6, opponent would get 3. Still harmless. Vote no anyway — cheaper. Actually does it matter at all? No. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738688,
+    "id": "202611151831212f9244be2ac24453",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831212f9244be2ac24453",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 4372,
+      "prompt_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "total_tokens": 4601
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.261,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 товара по лестнице (~7/6/5), пока цены не упали; кэш нужен для ставки в R4.\"}",
+          "reasoning_content": "I have 3 goods, boom 0, sold_counter=4. Price index 5th unit = 7? Ladder [12,10,9,8,7,...] index 4 = 7. Sell 3 units at ~8,7,6? Actually counter=4 means next price is ladder[4]=7. Sell all 3 now, keep cash for bid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739158,
+    "id": "20261115183915d908242e9f2e448d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183915d908242e9f2e448d",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2664,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2794
+    }
+  }
+}

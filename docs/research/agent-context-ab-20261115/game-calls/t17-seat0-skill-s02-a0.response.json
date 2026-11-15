@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.935,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, что hurts мою продажу\"}",
+          "reasoning_content": "Card 6: prices -2 next market. I sell next round — vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738787,
+    "id": "20261115183305d1c88692c4404ef4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183305d1c88692c4404ef4",
+    "usage": {
+      "completion_tokens": 48,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 1912,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1960
+    }
+  }
+}

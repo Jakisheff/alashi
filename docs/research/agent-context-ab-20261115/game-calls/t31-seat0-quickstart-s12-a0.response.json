@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.793,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"У меня 3 товара по высоким ценам с бумом (+2), у соперников товара нет — продаю сейчас, пока лестница не упала.\"}",
+          "reasoning_content": "I'm idx 0, cash 25.75, goods 3, prices with boom +2. Ladder position: sold_counter=8, prices [12,10,9,8,7,6,5,4,3,3,2,...] +2 → next units: 5,6,7... wait index 8 = 4? Actually indices: 0:12,1:10,2:9,3:8,4:7,5:6,6:5,7:4,8:3,9:3,10:2. +2: my 3 units sell at 5,5,5=15. Sell now before rivals push lower (they have 0 goods though). Round 4, cash not devalued until end? Devaluation happens at rounds 2+ borders; cash will devalue at end of round 4 and round 6? Border of rounds 2+ — so after rounds 2,3,4,5. Devaluation floor(cash/100)*62 loses 38% if cash>=100... cash in units; 25.75M cash = high. Actually 62% retained. Selling now is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739607,
+    "id": "20261115184640f0b6919b6a504c9f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184640f0b6919b6a504c9f",
+    "usage": {
+      "completion_tokens": 301,
+      "completion_tokens_details": {
+        "reasoning_tokens": 255
+      },
+      "prompt_tokens": 3443,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3744
+    }
+  }
+}

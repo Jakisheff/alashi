@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.808,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% мне невыгоден в принципе; рынков больше нет, но голосую против с решающим весом 3.\"}",
+          "reasoning_content": "Law card 2: tax 20% — I already sold, tax affects revenue? Tax active now would hit sales already done. Card applies to future markets — no more markets. Actually if passed, active_tax_bps applies next market; no markets left. Neutral. But rivals may... no effect. Vote no anyway (tax harmful in principle, weight 3). I'm vote_weight 3 vs 1+2 — my vote decides. Abstain or no. Vote no to be safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738371,
+    "id": "20261115182606bf04b7ef93bf4e6c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182606bf04b7ef93bf4e6c",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 3618,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3761
+    }
+  }
+}

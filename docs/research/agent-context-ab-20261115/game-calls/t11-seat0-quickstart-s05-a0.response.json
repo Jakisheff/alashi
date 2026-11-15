@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.99,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Свободные 2 единицы товара надёжнее рискованного шаттла, промиссори вернётся на следующей границе.\"}",
+          "reasoning_content": "Round 2 action. I'm president with weight 3 (skipped action weight bonus? vote_weight 3 for me and idx1). My goods 0, cash 0, but promissory 30 alashi incoming at round 3 border (2 units ×12×1.25=30). Produce gives 2 goods. Donkey costs 1 cash which I don't have. Shuttle gives 3 goods with 25% confiscation risk, no tariff role known. Produce is safe: 2 goods free.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738454,
+    "id": "202611151827305e9fdc126c124a77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827305e9fdc126c124a77",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 2779,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2930
+    }
+  }
+}

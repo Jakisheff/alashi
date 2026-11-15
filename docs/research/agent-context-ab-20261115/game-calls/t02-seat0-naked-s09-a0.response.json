@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.827,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"С субсидией produce даёт гарантированные 3 товара; shuttle даёт те же 3 в ожидании с риском конфискации, а donkey невыгоден при текущих низких ценах.\"}",
+          "reasoning_content": "Round 3 action, cash 21.25M, goods 0. Subsidy 1, produce gives 3. Donkey costs 1 gives 1. Shuttle gives 4 grey goods with 25% confiscation risk. Cash needed? Later rounds. I have cash 21.25M. Donkey: buy 1 good for 1 alashi, sell at price... sold_counter=6, price ladder next = index 6 = 5 (indices 0-15: 12,10,9,8,7,6,5...). Actually sold 6, next price 5? Ladder[6]=5. Sell 3 goods at ~5,4,3 → ~12 alashi. Donkey cost 1 each — profitable. Buy several donkeys: each donkey = 1 good, cost 1, sell at ~3-5 → profit. Can do multiple donkey? Action is single per round. Only one donkey per action (\"donkey costs 1, gives 1 good\"). So one donkey = 1 good. Shuttle gives 4 goods, 25% confiscation, free — better than produce (3)? Shuttle expected 3 goods vs produce 3 guaranteed. Shuttle slightly worse in count but same expected; no tariff. But president influence... Produce is safe. Shuttle EV = 3 goods, equal to produce. Choose produce (safe).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738003,
+    "id": "202611151819513cb3b2044ddb4872",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819513cb3b2044ddb4872",
+    "usage": {
+      "completion_tokens": 351,
+      "completion_tokens_details": {
+        "reasoning_tokens": 295
+      },
+      "prompt_tokens": 2074,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2425
+    }
+  }
+}

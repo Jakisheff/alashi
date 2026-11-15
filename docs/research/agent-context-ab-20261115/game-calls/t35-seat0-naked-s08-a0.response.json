@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.156,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена 14 за единицу, sell_credit даёт 1.25x и вернётся после девальвации на границе раунда 3\"}",
+          "reasoning_content": "Sell 2 units at price 12+2=14 = 28 alashi, no tax. Sell credit? Devaluation boundary after round 3 (before round 4) — cash would be devalued floor(cash/100)*62. I have 21.25 cash already; promissory adds after devaluation. Sell credit gives 35 promissory → paid after devaluation, good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746711,
+    "id": "202611152045081739a1345ccb4cb7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045081739a1345ccb4cb7",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 1989,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2125
+    }
+  }
+}

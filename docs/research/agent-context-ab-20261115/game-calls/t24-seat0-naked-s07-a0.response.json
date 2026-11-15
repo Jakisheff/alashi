@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.413,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено (закон 7 принят), на стадии post_vote допустим только pass.\"}",
+          "reasoning_content": "Law 7 passed (boom +2). Post_vote stage, previously I did sell_credit here — but phase is law, only law actions allowed. Valid: vote_yes/no/abstain/veto/pass. Already voted. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739168,
+    "id": "202611151839252214ec76f77647e1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839252214ec76f77647e1",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1907,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1987
+    }
+  }
+}

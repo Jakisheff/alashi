@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.994,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":4,\"reason\":\"Финальный раунд: прямая продажа 4 товаров по высокой цене лестницы, кредит не погасится после игры.\"}",
+          "reasoning_content": "Round 6 market, I have 4 goods. Subsidy seems 0? state says active_subsidy_goods:0. Sell now at price ladder start 12. Others may sell too, but sell now. Direct sale better than credit (credit won't be repaid after last round). Sell 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738276,
+    "id": "202611151824324f02cfee2c3c4ddc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824324f02cfee2c3c4ddc",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 2912,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3019
+    }
+  }
+}

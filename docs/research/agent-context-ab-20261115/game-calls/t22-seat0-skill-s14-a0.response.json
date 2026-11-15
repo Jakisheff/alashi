@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.531,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему — я беднейший, лишний вес голоса и шанс на бонус влияния в итоге.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm tied poorest (22.9 vs 41.5). Vote yes. veto_pending — I'm not president, pass later.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739082,
+    "id": "20261115183759b9a7a4407df34522",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183759b9a7a4407df34522",
+    "usage": {
+      "completion_tokens": 83,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2978,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3061
+    }
+  }
+}

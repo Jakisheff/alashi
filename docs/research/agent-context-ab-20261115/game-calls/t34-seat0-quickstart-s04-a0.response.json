@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.94,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Ноль товаров и денег — бесплатное производство 2 единиц даёт максимум выгоды.\"}",
+          "reasoning_content": "Round 2 action. I have 0 cash, 0 goods, influence 1. Sold 2 credit, promissory 30 alashi coming at round 3 boundary. Vote weights [3,3,1] — I skipped action? No, I produced round 1... weights 3,3,1: base 1 + law bonus? Odd. Anyway: options: produce (2 goods), donkey (needs 1 cash, have 0), shuttle (grey, risk), bribe (need cash), pass. Produce is free, best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746653,
+    "id": "202611152044092b244b8513864fdf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044092b244b8513864fdf",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 2709,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2856
+    }
+  }
+}

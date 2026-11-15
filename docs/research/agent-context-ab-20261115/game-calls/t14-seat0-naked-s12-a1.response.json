@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.539,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа 3 единиц обходит девальвацию и даёт множитель 1.25 — выручка вернётся на границе раунда 5.\"}",
+          "reasoning_content": "Round 4 market, I have 3 goods. Sell normally? Credit would return at round 5 boundary — still redeemable since not after last round. Round 6 boundary is after last round? Rounds 1-6, boundary at end of each round 2+; credit sells in round 6 market return at boundary after round 6 — \"after the last round it is not redeemed\". Round 4 credit is fine, returns at round 5 boundary. So sell_credit 3 for 1.25x and skip devaluation.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738664,
+    "id": "202611151831003007925ad81f4979",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831003007925ad81f4979",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 112
+      },
+      "prompt_tokens": 2318,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2486
+    }
+  }
+}

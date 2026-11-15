@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.088,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даст +1 влияния беднейшему (сопернику с 9M), усилив его и без того ведущую позицию\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest in cash (17.5M vs... actually 17.5M vs 40M vs 9M — no, P1 is richest at 40M). Poorest by cash is P2 (9M) — that's my rival with influence 2 already. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739435,
+    "id": "20261115184351f90d7e08baa44579",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184351f90d7e08baa44579",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2494,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2612
+    }
+  }
+}

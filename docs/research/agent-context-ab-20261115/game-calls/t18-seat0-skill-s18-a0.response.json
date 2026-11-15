@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.536,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже пройден, товар продавать некуда — любые действия только тратят cash перед итогом.\"}",
+          "reasoning_content": "Round 6 action: no cash reason to pass; shuttle risky but goods sold already; shuttle could give goods but market is over. Best action: pass? Shuttle gives goods but no market to sell. Donkey costs money. Produce gives goods unusable. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738910,
+    "id": "202611151835056211b5698a5f4e00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151835056211b5698a5f4e00",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3440,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3530
+    }
+  }
+}

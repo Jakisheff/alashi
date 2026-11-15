@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.143,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 сейчас мне безвредна (нет promissory), тратить вес незачем\"}",
+          "reasoning_content": "Card 8 cancels promissory — irrelevant to me now (no promissory). Vote? Others voted already; their votes unknown. Card 8 harmless to me. I'll abstain... actually card 8 wipes promissory notes; if I plan to use sell_credit later, it hurts. But this round it affects current promissory only. Pass/abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738705,
+    "id": "202611151831411638267bda3a488d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831411638267bda3a488d",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2527,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2642
+    }
+  }
+}

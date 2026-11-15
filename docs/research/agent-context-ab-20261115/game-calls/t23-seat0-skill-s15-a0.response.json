@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.45,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Кэш 7 маловат для ставки, товар нужен для продажи в R6; шаттл даёт 3 товара (EV ~2.25) против 2 у produce.\"}",
+          "reasoning_content": "Round 5 action, cash ~7 alashi. Need cash for R6? License already auctioned. Best: produce (free, 2 goods) or shuttle (3 goods, risk ~25% confiscation). Shuttle EV 2.25 > 2. Take shuttle? Cash 7, no fine risk (no tariff issue mentioned). Yes, shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739180,
+    "id": "202611151839359bb38240f3444c30",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839359bb38240f3444c30",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 3169,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3296
+    }
+  }
+}

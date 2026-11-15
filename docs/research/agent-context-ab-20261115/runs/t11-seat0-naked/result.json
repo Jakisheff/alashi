@@ -1,0 +1,54 @@
+{
+  "id": "t11-seat0-naked",
+  "seed_index": 11,
+  "seed": 875799988318283219,
+  "seat": 0,
+  "arm": "naked",
+  "opponents": [
+    "greedy",
+    "tactical"
+  ],
+  "partition": "test",
+  "status": "completed",
+  "started_utc": "2026-11-15T10:26:46.814214+00:00",
+  "harness": {
+    "memory.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "helper.py": "a992bf32be20d8a85d5e3b6e8fbcaa4369ab70ef88b6b8c31a903e7b0de6e2c8"
+  },
+  "payout": 78953394,
+  "net_profit": 68953394,
+  "rank": 1,
+  "decisions": 24,
+  "model_decisions": 24,
+  "parse_errors": [
+    {
+      "phase": "market",
+      "decision": "Pass",
+      "parse_error": "invalid units"
+    }
+  ],
+  "illegal_actions": 4,
+  "illegal_detail": [
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    },
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    },
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    },
+    {
+      "phase": "law",
+      "err": "AlreadyVoted",
+      "detail": {}
+    }
+  ],
+  "elapsed_s": 137.223
+}

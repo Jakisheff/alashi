@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.613,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 единицы по 7,6,5 до возможного снижения цен, чтобы иметь кэш для ставки на лицензию в этом раунде.\"}",
+          "reasoning_content": "Round 4 market, I have 3 goods. Price ladder at sold_counter=4 → next prices 7,6,5. Bid round 4 — license auction. Sell 3 units at 7,6,5. Boom 0, no shift. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738421,
+    "id": "202611151826588fb53b63f027469e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826588fb53b63f027469e",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 2221,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2331
+    }
+  }
+}

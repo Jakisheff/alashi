@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.538,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд — продаю все 3 единицы по верхней лестнице, sell_credit невозможен, держать товар дальше бессмысленно.\"}",
+          "reasoning_content": "Round 6 market, sell all 3. Ladder: 12,10,9 for first units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746752,
+    "id": "202611152045500ec215cd5aac46e7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045500ec215cd5aac46e7",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 3348,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3417
+    }
+  }
+}

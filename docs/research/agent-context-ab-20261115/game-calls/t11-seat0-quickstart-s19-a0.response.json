@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.363,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, кредит в последнем раунде не погашается, а покупка-перепродажа убыточна.\"}",
+          "reasoning_content": "Round 6 market, I have 0 goods. Others have 2 each. Can't sell. Buy? Buying moves counter back but I have no goods, no. Pass.\n\nWait — cash 21.9M, no goods, last round. sell_credit won't pay off after last round. Buy units to sell? Buying costs and moves counter... buying gives goods, then selling them back is lossy. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738516,
+    "id": "20261115182833ca64d9e7aa2e4bb5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182833ca64d9e7aa2e4bb5",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 87
+      },
+      "prompt_tokens": 4088,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4216
+    }
+  }
+}

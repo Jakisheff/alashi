@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 19.746,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Гарантированные 3 товара с субсидией дают ~31 alashi на последнем рынке — лучше рискованного shuttle и одного donkey.\"}",
+          "reasoning_content": "Round 5 action. Last round goods can be sold round 6. Produce gives 3 goods, sell next market for ~12+10+9=31 alashi. Donkey: 1 alashi for 1 good. Shuttle risk 25% confiscation of 3 goods. Produce best.\n\nCash 50.9M — devaluation at round 6 border: floor(50/100)*62 = 0... cash 50,948,376 → floor/100 = 50 → 31M. Sell early doesn't matter, devaluation hits anyway. Could shuttle for 4 goods? 25% confiscation of all. Produce 3 safe = ~31 alashi. Shuttle gives 4 goods, EV 0.75*(12+10+9+8=39)=29.25 minus risk. Also fine to produce plus donkey (1 alashi for 1 good worth ~8) → donkey good: buy good for 1, sell for 8 → +7. Actually can only do one action. Donkey: pay 1 alashi, get 1 good, sells at price 12 next round if counter resets (new round resets counter). 1 good sells ~12 → profit ~11. Produce: 3 goods → 12+10+9=31. Produce better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739322,
+    "id": "20261115184143865898ae7d0c4ee6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184143865898ae7d0c4ee6",
+    "usage": {
+      "completion_tokens": 319,
+      "completion_tokens_details": {
+        "reasoning_tokens": 278
+      },
+      "prompt_tokens": 3619,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3938
+    }
+  }
+}

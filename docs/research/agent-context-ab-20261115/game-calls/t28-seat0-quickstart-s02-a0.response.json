@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Card 8 cancels promissory notes, and no one has them, so the outcome is irrelevant to me.\"}",
+          "reasoning_content": "Law card 8 cancels promissory notes. I have no promissory notes. No one else does either (no sales). Also, I'm not president; voting no on card 8 is indifferent. Someone voted already. Pass/abstain. Card 8 could hurt others later; irrelevant now. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739365,
+    "id": "2026111518424137d76b3f31804977",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518424137d76b3f31804977",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2523,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2629
+    }
+  }
+}

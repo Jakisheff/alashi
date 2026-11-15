@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.835,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":4674800,\"reason\":\"Аукцион в раунде 4: ставка вернётся при проигрыше, а выигрыш лицензии даст крупный доход, поэтому ставлю весь кэш, который всё равно девальвируется.\"}",
+          "reasoning_content": "Round 4 action: bid available. I have 4.67M cash, minimal bid multiple? Bid amount integer; bribe must be multiple of 5M, bid not necessarily. License income 20-60 alashi (20-60M units?) \"income roughly 20..60 alashi\" — huge. Bid my whole cash 4674800? Opponents have 49M and 25.5M — they could outbid. But cash devalues 62% anyway. Bidding all cash: cost 4.67M → devalued 2.9M worth; if win, income 20M+ extra. But opponents likely outbid me. Still, bid everything: zero downside (losing bids refunded; but refund comes after? \"returned to the losers\" — cash at boundary devalues... refund presumably before boundary). Bid all cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738632,
+    "id": "202611151830240e6a8d160f5d41e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830240e6a8d160f5d41e6",
+    "usage": {
+      "completion_tokens": 244,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 3511,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3755
+    }
+  }
+}

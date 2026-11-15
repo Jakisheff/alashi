@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.905,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получить 2 товара для будущей продажи\"}",
+          "reasoning_content": "Produce: 2 goods free. Others already have 2 goods (they produced? no, action phase now — they have 2 from earlier? anyway). Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739146,
+    "id": "202611151839024397e2e3960b41f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839024397e2e3960b41f3",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2449,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2509
+    }
+  }
+}

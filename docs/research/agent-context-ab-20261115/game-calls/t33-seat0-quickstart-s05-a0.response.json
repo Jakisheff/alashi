@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.95,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег для donkey, бесплатный produce даёт 2 товара для продажи в следующем рынке.\"}",
+          "reasoning_content": "Round 2 action, I have 0 cash, 0 goods. No cash for donkey. Best: produce (free, 2 goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739685,
+    "id": "202611151848026e5116174a4040d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151848026e5116174a4040d3",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2760,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2822
+    }
+  }
+}

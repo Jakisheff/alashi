@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.041,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар на открытии по ~8-7 за единицу, кэш нужен для ставки на лицензию в этом же раунде.\"}",
+          "reasoning_content": "Sell 2 units. Prices: counter 2, ladder next 8. Sell 2 → 8+7=15. Boom 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738221,
+    "id": "202611151823380b3b4e9893504719",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823380b3b4e9893504719",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2887,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2966
+    }
+  }
+}

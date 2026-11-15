@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.513,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":28000000,\"reason\":\"Аукцион решает партию: ставлю ~70% кассы, чтобы перекрыть вероятную ставку соперника с 39 alashi при доходе лицензии 20-60.\"}",
+          "reasoning_content": "Round 4 action: bid. My cash ~39.65 alashi. Rivals: 39.1 and 7.9. Bid ~40-60% → ~20 alashi. Rival 1 has 39 cash, could outbid. License income 20-60. Bid maybe 25 to beat rival likely bidding ~20? Risky. I'll bid 25.\n\nActually winner pays their bid to bank; losing bids returned. Bid high enough to deter: 28.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738329,
+    "id": "202611151825247d66112f898c435e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825247d66112f898c435e",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 2830,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2993
+    }
+  }
+}

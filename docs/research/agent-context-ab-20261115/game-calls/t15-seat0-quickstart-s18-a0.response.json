@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.942,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Карта 0 пустая, исход голосования на меня не влияет, сохраняю нейтралитет.\"}",
+          "reasoning_content": "Law phase, card 0 (empty), card 8 earlier already passed? Card 0 — nothing. Already voted? voted[false...], I haven't voted. Card 0 — pass/abstain doesn't matter. But card 8 wipes promissory — my sell_credit round 4 promissory was redeemed at round 5 boundary (already reflected in cash). Card 0 empty; I should still weigh influence +2 if pass action. I already used action (shuttle), so no bonus. Card 0 does nothing, vote doesn't matter. Abstain or pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738720,
+    "id": "20261115183149336f824298624413",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183149336f824298624413",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 3905,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4064
+    }
+  }
+}

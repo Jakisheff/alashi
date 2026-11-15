@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.056,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено и закон принят; в post_vote нет доступного действия.\"}",
+          "reasoning_content": "Law 7 passed, post_vote stage — nothing to do, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738307,
+    "id": "20261115182505160f65371eb7458e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182505160f65371eb7458e",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 2964,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3006
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.787,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатное производство 2 товаров при нуле ресурсов — лучший ход.\"}",
+          "reasoning_content": "Vote weight mode 1: weight = influence +2 if passed action? I passed, so weight 3. Action: no cash, no goods... but produce gives 2 goods. Yes, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746640,
+    "id": "20261115204357be1fe9c4bca14aba",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204357be1fe9c4bca14aba",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2517
+    }
+  }
+}

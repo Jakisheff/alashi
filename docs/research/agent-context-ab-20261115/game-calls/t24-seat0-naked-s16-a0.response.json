@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.849,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даст +1 товар к моему shuttle в последнем раунде — за закон.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1. I have 3 goods already, no more production phases after? Round 5 law, then round 6: action phase still exists in round 6 — shuttle would give 3+1. So subsidy helps me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739220,
+    "id": "202611151840178401ece7f60e4584",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840178401ece7f60e4584",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 2838,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2928
+    }
+  }
+}

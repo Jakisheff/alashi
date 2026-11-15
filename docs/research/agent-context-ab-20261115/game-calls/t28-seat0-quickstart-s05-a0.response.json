@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег и товара; produce бесплатно даёт 2 единицы для продажи в следующем раунде.\"}",
+          "reasoning_content": "Round 2 action. Cash 0, goods 0. sold_counter=6 — opponents sold 6 units. My credit sale of 2 units at prices 3,3 → 6*1.25=7.5 promissory. Devaluation floor(cash/100)*62 — my cash 0. Promissory added at boundary.\n\nAction: produce gives 2 goods. Donkey costs 1 alashi — I have 0 cash. So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739393,
+    "id": "20261115184259fca52195539d46ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184259fca52195539d46ab",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2785,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2916
+    }
+  }
+}

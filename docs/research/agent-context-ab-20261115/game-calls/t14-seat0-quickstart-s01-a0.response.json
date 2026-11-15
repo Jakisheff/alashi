@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.369,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без товара и денег лучший ход — бесплатное производство двух единиц.\"}",
+          "reasoning_content": "Vote weight mode 1 means skipped action gives +2? My weight 3 suggests others? Actually I passed market... weights [3,1,1] odd. I'm idx 0. Take produce: goods 2. Donkey costs 1 which I don't have. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738577,
+    "id": "202611151829341a54e031a67d4f62",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829341a54e031a67d4f62",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 2449,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2533
+    }
+  }
+}

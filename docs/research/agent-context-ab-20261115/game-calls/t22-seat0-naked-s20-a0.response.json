@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.057,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный рынок уже прошёл, товары и роли больше не приносят выплаты — любой расход только уменьшит итоговый cash.\"}",
+          "reasoning_content": "Round 6 action: cash 54.25, no goods. Options: pass (president? no), produce gives 2 goods but market already done. Goods useless after market. Bid not round 4. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739143,
+    "id": "202611151838596c90d078dea149d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838596c90d078dea149d2",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 3126,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3214
+    }
+  }
+}

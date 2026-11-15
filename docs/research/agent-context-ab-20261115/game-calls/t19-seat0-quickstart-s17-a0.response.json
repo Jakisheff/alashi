@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.837,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара позволят продать их на следующем рынке с boom +2 по высоким ценам.\"}",
+          "reasoning_content": "Round 5 action, cash ~9.4. I'm not richest. I have no goods; produce gives 2 free. Then round 6 produce again and sell at boom+2. produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738967,
+    "id": "20261115183603aded83b63efa43da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183603aded83b63efa43da",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 3950,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4027
+    }
+  }
+}

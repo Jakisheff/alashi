@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.024,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":10000000,\"reason\":\"Товар продан, рынок низких цен в раунде 4 малоценен; +2 влияния дают пост президента, вес в законах и шанс бонусных 5% банка, что перевешивает ~4-5 alashi от донки.\"}",
+          "reasoning_content": "Round 3 action, no goods, cash 21.25, no devaluation yet. Options: bribe for influence (influence gives 5% bonus share), donkey costs 1 for 1 good. Market in round 4: prices at counter 6 → price ladder next units ~5,4... Selling 2 goods later low value. Bribe 1 alashi? Cash must survive devaluation floor(cash/100)*62: 21.25 → 21*0.62=13.02. Hmm, devaluation between rounds 2+ — cash already shows 21.25 after? Devaluation happens at round boundaries 2+, so round 3 cash was devalued already. Bribe 10M (multiple of 5M) gives 2 influence. Influence max gives extra 5% bank share. Bribe 10M cost 10, gain influence 2. Might help presidency and 5% bonus. Alternatively donkey: 1 good, sell at price ~5*1.25... marginal ~5 alashi. Bribe gives long-term influence. I'll bribe 10M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737800,
+    "id": "2026111518163356f556a9da0949b9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518163356f556a9da0949b9",
+    "usage": {
+      "completion_tokens": 314,
+      "completion_tokens_details": {
+        "reasoning_tokens": 238
+      },
+      "prompt_tokens": 2074,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2388
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"produce бесплатно даёт 3 товара с субсидией для продажи в раунде 6\"}",
+          "reasoning_content": "Round 5 action: no cash? I have 10.6M. Options: produce (free, 3 goods with subsidy), donkey costs 1, shuttle gives 4 with risk. Produce is free. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739300,
+    "id": "20261115184137dbc097044d4a4422",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184137dbc097044d4a4422",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 3012,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3089
+    }
+  }
+}

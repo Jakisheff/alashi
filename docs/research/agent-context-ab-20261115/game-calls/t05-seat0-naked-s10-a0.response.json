@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.555,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 товара по текущей цене 7, пока рынок не забит и налога нет.\"}",
+          "reasoning_content": "I have 2 goods, cash 13.64. Sell 2 at price after 4 sold: ladder index 4 → 7 each (counter=4, next price 7). Sell now before others. Tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738125,
+    "id": "202611151822016cee648088cc4180",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822016cee648088cc4180",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 2113,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2198
+    }
+  }
+}

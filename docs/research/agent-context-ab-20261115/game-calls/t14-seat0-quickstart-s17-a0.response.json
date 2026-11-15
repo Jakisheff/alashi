@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.234,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатное производство даст 2 товара для продажи на последнем рынке — другой полезной альтернативы нет.\"}",
+          "reasoning_content": "Round 5 action. I have no goods, ~2.9 cash, license bid outcome unknown (I likely lost or won; cash unchanged 4674800→ devalued to 2898376, meaning I lost the bid? Actually if I lost, bid returned then devalued: 4674800→floor/100*62 = 28*62? Wait floor(cash/100)... 4674800/1000000=4.67M → floor(4.6748)*62? 4*62=248? But got 2898376. Hmm whatever. Actually 4674800*0.62=2898376, so no devaluation applied? Anyway.\n\nNow action: produce gives 2 goods. Rival 2 has 2 goods. Produce for round 6 market.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738649,
+    "id": "20261115183044a7dbfdab9edd4e1d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183044a7dbfdab9edd4e1d",
+    "usage": {
+      "completion_tokens": 218,
+      "completion_tokens_details": {
+        "reasoning_tokens": 183
+      },
+      "prompt_tokens": 3892,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4110
+    }
+  }
+}

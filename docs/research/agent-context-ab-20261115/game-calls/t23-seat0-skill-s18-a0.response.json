@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.591,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок R6 уже прошёл, товар больше не продать — производить/покупать бессмысленно, а взятка лишь сжигает cash перед итогом.\"}",
+          "reasoning_content": "Round 6 action: no bid (only R4). No cash value in donkey (goods can't be sold anymore—market passed). Produce gives goods useless. Best: pass? Rules say don't pass without reason—reason: no benefit. Influence via bribe? Cash counts for rank, bribe loses cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739191,
+    "id": "202611151839477b8190d0b2b844c6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839477b8190d0b2b844c6",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 68
+      },
+      "prompt_tokens": 3461,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3576
+    }
+  }
+}

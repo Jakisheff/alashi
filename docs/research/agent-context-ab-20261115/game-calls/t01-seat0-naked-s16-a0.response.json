@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"У меня ноль товара — продавать нечего, жду action-фазу для produce.\"}",
+          "reasoning_content": "Round 5 market, I have 0 goods. Pass. Note: my bid won presumably (cash reduced), cash 32.17M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737832,
+    "id": "20261115181707db3737ce818f4d43",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181707db3737ce818f4d43",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2726,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2787
+    }
+  }
+}

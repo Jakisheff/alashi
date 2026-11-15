@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.401,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Шаттл бесплатно даёт 3 товара (риск 25% приемлем), деньги сохраняю — нести их через девальвацию дороже, чем платить за ослика\"}",
+          "reasoning_content": "I have 24M cash, 0 goods. Options: bribe for influence? Round 2 action. Bribe 5M gives 1 influence. President determined by influence at law. Vote weight currently 3 each (cash-based? mode 1). Bribing increases influence and final payout bonus (max influence gets 5% of bank). Bank will be big. 5M bribe gives 1 influence — could secure max influence bonus. But devaluation: cash floors at 62% at round boundary. Bribe reduces cash that would be devalued? Bribe transfers to another player — I lose it. Not good for cash rank, but influence bonus 5% of bank may be significant.\n\nAlternatively donkey: 1 alashi for 1 good — goods sell later. Or shuttle: 3 goods, 25% confiscation risk (no role owner? unclear). Cash 24M → donkey costs 1M, gives good worth ~5-6 later. Actually buying goods cheap and selling at decent price is good. But price ladder already at 7 sold; selling pushes to lower prices. Shuttle gives 3 goods free (risk 25% confiscation, grey goods). Expected value high.\n\nI think shuttle again: 3 goods free vs donkey 3M for 3 goods. Shuttle better unless confiscated. Expected 2.25 goods free. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738774,
+    "id": "2026111518324455aec19f48c94f3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518324455aec19f48c94f3e",
+    "usage": {
+      "completion_tokens": 342,
+      "completion_tokens_details": {
+        "reasoning_tokens": 290
+      },
+      "prompt_tokens": 1676,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 2018
+    }
+  }
+}

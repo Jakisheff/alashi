@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.285,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара; производить выгоднее всего, а вес голоса уже усилен пропуском рынка.\"}",
+          "reasoning_content": "I have vote_weight 3 (from pass? actually pass gives +2). Action phase round 1: produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738281,
+    "id": "20261115182438ad245ea8d5a042c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182438ad245ea8d5a042c0",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 2451,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2510
+    }
+  }
+}

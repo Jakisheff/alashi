@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.816,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цена ещё высокая (9 за единицу), налога нет — продаю оба товара сейчас.\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, prices at index 2 = 9 alashi. No tax. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738471,
+    "id": "202611151827485cf0606ed714472a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827485cf0606ed714472a",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 1517,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1580
+    }
+  }
+}

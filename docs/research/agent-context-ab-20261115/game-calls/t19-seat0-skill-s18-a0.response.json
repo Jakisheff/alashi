@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.544,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт субсидию товара — у меня 2 товара и produce в R6, закон прямо увеличивает мою выручку.\"}",
+          "reasoning_content": "Law 3: subsidy_goods=1, выгодно мне (produce даст 3). Проголосовать yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738977,
+    "id": "202611151836141cd7257b548c4dbd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836141cd7257b548c4dbd",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 3452,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3519
+    }
+  }
+}

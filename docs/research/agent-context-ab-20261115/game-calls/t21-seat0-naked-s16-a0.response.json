@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.244,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка по высокой стартовой цене без плана перепродажи убыточна.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 9.4M. No action possible except buy — buying moves counter back, helps sell later. Buying moves sales counter backward giving higher future prices... with no goods, buying is pointless unless resale. I have no goods and only donkey next rounds. Actually I could buy now cheap? Price at counter 0 is 12; buying expensive, sell later at lower price — bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739078,
+    "id": "202611151837532052a09541eb4d57",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837532052a09541eb4d57",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 2708,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2833
+    }
+  }
+}

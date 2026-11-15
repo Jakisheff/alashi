@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.475,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и мало cash — покупка по высокой цене с налогом не приносит выгоды\"}",
+          "reasoning_content": "Round 5 market, boom +2. No goods, no cash to buy (5 alashi). Buying goods: price? Buying moves counter back and buys at price... I have 5 alashi cash. Could buy ~0-1 units. Not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738948,
+    "id": "20261115183544b280758653d943fd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183544b280758653d943fd",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 2716,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2801
+    }
+  }
+}

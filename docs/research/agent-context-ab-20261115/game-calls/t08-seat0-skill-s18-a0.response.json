@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.397,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: продаю все 3 товара на открытии по максимальной лестнице, sell_credit не использую — вексель не погасится.\"}",
+          "reasoning_content": "Round 6, sell all 3 at opening.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738348,
+    "id": "20261115182546f0c5b0cdbb144f11",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182546f0c5b0cdbb144f11",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 3400,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3463
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.95,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Обычная выручка всё равно сгорит при девальвации на границе раунда, sell_credit даёт 1.25x и вернётся уже после неё\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, sold_counter=2. Prices ladder starts 12 but counter at 2 → next price 9. Sell both at 9,10? Ladder index by sold_counter. Sell 2 units at 9,8 = 17. But cash devaluation at end of round 2: floor(cash/100)*62 — cash 17 → 0. Better sell_credit again: 17*1.25=21.25 promissory, returns at boundary of round 3 (after devaluation of round 2→3). Yes, sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746696,
+    "id": "202611152044538d8b545c8c5f42e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044538d8b545c8c5f42e0",
+    "usage": {
+      "completion_tokens": 184,
+      "completion_tokens_details": {
+        "reasoning_tokens": 130
+      },
+      "prompt_tokens": 1632,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1816
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.907,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт 2 товара под бум +2, тогда как shuttle рискует конфискацией, а взятка лишь усилит соперника перед девальвацией.\"}",
+          "reasoning_content": "Round 3 action. Cash 36.5M is top. Devaluation: cash floor(cash/100)*62 → losing 38%. Options: bribe for influence? Influence gives extra 5% bank share at end and presidency. Bribes convert cash 5M→1 influence, but bribe money goes to recipient — costly. Devaluation makes spending now attractive: spending 30M now avoids devaluation loss? Actually roof/donkey.\n\nDonkey: 1 alashi for 1 good — cheap relative to boom prices (~12+ per unit next market). Buy several? Donkey gives 1 good per action, only one action per round. So donkey gives 1 good for 1 alashi, sells at ~10-12 → good. Produce gives 2 goods free. Produce better.\n\nShuttle: 3 goods, 25% confiscation risk. Expected 2.25 goods. Produce gives 2 free, keeps cash. Shuttle gives expected +0.25 goods, small. With boom, fine—but risk. Produce is safe.\n\nConsider bribe: cash 36.5M devalues to ~22.6M anyway; bribing 5M to gain 1 influence → influence helps presidency and 5% bank. But money to rival. Meh. Produce is solid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739151,
+    "id": "2026111518390276d446b95ee2470e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518390276d446b95ee2470e",
+    "usage": {
+      "completion_tokens": 324,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 3042,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3366
+    }
+  }
+}

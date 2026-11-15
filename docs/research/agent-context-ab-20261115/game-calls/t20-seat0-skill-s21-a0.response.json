@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.948,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% мне уже не вредит (рынок пройден, товара нет), но блокировка лишней карты при моём весе 3 безопасна и не даёт соперникам выгоды.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I have no goods to sell (goods=0), tax hits revenue — but I have no sales left. Tax hurts rivals? Rival 1 has 3 goods but market already done. Tax only applies to market sales — no more markets. So neutral. But wait, cash after law? Tax is on revenue only. Neutral. I skipped action so weight 3, my vote matters most. Card 2 no effect now — abstain? Others weight 1 and 2; if they vote yes 3 vs my no 3 — tie, fails? Strictly greater yes needed: yes=3, no=3 → fails. If I abstain and they yes → passes but harmless. Vote_no safest to block anything. Actually harmless either way; vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739025,
+    "id": "20261115183658d9d2d11076974fc9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183658d9d2d11076974fc9",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 167
+      },
+      "prompt_tokens": 3670,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3892
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.585,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Ожидаемый доход лицензии 20–60 alashi оправдывает ставку 15, проигрыш возвращается, соперники богаты, поэтому ставка достаточно высокая, чтобы выиграть.\"}",
+          "reasoning_content": "Round 4 action: bid auction. License income 20-60 extra. My cash ~40.7, others 33.5 and 25.5. Bidding reasonable: income expected ~40. Bid something like 15? Others may bid too. Losing bid returned. Bid 15 alashi = 15000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737818,
+    "id": "20261115181654224785a80944492f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181654224785a80944492f",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 2419,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2545
+    }
+  }
+}

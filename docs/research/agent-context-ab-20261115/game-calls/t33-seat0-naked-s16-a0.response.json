@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.317,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара; покупка по стартовой цене 12 убыточна при последующей девальвации, продаю ничего и сохраняю позицию.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 12.5. Promissory 15 came through (cash 12.5 = floor cash 0 + promissory 15? Wait cash was 0, promissory ~15... floor(0/100)*62=0, plus promissory 15 → but cash shows 12.5. Hmm, maybe tax? Anyway, no goods. Can buy? Price counter reset, buy units at price 12? Buying moves counter back, expensive. Buy at 12 to sell later at ... in round 6 could sell at 12 with boom? Not profitable after tax/devaluation. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746661,
+    "id": "202611152044181ee22da4accc453c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044181ee22da4accc453c",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 2735,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2916
+    }
+  }
+}

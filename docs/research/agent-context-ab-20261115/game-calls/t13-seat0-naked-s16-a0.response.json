@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.441,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа 2 единиц по полной цене даёт 30 alashi promissory к границе раунда 6 без риска девальвации\"}",
+          "reasoning_content": "Round 5 market, I have 2 goods. Sell now or credit? After round 6 boundary, promissory from round 6 doesn't pay... actually round 5 credit pays at boundary after round 5 (rounds 2+). Wait: promissory comes at boundary of next round, so round 5 sell_credit pays at round 6 start — fine. But cash devaluation: boundary after round 5 and 6? Devaluation happens each boundary 2+. Sell now at 12? sold_counter=0, no shifts, tax 0. Price 12. Credit ×1.25 = 30 paid as promissory, which converts to cash at round 6 boundary — then no further devaluation (final). Actually is there devaluation after round 6? Boundary rounds 2+ means after each round including 6? If after round 6 cash is devalued, then... promissory added after devaluation presumably. Safer: sell_credit gives 30 guaranteed. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738601,
+    "id": "202611151829540e42cc8b46ed4670",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829540e42cc8b46ed4670",
+    "usage": {
+      "completion_tokens": 263,
+      "completion_tokens_details": {
+        "reasoning_tokens": 213
+      },
+      "prompt_tokens": 2680,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2943
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.426,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка в последнем раунде только сжигает кэш — продаю нечего, готовлюсь к action (produce/shuttle).\"}",
+          "reasoning_content": "Round 6 market, I have 0 goods. Can't sell. Buy? Buying moves counter back — buying loses money. Pass is correct... but rule says never pass with goods; no goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739011,
+    "id": "20261115183649bdc55cad53874149",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183649bdc55cad53874149",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 3466,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3556
+    }
+  }
+}

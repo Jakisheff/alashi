@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.364,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":33000000,\"reason\":\"Ставка 33 млн превышает наличные обоих соперников, гарантирует лицензию с ожидаемым доходом ~40 млн против ставки и не даёт её конкурентам.\"}",
+          "reasoning_content": "Auction round 4. Cash 46.1, rivals 32.8 and 25.5. License income 20-60, plus payout share. Need to bid more than rivals can. Bid ~32? If I bid 32, rival can't beat (they have 32.77). Risky but tie: tie_order unknown; I'm idx0. Bid 33000000? Rival 1 has 32.77M — could bid 32.5M. Bid 33000000 ensures win. Expected license 40 avg vs cost 33 — marginally negative EV directly, but license income paid on top of share and rank boost. Rank matters: winner pays 33 to bank, gets 20-60. Expected value ~40 vs 33 cost, plus denied to rivals. Bid 33000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738252,
+    "id": "2026111518240540986a0988984b77",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518240540986a0988984b77",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 175
+      },
+      "prompt_tokens": 2327,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2556
+    }
+  }
+}

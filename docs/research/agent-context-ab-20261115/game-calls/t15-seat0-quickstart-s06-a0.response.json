@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.006,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory — у меня их нет, значит вредит только соперникам, если они продавали в кредит.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have none (my sell was normal). Others may have? R3 seen [22M,0,1] for player 2 — sold 3 goods? sold_counter went 0→6: I sold 2, others sold 4 total. Did anyone use sell_credit? Unknown. Card 8 wipes promissory — hurts rivals if they have credit, harmless to me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738655,
+    "id": "202611151830519e3403bcfef74b0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830519e3403bcfef74b0b",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2821,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2961
+    }
+  }
+}

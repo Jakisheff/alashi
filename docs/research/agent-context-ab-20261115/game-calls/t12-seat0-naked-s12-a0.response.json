@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.856,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":5790800,\"reason\":\"Ставка возвращается при проигрыше, а лицензия даёт 20–60 alashi сверх доли — ставлю весь кэш без риска.\"}",
+          "reasoning_content": "Round 4 action: bid available. Cash 5.79M. License income 20-60 alashi, huge. Bid must be... amounts in minimal units, multiple of 5M for bribes; bid just integer. Bid 5,000,000 (5.79M cash). Rivals have 40M and 7.9M. Bidding 5M might be outbid. If lose, returned. Bid all 5,790,800? Bid wins unless rivals bid more; opponent 1 with 40M could bid more. But they may also value. Risk-free if lose (returned). Bid 5,790,800 — max possible.\n\nActually opponents act after? Unknown. Bid all cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738521,
+    "id": "20261115182836845843cd1dcf4025",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182836845843cd1dcf4025",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 154
+      },
+      "prompt_tokens": 2357,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2563
+    }
+  }
+}

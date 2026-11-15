@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.904,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Денег нет для других действий — произвожу 2 единицы бесплатно на продажу следующего раунда.\"}",
+          "reasoning_content": "I have 0 cash, 2 goods... wait goods[0]=0. I sold 2 via credit. Cash 0. Action phase round 2. Options: produce (free, gives 2 goods), donkey costs 1 (can't), bribe (no cash), pass. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738577,
+    "id": "20261115182932238d852694604f0b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182932238d852694604f0b",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 2216,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2315
+    }
+  }
+}

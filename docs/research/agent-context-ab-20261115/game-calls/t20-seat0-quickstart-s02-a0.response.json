@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.252,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снижает мою будущую выручку; отклоняю.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Vote no. Others voted already? voted [false,true,true] — unknown choices. Abstain gives weight anyway? Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738926,
+    "id": "20261115183521ad935a37dfb349cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183521ad935a37dfb349cb",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2518,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2585
+    }
+  }
+}

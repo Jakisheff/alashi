@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.609,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, влияние на исход больше нет — экономлю ход.\"}",
+          "reasoning_content": "Card 8 wipes my promissory (4 units sold on credit). Vote was already no; post_vote — can only pass? Post_vote actions: likely sell_credit? Previously in post_vote I did sell_credit (round1). Here phase law post_vote — options vote/veto... Actually previous post_vote I sold credit — odd but accepted. Now best action: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739066,
+    "id": "2026111518374296a79bb92da44630",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518374296a79bb92da44630",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3007,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3109
+    }
+  }
+}

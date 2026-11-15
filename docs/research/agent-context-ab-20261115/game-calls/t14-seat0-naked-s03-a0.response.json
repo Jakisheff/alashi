@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.418,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, действий нет.\"}",
+          "reasoning_content": "Round 2, law phase already done? Actually state says phase law, post_vote — need to respond? Post_vote stage... action should be pass? Phase law, decision_stage post_vote — likely just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738573,
+    "id": "202611151829287ca57300528343ec",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829287ca57300528343ec",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 1504,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1567
+    }
+  }
+}

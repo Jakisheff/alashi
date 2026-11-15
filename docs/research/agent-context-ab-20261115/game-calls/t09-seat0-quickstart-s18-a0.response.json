@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.645,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан по пустой карте, в post_vote действий нет.\"}",
+          "reasoning_content": "Post_vote, nothing to do.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738387,
+    "id": "20261115182625782c91e4e4784145",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182625782c91e4e4784145",
+    "usage": {
+      "completion_tokens": 33,
+      "completion_tokens_details": {
+        "reasoning_tokens": 7
+      },
+      "prompt_tokens": 3974,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4007
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.217,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему — это я, и влияние приносит бонус комиссии и вес голосов.\"}",
+          "reasoning_content": "Law phase round 4, card 4: +1 influence to poorest. I'm poorest (13.1M cash). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738255,
+    "id": "20261115182413efc88b74265b467e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182413efc88b74265b467e",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 2435,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2503
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.072,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% в принципе вреден, но рынок уже исчерпан; моим весом 3 против 1+2 закон всё равно не пройдёт строго — голосую против для надежности.\"}",
+          "reasoning_content": "Law card 2: tax 20% — already sold, final round, no more selling? Others still have 2 goods each but market phase passed. Tax applies to revenue — no more sales for me. Actually tax 20% hurts nothing now. But vote: president is idx 2 (influence 2). My weight 3 (skipped action +2). Card 2 harmful generally but final round, no sales left. Could pass vote either way. Vote no harmlessly — tax hurts nobody now, but if passed it doesn't matter. Actually others might sell? Market phase over. Vote yes/no indifferent; vote_no safe.\n\nWait — vote weight 3 vs others 1+2=3, tie means not strictly greater, fails. My vote decides... equal → fails anyway. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739305,
+    "id": "202611151841370d10fd4c360f4b78",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841370d10fd4c360f4b78",
+    "usage": {
+      "completion_tokens": 224,
+      "completion_tokens_details": {
+        "reasoning_tokens": 168
+      },
+      "prompt_tokens": 3520,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3744
+    }
+  }
+}

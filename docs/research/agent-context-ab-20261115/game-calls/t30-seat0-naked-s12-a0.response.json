@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.817,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа в раунде 4 обходит девальвацию на границе и приносит выручку с премией 25% при буме +2.\",\"reason_short\":\"\",\"action_valid\":true}",
+          "reasoning_content": "Round 4 market. My cash includes 21.25 promissory + base? Cash 40.675M includes promissory paid at round-3 boundary? Promissory from round 3 added at boundary of round 4 — yes already in cash. Boom +2, sold_counter=4, price ladder index 4 = 8? Ladder [12,10,9,8,...], counter 4 means next units at price 8? Actually prices by units sold so far; selling 2 units at prices... counter=4, next price 7? Ladder index: after 4 sold, price = 8+2 boom = 10? Approx ~10 per unit.\n\nRound 4 is the last round where cash devalues at boundary to round 5 (floor/100*62). Selling credit now gives revenue*1.25 promissory returned at boundary of round 5 — no devaluation! So sell_credit units 2 again. Tax 0.\n\nSell credit 2 units: prices 8,8? Either way, sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739656,
+    "id": "2026111518472919b1da279a71478f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518472919b1da279a71478f",
+    "usage": {
+      "completion_tokens": 287,
+      "completion_tokens_details": {
+        "reasoning_tokens": 227
+      },
+      "prompt_tokens": 2334,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2621
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.922,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия даёт мне +1 товар к производству в раунде 6, увеличивая выручку последнего рынка при равной выгоде для всех.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — benefits everyone equally; but as president, +1 goods helps me too. I have vote weight 2, already one opponent voted yes presumably. I can vote yes or abstain. Subsidy helps all equally — vote yes? It helps me get 3 goods instead of 2 next round (round 6 produce). All benefit equally, so neutral-ish; but more goods = more revenue for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739406,
+    "id": "20261115184322ba3aae11bfd547d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184322ba3aae11bfd547d8",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 4001,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4144
+    }
+  }
+}

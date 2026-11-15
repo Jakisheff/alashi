@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.756,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка по высокой лестнице убыточна; cash сохраняю под раунд 4 (аукцион) и девальвацию.\"}",
+          "reasoning_content": "Round 3, I have 0 goods, cash 13.02M, no pending promissory (I sold normally). Market: no goods to sell, buying goods to resell later? Buying moves counter back and gives goods at high price — likely bad. Pass is fine (no goods, buying unprofitable).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738107,
+    "id": "202611151821440cd6559a9353430a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821440cd6559a9353430a",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 67
+      },
+      "prompt_tokens": 2458,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2572
+    }
+  }
+}

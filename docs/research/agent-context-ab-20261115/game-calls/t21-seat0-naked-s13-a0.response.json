@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.991,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":18000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi против ставки 18 — положительное матожидание, проигрыш возвращается.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. Cash ~33. License income 20-60 alashi, bid goes to bank if won. Others may bid. Bidding amounts: my cash 33 alashi. License expected ~40. Bidding something like 15-20 could be profitable. But rank is by cash+hard; paying 20 to gain ~40 net +20 expected. But losing bid returned. Risk: overbid vs opponents. Bid maybe 15000000? Others have 33.5 and 25.5. A bid of 20 alashi gives net expectation positive if income >20. Income 20-60, expected 40. Bid 20 seems good; but tie_order unknown for me (my_idx=0, likely tie order favors?). Bid 18000000 to outbid moderately.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739064,
+    "id": "202611151837363b86354664a4439c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837363b86354664a4439c",
+    "usage": {
+      "completion_tokens": 215,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 2425,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2640
+    }
+  }
+}

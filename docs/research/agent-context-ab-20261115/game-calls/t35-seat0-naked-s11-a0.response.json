@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.648,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Обычная выручка обнулится девальвацией на границе раунда, sell_credit даёт 1.25x и вернётся уже после неё\"}",
+          "reasoning_content": "My cash 47.5M. Goods 3. Market round 4. Prices start at counter 2: price ladder index 2 = 9. Others likely sell too. Selling 3 units: prices 9,8,7 = 24 revenue. Cash won't devalue? Devaluation at rounds 2+ boundary: cash=floor(cash/100)*62 — wait that devalues each round boundary. Current cash 47,535,000 → devaluation already applied? Round 4 market; boundary between rounds happens... cash 47.5M — seems devaluation happens at boundary entering new round. So cash would devalue at end of round 4 too? \"На границе раундов 2+ cash=floor(cash/100)*62\". So selling now, cash devalues at boundary to 62%. sell_credit returns at next boundary after devaluation — better: promissory added to cash and reset, i.e., returned cash then devalued? \"promissory прибавляется к cash и обнуляется\" at boundary, then... devaluation applies to cash before adding promissory? Ambiguous. Prior reasoning: sell_credit returns after devaluation. Follow that pattern: sell_credit.\n\nUnits 3: prices 9,8,7 = 24 *1.25 = 30 promissory. Others may sell too, lowering prices. Still sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746726,
+    "id": "202611152045208e8fb0cd48044d23",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045208e8fb0cd48044d23",
+    "usage": {
+      "completion_tokens": 350,
+      "completion_tokens_details": {
+        "reasoning_tokens": 297
+      },
+      "prompt_tokens": 2266,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2616
+    }
+  }
+}

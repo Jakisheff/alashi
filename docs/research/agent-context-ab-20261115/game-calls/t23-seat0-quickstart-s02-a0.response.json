@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.125,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% сокращает мою выручку от продажи 2 товаров — против.\"}",
+          "reasoning_content": "Law card 1 = tax 10%. I have 2 goods, no cash. Tax hurts me. Vote no. veto_pending true — president may veto. I'm not president. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739119,
+    "id": "2026111518383740c45741a5824881",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518383740c45741a5824881",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2537,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2609
+    }
+  }
+}

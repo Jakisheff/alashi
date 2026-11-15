@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.976,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снижает мою будущую выручку — против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm not president; opponents voted? voted[1]=true. Tax reduces revenue; I just sold credit, promissory... tax applies to revenue at sale. Card 1 tax 10% hurts me next rounds but also opponents. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739288,
+    "id": "2026111518412367a0862584304496",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518412367a0862584304496",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 3615,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3704
+    }
+  }
+}

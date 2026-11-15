@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.323,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по лестнице (6+5=11 alashi) без налога, деньги пригодятся для аукциона.\"}",
+          "reasoning_content": "Cash 22.94, goods 2. Sell 2 at price for units 5,6: 6,5 → 11 alashi, no tax. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738198,
+    "id": "2026111518231656dbfbabbd984179",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518231656dbfbabbd984179",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2287,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2368
+    }
+  }
+}

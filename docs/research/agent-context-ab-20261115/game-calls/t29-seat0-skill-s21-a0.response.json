@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.564,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: рынка больше нет, товары бесполезны, а взятка 5 alashi за влияние дороже ожидаемых ~3 alashi от доли влияния\"}",
+          "reasoning_content": "Round 6 action. License income arrives. Options: produce with subsidy gives 3 goods but no market left (market already passed — final market done). No more market phase. So goods useless. Bid not allowed (not round 4). Donkey useless. So pass? Or bribe for influence — influence gives extra 5% bank share to max influence. Bribe gives influence floor(amount/5M). 5% of bank... bank commission 5%, extra 5% to max influence. Bribing 5M gives +1 influence but reduces cash. Ties broken by influence? Max influence currently all 1. If I bribe 5M (5 alashi) to get influence 2, I'd get extra 5% of bank. Bank total unknown—likely large (sales total... plus my bid 25M went to bank). Bank commission 5% of bank. Actually \"комиссия 5% банка; остаток по весам\". Extra 5% of bank to max influence. Bank includes bid 25M + taxes? Estimated bank maybe ~50-60 alashi. 5% = ~3 alashi < 5 alashi bribe. Not worth. Also someone else might bribe. Risky. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739534,
+    "id": "2026111518452641e91456b5044a4f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518452641e91456b5044a4f",
+    "usage": {
+      "completion_tokens": 311,
+      "completion_tokens_details": {
+        "reasoning_tokens": 262
+      },
+      "prompt_tokens": 3637,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3948
+    }
+  }
+}

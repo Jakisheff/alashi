@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.218,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Карта 7 (+2 цены) бесполезна после последнего рынка, исход на выплату не влияет.\"}",
+          "reasoning_content": "Card 7: +2 prices — but no more market after round 6. Useless. I abstained action, weight 3. President is player 2 (influence 2), not me. Card 7 is harmless. Vote doesn't matter for payout directly except influence? No. Vote yes or abstain — indifferent. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738735,
+    "id": "202611151832122b395d27026045ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832122b395d27026045ff",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 4194,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4303
+    }
+  }
+}

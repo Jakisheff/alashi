@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.053,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет векселей, а списание promissory может навредить только соперникам.\"}",
+          "reasoning_content": "Card 8 writes off promissory notes — I have none. Others may? Unknown. I sold normally. Card 8 harms holders of promissory — I hold none, so likely neutral or benefits me if rivals hold notes. Rival 2 sold at round 2 without credit presumably. I don't know who holds notes; I have none, so vote yes (it can only hurt rivals' notes, never mine).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738122,
+    "id": "202611151821584eff42c3a9934078",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821584eff42c3a9934078",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2290
+    }
+  }
+}

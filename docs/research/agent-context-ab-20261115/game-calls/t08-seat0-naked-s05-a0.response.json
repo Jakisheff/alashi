@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.368,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получаю 2 товара для будущих продаж, денег на другие действия нет.\"}",
+          "reasoning_content": "Round 2 action. Cash 0, goods 0, influence 1. Options: produce (free, 2 goods). Best.\n\nWait, sell_credit already sold my 2 goods... goods=0. Yes, produce again.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738282,
+    "id": "2026111518243944a24f702e93489d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518243944a24f702e93489d",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1687,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1765
+    }
+  }
+}

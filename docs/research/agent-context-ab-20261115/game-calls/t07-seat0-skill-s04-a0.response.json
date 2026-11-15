@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.863,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цена ещё высокая (лестница с 9 за единицу), товар держать невыгодно — продаю оба товара.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods. Sell at price: sold_counter=2, so prices start at index 2 = 9. Sell 2 units. Cash is cash in units; sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738210,
+    "id": "2026111518232712d08652f6134866",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518232712d08652f6134866",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 2087,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2176
+    }
+  }
+}

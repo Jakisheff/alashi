@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.028,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность 3 товаров с риском конфискации (~2.25 товара) выше, чем 2 от produce.\"}",
+          "reasoning_content": "Round 3 action. Cash 41.5, no promissory. Others sold too. Best: produce gives 2 goods; donkey costs 1 for 1; shuttle gives 3 grey goods but ~25% confiscation risk. Produce gives 2 free; donkey +1 for 1 alashi. Produce then donkey? Only one action. Shuttle: 3 goods expected value higher (3*0.75=2.25 goods) — better than produce (2). But confiscation. Expected goods 2.25 vs 2. Also could then sell 3-4 units later. I'll do shuttle for slightly better expected goods.\n\nActually price ladder: sold_counter=5, next prices: ladder index 5 onward: 6,5,4,3,3,2... selling 4 units gets ~6+5+4+3. Goods value ~18 per shuttle's 3 units. Marginal difference: 0.25 goods*~5 = ~1.25 alashi gain for shuttle. Fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738668,
+    "id": "20261115183101f0cf772dc16b4bad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183101f0cf772dc16b4bad",
+    "usage": {
+      "completion_tokens": 261,
+      "completion_tokens_details": {
+        "reasoning_tokens": 219
+      },
+      "prompt_tokens": 3087,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3348
+    }
+  }
+}

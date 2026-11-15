@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.266,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":24000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi значительно превышает ставку, а при проигрыше она возвращается — ставлю почти весь кэш.\"}",
+          "reasoning_content": "Round 4 action: bid for license. License income 20-60 alashi, huge. I have 24.8 cash. Bid big — but bid goes to bank if win, and cash reduces. Payout is share-based at end though. Still, license pays 20-60 above share. Winning bid of ~20-24 alashi... expected value 40. I should bid aggressively. Cash 24832400. But others also bid. Bid all cash? If I lose, refunded. If I win, pay but gain license ~40 avg. Marginal: paying 24 to gain ~40, net +16 but lose cash rank? Final rank by cash+hard, but payout shares 50:30:15 — rank matters slightly? Rank by cash then weights fixed 50:30:15 presumably. Actually weights fixed. License income paid above share. So bid up to expected value ~40. I have 24.8. Bid 24000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738429,
+    "id": "202611151827021494b4a0c5434622",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827021494b4a0c5434622",
+    "usage": {
+      "completion_tokens": 254,
+      "completion_tokens_details": {
+        "reasoning_tokens": 204
+      },
+      "prompt_tokens": 2330,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2584
+    }
+  }
+}

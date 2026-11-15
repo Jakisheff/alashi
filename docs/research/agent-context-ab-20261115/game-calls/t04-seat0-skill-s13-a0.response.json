@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.535,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":5000000,\"reason\":\"Раунд 4 — аукцион лицензии решает партию; при кассе ~8 alashi ставлю ~60% её, минимум 5.\"}",
+          "reasoning_content": "Round 4 action: bid. My cash 8.07. Bid 40-60% → ~4 alashi, but \"no less than 5\". Bid 5.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738132,
+    "id": "2026111518220944c65452d4e34f7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518220944c65452d4e34f7a",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2946,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3035
+    }
+  }
+}

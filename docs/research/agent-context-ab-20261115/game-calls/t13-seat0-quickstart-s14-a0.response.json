@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.801,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему — это я (17.2M против 37–41M), а влияние приносит бонус 5% банка и总统ство.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm poorest (17.17M). Both others voted already (voted true). I'm poorest — vote yes. It passed likely? Others voted unknown. My vote yes helps; likely passes either way. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738595,
+    "id": "202611151829510a5d6e2a4dd74e8d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829510a5d6e2a4dd74e8d",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 3594,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3702
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Нет налога, счётчик продаж сброшен — продаю оба товара по высоким ценам 12 и 10.\"}",
+          "reasoning_content": "Market round 3, sold_counter 0, prices 12,10,9... no tax. I have 2 goods. Sell both now at high prices (12,10).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738129,
+    "id": "202611151822065956b6d0bf03446c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822065956b6d0bf03446c",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2961,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3038
+    }
+  }
+}

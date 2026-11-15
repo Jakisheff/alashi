@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.87,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 0 пуста и голосование учтено — в post_vote действий нет.\"}",
+          "reasoning_content": "Post-vote, card 0 empty, nothing to do.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738484,
+    "id": "202611151828025628637651b44621",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828025628637651b44621",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 3132,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3174
+    }
+  }
+}

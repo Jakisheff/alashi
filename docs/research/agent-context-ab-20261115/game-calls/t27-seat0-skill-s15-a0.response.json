@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.56,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% режет мою будущую выручку от продаж в раундах 5-6 — бесплатное veto президента отменяет его.\"}",
+          "reasoning_content": "Law 2 tax 20%. Post_vote, already voted no. Votes: unknown outcome? Voted all true. Weights 3 each. I'm president. If law passes (yes>no)? My vote no. Outcome unknown; veto_pending false. Decision stage post_vote — only veto/pass possible presumably. Tax 20% hurts my future sales in rounds 5-6. Veto if passed. But veto_pending false — veto already used? Rules say veto free. Card 2 tax is harmful. But I have no goods now; future produce sales taxed 20% — veto worth it. However rivals richer... veto hurts them too? They also sell. My future revenue smaller than theirs; tax hits proportionally. Veto also removes tax hurting me. Use veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739404,
+    "id": "202611151843179cf8dd2b9a79461b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843179cf8dd2b9a79461b",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 3075,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3280
+    }
+  }
+}

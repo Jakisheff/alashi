@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.035,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар больше не продать — любые действия бессмысленны, финальный ранг определяется текущим cash\"}",
+          "reasoning_content": "Shuttle round 6: goods can't be sold (market phase passed). Goods useless now. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739461,
+    "id": "20261115184419a79993d29d4f40f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184419a79993d29d4f40f8",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 3123,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3186
+    }
+  }
+}

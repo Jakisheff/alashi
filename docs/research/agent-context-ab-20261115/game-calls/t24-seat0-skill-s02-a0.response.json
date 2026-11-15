@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает векселя — сейчас их ни у кого нет, закон безвреден и снимает будущий риск.\"}",
+          "reasoning_content": "Card 8: списывает promissory. Opponents voted already (voted true). My vote matters. Card 8 wipes promissory notes — I have none, no one has yet. It's neutral/beneficial early. No promissory exist yet, so it's harmless. But it could hurt my future sell_credit? No, it applies now. Vote yes—harmless, denies nothing. Actually voting no also harmless. Card 8 benefits those holding promissory (debtors). Currently nobody has promissory... it cancels now-existing ones. Neutral. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739157,
+    "id": "202611151839122633cf4a1c9a44ae",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839122633cf4a1c9a44ae",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 1915,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2080
+    }
+  }
+}

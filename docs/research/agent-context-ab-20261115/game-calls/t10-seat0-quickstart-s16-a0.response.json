@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.383,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет товара, налог 10% ударит только по продажам соперников в последнем раунде — голосую за.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I sold already, my cash 20.4M. Tax applies to next market revenue — round 6 market, I'll have goods? I have 0 goods; shuttle gave... goods show [0,2,2]? Wait, I did shuttle in round 5 action, but goods[0]=0? Shuttle failed? Seen after action shows goods [0,2,2] — my shuttle likely confiscated (25%). So I have no goods; tax doesn't hurt me, hurts opponents who have 2 goods each. Vote yes.\n\nveto_pending — president may veto; I'm not president. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738452,
+    "id": "20261115182727ed4ade42f11243b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182727ed4ade42f11243b2",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 3790,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3966
+    }
+  }
+}

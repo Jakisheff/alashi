@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.721,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по текущей цене 9, получаю наличные для дальнейших действий\"}",
+          "reasoning_content": "Round 2 market, sold_counter=2, I have 2 goods. Price ladder at index 2 = 9. Wait, history round1 law post_vote shows sell 2 at 12 — but state says sold_counter=2 and cash 22M for player... my_idx=0, cash[2]=22M? That's player 2's cash? cash array [0,0,22000000], my_idx 0 — my cash 0, player 2 has 22M? But I sold 2... Odd—maybe that sell was in law phase and rejected/misattributed. Anyway I have 2 goods, cash 0.\n\nNow sell at price 9, or sell_credit? Cash 0, might need cash for actions. Selling 2 units at 9 = 18 alashi. Fine, sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739218,
+    "id": "202611151840133d29d95918ca4798",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840133d29d95918ca4798",
+    "usage": {
+      "completion_tokens": 212,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 1590,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1802
+    }
+  }
+}

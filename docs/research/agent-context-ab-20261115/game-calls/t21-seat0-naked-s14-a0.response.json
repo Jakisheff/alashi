@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.88,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даст +1 влияния богатейшему (не мне), усилив его претендента на бонус влияния — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is player 1 (37.5). Not me. Vote no. Also bid money returned? I lost bid presumably (bid 18, player1 may have bid more — my cash 15.17 means... 33.17-18=15.17, so bid was taken and I... actually cash reduced by 18. If I lost, it returns at end of round? Cash 33.17→15.17, bid spent, lost apparently. Now card 5 gives influence to richest (player1), which boosts their final influence bonus. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739070,
+    "id": "2026111518374565c6fa1504414cd5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518374565c6fa1504414cd5",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 2524,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2695
+    }
+  }
+}

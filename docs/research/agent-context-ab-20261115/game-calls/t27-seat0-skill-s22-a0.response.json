@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.632,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 7 (цены +2) действует на следующий рынок, которого больше нет — исход не влияет на выплату.\"}",
+          "reasoning_content": "Card 7: prices +2, but round 6 market already passed — no effect. Pass or abstain. Actually no effect, abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739438,
+    "id": "20261115184355af6524054b6e491b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184355af6524054b6e491b",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 3761,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3831
+    }
+  }
+}

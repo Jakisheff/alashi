@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.586,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар на открытии раунда 3 по максимальной цене лестницы, дальше цены падают, а кэш всё равно девальвируется одинаково.\"}",
+          "reasoning_content": "Round 3, I have 2 goods. Note: my cash 10.54M after devaluation. Sell now. Units 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746636,
+    "id": "20261115204353d7313ac8ef0d46da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204353d7313ac8ef0d46da",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2346,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2430
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.133,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон, судя по отсутствию veto_pending, не прошёл (2:2), вето не требуется — пропускаю.\"}",
+          "reasoning_content": "Vote result unknown; I'm president. Card 4 gives +1 influence to poorest (faction 2). Veto if it passed? veto_pending false... In post_vote, I can veto if it passed. My vote no (weight 2), others voted — likely yes each weight 1 → 2 vs 2 → fails? Yes strictly greater: no 2, yes 2 → fails. But uncertain. If it passed, veto to protect my influence bonus. Veto is free; if it didn't pass, pass. Given veto_pending=false suggests no veto available? Safer: veto anyway? Veto unavailable when law failed — action would be rejected? \"pass\" is safe. Veto_pending false likely means no veto applicable → pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739339,
+    "id": "202611151842098b59f0e4a3c047d3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842098b59f0e4a3c047d3",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 155
+      },
+      "prompt_tokens": 3606,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3800
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 22.957,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара против 2 у produce, а выручка от их продажи обойдёт девальвацию.\"}",
+          "reasoning_content": "We're in action phase round 3. My promissory: 21.25M will arrive at round boundary. Cash is 21.25M currently (shown cash[0]=21250000). Options: produce (2 goods), donkey, shuttle (3 goods, 25% confiscation, but likely no border role), bribe. Cash will be devalued at boundary: floor(21.25/100... actually floor(cash/100)*62 — cash 21,250,000 /1,000,000 =21.25 → floor 21 → 13.02M? Wait units: 1000000 = 1 alashi; floor(cash/100000000)*62000000? floor(21.25M/100M)=0 → cash becomes 0? Hmm, likely floor(cash/100)*62 in alashi units where cash in units of... floor(21250000/100)*62 = 212500*62=13,175,000. So devaluation 38%. Promissory added after devaluation? \"cash=floor(cash/100)*62, promissory добавляется к cash\". So promissory 21.25M survives. Wait — sell_credit units 2 in round 2: price ladder at sold_counter 2? Sold counter... revenue 17? Ladder 10,9 next two → 19*1.25=23.75? Their calc said 17×1.25. Anyway promissory exists.\n\nSpend cash before devaluation: bribe gives influence — bribing is efficient use of devaluable cash. Influence matters for final 5% bank bonus and votes. Bribe min 5M, multiple of 5M. I could bribe 10M for 2 influence? That would beat idx2's 2 influence. Or buy goods via donkey (1 alashi = 1 good; sell ~7-9 alashi each? later price declines). Donkey: costs 1M, gives 1 good; I have 21.25M cash but spending before devaluation saves 38%. Selling good at ~9 alashi → huge ROI. But donkey gives only 1 good per 1M. With 21M can't do multiple donkeys (one action). So one donkey = +1 good.\n\nShuttle: 3 goods, 25% confiscation risk — better expected value than produce+donkey? Produce gives 2 free. Shuttle 3 with 25% risk → expected 2.25 goods, worth it slightly. But also shuttle grey goods risk vs border tribute... I'm not border holder. Shuttle expected value > produce. Buy action? buy is market phase only.\n\nBribe 5M for 1 influence: helps win 5% bonus and president. But money devalues anyway. Compare: shuttle +1 expected good ≈ +7-8 alashi future revenue? Goods sell ~6-9 alashi later, credit ×1.25. One good ~8 alashi = 8M. Bribe 5M → 1 influence. Influence gives vote weight, president, and final 5% bank share. Marginal. But idx2 has 2 influence, 4 vote weight; my 3. Bribing 5M → weight 4 tie.\n\nShuttle vs bribe: shuttle expected gain ~8M (survives devaluation as goods). Bribe 5M spent (which would devalue to 3.1M anyway) for influence — influence persists and affects final 5% bonus of bank. Bank could be large (license bid 20-60M + taxes). 5% bonus maybe 5M+. Also president control. I'd pick shuttle for goods, expected value higher and cash devalues anyway... but actually devaluation means spending 5M costs only 3.1M real. Both good. Shuttle gives ~2.25 goods worth ~8 alashi ×1.25 credit = ~10M real. Do shuttle.\n\nConfiscation 25% of grey goods — with 3 goods, chance lose some. Fine, expected still ~2.25.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738619,
+    "id": "20261115182956ddca32b64c934a0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182956ddca32b64c934a0c",
+    "usage": {
+      "completion_tokens": 918,
+      "completion_tokens_details": {
+        "reasoning_tokens": 876
+      },
+      "prompt_tokens": 2010,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2928
+    }
+  }
+}

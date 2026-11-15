@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.176,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаю доход лицензии 20–60 alashi; ставка 30 alashi с высокой вероятностью побеждает соперников с меньшим cash и даёт положительное матожидание сверх доли\"}",
+          "reasoning_content": "Round 4 action: bid for license. I have most cash (38.17M). License income 20-60 alashi, winner pays bid to bank. Rivals have 33.5M and 25.5M. Bidding high enough to win but not overpay. Expected license ~40 alashi; payout is added on top of share. Bidding ~20M (20 alashi) seems safe but rivals could outbid. I'm richest, can bid 30M? Marginal: winning costs bid; net gain = income (20-60) − bid. Tie risk. Bid 25M (25 alashi) — likely beats rivals who need to preserve cash for rank too. Actually rivals know income range too; they may bid up to ~30. I'll bid 30M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738937,
+    "id": "20261115183530766f1f0f485b4374",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183530766f1f0f485b4374",
+    "usage": {
+      "completion_tokens": 230,
+      "completion_tokens_details": {
+        "reasoning_tokens": 169
+      },
+      "prompt_tokens": 2430,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2660
+    }
+  }
+}

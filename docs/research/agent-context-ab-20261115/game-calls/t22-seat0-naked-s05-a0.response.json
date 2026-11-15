@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.599,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег, shuttle даёт 3 товара против 2 у produce; ожидаемая ценность выше даже с риском конфискации.\"}",
+          "reasoning_content": "I'm player 0, cash 0, goods 0. Round 2 action. No money for donkey/bribe. produce gives 2 goods. shuttle gives 3 but 25% confiscation, no cash needed. Shuttle expected 2.25 vs produce 2. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739030,
+    "id": "20261115183707e2c6523cffb5478d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183707e2c6523cffb5478d",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 63
+      },
+      "prompt_tokens": 1695,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1799
+    }
+  }
+}

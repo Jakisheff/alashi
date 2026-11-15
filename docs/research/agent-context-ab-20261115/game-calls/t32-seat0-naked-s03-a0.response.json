@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.308,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — влияния на закон больше нет.\"}",
+          "reasoning_content": "It's a law phase, post_vote — already voted? decision_stage post_vote, voted true. Likely nothing to do; president may veto. I'm not president. Return pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739586,
+    "id": "20261115184622ee4553be0abb4b70",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184622ee4553be0abb4b70",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 1510,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1574
+    }
+  }
+}

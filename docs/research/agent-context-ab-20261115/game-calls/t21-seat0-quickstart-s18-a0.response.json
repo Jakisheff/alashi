@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.118,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия +1 товар усилит моё производство/шаттл в финальном раунде — за.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1. I already did shuttle (goods 0? wait goods[0]=0... state shows goods [0,2,2] — my shuttle gave 3 goods? I'm idx0 with 0 goods. Hmm, maybe shuttle confiscated (25%). Anyway, card 3 benefits me if I produce/donkey/shuttle in round 6. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739111,
+    "id": "20261115183827f482faf455fd436f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183827f482faf455fd436f",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 4131,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4254
+    }
+  }
+}

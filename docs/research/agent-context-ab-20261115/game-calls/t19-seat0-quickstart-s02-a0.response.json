@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.454,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Непогашенных promissory ни у кого нет, а сам закон позже мог бы списать мои будущие кредитные продажи.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have none. Vote no? It harms opponents who might use sell_credit — but also would hurt me later. Card 8 wipes promissory; nobody has promissory yet (round 1). It could hurt me in future? No, only current ones. Voting no... actually it removes opponents' debt nothing now. Voting yes/no doesn't matter much. Pass? I'm president, vote. Abstain keeps options; others voted already. Vote no since no effect and card 8 could later wipe my own promissory if I use sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738894,
+    "id": "20261115183448f0d882174eb647ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183448f0d882174eb647ab",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 2526,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2694
+    }
+  }
+}

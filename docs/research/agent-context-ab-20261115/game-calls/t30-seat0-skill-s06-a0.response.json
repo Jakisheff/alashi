@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 сжигает непогашенные векселя — у меня их нет, а у соперников могут быть, значит закон мне нейтрален и потенциально вредит им.\"}",
+          "reasoning_content": "Law card 8: cancels promissory notes. I have none. Others may? Unknown. I sold normally, cash 17M. Card 8 hurts anyone with promissory. Do I benefit? It writes off promissory debts (списывает все непогашенные promissory — they're receivables). If opponents have none, it's neutral. Vote no? Player 2 sold 22M cash, sold via regular sell likely. Unknown. Neutral for me; vote yes if opponents may hold promissory (harm them). Card 8 cancels promissory — meaning holders lose them. Opponents possibly used sell_credit? Player 2 cash 22M at start of R2 market... they sold. Hard to know. Voting yes is weakly harmful to opponents potentially, neutral to me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739523,
+    "id": "2026111518451759ef838cdf3a44d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518451759ef838cdf3a44d8",
+    "usage": {
+      "completion_tokens": 228,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 2276,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2504
+    }
+  }
+}

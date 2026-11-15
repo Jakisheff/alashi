@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.846,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по 1.25x позволяет обойти девальвацию на границе раунда 3: выручка ~21.25 alashi вернётся целиком.\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, prices start at 12,10 next... sold_counter=2 already, so my first unit sells at 9, next 8. Sell both. Cash devalues at round 3 border (floor/100*62). Sell now gets cash that devalues. But still selling is better than holding. Sell 2 units → cash 9+8=17, tax 0. Then devalue at border 3. Or sell_credit gives 1.25x promissory added after devaluation — better! Promissory added at boundary of next round, avoids devaluation. Sell_credit 2 units → 21.25 promissory, added to cash at border round 3 without devaluation. Yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737769,
+    "id": "2026111518160420271ae73326475f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518160420271ae73326475f",
+    "usage": {
+      "completion_tokens": 217,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 1596,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1813
+    }
+  }
+}

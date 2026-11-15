@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.407,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 6 снизит цены следующего рынка на 2, что ударит по продаже моих 3 товаров — применяю вето\"}",
+          "reasoning_content": "Card 6 passed? voted all true, I voted no. Need veto. Card 6 lowers prices next round; my 3 goods. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738925,
+    "id": "20261115183522debfe55f0ab04fbc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183522debfe55f0ab04fbc",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 2236,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2308
+    }
+  }
+}

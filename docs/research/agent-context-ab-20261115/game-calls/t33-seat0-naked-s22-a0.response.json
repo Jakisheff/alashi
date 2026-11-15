@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.374,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (субсидия товара) уже бесполезна после рынка раунда 6, исход не влияет на выплату.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — irrelevant in round 6 law (market passed). As president with weight 4, could vote for influence bonus? No, card 3 gives no influence. Just vote yes/no doesn't matter; voting yes passes but no effect. Abstain fine. Keep influence max — already 2, no card gives influence. Just abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746684,
+    "id": "20261115204441451b316606d34ca3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204441451b316606d34ca3",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3337,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3460
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.949,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory, которых ни у кого нет — закон безвреден, а моё «да» ничего не стоит.\"}",
+          "reasoning_content": "Law card 8: writes off all promissory notes. No one has promissory notes (I have none). Harmless — but I'm president with veto. Voting yes/no: card 8 cancels promissory notes; nobody has any. It's basically neutral. Could hurt others later? No, only current. Pass yes or abstain. Others already voted? voted=[false,true,true]. I'm president with weight 1. Vote yes (neutral) — no downside. If it were to cancel my future promissory notes, no. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738417,
+    "id": "202611151826521d3bfc33f95a4149",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826521d3bfc33f95a4149",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 1433,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1598
+    }
+  }
+}

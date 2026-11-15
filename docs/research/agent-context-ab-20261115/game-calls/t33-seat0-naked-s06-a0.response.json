@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.819,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% сократит выручку от моих 3 товаров в следующем раунде, мне невыгоден.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have 15 cash, others 15 and 22. Tax reduces my future sale revenue; I plan to sell 3 goods round 3. Tax 10% hurts me. Vote no. Weights 1 each, one already voted yes (idx2). Vote no; 1 yes vs 1 no, remaining player 1 decides. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739684,
+    "id": "20261115184759e88ffc248e5c4f99",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184759e88ffc248e5c4f99",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1778,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1901
+    }
+  }
+}

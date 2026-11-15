@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 13.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион — выплата сверх доли, а ставка списывается из кэша до девальвации, поэтому реальная цена ~15.5M при ожидаемом доходе лицензии ~40M; ставкаю высоко для победы.\"}",
+          "reasoning_content": "Round 4 action: auction available. Bidding could win license income 20-60. Opponent 1 has 37.5M, opponent 2 has 9M. A bid of maybe 10-15M? License expected ~40 alashi; expected gain = 40 - bid. Bid 5M could win? Opponent 1 has 37.5M cash. Bidding war risk. If I bid high, e.g., 20M (4 influence), might win; opponents may outbid. Cash devalues 62% at round boundary anyway, so spending cash now avoids devaluation! Spending 20M cash = paying only effective 12.4M value. License 20-60 (mean 40) paid later plus influence from bribe-like amount? Bid gives floor(amount/5000000) influence? No, that's bribe. Bid gives no influence.\n\nExpected: license income ~40 alashi. If bid 20M, gain ~20 alashi expected minus share effects (income paid above share). Paying with pre-devaluation cash effectively costs 12.4M value. Good deal. Risk: outbid — losers' bids returned, but returned cash then devalues. Bid 20M; if returned, lose 38% of 20M ≈ 7.6M ≈ devaluation loss anyway... cash would devalue anyway, so returned bid devalues like it would anyway. Actually all my cash devalues regardless; the only loss from losing is zero extra? Winning: pay 20M (would have devalued to 12.4M anyway, so real cost is foregone 12.4M value) and get license 20-60 later. Clear win. Bid 20M.\n\nOpponents also rational; opponent 1 has 37.5M and may bid higher. Even bid 25M is EV+ (cost 15.5 value, income mean 40). But income \"примерно 20..60\" — mean 40, paid сверх доли. I'd bid 25M to increase win chance. Max useful: cost devalued 15.5M for expected 40M. Bid 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739204,
+    "id": "202611151839506dc5dc42586e4454",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839506dc5dc42586e4454",
+    "usage": {
+      "completion_tokens": 531,
+      "completion_tokens_details": {
+        "reasoning_tokens": 461
+      },
+      "prompt_tokens": 2410,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2941
+    }
+  }
+}

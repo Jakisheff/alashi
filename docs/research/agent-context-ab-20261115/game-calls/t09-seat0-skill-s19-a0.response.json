@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.254,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний раунд — продать весь товар немедленно по высокой цене лестницы, вексель не погасится.\"}",
+          "reasoning_content": "Round 6, last market, price ladder from 12, boom 0. I have 3 goods, cash 4.59M. Sell all 3 now.\n\nPrices: first 12+... sold_counter 0, rivals also have 2 each. Sell 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738398,
+    "id": "20261115182634eaa5356229954f7e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182634eaa5356229954f7e",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 3517,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3616
+    }
+  }
+}

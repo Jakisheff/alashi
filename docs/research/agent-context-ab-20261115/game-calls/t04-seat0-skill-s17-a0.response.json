@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.541,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния самому бедному — это я (5M cash), повышает мой вес и бонус влияния.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm poorest (cash 5M). Also veto_pending true — I'm not president, so no veto for me? Veto applies by president. Just vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738150,
+    "id": "202611151822275b3533a427a34e2d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822275b3533a427a34e2d",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 3349,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3436
+    }
+  }
+}

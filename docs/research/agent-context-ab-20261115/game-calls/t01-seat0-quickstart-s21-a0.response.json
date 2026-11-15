@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.956,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: производство уже не продать, я и так максимален по cash при равном влиянии, тратить деньги на взятки бессмысленно.\"}",
+          "reasoning_content": "Final round action, cash 35.1M, president, max influence tie. No useful actions: bribe would reduce cash, no benefit—actually influence bonus 5% of bank paid to max influence; tie broken by cash+hard. I'm top in cash? cash[0]=35M vs others 28.9, 26.3 — wait cash array shows my 35M. Influence all 1. If I bribe, I lose cash and gain influence; bonus already mine by cash tiebreak. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737835,
+    "id": "2026111518171146a443b838344b12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518171146a443b838344b12",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 4248,
+      "prompt_tokens_details": {
+        "cached_tokens": 3968
+      },
+      "total_tokens": 4405
+    }
+  }
+}

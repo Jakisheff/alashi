@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.01,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Шаттл даёт 3 единицы (EV≈2.25 против 2 у produce) бесплатно — при буме +2 к ценам лишняя единица стоит ~14 alashi за риск.\"}",
+          "reasoning_content": "Round 5 action, cash 9.4M. Bid not allowed (only round 4). Produce gives 2 goods free → sell round 6. Donkey costs 1M for 1 good. Shuttle gives 3, 25% confiscation. My vote weight is 3 already (someone skipped). Produce is safe: 2 goods free. Shuttle gives 3 goods, risk 25% confiscation. Boom +2 prices next market. Shuttle: 3 goods at ~12+2=14 vs 2 at 14 — extra unit worth 14M minus risk. Confiscation ~25% of 3 goods. EV shuttle = 2.25 goods, EV produce = 2. Shuttle slightly better EV. But uncertainty in law—my weight 3 matters. If I skip action, weight 5. But produce doesn't cost vote weight? vote_weight already 3 for me—likely mode: skipping action gives +2. Currently weight [3,3,1]: someone skipped (idx2 weight 1?). Anyway action doesn't affect weight this round—weight set... Actually +2 if primary action skipped; my current weight 3 suggests I already skipped? I bid last round... hmm, weights [3,3,1]. Anyway take shuttle for EV.\n\nShuttle risk: at non-preferential border, ~25% confiscation of grey goods. EV 3*0.75=2.25 > 2. Slight edge, plus no cash cost. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738386,
+    "id": "202611151826178dcf9f37ad614c93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826178dcf9f37ad614c93",
+    "usage": {
+      "completion_tokens": 369,
+      "completion_tokens_details": {
+        "reasoning_tokens": 315
+      },
+      "prompt_tokens": 3231,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3600
+    }
+  }
+}

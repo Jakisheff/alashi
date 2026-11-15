@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.124,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, деньги считать нечем, а взятки/roof лишь переводят мой cash соперникам — лучший ход пасс.\"}",
+          "reasoning_content": "Round 6 action phase. Cash 23.8. Options: produce gives 2 goods but no more market? Market phase already passed this round — market was before action. So goods useless. Bid not available (only round 4). Bribe for influence? Influence max bonus 5% of bank goes to max influence; currently faction 2 has 2, I'd need bribes. Cash counts anyway. Bribe transfers money to others — bad. Roof? No anti-rich law pending known; law phase next with unknown card. Roof tariff 1 costs 30% cash to faction 2 — money leaves me, bad. Donkey/shuttle produce useless goods. Pass best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738882,
+    "id": "20261115183437690e775aee234a81",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183437690e775aee234a81",
+    "usage": {
+      "completion_tokens": 181,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3009,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3190
+    }
+  }
+}

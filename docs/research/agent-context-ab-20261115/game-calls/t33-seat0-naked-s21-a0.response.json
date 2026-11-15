@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.398,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар больше нельзя продать (рынок раунда 6 пройден), любые траты cash или взятки лишь уменьшают итоговую выплату, а моё влияние уже максимально.\"}",
+          "reasoning_content": "Round 6 action. I have 37.5 cash, 0 goods, influence 2. Shuttle gives 3 goods but can't sell after (market already passed). Cash counts to final payout directly; donkey/shuttle cost cash and goods useless. Best: pass. Bribe gives influence — 5% bank bonus for max influence. Others have influence 1, I have 2. Bribe of 5M gives +1 influence? But bribe transfers cash to opponent — costly. Bonus is 5% of bank; bank = license income etc. Not worth 5M likely. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746681,
+    "id": "202611152044370c37d9c4393449c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044370c37d9c4393449c0",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 3227,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3407
+    }
+  }
+}

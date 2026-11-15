@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.837,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемая ценность шаттла (0.75×3×12≈27) выше гарантированных 2×12=24 от produce.\"}",
+          "reasoning_content": "Round 5 action, no goods, cash ~12.8. I lost auction. Options: produce (2 goods, sell next round at price ladder reset... sold_counter=0, round 6 market). Shuttle risky, 3 goods but 25% confiscation. Produce gives 2 goods guaranteed, sell at 12+ = 24 alashi. Shuttle EV 2.25*12=27. Slight edge, but risk. Also competitor has 2 goods; selling order affects ladder. Shuttle EV higher slightly — but confiscation is total loss of grey goods? \"может быть конфискован с вероятностью ~25%\" — likely all shuttle goods. EV: 0.75*3*12=27 vs 24. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738709,
+    "id": "202611151831436acd479860a14f82",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831436acd479860a14f82",
+    "usage": {
+      "completion_tokens": 206,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 3804,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 4010
+    }
+  }
+}

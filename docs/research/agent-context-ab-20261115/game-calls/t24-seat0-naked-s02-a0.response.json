@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.612,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Закон нейтрален (непогашенных promissory ни у кого нет), а исход уже решён голосами соперников.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have none; opponents may. Voted: others voted true already — unclear which way. I haven't voted. Law passes if yes>no. Others voted (we don't know how). If it cancels promissory notes — opponents might use sell_credit later; this card now cancels existing ones (none known). Likely harmful to nobody. I benefit if opponents hold promissory. Unknown votes... card 8 cancels promissory notes — bad for anyone planning credit sales? Only applies now. With no promissory outstanding, it's neutral. Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739133,
+    "id": "20261115183848ea8e7bf4fc574ff6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183848ea8e7bf4fc574ff6",
+    "usage": {
+      "completion_tokens": 175,
+      "completion_tokens_details": {
+        "reasoning_tokens": 133
+      },
+      "prompt_tokens": 1440,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1615
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.419,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% урежет мою будущую выручку от продаж, а выгоды от него мне нет\"}",
+          "reasoning_content": "Law card 1: tax 10%. Tax hurts sellers. I have no goods, low cash — tax reduces future revenue though. I'll produce later and sell. 10% tax hurts everyone selling; I plan to sell next rounds. Vote no. Opponent voted already (true for idx1). voted[1]=true. I'm not president, veto_pending true (president may veto). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739269,
+    "id": "2026111518410562a5542ad4cf43cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518410562a5542ad4cf43cb",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2419,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2540
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.086,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 6 снизит цены на следующем рынке, где у меня нет товара, а соперники с деньгами и производством пострадают — это относительно усиливает мою позицию.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I have no goods, so I don't sell. Vote yes — rivals will sell cheaper; as lowest cash, I benefit relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739497,
+    "id": "20261115184453154d625b890949f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184453154d625b890949f4",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 3595,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3687
+    }
+  }
+}

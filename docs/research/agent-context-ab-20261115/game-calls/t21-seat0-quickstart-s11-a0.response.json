@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.898,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и не могу наложить вето — в post_vote ничего полезного сделать нельзя.\"}",
+          "reasoning_content": "Law card 6 voted, everyone voted yes? All voted true. I voted no. Post_vote action... law phase actions only vote/veto/pass. Card 6 passed likely (others voted?). I can't veto (not president). So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739073,
+    "id": "2026111518374929293d37e0ef42c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518374929293d37e0ef42c0",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3437,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3524
+    }
+  }
+}

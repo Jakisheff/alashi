@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.408,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Больше рынков нет, налог меня не заденет, а при любом эффекте он ударит по более богатым соперникам.\"}",
+          "reasoning_content": "Law card 2: tax 20%. My weight 3 (passed action), others 1 each. Tax affects... I have no goods, no cash from sales — market already done? Round 6 market done, so tax next market? Card says tax 10/20% — likely affects next market; there's no next market after round 6, or maybe applies... Actually tax applies to market revenue; no more markets. Or it's a current tax on cash? Cards 1,2 \"налог 10/20%\" — active_tax_bps withheld from market revenue. No more markets for me; rivals have goods but also no more markets (market phase of round 6 passed). So tax does nothing to final payouts. But card 2 may tax cash? Given active_tax_bps applies to revenue only, harmless. But safer to just pass/abstain. If tax did apply to cash, rivals richer — vote yes. Given rivals have 2 goods each unsold and no more market, they can't sell anyway. Vote yes harmlessly or abstain. I'll vote yes (if any effect, hits richer rivals).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738467,
+    "id": "20261115182740db4542208d3e4b61",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182740db4542208d3e4b61",
+    "usage": {
+      "completion_tokens": 275,
+      "completion_tokens_details": {
+        "reasoning_tokens": 236
+      },
+      "prompt_tokens": 4053,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4328
+    }
+  }
+}

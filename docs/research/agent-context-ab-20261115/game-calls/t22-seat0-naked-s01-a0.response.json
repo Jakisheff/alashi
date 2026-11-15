@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.829,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Больше ожидаемый товар, чем у produce, при нулевых деньгах.\"}",
+          "reasoning_content": "Action phase round 1, cash 0. Produce gives 2 goods. Shuttle gives 3 free goods but confiscation risk 25%... no border role benefit; shuttle gives 3 goods. Take shuttle—risk 25% confiscation but expected 2.25 goods vs 2. Confiscation ~25% loses all. Produce safer with no cash. Actually shuttle better expected. But donkey costs cash (0). Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739009,
+    "id": "2026111518364408b47c8b36a948b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518364408b47c8b36a948b1",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 1359,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1480
+    }
+  }
+}

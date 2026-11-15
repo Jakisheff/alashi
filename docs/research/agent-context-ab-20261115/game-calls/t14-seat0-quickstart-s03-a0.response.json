@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.382,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено (post_vote), карта пустая — ничего не делаю.\"}",
+          "reasoning_content": "Law card 0, already voted abstain? post_vote stage — but we must return a law action? Stage post_vote, phase law. Actions: vote_yes/no/abstain/veto/pass. Probably pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738584,
+    "id": "20261115182941da5e685ac5f34e65",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182941da5e685ac5f34e65",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2600,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2673
+    }
+  }
+}

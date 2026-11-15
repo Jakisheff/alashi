@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.442,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по высокой цене лестницы (~9 и 8 alashi) до обесценивания.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods. Sell both now at prices... sold_counter=2, ladder next price index 2 = 9. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737967,
+    "id": "202611151819249287a3052bf14923",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819249287a3052bf14923",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 2681,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2756
+    }
+  }
+}

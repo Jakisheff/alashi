@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.477,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 2 вводит налог 20%, который урежет выручку моей финальной продажи 3 товаров.\"}",
+          "reasoning_content": "Law card 2 = tax 20%. I have 3 goods to sell in round 6. Tax would hurt me. I should vote_no; already voted? voted[false,false,true] — I haven't voted. Vote no. Others: rivals have 2 goods each too, tax hurts everyone. Vote no; I'm president with veto anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737823,
+    "id": "20261115181700b2f5f7b8f80d4209",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181700b2f5f7b8f80d4209",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3958,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4069
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.387,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 3 (субсидия produce) бесполезна в последнем раунде — производства больше не будет, голосую против.\"}",
+          "reasoning_content": "Card 3: subsidy goods=1 — no goods to produce now (last action passed). It affects next round production — but round 6 is last, so card 3 is useless. Vote no? Neutral—either way it passes or not, doesn't matter. Vote no to be safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738650,
+    "id": "20261115183047ff8e329392564d93",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183047ff8e329392564d93",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 3924,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4027
+    }
+  }
+}

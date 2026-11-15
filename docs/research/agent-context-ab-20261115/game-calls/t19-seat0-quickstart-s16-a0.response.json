@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.722,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка по высоким ценам с boom+2 не приносит выгоды — пропускаю.\"}",
+          "reasoning_content": "Round 5 market, cash 9.4M, no goods. Boom +2. Can't sell. Could buy? Buying moves counter back — no benefit without plan to sell... buy at ~14 then sell later? Buy cost high. Best pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738963,
+    "id": "20261115183558a2983351f15e4451",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183558a2983351f15e4451",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3859,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3948
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.599,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 2.25 товара против 2 у produce — выгоднее, риск конфискации приемлем.\"}",
+          "reasoning_content": "Round 3 action. I'm richest with 41.5 cash. Auction is round 4, not now. Action: produce (2 goods) vs shuttle (3 goods, ~25% confiscation risk). Shuttle EV better; but no tariff protection. Confiscation loses goods. EV shuttle = 0.75*3=2.25 > 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737785,
+    "id": "20261115181622040f2df95f5249d8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181622040f2df95f5249d8",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3120,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3236
+    }
+  }
+}

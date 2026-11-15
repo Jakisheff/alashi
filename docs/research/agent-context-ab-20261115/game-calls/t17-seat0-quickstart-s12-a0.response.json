@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.742,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":18000000,\"reason\":\"Ожидаемый доход лицензии 20–60 alashi превышает ставку, а проигрыш возвращается — делаю сильную ставку.\"}",
+          "reasoning_content": "Round 4 action: bid for license. Bid should be positive; expected income 20-60 alashi, worth bidding. My cash 33 alashi. Others similar. Bid maybe 15 alashi? Auction: highest wins, ties tie_order. If tie with equal bids, tie_order — unknown ordering. Bid 15000000? Risk: win with overpay vs lose. Expected value ~40. Bid 20M could still profit. But cash devalues 62%... cash spent now is bid; if win, income paid at end beyond share, and bid goes to bank (increases pot, which partly returns via shares). Reasonable bid ~15-20M. I'll bid 18000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738809,
+    "id": "20261115183322d0c243dcabf645c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183322d0c243dcabf645c0",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 3405,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3602
+    }
+  }
+}

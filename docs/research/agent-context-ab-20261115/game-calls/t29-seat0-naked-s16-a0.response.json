@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.383,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а денег слишком мало для покупок — сохраняю их, ведь лицензия уже должна принести доход сверх доли\"}",
+          "reasoning_content": "Round 5 market, no goods, cash tiny. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739525,
+    "id": "20261115184522b36ecde95358447f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184522b36ecde95358447f",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 2753,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2805
+    }
+  }
+}

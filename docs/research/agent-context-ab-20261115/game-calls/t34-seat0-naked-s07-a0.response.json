@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.007,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит по высоким ценам (12,10,9) даёт 38.75 alashi promissory, которые придут на границе раунда уже после дефляции, тогда как обычная выручка 31 будет урезана до 62%.\"}",
+          "reasoning_content": "I have 3 goods, sell now at good prices (12,10,9 → ~31). Deflation at border of round 3? Cash deflates at rounds 2+ borders. Selling now keeps cash then at next border it deflates too. Better sell_credit? Promissory added at next border without deflation. Sell 3 normally at 12,10,9 = 31 alashi, then deflation cuts 62%. sell_credit gives 31*1.25=38.75 paid at border 4 as promissory added after deflation. Definitely sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746665,
+    "id": "2026111520442139562946f3904842",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520442139562946f3904842",
+    "usage": {
+      "completion_tokens": 202,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 1928,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2130
+    }
+  }
+}

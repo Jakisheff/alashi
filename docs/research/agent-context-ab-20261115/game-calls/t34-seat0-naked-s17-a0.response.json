@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.478,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка по стартовой цене 12 не окупится — экономлю наличные до конца игры.\"}",
+          "reasoning_content": "Round 6 market, I have 0 goods. Cash low. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746703,
+    "id": "20261115204501e5500b43e3ba4e03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204501e5500b43e3ba4e03",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 2941,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 2994
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.324,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка по 12 при нулевом счётчике убыточна — сохраняю cash к раунду 4.\"}",
+          "reasoning_content": "Cash 10.54M, goods 0. Market r3: no goods. Buy? Ladder starts 12; buying moves counter back — counter 0. Buying units cheap to sell later? Buy price would be high (counter 0 → 12? buy price follows ladder). Buy at 12, sell later at ≤12, worse after devaluation? Actually selling later gains... buy now costs 12, sell next round maybe ~10 with tax risk — not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738131,
+    "id": "202611151822061e27318cba874d42",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822061e27318cba874d42",
+    "usage": {
+      "completion_tokens": 148,
+      "completion_tokens_details": {
+        "reasoning_tokens": 102
+      },
+      "prompt_tokens": 2341,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2489
+    }
+  }
+}

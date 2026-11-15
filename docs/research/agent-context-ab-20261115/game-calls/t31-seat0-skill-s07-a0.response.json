@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.318,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 8 (списание векселей) мне невыгодна и я уже проголосовал против; вето не требуется.\"}",
+          "reasoning_content": "Post_vote, card 8 failed (I voted no). All voted. Likely no majority? Others unknown. Just pass, no veto needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739586,
+    "id": "202611151846222045595bac914acb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846222045595bac914acb",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 2357,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2424
+    }
+  }
+}

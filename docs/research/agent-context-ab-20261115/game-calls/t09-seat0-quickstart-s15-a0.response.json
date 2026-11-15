@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и недостаточно наличных для покупки — сохраняю деньги для дальнейших действий.\"}",
+          "reasoning_content": "Round 5 market, no goods, low cash (0.61 alashi). Nothing to sell; buying? cash 611320, buying costs ~12+ alashi per unit — can't afford. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738376,
+    "id": "2026111518261399c5833689734ac3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518261399c5833689734ac3",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 3713,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3787
+    }
+  }
+}

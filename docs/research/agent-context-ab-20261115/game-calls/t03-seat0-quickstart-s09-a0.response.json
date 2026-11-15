@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.406,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV шаттла (~0.75×15=11.25 alashi) чуть выше, чем у produce (11).\"}",
+          "reasoning_content": "Round 3 action. I have 10.54 cash, 0 goods. Shuttle gives 3 goods, ~25% confiscation risk at black? No tariff info; risk of losing goods. Produce gives 2 safe. Selling 3 vs 2 at prices ~6,5,4: shuttle EV ≈ 0.75*15=11.25 vs produce 11. Actually sold_counter=4, prices: 5th unit =5? Ladder [12,10,9,8,7,6,5,...] counter 4 → next prices 6,5,4? Index 4 =6? counter counts sold units; next unit price = ladder[4]=6, then 5,4. Produce 2 → 6+5=11. Shuttle 3 → 6+5+4=15, EV with 25% confiscation... confiscation is per whole shuttle? \"grey goods may be confiscated\" — likely whole shipment. EV 0.75*15 = 11.25. Slight edge to shuttle. But confiscation risk correlated with cash loss? No. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737989,
+    "id": "2026111518194400c8c9f8540e469e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518194400c8c9f8540e469e",
+    "usage": {
+      "completion_tokens": 276,
+      "completion_tokens_details": {
+        "reasoning_tokens": 238
+      },
+      "prompt_tokens": 3114,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3390
+    }
+  }
+}

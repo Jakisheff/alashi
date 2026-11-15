@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.206,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продаю 2 единицы в кредит: выручка вернётся на границе раунда 3 с множителем 1.25, а девальвация бьёт по обоим вариантам одинаково — кредит строго выгоднее.\"}",
+          "reasoning_content": "I have 2 goods, sold_counter=2. Prices ladder: [12,10,9,...], counter 2 means next price 9. Sell both, maybe sell_credit? Round 2, credit pays next round boundary ×1.25 — beneficial and devaluation applies to cash... promissory added to cash then devalued? Boundary: cash=floor(cash/2... wait \"На границе раундов 2+ cash=floor(cash/100)*62\" and promissory прибавляется к cash. So credit converted at 1.25 then devalued to 62% → 0.775, worse than selling now (keep cash → 62%). Same devaluation. Actually sell now: cash devalued 62% too. So credit 1.25*0.62 > 0.62. Sell_credit is better in round 2! Yes, credit 25% bonus outweighs nothing. Do sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738572,
+    "id": "2026111518292695fa98b6ad084845",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518292695fa98b6ad084845",
+    "usage": {
+      "completion_tokens": 276,
+      "completion_tokens_details": {
+        "reasoning_tokens": 206
+      },
+      "prompt_tokens": 2097,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2373
+    }
+  }
+}

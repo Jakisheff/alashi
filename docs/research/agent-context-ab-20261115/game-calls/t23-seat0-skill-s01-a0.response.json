@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.996,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет кэша для donkey, беру 2 товара бесплатно и планирую продать в следующем раунде.\"}",
+          "reasoning_content": "I passed market so I have +2 vote weight. Action phase: produce gives 2 goods (no subsidy). Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739118,
+    "id": "20261115183835f79af141dbd14459",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183835f79af141dbd14459",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 1851,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1913
+    }
+  }
+}

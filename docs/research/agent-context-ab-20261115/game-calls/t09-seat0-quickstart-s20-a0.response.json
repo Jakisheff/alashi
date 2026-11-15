@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.972,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и рынок больше не нужны, а взятки дороже, чем бонус 5% банка за максимальное влияние.\", \"reason\":\"No more market phases, so producing goods is useless and bribing costs more than the 5% bank influence bonus.\"}",
+          "reasoning_content": "Round 6 action: cash 22.4, no goods. Options: shuttle (3 goods, 25% confiscation — but no market after? Round 6 market already done). Producing goods now useless — no more market. Bribe gives influence — max influence gets 5% bank bonus. Bank: total cash ~81.9M; 5% ≈ 4.1M. Bribe 5M to gain influence 1... I'd have influence 2, president maybe. But bribing costs 5M, bonus 4.1M split? The 5% bonus goes fully to max-influence participant. But if I bribe opponent, they get influence too. Bribing gives influence to me: floor(amount/5M). If I bribe 5M to opponent 1, my influence 2, theirs 2 — tie, tie_order? Risky. Bribe 10M to opponent: my influence 3. Cost 10M for 4.1M bonus — not worth. But opponent may bribe too. Actually bribery money goes to opponent, boosting their cash — bad.\n\nBest: pass (or donkey/shuttle useless). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738401,
+    "id": "2026111518263074fe3593b9854e1e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518263074fe3593b9854e1e",
+    "usage": {
+      "completion_tokens": 314,
+      "completion_tokens_details": {
+        "reasoning_tokens": 250
+      },
+      "prompt_tokens": 4149,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4463
+    }
+  }
+}

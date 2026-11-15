@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.186,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос против карты 6 подан, я не президент и вето не ожидается — в post_vote влиять не на что.\"}",
+          "reasoning_content": "Post-vote, not president, no veto. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738165,
+    "id": "20261115182243bde331e913274ffc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182243bde331e913274ffc",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 3334,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3384
+    }
+  }
+}

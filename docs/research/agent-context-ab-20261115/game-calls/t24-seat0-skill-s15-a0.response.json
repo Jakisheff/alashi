@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.544,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатный shuttle даёт 3 товара против 2 у produce; даже с риском 25% конфискации ожидание выше для последнего рынка.\"}",
+          "reasoning_content": "Round 5 action. No goods... wait goods[0]=0. Options: donkey (1 alashi → 1 good), shuttle (25% confiscation, 3 goods), produce (2 goods free). I have ~12.8 alashi. Produce gives 2 free goods — best no-risk. Shuttle gives 3 goods with 25% loss risk; expected 2.25 goods for free. Slightly better expected but risky. Round 6 is last market, sell all. Shuttle EV 2.25 goods vs produce 2 — shuttle better. But confiscation loses all 3. I'll do shuttle... actually no favorable border — confiscation. Expected goods 2.25 > 2. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739218,
+    "id": "20261115184013fbbca4b2edee40a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184013fbbca4b2edee40a2",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 3095,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3292
+    }
+  }
+}

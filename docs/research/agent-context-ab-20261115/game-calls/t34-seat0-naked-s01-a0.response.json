@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.103,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег — produce даёт 2 товара бесплатно.\"}",
+          "reasoning_content": "I have vote_weight 3 (passed gives +2). Others have goods 2, I have 0. Produce gives 2 goods. Donkey needs 1 alashi cash — I have 0. So produce.\n\nWait, why did others get 2 goods already? Whatever. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746625,
+    "id": "2026111520434331179713757d47ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520434331179713757d47ab",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 1364,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1448
+    }
+  }
+}

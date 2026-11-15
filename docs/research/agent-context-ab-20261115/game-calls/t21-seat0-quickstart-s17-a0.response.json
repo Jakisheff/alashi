@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.102,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Шаттл даёт 3 товара (EV≈2.25×12≈27 alashi при продаже в финальном раунде) против 2 бесплатных от produce (≈22).\"}",
+          "reasoning_content": "Round 5 action. Cash 39.5M. Others have no goods. I have no goods. Options: donkey (1 alashi → 1 good), shuttle (3 goods, 25% confiscation risk, cash fine if favorable border — not relevant), produce (2 goods free). Then sell in round 6 market. Produce gives 2 free goods — best? Shuttle gives 3 goods EV 2.25, donkey 1 good costs 1. Produce free 2 goods, sell in round 6 at ladder ~12,10 → ~22 (or credit ×1.25 but round 6 credit not redeemed after last round — so sell normally). Shuttle EV: 2.25×12 ≈ 27 vs produce 22. Shuttle better despite risk. But shuttle grey confiscation ~25%. EV goods value ~12 each → shuttle EV ≈ 27 vs produce 22. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739106,
+    "id": "202611151838197659d9de63854377",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838197659d9de63854377",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 193
+      },
+      "prompt_tokens": 4022,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4269
+    }
+  }
+}

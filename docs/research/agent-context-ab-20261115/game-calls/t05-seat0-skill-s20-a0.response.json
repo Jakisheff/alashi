@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.415,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены, но следующего рынка уже нет — голос безвреден, поддерживаю про-рыночный закон.\"}",
+          "reasoning_content": "Card 7: prices +2 next market — no next market (round 6 last). Vote doesn't matter; pass ok but guidance says vote by interest. Either pass or vote_yes harmless. Vote yes (harmless) or pass to avoid... weight +2 only if action skipped — I did pass action, so my weight already 3. Just vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738186,
+    "id": "202611151823022be0e04b23054b9c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823022be0e04b23054b9c",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3635,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3753
+    }
+  }
+}

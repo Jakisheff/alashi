@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.489,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и не могу наложить вето; карта 7 уже прошла в мою пользу.\"}",
+          "reasoning_content": "Post_vote, vote done, no veto power (not president). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738856,
+    "id": "20261115183412dade305fc22f4b51",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183412dade305fc22f4b51",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 2355,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2407
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.366,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар больше негде продать, а влияющие действия не окупаются — сохраняю максимум cash к итогу\"}",
+          "reasoning_content": "Round 6 action: no goods, cash 55.5M. Options: donkey costs 1 alashi gives 1 good but market passed already. Shuttle gives goods — but no market left to sell. Goods useless now. Bid not round 4. Best: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738620,
+    "id": "202611151830168028e1f482634712",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830168028e1f482634712",
+    "usage": {
+      "completion_tokens": 99,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3128,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3227
+    }
+  }
+}

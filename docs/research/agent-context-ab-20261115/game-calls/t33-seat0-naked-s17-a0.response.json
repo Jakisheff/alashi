@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.379,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаю 2,25 товара против 2 от produce; выручка в раунде 6 не девальвирует, ожидаемая ценность shuttle выше при небольшом риске конфискации.\"}",
+          "reasoning_content": "Round 5 action. Cash 12.5, goods 0. Options: produce (2 goods), donkey, shuttle (needs cash 1? costs? shuttle costs 1 alashi? Donkey costs 1, shuttle probably costs more — history shows shuttle without noted cost but cash reduced oddly). I have cash 12.5, no goods. Round 5 action then round 6 market last. Shuttle gives 3 goods (confiscation 25%). Produce gives 2 free. Expected: 3*0.75=2.25 goods vs 2 free. Sell next round at top prices ~12,10,9 avg ~10.3. Shuttle expected gain 2.25-2=0.25 goods ~2.5 alashi, but confiscation risk. Cash will devalue at round 6 border after selling — irrelevant, final round. Shuttle costs 1 alashi? Unclear; even so expected value positive. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746668,
+    "id": "20261115204422075ff94ab33241f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204422075ff94ab33241f3",
+    "usage": {
+      "completion_tokens": 259,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 2833,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3092
+    }
+  }
+}

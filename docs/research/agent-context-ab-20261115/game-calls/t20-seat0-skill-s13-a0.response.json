@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.958,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных векселей, а списание долгов нейтрально/выгодно — плюс вес голоса сохраняю, не пропуская фазу без причины.\"}",
+          "reasoning_content": "Card 8 cancels all promissory notes. I have no promissory notes (sold via regular sell). Others likely none either? Unknown, but card 8 is beneficial generally per rules (\"полезна\"). I didn't have promissory. But rivals may have. If rivals have none, card harmless. Vote yes per heuristic. Actually I already voted? voted[0]=false — I can vote. vote_yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738981,
+    "id": "202611151836171b60e0f68fff4012",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836171b60e0f68fff4012",
+    "usage": {
+      "completion_tokens": 142,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2912,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3054
+    }
+  }
+}

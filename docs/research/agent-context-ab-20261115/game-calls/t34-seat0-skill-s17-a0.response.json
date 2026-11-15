@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.875,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд: продаю оба товара на вершине лестницы (12 и 10), налога нет, кредит не использовать — вексель не погасится.\"}",
+          "reasoning_content": "Final round, sell 2 at ladder top (12,10), no tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746714,
+    "id": "20261115204511d09052264af3425a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204511d09052264af3425a",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 3333,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3402
+    }
+  }
+}

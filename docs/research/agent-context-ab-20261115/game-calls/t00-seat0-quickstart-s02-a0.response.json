@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.233,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Никто ещё не имеет векселей, закон 8 сейчас безвреден, а любые будущие кредитные продажи соперников будут обнулены.\"}",
+          "reasoning_content": "Law card 8: cancels promissory notes. I'm president, opponents already voted (voted [false,true,true]) — but I don't know their choices. Card 8 hurts those using sell_credit; I have none. It's neutral for me but I'm president with veto. Card 8 cancels all promissory — no one has promissory yet (round 1). Harmless either way. Pass it or not? It's null effect; vote yes to be safe? If others voted yes and I abstain, passes — fine. Nothing changes. I'll vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737759,
+    "id": "20261115181553074b900969d54f39",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181553074b900969d54f39",
+    "usage": {
+      "completion_tokens": 168,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 2524,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2692
+    }
+  }
+}

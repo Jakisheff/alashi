@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.907,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт выручку ×1.25, а promissory не девальвируется на границе раунда.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, price ladder at index 2: price 9. No tax. Sell both? Devaluation at round boundary: cash floor(cash/100)*62 — cash is in units; 1 alashi = 1,000,000 units. floor(cash/100)*62 → devaluation to 62% of alashi count. Sell 2 units at 9 and 8 = 17 alashi. Could sell_credit? Promissory is not devalued. Sell both with sell_credit: revenue 17*1.25=21.25 alashi promissory, returned at round 3 boundary. That's better if not last round. Round 2 of 6, so sell_credit is good.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739335,
+    "id": "202611151842104a6c7f4ebbaa4f64",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842104a6c7f4ebbaa4f64",
+    "usage": {
+      "completion_tokens": 207,
+      "completion_tokens_details": {
+        "reasoning_tokens": 160
+      },
+      "prompt_tokens": 2685,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2892
+    }
+  }
+}

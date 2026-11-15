@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.513,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Бум +2 даёт максимальные цены (16 и 15); кредит ×1.25 защитит выручку от девальвации на границе раунда.\"}",
+          "reasoning_content": "Round 3 market, boom +2, prices start at 12+2=14. I have 2 goods. Sell credit again? Cash 0, promissory ~ (12+10)*1.25*... previous credit: round1 sold 2 units at 12,11? Actually counter... anyway. Selling credit at 14+2=16 and 15 gives big revenue. Yes sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739173,
+    "id": "20261115183929072f05221a274ac2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183929072f05221a274ac2",
+    "usage": {
+      "completion_tokens": 144,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 1987,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2131
+    }
+  }
+}

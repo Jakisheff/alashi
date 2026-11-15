@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.012,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет; покупка на верхней ступени лестницы убыточна, продающего хода нет.\"}",
+          "reasoning_content": "Round 5 market, no goods. Buy? Buying goods to sell? Buy moves counter back and buys at price... buying at ladder top ~12 and selling loses. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739296,
+    "id": "202611151841334daf82e30b704a54",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841334daf82e30b704a54",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2923,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2993
+    }
+  }
+}

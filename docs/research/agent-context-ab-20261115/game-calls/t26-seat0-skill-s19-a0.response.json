@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.404,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему (фракция 2), создавая ничью со мной и угрожая президентству и бонусу 5%; голосую против и при необходимости приму вето.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm president now (influence 2). Card benefits poorest — that's faction 2 (32.4M). Vote against? My influence already max (2 vs 1,1). If card passes, poorest gets +1 → 2, tie, and 5% commission bonus goes to best cash+hard on tie — faction 1 richest. So vote_no. I'm president with veto option if needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739329,
+    "id": "20261115184202d320fdef8d2f40c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184202d320fdef8d2f40c1",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      },
+      "prompt_tokens": 3490,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3648
+    }
+  }
+}

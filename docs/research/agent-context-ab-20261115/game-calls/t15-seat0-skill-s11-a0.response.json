@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.596,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лестница падает, продаю все 3 товара немедленно по ~9, песо нужны для ставки в аукционе.\",\"choice\":0}",
+          "reasoning_content": "Round 4 market, I have 3 goods, no price shift, sold_counter=2, prices start ~9. Sell all 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738711,
+    "id": "202611151831487f28eb1055b5446c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831487f28eb1055b5446c",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2680,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2758
+    }
+  }
+}

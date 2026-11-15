@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.347,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 единицы на верхних ступенях лестницы (12 и 10 alashi) — максимальная выручка.\"}",
+          "reasoning_content": "Round 3 market, sell 2 units at price ~10 each? sold_counter=0, so prices 12,10. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738568,
+    "id": "20261115182925c6db1c94d961437f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182925c6db1c94d961437f",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 3003,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3079
+    }
+  }
+}

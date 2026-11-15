@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.399,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (субсидия производства) уже бесполезна — раундов производства больше нет, исход не влияет на мою выплату.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, affects future production — round 6 action already passed, no more production. Useless. Vote doesn't matter much; I'm president with weight 4, will pass anyway. Vote yes harmlessly? It's useless; abstain. Actually passing gives opponents nothing; but my vote yes vs no — card is harmless. Abstain fine. Actually skipping action earlier didn't give +2 weight... vote_weight [4,1,1], I have 2 influence +2 (I skipped action). Vote yes/abstain — either fine. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738627,
+    "id": "202611151830213f84ce009cef4a69",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830213f84ce009cef4a69",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 4370,
+      "prompt_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "total_tokens": 4541
+    }
+  }
+}

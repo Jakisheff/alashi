@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.369,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон о налоге 20% провалился (мой вес 5 против 3), товара нет, действия в post_vote недоступны — pass.\"}",
+          "reasoning_content": "Law 2: 20% tax. Did it pass? voted all; my weight 5 no vs 1+2=3 yes — no fails. No veto needed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738088,
+    "id": "20261115182124903f8e09753f44b4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182124903f8e09753f44b4",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 4538,
+      "prompt_tokens_details": {
+        "cached_tokens": 4288
+      },
+      "total_tokens": 4620
+    }
+  }
+}

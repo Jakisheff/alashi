@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.795,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет векселей, а списание векселей вредит только соперникам, если они их держат.\",\"choice\":0}",
+          "reasoning_content": "Law card 8: cancels promissory notes. I have none? I passed on sell_credit; my history shows no sell_credit. Do rivals have promissories? Unknown; I sold only via sell. Vote yes if rivals hold promissory notes — but I don't know. I have none, so card 8 likely hurts rivals if they have any. Rivals sold in round 2 too — unknown whether credit. Safer: yes, no downside for me.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738117,
+    "id": "20261115182152aab6ca8e664a41e2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182152aab6ca8e664a41e2",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2662,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2800
+    }
+  }
+}

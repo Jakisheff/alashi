@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.16,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi превышает реальную стоимость ставки (потраченный cash всё равно девальвируется до 62%), а ставки соперников ограничены их cash\"}",
+          "reasoning_content": "Round 4 action phase: auction available. Cash 47.5M. Bid? License income 20-60 alashi, paid above share. Bidding makes sense. Opponents: 36M and 9.1M cash. Bid e.g. 20M? Expected license ~40 alashi. But cash devalues at round boundary (floor/100*62)? Cash devalues 62% at end of rounds 2+... wait \"На границе раундов 2+ cash=floor(cash/100)*62\". So spending cash on bid avoids devaluation—bid is good. Also could bribe for influence. Bid amount is lost (goes to bank) but license income 20-60 alashi (~20-60M) exceeds typical bid. Bid high enough to win: 25M? Opponent 2 has 36M. Risk tie. Bid 30M leaves 17.5M. Expected license 40M > 30M loss? Net ~+10M plus avoiding devaluation of 30M (would lose 11.4M anyway). Actually spending 30M instead of keeping: keeping yields 30*0.62=18.6 later. So real cost 18.6M, expected gain 40M. Good. Bid 30M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739430,
+    "id": "20261115184343f75ae9947a0048bc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184343f75ae9947a0048bc",
+    "usage": {
+      "completion_tokens": 335,
+      "completion_tokens_details": {
+        "reasoning_tokens": 276
+      },
+      "prompt_tokens": 2383,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2718
+    }
+  }
+}

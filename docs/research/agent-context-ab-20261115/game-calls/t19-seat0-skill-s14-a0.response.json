@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.835,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены рынка R5 на 2 — прямо выгодно мне как продавцу, голосую за.\"}",
+          "reasoning_content": "Card 7: prices +2 next market — beneficial for me as seller. Rivals already voted (voted true). I vote yes. But they voted unknown... I can't know. Vote yes; my weight 3 + likely others? Just vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738963,
+    "id": "2026111518360055c118ddf628494f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518360055c118ddf628494f",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3066,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3157
+    }
+  }
+}

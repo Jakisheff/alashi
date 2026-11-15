@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.016,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% влияет только на рыночную выручку, а рынков больше нет — закон ничего не меняет.\"}",
+          "reasoning_content": "Law card 1: 10% tax. Others sell this round's market (already done, sold_counter 6, they sold 2 each?). I already sold. Tax applies to revenue — likely already collected? Tax applies at market sales; market is done, so tax this round affects nothing... Actually active_tax applies next market—no next market. Card 1 irrelevant or hurts richer? Vote weights: me 3 (abstained action? I passed action → +2), others 1 and 2. My vote decides. Tax 10% — no more markets, so no effect. Abstain or pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738183,
+    "id": "202611151822569cb781b46dd74f88",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822569cb781b46dd74f88",
+    "usage": {
+      "completion_tokens": 169,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      },
+      "prompt_tokens": 4167,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4336
+    }
+  }
+}

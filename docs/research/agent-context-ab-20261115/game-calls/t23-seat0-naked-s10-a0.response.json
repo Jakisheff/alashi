@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.238,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 товара по 7 alashi, пока счётчик продаж низкий и цены не упали.\"}",
+          "reasoning_content": "Round 4 market, price ladder at sold_counter=4: price 7. No boom. I have 3 goods. Sell now at 7 each before others sell and drop prices.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739141,
+    "id": "20261115183856718ac02771614edd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183856718ac02771614edd",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2132,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2211
+    }
+  }
+}

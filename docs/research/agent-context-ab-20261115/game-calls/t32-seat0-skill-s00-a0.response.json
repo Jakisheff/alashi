@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.467,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег — продавать нечего, действие невозможно.\"}",
+          "reasoning_content": "No goods, market phase. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739648,
+    "id": "20261115184726c88951f1c7494e22",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184726c88951f1c7494e22",
+    "usage": {
+      "completion_tokens": 31,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1806
+    }
+  }
+}

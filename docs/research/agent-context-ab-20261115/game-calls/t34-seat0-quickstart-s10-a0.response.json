@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.167,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, влияние у меня не максимальное — доступных продуктивных действий нет.\"}",
+          "reasoning_content": "Law already voted, post_vote, president is not me (tie broken by tie_order, idx 1 or 2). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746679,
+    "id": "2026111520443757294d2bb5d04fb2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520443757294d2bb5d04fb2",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 3253,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3313
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.656,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатные ~3 товара при EV≈2,25 лучше платного donkey и produce, сохраняя кэш 15,8 под конец партии.\"}",
+          "reasoning_content": "I have 2 goods, no cash? Cash 15.79. Shuttle free gives 3 goods (risk confiscation). Shuttle best EV, keeps cash. But wait, I already have 2 goods — shuttle gives 3+0=3, 25% confiscation... confiscation applies to grey goods. EV still better than produce (2). Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739002,
+    "id": "202611151836388deac06139f3406e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836388deac06139f3406e",
+    "usage": {
+      "completion_tokens": 120,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3197,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3317
+    }
+  }
+}

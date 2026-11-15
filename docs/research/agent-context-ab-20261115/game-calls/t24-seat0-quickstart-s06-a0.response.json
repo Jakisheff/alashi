@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.306,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 (+2 к ценам следующего рынка) увеличивает выручку от моих 2 товаров\"}",
+          "reasoning_content": "Law card 7: prices +2 next market. I voted... not yet. I have 2 goods to sell next market. Vote yes. Opponent 2 already voted (true). Influence all 1, weights 1 each; abstain gives +2 weight if passed action — I did produce, so no bonus. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739171,
+    "id": "20261115183928f7e60c576d3d4a06",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183928f7e60c576d3d4a06",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2859,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2962
+    }
+  }
+}

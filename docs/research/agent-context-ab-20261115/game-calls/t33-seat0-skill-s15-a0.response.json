@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.924,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка товара по цене ≥12 для перепродажи убыточна — pass в market без потерь.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 11.7M. Can't sell. Buy? Buying goods to resell — price ladder reset at sold_counter=0, price 12. Buy moves counter back... buying costs likely ~12 per unit, selling gives 12 minus tax... not profitable generally. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746659,
+    "id": "202611152044174aa8040b659c4bd1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044174aa8040b659c4bd1",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 3158,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3264
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.058,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 (субсидия товара) в последнем раунде ничего не меняет — рынок и производство уже прошли, закон безвреден.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, only affects next round produce — no next round. But it's harmless; vote yes or abstain — doesn't matter. Actually cash ranks: I'm richest. Card 3 harmless. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738540,
+    "id": "202611151828583fc50209fd6247a3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828583fc50209fd6247a3",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 3462,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3557
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.718,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 10% бьёт по продажам соперников, у которых ещё есть товар (у меня товар уже продан), и пополняет банк выплат.\",\"veto\":false}",
+          "reasoning_content": "Card 1: tax 10% — I already sold, tax applies to market revenue? Already sold this round, so no effect now. But rivals have goods 2 each, they haven't sold... wait sold_counter=10, prices are low anyway. Tax would hurt rivals' sales this round. I have no more goods. Vote yes? Tax collected reduces their revenue, but does bank grow? Money goes to bank presumably, increasing payout pool. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738289,
+    "id": "202611151824450e4f080f364e4352",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824450e4f080f364e4352",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 3142,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3285
+    }
+  }
+}

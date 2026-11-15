@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.903,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего; покупка для сдвига счётчика не окупается — пропускаю рынок.\"}",
+          "reasoning_content": "Round 4 market, no goods, sold_counter=4. Cash ~20. I have no goods to sell. Could buy to move counter back? Not useful. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738354,
+    "id": "2026111518255083d2ba08c1f74113",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518255083d2ba08c1f74113",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2244,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2319
+    }
+  }
+}

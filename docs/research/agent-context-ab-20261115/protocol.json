@@ -1,0 +1,1392 @@
+{
+  "schema": 1,
+  "created_utc": "2026-11-15T10:15:44+00:00",
+  "status": "frozen_before_collection",
+  "study": "agent-context-ab",
+  "question": "Does a compact procedural context (skill) change payout versus documentation (quickstart) and no addition (naked), paired by seed?",
+  "model": "glm-5.3",
+  "executor_settings": {
+    "model": "glm-5.3",
+    "thinking": {
+      "type": "enabled"
+    },
+    "reasoning_effort": "low",
+    "temperature": 0.7,
+    "top_p": 0.95,
+    "max_tokens": 3072,
+    "response_format": {
+      "type": "json_object"
+    }
+  },
+  "collection_limits": {
+    "calls": 3600,
+    "prompt_tokens": 9000000,
+    "completion_tokens": 900000,
+    "wall_s": 10800
+  },
+  "workers": 6,
+  "seed_prng": 20261115,
+  "seeds": [
+    233747523293130150,
+    6478052720233619023,
+    6623847258950024181,
+    7641116610517618950,
+    1489329283135565703,
+    1636024383963375227,
+    6468506619499674957,
+    7376980301324979958,
+    5799505083444558963,
+    8473271001755308054,
+    6835103206236599948,
+    875799988318283219,
+    426871563463199695,
+    4761788928814761805,
+    1722462449049923966,
+    726942173478114350,
+    8458019192144416468,
+    1466019202362239674,
+    4737151547415767395,
+    7182955257003814301,
+    6565111343291890850,
+    3138136797073492260,
+    8596249498958580583,
+    1278191448956275260,
+    4252583941815025745,
+    8712691673791365548,
+    1621077718575090335,
+    402870619059137577,
+    3911758702882356043,
+    3320593685071723272,
+    5119474976401686124,
+    7113336935843798272,
+    2997741731102685509,
+    5484989809993118849,
+    3496418931709480645,
+    8360366395054682670
+  ],
+  "arms": {
+    "naked": "base RULES only; memory.md empty",
+    "quickstart": "docs/QUICKSTART_JURY.md appended to system prompt verbatim",
+    "skill": "compact procedural memory derived from castdev post-mortems (inbox/Agent3, 2026-09-02)"
+  },
+  "arm_surface": {
+    "naked": 0,
+    "quickstart": 4177,
+    "skill": 2303
+  },
+  "primary": "mean skill payout minus mean naked payout per seed cluster (36 clusters, seat 0, opponents greedy+tactical); two-sided exact Wilcoxon via tools/eval_report.py; bootstrap CI seed 20260907",
+  "protocol_errors": "first-attempt validation errors per arm from game-calls/*.validation-error.json; expected near ceiling (0 errors in ~1400 prior glm-5.3 responses)",
+  "engine_source_commit": "095f0e0",
+  "engine_binary_sha256": "62e9ea2b3e53e8854b6e1de8e8e21e0653ab70bbb17a54ec8156392457117d07",
+  "jobs": [
+    {
+      "id": "t00-seat0-naked",
+      "seed_index": 0,
+      "seed": 233747523293130150,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t00-seat0-quickstart",
+      "seed_index": 0,
+      "seed": 233747523293130150,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t00-seat0-skill",
+      "seed_index": 0,
+      "seed": 233747523293130150,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t01-seat0-naked",
+      "seed_index": 1,
+      "seed": 6478052720233619023,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t01-seat0-quickstart",
+      "seed_index": 1,
+      "seed": 6478052720233619023,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t01-seat0-skill",
+      "seed_index": 1,
+      "seed": 6478052720233619023,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t02-seat0-naked",
+      "seed_index": 2,
+      "seed": 6623847258950024181,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t02-seat0-quickstart",
+      "seed_index": 2,
+      "seed": 6623847258950024181,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t02-seat0-skill",
+      "seed_index": 2,
+      "seed": 6623847258950024181,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t03-seat0-naked",
+      "seed_index": 3,
+      "seed": 7641116610517618950,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t03-seat0-quickstart",
+      "seed_index": 3,
+      "seed": 7641116610517618950,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t03-seat0-skill",
+      "seed_index": 3,
+      "seed": 7641116610517618950,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t04-seat0-naked",
+      "seed_index": 4,
+      "seed": 1489329283135565703,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t04-seat0-quickstart",
+      "seed_index": 4,
+      "seed": 1489329283135565703,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t04-seat0-skill",
+      "seed_index": 4,
+      "seed": 1489329283135565703,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t05-seat0-naked",
+      "seed_index": 5,
+      "seed": 1636024383963375227,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t05-seat0-quickstart",
+      "seed_index": 5,
+      "seed": 1636024383963375227,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t05-seat0-skill",
+      "seed_index": 5,
+      "seed": 1636024383963375227,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t06-seat0-naked",
+      "seed_index": 6,
+      "seed": 6468506619499674957,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t06-seat0-quickstart",
+      "seed_index": 6,
+      "seed": 6468506619499674957,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t06-seat0-skill",
+      "seed_index": 6,
+      "seed": 6468506619499674957,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t07-seat0-naked",
+      "seed_index": 7,
+      "seed": 7376980301324979958,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t07-seat0-quickstart",
+      "seed_index": 7,
+      "seed": 7376980301324979958,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t07-seat0-skill",
+      "seed_index": 7,
+      "seed": 7376980301324979958,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t08-seat0-naked",
+      "seed_index": 8,
+      "seed": 5799505083444558963,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t08-seat0-quickstart",
+      "seed_index": 8,
+      "seed": 5799505083444558963,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t08-seat0-skill",
+      "seed_index": 8,
+      "seed": 5799505083444558963,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t09-seat0-naked",
+      "seed_index": 9,
+      "seed": 8473271001755308054,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t09-seat0-quickstart",
+      "seed_index": 9,
+      "seed": 8473271001755308054,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t09-seat0-skill",
+      "seed_index": 9,
+      "seed": 8473271001755308054,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t10-seat0-naked",
+      "seed_index": 10,
+      "seed": 6835103206236599948,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t10-seat0-quickstart",
+      "seed_index": 10,
+      "seed": 6835103206236599948,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t10-seat0-skill",
+      "seed_index": 10,
+      "seed": 6835103206236599948,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t11-seat0-naked",
+      "seed_index": 11,
+      "seed": 875799988318283219,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t11-seat0-quickstart",
+      "seed_index": 11,
+      "seed": 875799988318283219,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t11-seat0-skill",
+      "seed_index": 11,
+      "seed": 875799988318283219,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t12-seat0-naked",
+      "seed_index": 12,
+      "seed": 426871563463199695,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t12-seat0-quickstart",
+      "seed_index": 12,
+      "seed": 426871563463199695,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t12-seat0-skill",
+      "seed_index": 12,
+      "seed": 426871563463199695,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t13-seat0-naked",
+      "seed_index": 13,
+      "seed": 4761788928814761805,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t13-seat0-quickstart",
+      "seed_index": 13,
+      "seed": 4761788928814761805,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t13-seat0-skill",
+      "seed_index": 13,
+      "seed": 4761788928814761805,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t14-seat0-naked",
+      "seed_index": 14,
+      "seed": 1722462449049923966,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t14-seat0-quickstart",
+      "seed_index": 14,
+      "seed": 1722462449049923966,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t14-seat0-skill",
+      "seed_index": 14,
+      "seed": 1722462449049923966,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t15-seat0-naked",
+      "seed_index": 15,
+      "seed": 726942173478114350,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t15-seat0-quickstart",
+      "seed_index": 15,
+      "seed": 726942173478114350,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t15-seat0-skill",
+      "seed_index": 15,
+      "seed": 726942173478114350,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t16-seat0-naked",
+      "seed_index": 16,
+      "seed": 8458019192144416468,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t16-seat0-quickstart",
+      "seed_index": 16,
+      "seed": 8458019192144416468,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t16-seat0-skill",
+      "seed_index": 16,
+      "seed": 8458019192144416468,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t17-seat0-naked",
+      "seed_index": 17,
+      "seed": 1466019202362239674,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t17-seat0-quickstart",
+      "seed_index": 17,
+      "seed": 1466019202362239674,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t17-seat0-skill",
+      "seed_index": 17,
+      "seed": 1466019202362239674,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t18-seat0-naked",
+      "seed_index": 18,
+      "seed": 4737151547415767395,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t18-seat0-quickstart",
+      "seed_index": 18,
+      "seed": 4737151547415767395,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t18-seat0-skill",
+      "seed_index": 18,
+      "seed": 4737151547415767395,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t19-seat0-naked",
+      "seed_index": 19,
+      "seed": 7182955257003814301,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t19-seat0-quickstart",
+      "seed_index": 19,
+      "seed": 7182955257003814301,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t19-seat0-skill",
+      "seed_index": 19,
+      "seed": 7182955257003814301,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t20-seat0-naked",
+      "seed_index": 20,
+      "seed": 6565111343291890850,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t20-seat0-quickstart",
+      "seed_index": 20,
+      "seed": 6565111343291890850,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t20-seat0-skill",
+      "seed_index": 20,
+      "seed": 6565111343291890850,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t21-seat0-naked",
+      "seed_index": 21,
+      "seed": 3138136797073492260,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t21-seat0-quickstart",
+      "seed_index": 21,
+      "seed": 3138136797073492260,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t21-seat0-skill",
+      "seed_index": 21,
+      "seed": 3138136797073492260,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t22-seat0-naked",
+      "seed_index": 22,
+      "seed": 8596249498958580583,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t22-seat0-quickstart",
+      "seed_index": 22,
+      "seed": 8596249498958580583,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t22-seat0-skill",
+      "seed_index": 22,
+      "seed": 8596249498958580583,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t23-seat0-naked",
+      "seed_index": 23,
+      "seed": 1278191448956275260,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t23-seat0-quickstart",
+      "seed_index": 23,
+      "seed": 1278191448956275260,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t23-seat0-skill",
+      "seed_index": 23,
+      "seed": 1278191448956275260,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t24-seat0-naked",
+      "seed_index": 24,
+      "seed": 4252583941815025745,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t24-seat0-quickstart",
+      "seed_index": 24,
+      "seed": 4252583941815025745,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t24-seat0-skill",
+      "seed_index": 24,
+      "seed": 4252583941815025745,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t25-seat0-naked",
+      "seed_index": 25,
+      "seed": 8712691673791365548,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t25-seat0-quickstart",
+      "seed_index": 25,
+      "seed": 8712691673791365548,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t25-seat0-skill",
+      "seed_index": 25,
+      "seed": 8712691673791365548,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t26-seat0-naked",
+      "seed_index": 26,
+      "seed": 1621077718575090335,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t26-seat0-quickstart",
+      "seed_index": 26,
+      "seed": 1621077718575090335,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t26-seat0-skill",
+      "seed_index": 26,
+      "seed": 1621077718575090335,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t27-seat0-naked",
+      "seed_index": 27,
+      "seed": 402870619059137577,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t27-seat0-quickstart",
+      "seed_index": 27,
+      "seed": 402870619059137577,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t27-seat0-skill",
+      "seed_index": 27,
+      "seed": 402870619059137577,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t28-seat0-naked",
+      "seed_index": 28,
+      "seed": 3911758702882356043,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t28-seat0-quickstart",
+      "seed_index": 28,
+      "seed": 3911758702882356043,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t28-seat0-skill",
+      "seed_index": 28,
+      "seed": 3911758702882356043,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t29-seat0-naked",
+      "seed_index": 29,
+      "seed": 3320593685071723272,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t29-seat0-quickstart",
+      "seed_index": 29,
+      "seed": 3320593685071723272,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t29-seat0-skill",
+      "seed_index": 29,
+      "seed": 3320593685071723272,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t30-seat0-naked",
+      "seed_index": 30,
+      "seed": 5119474976401686124,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t30-seat0-quickstart",
+      "seed_index": 30,
+      "seed": 5119474976401686124,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t30-seat0-skill",
+      "seed_index": 30,
+      "seed": 5119474976401686124,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t31-seat0-naked",
+      "seed_index": 31,
+      "seed": 7113336935843798272,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t31-seat0-quickstart",
+      "seed_index": 31,
+      "seed": 7113336935843798272,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t31-seat0-skill",
+      "seed_index": 31,
+      "seed": 7113336935843798272,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t32-seat0-naked",
+      "seed_index": 32,
+      "seed": 2997741731102685509,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t32-seat0-quickstart",
+      "seed_index": 32,
+      "seed": 2997741731102685509,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t32-seat0-skill",
+      "seed_index": 32,
+      "seed": 2997741731102685509,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t33-seat0-naked",
+      "seed_index": 33,
+      "seed": 5484989809993118849,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t33-seat0-quickstart",
+      "seed_index": 33,
+      "seed": 5484989809993118849,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t33-seat0-skill",
+      "seed_index": 33,
+      "seed": 5484989809993118849,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t34-seat0-naked",
+      "seed_index": 34,
+      "seed": 3496418931709480645,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t34-seat0-quickstart",
+      "seed_index": 34,
+      "seed": 3496418931709480645,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t34-seat0-skill",
+      "seed_index": 34,
+      "seed": 3496418931709480645,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t35-seat0-naked",
+      "seed_index": 35,
+      "seed": 8360366395054682670,
+      "seat": 0,
+      "arm": "naked",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t35-seat0-quickstart",
+      "seed_index": 35,
+      "seed": 8360366395054682670,
+      "seat": 0,
+      "arm": "quickstart",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    },
+    {
+      "id": "t35-seat0-skill",
+      "seed_index": 35,
+      "seed": 8360366395054682670,
+      "seat": 0,
+      "arm": "skill",
+      "opponents": [
+        "greedy",
+        "tactical"
+      ],
+      "partition": "test"
+    }
+  ],
+  "hashes": {
+    "common.py": "70ade1e8a467a491c0c35d6fb2043ac9766ff0295a5fcdd7234c5cc2ee0a7990",
+    "model_api.py": "7495b3bae2bc6fce96a5c4c97c7b50ba6b59784f22c9dac95a0a3df162dbd30f",
+    "discover.py": "350405ff612140547aa638ab9855ee28c0a7efe7aca198a4b0d1ddb56eaa4863",
+    "safe_runtime.py": "124a424d1469123415374ad38bdc9a7dbf2db5b92cb460283c099f8ca9f818a0",
+    "collect.py": "237de77acf0eda1e79142a2ba27fa3900a9a5b10381ddcf3e17b21ed86ec521c",
+    "arms/naked/memory.md": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "arms/naked/helper.py": "a992bf32be20d8a85d5e3b6e8fbcaa4369ab70ef88b6b8c31a903e7b0de6e2c8",
+    "arms/quickstart/memory.md": "15eb9fda32d111ddae957d3b36ce43489270ec53895c5a21348fa51abd7d1a06",
+    "arms/quickstart/helper.py": "a992bf32be20d8a85d5e3b6e8fbcaa4369ab70ef88b6b8c31a903e7b0de6e2c8",
+    "arms/skill/memory.md": "0ef04e2d60c4c63619c2d5ffb9c9891e8ef9e1fb4cf1856aba5db707582068a1",
+    "arms/skill/helper.py": "a992bf32be20d8a85d5e3b6e8fbcaa4369ab70ef88b6b8c31a903e7b0de6e2c8"
+  }
+}

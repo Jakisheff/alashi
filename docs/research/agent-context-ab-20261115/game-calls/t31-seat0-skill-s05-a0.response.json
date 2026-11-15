@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.701,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатный produce с субсидией даёт 3 товара на рынок следующего раунда; weight 3 уже обеспечен президентством, донки не нужны.\"}",
+          "reasoning_content": "Action phase round 2, subsidy active: produce gives 3 goods. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739577,
+    "id": "202611151846135c50498a96114208",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846135c50498a96114208",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2170,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2233
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.947,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и не могу ветировать карту 8, которая спишет мой promissory.\"}",
+          "reasoning_content": "Law card 8 wipes my promissory (2 units sold credit, 12*1.25≈? price at counter 4-5). Already voted. Post-vote stage: no action needed; veto only president. Return pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738491,
+    "id": "20261115182808e51a0e1012484204",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182808e51a0e1012484204",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2859,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2946
+    }
+  }
+}

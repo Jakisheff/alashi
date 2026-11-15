@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.456,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Счётчик продаж обнулён и цены высоки: 3 товара через shuttle дают ~31 alashi против 22 у produce, что покрывает 25% риск конфискации.\"}",
+          "reasoning_content": "Round 5 action. No goods, cash 12M. License auction already done. Options: produce (2 goods, free), shuttle (3 goods, risk 25%), donkey (1 goods, 1 alashi). Boom 0, sold_counter 0 → prices 12,10 for round 6 market. Sell 2 goods next round ≈22 alashi, devalued 62%... cash devalues anyway; goods produce value high. Shuttle gives 3 goods → 12+10+9=31, risk 25% confiscation, expected ~23 vs produce 22, but I have 12M cash, tribute possible. Shuttle expected slightly better. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739167,
+    "id": "202611151839210299240390f840bd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839210299240390f840bd",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 2604,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2802
+    }
+  }
+}

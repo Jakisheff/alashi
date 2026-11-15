@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.525,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 20% больше не может затронуть мою выручку — рынки закончились, поэтому исход мне безразличен.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm not president. Vote weight mode 1, my weight 3, others 1 and 2. Tax reduces... but no goods remain and market over — tax applies to next market? No more markets. Tax applies to sales revenue; round 6 market done, so tax is harmless. Vote yes or no — irrelevant to me. Opponents have no goods either. Abstain safe; also voting yes/no doesn't matter. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739008,
+    "id": "20261115183642f1bf73c11687468e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183642f1bf73c11687468e",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 103
+      },
+      "prompt_tokens": 4190,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4336
+    }
+  }
+}

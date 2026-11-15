@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных векселей, а списание векселей соперников снижает их итоговый cash — относительно мне выгодно.\"}",
+          "reasoning_content": "Card 8: cancels promissory notes. I sold everything for cash, no promissory. Others may have? Unknown. Card 8 benefits those with promissory notes; I have none. But canceling others' promissory hurts them — good for my relative rank? Rank is by cash+hard; canceling others' promissory helps me relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746654,
+    "id": "20261115204411be444c153891455f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204411be444c153891455f",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 2971,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3094
+    }
+  }
+}

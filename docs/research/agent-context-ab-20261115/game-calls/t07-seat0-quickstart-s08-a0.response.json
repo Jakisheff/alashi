@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.577,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа по 1.25x защищает выручку от девальвации на границе раунда 4 и максимизирует итоговую выплату.\"}",
+          "reasoning_content": "Round 3 market, I have 2 goods. sell now: price 12 each, no tax. Cash already 21.25M. Selling 2 at 12 = 24 alashi. Or sell_credit gives promissory returned at next boundary — fine, no devaluation? Devaluation applies to cash at rounds 2+: floor(cash/100)*62. Round 4 boundary will devaluate cash. So sell_credit defers past the round-4 boundary devaluation — better. 2*12*1.25=30 promissory. Sell normally 24 cash now, which would devaluate at boundary 4 (62%). So sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738246,
+    "id": "2026111518235729fbdc5377bf4de1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518235729fbdc5377bf4de1",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3047,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3241
+    }
+  }
+}

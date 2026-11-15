@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.259,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю весь товар сразу в раунде 4 — дальше цены только падят, а кредит не погасится после финала.\"}",
+          "reasoning_content": "Round 4 market: sell 2 goods. Prices ladder: sold_counter=4, so my units get prices 8,7. Sell all.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739686,
+    "id": "20261115184804af62cd14053044f1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184804af62cd14053044f1",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 2685,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2760
+    }
+  }
+}

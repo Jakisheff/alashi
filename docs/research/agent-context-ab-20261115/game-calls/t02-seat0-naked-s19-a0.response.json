@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.541,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Закон повышает цены к рынку раунда 6, где у меня не будет товара (шаттл конфискован), а соперники с товаром получат выгоду.\"}",
+          "reasoning_content": "Law 7 voted; my no, others yes (2 yes vs 1 no) — passes. I'm president; +2 prices next round would help me sell? I have no goods, but I could produce round 6... actually last round? Round 5 is not last (six rounds). Round 6 market: I'd have goods from round 5/6 actions. Wait, round 5 action was shuttle, confiscated apparently. Round 5 law phase now; round 6 I can produce and sell? Round 6 market comes before action, so I'd have 0 goods at round 6 market unless shuttle returned... it's confiscated. So +2 prices only helps rivals who have 2 goods each. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738074,
+    "id": "202611151821075a4d4ee34bb14fa7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821075a4d4ee34bb14fa7",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 3116,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3321
+    }
+  }
+}

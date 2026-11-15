@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.547,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, покупать по цене 5 невыгодно, жду аукцион лицензии в action-фазе этого раунда.\"}",
+          "reasoning_content": "Round 4 market: goods 0, cash 44.5M. Nothing to sell, could buy? Buying moves counter back, could allow selling later? No, no goods now. Buy goods to sell later? Buy price same ladder; counter is 7 (price ~5). Buy at 5 and sell later at lower — no. Also auction this round bid — that's in action phase. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746679,
+    "id": "202611152044369aae099883bd4d2e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044369aae099883bd4d2e",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 85
+      },
+      "prompt_tokens": 2327,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2454
+    }
+  }
+}

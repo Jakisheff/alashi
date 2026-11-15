@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.788,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, покупка по верхней цене 12 с налогом 20% на будущую продажу убыточна; сохраняю деньги до action-фазы.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 6.6M. Tax 20% active. Pass — can't sell, buying at high ladder prices to resell? Ladder resets: sold_counter=0, prices 12,10,9... buying moves counter back. Buying 1 unit at low counter price ~12? Buy cost? Buying buys at current price presumably 12 — then later sell? Marginal. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739392,
+    "id": "202611151843087a123c35befe466c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843087a123c35befe466c",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2659,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2797
+    }
+  }
+}

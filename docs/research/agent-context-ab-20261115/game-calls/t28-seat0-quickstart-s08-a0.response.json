@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.004,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам обе единицы по максимуму лестницы с бумом (14 за штуку) сразу, пока счётчик продаж нулевой.\"}",
+          "reasoning_content": "Round 3 market, boom +2. Sell 2 units at 12+2=14 each. Sell now before counter moves.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739402,
+    "id": "20261115184320a2d04a7f03e845cb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184320a2d04a7f03e845cb",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 3031,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3104
+    }
+  }
+}

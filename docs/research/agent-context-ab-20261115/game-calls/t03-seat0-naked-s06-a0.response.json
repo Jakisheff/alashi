@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.932,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даст +1 влияния богатейшему (сопернику с 22 alashi), что усилит его в голосовании и бонусе влияния\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest by cash is faction 2 (22M). I'm poorest with 0. Vote no? Weighs: each 1; player2 voted yes. Player1 unknown. Ties... I should vote no to prevent rival getting influence. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737974,
+    "id": "2026111518193101effa839f16430f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518193101effa839f16430f",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 1753,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1864
+    }
+  }
+}

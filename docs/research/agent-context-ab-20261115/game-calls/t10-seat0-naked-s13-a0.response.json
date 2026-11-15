@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.138,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен на -2 вредит моим будущим продажам, а соперникам с товаром — больше; отклоняю.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. Round 4 is last market? Six rounds, markets in rounds 1-6? Actually round 4 market already happened; card 6 affects next market. I'm selling? I have 0 goods. Lower prices hurt rivals (they produce/sell). Vote no. Others voted: index1 voted (unknown direction). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738433,
+    "id": "2026111518270914eafd88fdb44e72",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518270914eafd88fdb44e72",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2435,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2556
+    }
+  }
+}

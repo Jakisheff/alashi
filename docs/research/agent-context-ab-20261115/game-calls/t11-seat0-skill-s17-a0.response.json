@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.931,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"produce бесплатен и даёт 2 товара на продажу в последнем рынке, тогда как пасс теряет фазу.\"}",
+          "reasoning_content": "Round 5 action. Cash 10.6, no goods. Options: donkey (1 alashi → 1 good) to sell next market? Round 6 market exists — buy donkey now gives 1 good, sell round 6. Price ladder reset? Sold counter 0, prices ~12 minus taxes. Donkey costs 1, sells for ~10+ → profitable. Produce gives 2 free goods! produce is free. Yes, produce gives 2 goods, sell next round.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738493,
+    "id": "2026111518280897fb9adb7a8348b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518280897fb9adb7a8348b1",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 3310,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3450
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.241,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам все 3 товара на открытии по высоким ценам лестницы (12/10/9), кредит не нужен — держать товар дольше проигрышно.\"}",
+          "reasoning_content": "I have 3 goods. Sell all 3 now, price ladder 12,10,9 → 31 alashi, tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737784,
+    "id": "20261115181622990365e07d6942a5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181622990365e07d6942a5",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2442,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2521
+    }
+  }
+}

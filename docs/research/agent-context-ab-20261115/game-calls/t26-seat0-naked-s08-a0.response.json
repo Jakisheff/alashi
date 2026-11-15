@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.647,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получаю 3 товара (с субсидией) для продажи на рынке 4 — максимальная доходность.\"}",
+          "reasoning_content": "Action phase round 3. Produce gives 2+1=3 goods free. Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739289,
+    "id": "202611151841276e682db0c4ce4ba5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841276e682db0c4ce4ba5",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1963,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2020
+    }
+  }
+}

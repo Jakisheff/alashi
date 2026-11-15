@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.181,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 5 уже проголосован в мою пользу, вмешательство не нужно.\"}",
+          "reasoning_content": "Law phase again? decision_stage post_vote, law passed... but I must return action. Phase law: options include veto/pass. I'm president; law 5 gives +1 influence to richest, tie-break favorable. Just pass/vote_yes? Already voted. Choose vote_yes again? Safer: pass.\n\nActually protocol demands action in law phase; pass is valid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737965,
+    "id": "202611151819212616f3ec94ba4cdb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819212616f3ec94ba4cdb",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 2011,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2114
+    }
+  }
+}

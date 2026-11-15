@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.375,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"У меня нет непогашенных векселей, а списание векселей конкурентов только усилит их итоговый cash — против.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — I have none pending. So card 8 is neutral/harmless to me. Do others have promissory? I don't track theirs; they likely used sell. Card 8 cancels their promissories would help them. My action was bid, so no +2. Vote no (opponents likely have promissory, cancelling helps them). I already... voted? voted[0]=false. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739167,
+    "id": "20261115183923524b221bb7674eab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183923524b221bb7674eab",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2883,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3020
+    }
+  }
+}

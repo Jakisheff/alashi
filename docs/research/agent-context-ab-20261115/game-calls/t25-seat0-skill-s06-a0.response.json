@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.645,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику с 22 alashi) — это усилит его в голосовании и борьбе за бонус влияния, мне это невыгодно.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is player 2 (22M). I'm not richest. Others vote? Player 2 voted already (true likely yes). If passes, richest gains influence — bad for me. Vote no. But it will pass? Others each weight 1; I vote no → 1 yes vs 1 no, no third? voted [false,false,true] — player 2 voted (yes presumably), player 1 not yet. My no: 1-1, player 1 decides. Vote no anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739234,
+    "id": "202611151840297c89f5360c7c4676",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840297c89f5360c7c4676",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 2248,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2420
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.267,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а списание долгов соперникам (если есть) ухудшает их итог относительно моего — голосую за.\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory. I have none. Do others have promissory? Unknown; sold via sell_credit not visible. Player 1 has lots of cash — maybe has promissory. Voting yes cancels rivals' promissory — good for me relatively. voted: others already voted; I haven't. Vote yes? But my promissory zero, so no downside. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738944,
+    "id": "2026111518353984b6358032534098",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518353984b6358032534098",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      },
+      "prompt_tokens": 2489,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2621
+    }
+  }
+}

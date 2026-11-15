@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.676,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо 3 товара дают больше выручки, чем 2 от produce, риск конфискации компенсируется объёмом.\"}",
+          "reasoning_content": "Round 2 action, cash 0, goods 2. Sell credit earlier gave promissory — I have unrecorded promissory from round 1 (sold 2 units at ~10,9 → ~19*1.25 ≈ 23.75... but state shows cash 0; promissory returns at round boundary). Actually my round 1 sell_credit: 2 units, revenue at prices after sold_counter... they sold 3 already? sold_counter=4. Anyway.\n\nAction now: shuttle gives 3 goods but risk confiscation ~25%; donkey costs 1 alashi (cash 0? cost 1 alashi — I have 0 cash, likely fails). Cash 0, so donkey impossible. Produce gives 2 goods. Shuttle gives 3 goods with confiscation risk on all grey goods? Confiscate at border with ~25% chance — confiscates the goods? Risky. Expected 3*0.75=2.25 vs 2 safe. Slight edge but could lose all. Take shuttle? No tariff protection. 25% chance lose 3 goods vs produce guaranteed 2. Expected value higher with shuttle. But cash 0 and promissory incoming — variance matters little. I'll do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739161,
+    "id": "20261115183913a41a265e497341cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183913a41a265e497341cd",
+    "usage": {
+      "completion_tokens": 307,
+      "completion_tokens_details": {
+        "reasoning_tokens": 264
+      },
+      "prompt_tokens": 1733,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 2040
+    }
+  }
+}

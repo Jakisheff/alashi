@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.377,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего, а покупка только сожжёт песо перед финальными раундами.\"}",
+          "reasoning_content": "Lost bid (20M went to bank). Round 5 market, no goods, cash 13.5. Sell impossible. Buy? Buy moves counter back, costs cash — not useful. Pass is correct (no goods). But rule says never pass in market with goods — I have none. Buy units? Price ~12+shift... buy would just spend cash. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737818,
+    "id": "2026111518165281a89003a5434d5c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518165281a89003a5434d5c",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      },
+      "prompt_tokens": 3140,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3255
+    }
+  }
+}

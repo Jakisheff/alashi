@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.121,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний рынок: продаю все 3 товара сразу по высокой цене, кредит бессмысленен, так как не погасится.\"}",
+          "reasoning_content": "Round 6 final market, sold_counter 0. I have 3 goods, price 12 first. Sell all 3 — plain sell (credit won't be repaid after last round).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738724,
+    "id": "20261115183200df591fb3c0fa41af",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183200df591fb3c0fa41af",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 3995,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4077
+    }
+  }
+}

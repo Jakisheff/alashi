@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.497,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар больше не продать; пропуск даёт +2 к весу голоса в law, что важнее бесполезного товара.\"}",
+          "reasoning_content": "Round 6 action, cash 12.65, no goods, no license income apparently lost bid. Options: produce gives 2 goods but market already passed—no more selling. Donkey/shuttle pointless. Law phase after: skipping action gives +2 vote weight—valuable for the influence bonus and law card. Pass to gain +2 vote weight.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738459,
+    "id": "202611151827353389f87186124409",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827353389f87186124409",
+    "usage": {
+      "completion_tokens": 118,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3955,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4073
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.766,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон +2 к ценам увеличил бы выручку моих будущих продаж.\"}",
+          "reasoning_content": "Law card 7: +2 prices next market — good for me, I sell. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739135,
+    "id": "202611151838536b75486154a44911",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838536b75486154a44911",
+    "usage": {
+      "completion_tokens": 49,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 2794,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2843
+    }
+  }
+}

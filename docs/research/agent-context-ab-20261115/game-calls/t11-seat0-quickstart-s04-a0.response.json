@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.499,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит избегает девальвации cash (62%) и даёт множитель 1.25, а промиссори вернётся целиком на следующей границе.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, cash 0, no promissory. Sell via credit? Revenue 2 units at price ladder: sold_counter=2, prices continue: next price 9, then 8 → 17 *1.25 = 21.25 alashi promissory, returned at next round boundary then devalued floor(cash/100)*62? Actually cash devaluation: cash=floor(cash/100)*62 — massive 62% haircut. Promissory added after devaluation and not devalued itself. So sell_credit is better than sell (cash would be devalued). Sell for cash: 17 alashi cash, then devalued to floor(17/... wait cash in units? floor(cash/100)*62 — that's bizarre; cash in minimal units: 17000000 → floor(17000000/100)*62 = 170000*62=10540000 (62%). So credit gives 21.25M promissory returned fully. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738449,
+    "id": "20261115182721915738a3c150490c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182721915738a3c150490c",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 2672,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2952
+    }
+  }
+}

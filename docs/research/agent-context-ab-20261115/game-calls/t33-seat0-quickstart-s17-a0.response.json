@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.299,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Кэш далеко от порога девальвации, а 3 товара на последнем рынке по высоким ценам (12+10+9) дают ~31 alashi, что оправдывает ~25% риск конфискации.\"}",
+          "reasoning_content": "Round 5 action. Cash 17, goods 0. Shuttle: 3 goods, next market can sell. Cash is 17M; next market sell 3 at ~12,10,9 = 31 revenue. Shuttle risk 25% confiscation — but no border benefit here. Alternatively produce 2. Shuttle EV better. Note round 6 devaluation: cash 17M → floor(17/100)*62... 17M = 17 alashi → floor 0.17? Actually units in millions; 1000000 = 1 alashi, 100 alashi threshold. Cash 17M → 17 alashi, floor(17/100)=0 → no devaluation. Sell next round: prices high (sold_counter 0). Shuttle gives 3 goods worth ~31 alashi minus risk. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746664,
+    "id": "20261115204419f48c5973c4b54473",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204419f48c5973c4b54473",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 3857,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 4093
+    }
+  }
+}

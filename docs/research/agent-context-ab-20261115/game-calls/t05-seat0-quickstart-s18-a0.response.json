@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок без налога, счётчик 0 — продаю оба товара по максимальным ценам; sell_credit в последнем раунде не погашается.\"}",
+          "reasoning_content": "Round 6 final market, sold_counter 0, no tax, no shift. Sell 2 units. Should I use sell_credit? No—promissory after last round not redeemed. Sell cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738176,
+    "id": "20261115182253d892c2f4e97f4a73",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182253d892c2f4e97f4a73",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 3973,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4068
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.72,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему (фракция 2): даже при тайке со мной по влиянию преимущество по кэшу у меня, но безопаснее сохранить отрыв и не усиливать соперника.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest — poorest is faction 2 (26.3). That gives them more influence; influence affects 5% bonus share? Final: max influence gets extra 5% of bank. My influence 2, others 1. If card passes, poorest gets 2, still tie with... my influence 2. Tie broken by cash — I win anyway. But it also could affect? Actually passing gives +1 influence to faction 2, tying with me at 2; tie broken by cash+hard — I have most cash. So no harm. Vote yes or no? No harm either way; but avoid risk—vote_no is safe. Passing doesn't threaten me. Simplest: vote_no to keep influence edge safe. Either fine. I'll vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738683,
+    "id": "202611151831168dfec9c2f71940ab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831168dfec9c2f71940ab",
+    "usage": {
+      "completion_tokens": 229,
+      "completion_tokens_details": {
+        "reasoning_tokens": 166
+      },
+      "prompt_tokens": 3844,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 4073
+    }
+  }
+}

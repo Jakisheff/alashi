@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.083,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, дальнейших действий в фазе law нет.\"}",
+          "reasoning_content": "Law post_vote, decision made. Phase law, we already voted? voted all true, post_vote — actions now likely pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738643,
+    "id": "2026111518304135313f608d4b4f07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518304135313f608d4b4f07",
+    "usage": {
+      "completion_tokens": 52,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2587,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2639
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.999,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Аукцион лицензии — ключ партии; ставка ~45% моей кассы (15 из 33 alashi) перекрывает вероятные ставки соперников при сохранении резерва.\"}",
+          "reasoning_content": "Round 4 action: bid. Cash 33.17M ≈ 33 alashi. Bid 40-60% ≈ 13-20 alashi. Bid 15000000? Must be multiple of... bribe multiple of 5M, bid maybe any amount in alashi units? amount in minimal units. Bid 15000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746695,
+    "id": "202611152044527cacdfc5c248467c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044527cacdfc5c248467c",
+    "usage": {
+      "completion_tokens": 132,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 2842,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2974
+    }
+  }
+}

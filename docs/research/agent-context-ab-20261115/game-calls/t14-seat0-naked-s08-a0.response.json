@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.863,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа обходит грядущую девальвацию 38% и даёт множитель 1.25 к выручке.\"}",
+          "reasoning_content": "Sell 2 units now. Price ~10 each. Cash doesn't devalue this round? Devaluation at round boundaries 2+ — boundary before round 3 already happened (my 21.25m from promissory). Next boundary before round 4. Selling for cash now would lose 38% at next boundary. Sell credit gives 1.25x, so better. Sell 2 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738596,
+    "id": "20261115182951af9391672e764be2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182951af9391672e764be2",
+    "usage": {
+      "completion_tokens": 131,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1911,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2042
+    }
+  }
+}

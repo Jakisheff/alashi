@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.347,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"post_vote: голосование завершено, вето не требуется, доступен только pass.\"}",
+          "reasoning_content": "Post_vote, president, veto_pending false, law decided. Only pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738694,
+    "id": "202611151831283556a274cd3646c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831283556a274cd3646c7",
+    "usage": {
+      "completion_tokens": 43,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 4484,
+      "prompt_tokens_details": {
+        "cached_tokens": 4160
+      },
+      "total_tokens": 4527
+    }
+  }
+}

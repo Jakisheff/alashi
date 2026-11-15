@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.212,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лестница обнулена, продаю все 3 товара по максимальной цене 12.\"}",
+          "reasoning_content": "Sell 3 at round 3, prices start at 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738660,
+    "id": "20261115183059c5674e6fffa94b28",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183059c5674e6fffa94b28",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 2998,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3048
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.543,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"С субсидией получаю 3 товара для продажи на последнем рынке раунда 6 — прямой прирост итоговой выплаты.\"}",
+          "reasoning_content": "Round 5 action: subsidy 1, produce gives 3 goods. Then sell in round 6 market (last round — sell, not credit). Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738281,
+    "id": "20261115182438da9813d2ddbb49ad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182438da9813d2ddbb49ad",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 3846,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3917
+    }
+  }
+}

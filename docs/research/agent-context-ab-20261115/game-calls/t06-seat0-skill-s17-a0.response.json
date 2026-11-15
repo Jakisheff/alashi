@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатный produce даёт 2 товара для продажи на последнем рынке раунда 6, кэш сохраняю.\"}",
+          "reasoning_content": "Round 5 action. Cash ~10.5, no goods. Options: produce (free, 2 goods for R6 market? selling R6 works — 6 rounds total, last round market R6). Yes, produce gives 2 goods to sell in R6. Or donkey. Produce is free and gives 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738239,
+    "id": "202611151823556d45f95eb96e417e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823556d45f95eb96e417e",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 69
+      },
+      "prompt_tokens": 3387,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3494
+    }
+  }
+}

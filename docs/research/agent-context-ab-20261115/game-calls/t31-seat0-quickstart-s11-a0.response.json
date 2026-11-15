@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.954,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 7 (цены +2) прошла и выгодна мне с 3 товарами — накладывать вето не нужно.\"}",
+          "reasoning_content": "Card 7 passed (all voted yes presumably). Post_vote, no veto pending, president. Options: veto? Card 7 benefits me (+2 prices) and I have 3 goods. No action needed. But post_vote phase allows veto/pass. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739599,
+    "id": "202611151846360241ea99f3c64a61",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846360241ea99f3c64a61",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3348,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3440
+    }
+  }
+}

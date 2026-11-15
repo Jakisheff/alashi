@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.461,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Ставка 20 млн, вероятно, перебьёт соперников (у них ~46 и ~33 млн); доход лицензии 20–60 alashi сверх доли покрывает ставку, а уплата в банк ещё и снижает потери от девальвации.\"}",
+          "reasoning_content": "I have 4 goods, bought 10 → sold_counter 10 now. Round 4 action: bid auction for license. I have 50.7 cash. Bidding could win license income 20-60. Others have ~46 and ~33. Bid maybe 15-20 to win. Losers returned; winner pays to bank but gets license income. Note cash devaluation at round borders: cash floor/100*62 at end of round 4+... Actually devaluation applies rounds 2+, so end of round 4 too. License income paid at end, extra beyond share.\n\nIf I don't bid, someone else wins. Bidding amounts: opponents each have ~46M and ~33M. Bid 20M to beat likely rivals. Paying 20 to bank reduces my devaluation loss too (less cash to devalue). License income 20-60 plus super-share payment. Expected value positive. Bid 20.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738726,
+    "id": "20261115183158a5340243c2234576",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183158a5340243c2234576",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 2475,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2745
+    }
+  }
+}

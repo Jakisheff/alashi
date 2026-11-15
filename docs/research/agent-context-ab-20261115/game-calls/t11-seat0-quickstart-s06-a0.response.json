@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.408,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Налог 20% сильно режет мою будущую выручку, а после прохождения я всё еще могу наложить вето как президент.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm president. Tax applies to market revenue — hurts me. But veto? Vote no first. Others' influence 1, vote weight 1 each, if they vote yes, yes=2 > no=1, passes. I could veto. Tax 20% on revenue reduces my income; veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738458,
+    "id": "20261115182735c5c3bf6f12384b25",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182735c5c3bf6f12384b25",
+    "usage": {
+      "completion_tokens": 115,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 2870,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2985
+    }
+  }
+}

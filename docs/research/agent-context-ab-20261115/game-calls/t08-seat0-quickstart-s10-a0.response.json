@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.282,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% урежет выручку моего рынка в раунде 4, где я буду продавать больше всех товара.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Applies to next market. We plan to sell goods in round 4 market; tax 10% hurts. Vote no. Opponents may vote yes to hurt us. President is player 2 (influence 2). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738324,
+    "id": "20261115182521d55dbd9c8dd74c5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182521d55dbd9c8dd74c5a",
+    "usage": {
+      "completion_tokens": 97,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3241,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3338
+    }
+  }
+}

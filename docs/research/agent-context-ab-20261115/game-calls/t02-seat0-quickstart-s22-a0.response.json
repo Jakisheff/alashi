@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.955,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% невыгоден и рынок уже закрыт, но на всякий случай голосую против; при необходимости наложу veto.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Applies to next market? Round 6 market is done. Tax is active tax_bps... likely applies to future market revenue; market is over, so it may not matter. I'm richest? cash: 43.9M vs my 39.4M — faction 1 richest. Tax on sales — no future sales. Vote no anyway, or veto if passes. Tax 20% would apply... likely to next market; no market remains. But safer to vote no. If it passes I'm president and can veto in post_vote. Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738083,
+    "id": "202611151821132a3dbfe994ab4577",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821132a3dbfe994ab4577",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      },
+      "prompt_tokens": 4442,
+      "prompt_tokens_details": {
+        "cached_tokens": 4160
+      },
+      "total_tokens": 4608
+    }
+  }
+}

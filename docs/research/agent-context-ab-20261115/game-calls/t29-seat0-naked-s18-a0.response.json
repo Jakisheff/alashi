@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.016,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Субсидия симметрично даёт всем +1 товар и мало влияет на мой ранг, тратить голос и рисковать не стоит\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1, gives +1 goods per produce/shuttle. I already produced this round (goods=2). Card 3 benefits everyone equally — but I have max influence, president. Passing it gives everyone +1 goods next round production; opponents have cash to shuttle. It's symmetric... I have 2 goods already, opponents have 2 goods each too. Round 6 produce would give extra goods to sell. Prices are -2 shifted, ladder 12→ min 1... price_shift -2 makes top price 10. Everyone selling 3 units each at 10,9,8... Symmetric effect; voting doesn't matter much for rank. Just abstain/pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739535,
+    "id": "20261115184529bc9ba8cd9af94636",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184529bc9ba8cd9af94636",
+    "usage": {
+      "completion_tokens": 189,
+      "completion_tokens_details": {
+        "reasoning_tokens": 146
+      },
+      "prompt_tokens": 2933,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3122
+    }
+  }
+}

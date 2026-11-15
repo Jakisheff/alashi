@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.026,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит 3 товаров по (6+5+4)×1.25 обходит девальвацию cash на границе раунда.\"}",
+          "reasoning_content": "Law card 3 passed (subsidy_goods=1). Post_vote action options: I can do market-like actions? Post_vote allows sell/sell_credit apparently. I have 3 goods, sold_counter=7, boom=2. Prices: index 7 → price 4? ladder [12,10,9,8,7,6,5,4,...] at counter 7 → 4, +2 boom = 6. Sell credit 3 units: (6+5+4)×1.25 = 18.75 alashi promissory returned at boundary after round 3 → rounds 4+ remain, so it will be paid. Cash 10.54 not subject to devaluation? Boundary of round 3→4: cash floor(10.54/1... floor(cash/100)*62 — devaluation applies! Wait \"cash=floor(cash/100)*62\" — units. 10540000 → floor(10540000/100)=105400*62=6534800? Hmm devaluation at rounds 2+. So selling cash would devalue too. Promissory avoids that. Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738251,
+    "id": "20261115182404d81ea2b58a88439a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182404d81ea2b58a88439a",
+    "usage": {
+      "completion_tokens": 296,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 3438,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3734
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 17.726,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница сброшена (sold_counter=0), цены 12 и 10 alashi — продаю весь товар на пике.\"}",
+          "reasoning_content": "Round 3 market, sold_counter=0, prices 12,10 high. I have 2 goods. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739254,
+    "id": "20261115184037d54c9b0d9fc04ce1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184037d54c9b0d9fc04ce1",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 3051,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3120
+    }
+  }
+}

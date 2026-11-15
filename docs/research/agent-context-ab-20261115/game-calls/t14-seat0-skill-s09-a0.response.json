@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.226,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатный шаттл даёт 3+ товара (EV 2.25 против 2 у produce), сохраняя кассу для ставки в раунде 4.\"}",
+          "reasoning_content": "Action phase round 3, cash 44.64, no goods. Options: shuttle (free, 3 goods with confiscation risk ~25%, but I have no preferential border... shuttle gives 3 goods, confiscation ~25%). I need cash for round 4 bid (40-60% of pesos). Shuttle free is good. Produce gives 2 without risk. Shuttle EV: 3*0.75=2.25 vs produce 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738623,
+    "id": "202611151830191528421f51f7420c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830191528421f51f7420c",
+    "usage": {
+      "completion_tokens": 149,
+      "completion_tokens_details": {
+        "reasoning_tokens": 99
+      },
+      "prompt_tokens": 2549,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2698
+    }
+  }
+}

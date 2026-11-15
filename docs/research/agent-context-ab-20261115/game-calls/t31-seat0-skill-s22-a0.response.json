@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.581,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 2 (налог 20%) мне невыгодна в принципе, а моих продаж больше не будет — голосую против.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I sold already, but tax on next market — no next market. But card 2... tax applies to market sales; there's no market left. Still, safer to vote no? Tax applies retroactively? active_tax_bps applies at sale time. No more sales. Irrelevant. But opponents might sell goods (goods [0,2,0]? I'm idx 0 with 0 goods, opponent has 2 goods but already passed market... actually goods 2 at faction idx1, market done). Card 2 harms no one further. I skipped action so my weight is 3, president is idx2 (influence 2). Vote — I could vote yes to tax rivals? No further sales. Neutral; vote no to harm nothing. Either fine. Vote yes to maintain anti-tax? Irrelevant. I'll vote no (tax bad generally, and I'm not president to veto).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739646,
+    "id": "20261115184720016b9a646c804c03",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184720016b9a646c804c03",
+    "usage": {
+      "completion_tokens": 233,
+      "completion_tokens_details": {
+        "reasoning_tokens": 194
+      },
+      "prompt_tokens": 3786,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 4019
+    }
+  }
+}

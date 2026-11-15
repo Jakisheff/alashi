@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.898,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Продажи уже сделаны, товары в этом раунде больше не продаются, а взятка лишь снизит мой cash и отдалит сопернику, ухудшив ранг и итоговую долю\"}",
+          "reasoning_content": "Round 6 action, no money advantage... bid not available (only round 4). Best: produce gives 2 goods but no market left to sell (round 6 market passed). Selling already done; no further market. So goods useless. Bribe for influence? Influence bonus gives 5% of bank share. Bank cash pool ~94M; 5% ≈ 4.7M split? Actually 5% of bank goes to max influence. Bribe 10M to get 2 influence could win the 5% bonus? All influence 1; bribing gives influence floor(amount/5M). Bribe 5M → 2 influence, receive bribed money goes to rival though — reduces my cash. Bonus 5% of bank (~4.7M?) — bank is total cash? Commission 5% of bank; bank likely sum of cash ~94M, 5% ≈ 4.7M to top influence. Bribe 5M gives rival 5M cash, and I get +2 influence → I'd have 2 vs their 1, winning 4.7M bonus but lost 5M bribe, and gave rival 5M worsening my relative rank (rank determines 50/30/15 shares — huge). Currently I'm richest (37M vs 30M). Rank matters most; bribing reduces my cash and increases rival's. Skip. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739184,
+    "id": "202611151839356d7926512a4d413a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151839356d7926512a4d413a",
+    "usage": {
+      "completion_tokens": 348,
+      "completion_tokens_details": {
+        "reasoning_tokens": 296
+      },
+      "prompt_tokens": 2910,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3258
+    }
+  }
+}

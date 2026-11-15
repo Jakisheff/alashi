@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.792,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товаров и рынок со счётчиком 0 ничего не даст; экономлю ход.\"}",
+          "reasoning_content": "Round 5 market, no goods, bid outcome — I bid 25M but cash shows 25.9M... apparently lost or refunded? Cash 25.97M. Anyway, no goods: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739668,
+    "id": "20261115184744296b2cf3491f42c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184744296b2cf3491f42c8",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 3762,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3834
+    }
+  }
+}

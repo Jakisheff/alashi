@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.404,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 20% уже не действует ни на один будущий рынок (рынков больше нет), исход мне безразличен — экономлю вес.\"}",
+          "reasoning_content": "Law card 2: tax 20%. That hurts future sales — no more market. Tax applies to market revenue; round 6 market already done. Actually tax would apply to future markets — none. Irrelevant, but president is idx1 (influence 2)? I'm not president. Vote weight [3,2,1] — I have 3 (abstained? no, weight mode... I have 3). Card 2 has no effect on remaining game; vote yes/no doesn't matter. Abstain — but wait, tax active_bps applies now; no more markets, so harmless. Abstain to keep... weight already computed. Just abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739137,
+    "id": "202611151838513e2128d21bd94fac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838513e2128d21bd94fac",
+    "usage": {
+      "completion_tokens": 186,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 4510,
+      "prompt_tokens_details": {
+        "cached_tokens": 4224
+      },
+      "total_tokens": 4696
+    }
+  }
+}

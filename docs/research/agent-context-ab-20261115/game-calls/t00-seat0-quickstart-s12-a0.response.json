@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.074,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"С учётом boom +2 цены составят ~4/4/3 alashi за единицу — продаю все 3 товара.\"}",
+          "reasoning_content": "Round 4 market, boom +2. Sold counter 7, so ladder prices from index 7: 2,2,1,1,1... plus boom 2 → 4,4,3. Sell 3 units: 4+4+3=11.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737803,
+    "id": "202611151816409b4bd2772af9492e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816409b4bd2772af9492e",
+    "usage": {
+      "completion_tokens": 102,
+      "completion_tokens_details": {
+        "reasoning_tokens": 59
+      },
+      "prompt_tokens": 3437,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3539
+    }
+  }
+}

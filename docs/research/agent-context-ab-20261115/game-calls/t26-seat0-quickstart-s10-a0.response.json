@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.023,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 единицы по текущим ценам лестницы (5/4/3), дальше цены только падают.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=6, prices at index 6: 5? Ladder [12,10,9,8,7,6,5,...] — counter 6 means next units cost 5,4,3... Sell 3 units gets 5,4,3=12 alashi. Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739282,
+    "id": "20261115184118d118e2cc87964265",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184118d118e2cc87964265",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      },
+      "prompt_tokens": 3216,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3330
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.945,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продажа 3 единиц по высокой цене (~8) даёт наличные для аукциона лицензии в этом же раунде, кредит уже начислен с прошлого раунда\"}",
+          "reasoning_content": "Round 4 market, I have 3 goods, price ladder at sold_counter=4 → price 8. Sell now for cash (need cash for auction bid later). Also promissory? I sold credit in r3, returns this boundary. Sell all 3 for cash to fund bid. Price 8*3=24, minus tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738746,
+    "id": "20261115183223dccfd5f952264f50",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183223dccfd5f952264f50",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 3386,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3513
+    }
+  }
+}

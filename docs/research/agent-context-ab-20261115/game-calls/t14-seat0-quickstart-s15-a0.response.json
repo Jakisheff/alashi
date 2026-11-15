@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.673,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"post_vote: закон уже решён, доступен только pass.\"}",
+          "reasoning_content": "Post_vote, president, card 1 tax 10% — I voted yes. voted all true; likely passed or not; veto_pending false. Only pass anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738641,
+    "id": "20261115183038cbdd9c95ca064a76",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183038cbdd9c95ca064a76",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 3737,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3794
+    }
+  }
+}

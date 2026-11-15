@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.228,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара сразу по высокой цене; выручка нужна наличными для ставки на лицензию в этом же раунде.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods, cash 22.65M. Sell now at ladder: sold_counter=2, prices next 9,8 (with no boom). Then bid later. Sell 2 units.\n\nSell or sell_credit? Not last round, credit gives 1.25x and returns next round boundary (round 5). But cash needed for bid in round 4 action — credit proceeds not available. So plain sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738875,
+    "id": "202611151834300eb9f0a030374a7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834300eb9f0a030374a7a",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2733,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2869
+    }
+  }
+}

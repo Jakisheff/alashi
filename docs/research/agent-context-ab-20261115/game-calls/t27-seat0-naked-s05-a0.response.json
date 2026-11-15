@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.5,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Денег на donkey нет, produce бесплатно даёт ещё 2 товара для продажи в кредит\"}",
+          "reasoning_content": "Round 2 action. I have promissory from selling 2 units at price... sold_counter=6, sold 2 units at prices ~7? Wait I sold first? sold_counter=6 means others sold 6? Actually price ladder: I sold 2 at prices 7,6? Anyway promissory ~16*1.25=20 alashi incoming next round boundary.\n\nCash 0. Action options: produce (2 goods), donkey (need 1 alashi cash, but cash=0? I have 0 cash). So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739331,
+    "id": "20261115184206ab350b3a98b447c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184206ab350b3a98b447c0",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 1671,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1818
+    }
+  }
+}

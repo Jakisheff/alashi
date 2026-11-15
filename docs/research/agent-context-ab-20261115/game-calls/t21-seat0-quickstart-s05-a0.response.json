@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.417,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет денег на взятки и товар для шаттла — бесплатный produce даёт 2 товара под будущие продажи.\"}",
+          "reasoning_content": "Phase action, round 2. I have 2 goods, no cash, promissory from selling 2 credits at 27.5? Wait, my history: round 1 post_vote I \"sold_credit 2\" — but I had 2 goods, sold both as credit: revenue 22*1.25=27.5 promissory. Then round 2 market seen shows I had 2 goods again? State shows goods [0,0,2] — my_idx=0, so I have 0 goods, 0 cash, promissory 27.5. Others: cash 13M and 22M.\n\nAction phase: no cash, no goods. Options: produce (free, +2 goods). Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739029,
+    "id": "2026111518370574cf3c3da0b04bca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518370574cf3c3da0b04bca",
+    "usage": {
+      "completion_tokens": 193,
+      "completion_tokens_details": {
+        "reasoning_tokens": 157
+      },
+      "prompt_tokens": 2825,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3018
+    }
+  }
+}

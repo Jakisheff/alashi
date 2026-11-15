@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.106,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка на +2 — выгодно мне как будущему продавцу.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market — good for me if I have goods. I'll produce? Round 5 action I can produce and sell with +2. Vote yes. Already voted? voted[0]=false, so I vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737805,
+    "id": "20261115181643a327d60ddba2474f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181643a327d60ddba2474f",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 3602,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3689
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.613,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% уменьшит мою будущую выручку от продаж — против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have promissory outstanding? Yes, sold 2 units credit round 1 post_vote (~27.5 promissory) and round 2 sell_credit 2 units — wait, round 2 market I sold 2 units credit, so promissory ~ that. Tax affects market revenue; I plan to sell future goods, tax 10% reduces my revenue — vote no. Rival already voted (voted[2]=true, likely yes). I have weight 1; 2 opponents could outvote. Vote no anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739035,
+    "id": "202611151837103a439336a05a47b1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837103a439336a05a47b1",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 121
+      },
+      "prompt_tokens": 2910,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3064
+    }
+  }
+}

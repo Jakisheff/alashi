@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.153,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатный шаттл даёт 3 товара; ожидаемая ценность даже с риском конфискации заметно выше осла за 1 alashi.\"}",
+          "reasoning_content": "I have 21.25 cash, no goods. Buy donkey? Donkey costs 1 alashi, gives 1 good. Round 3 of 6. Could shuttle: gives 3 goods, possible confiscation ~25%. Cash value: goods sell at price ~ remaining counter 4 sold, so ladder price index 5th = 6? sold_counter=4, next units price 6,5,4,3,3... Selling 3 goods gives ~14 alashi minus tax. Shuttle free, expected ~0.75*3 goods = 2.25 goods ≈ ~12 alashi. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738730,
+    "id": "20261115183206bca9623c8a9d4b5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183206bca9623c8a9d4b5a",
+    "usage": {
+      "completion_tokens": 179,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 1923,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2102
+    }
+  }
+}

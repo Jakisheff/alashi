@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.893,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион только в этом раунде: лицензия приносит 20–60 alashi сверх доли, а ставка проигравшего возвращается, поэтому ставка 25 alashi имеет положительное ожидание (а уплаченные деньги всё равно девальвировали бы на 62%).\"}",
+          "reasoning_content": "Round 4 action: bid available? Bid only in round 4 action. License income 20-60, likely worth bidding. Cash ~22.65. Bid must be reasonable; rivals also may bid. License payout 20-60 alashi. Bid e.g. 15? Winner pays bid from cash (which devalues 62% at boundary — but bid goes to bank now, so paying pre-devaluation alashi is costly... actually paying 15 now costs 15*0.62=9.3 in next-round value). Others similar. Bid 20 alashi? Expected value: license 20-60, mean 40, plus super share. Bid 20 seems safe. But if lose, refunded. So bid high-ish? Risk: paying more than license income. Bid 25.\n\nNote bid amount units in millions minimum? amount in minimal units, multiple of 5,000,000? That's bribe rule. Bid 25000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739172,
+    "id": "20261115183925b8cf0af3cd3a49a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183925b8cf0af3cd3a49a8",
+    "usage": {
+      "completion_tokens": 277,
+      "completion_tokens_details": {
+        "reasoning_tokens": 201
+      },
+      "prompt_tokens": 3365,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3642
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.718,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Закон о субсидии даёт +1 товар к производству, выгодно мне.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — good for me. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739552,
+    "id": "20261115184550f020f37ce27b40d2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184550f020f37ce27b40d2",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 16
+      },
+      "prompt_tokens": 1437,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1483
+    }
+  }
+}

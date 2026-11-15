@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.098,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Крупный cash сильно потеряет при девальвации границы раунда 4, поэтому конвертирую его потенциал в 3 товара через shuttle (риск 25% конфискации приемлем при бесплатных товарах).\"}",
+          "reasoning_content": "I'm idx 0, cash 40.3M, no goods. Round 3 action. Options: shuttle (3 goods, ~25% confiscation), donkey (1 good for 1), produce (2 goods), bribe. Devaluation: round 4 border floors cash to floor/100*62 → keeping cash is bad. So spend cash now: shuttle is best even with risk (spend 1? shuttle costs? shuttle seems free). Buy goods via market not available in action. Shuttle gives 3 goods free with confiscation risk 25% — expected value good. But border crossing? Confiscation ~25%. Still do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739697,
+    "id": "202611151848116743048aae3f42b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151848116743048aae3f42b7",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 2039,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2238
+    }
+  }
+}

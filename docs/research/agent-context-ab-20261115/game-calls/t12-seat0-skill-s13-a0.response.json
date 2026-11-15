@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.269,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка по цене 12 для продажи позже по падающей лестнице убыточна — сохраняю 8.4M для следующего action.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 8.4M. Bid likely lost. Sell credit? No goods. Buy? Buying goods at ladder opening price 12 — sell later at lower price, unprofitable. Pass. But rule says never pass in market with goods; no goods here. Buying: buy at price? buy moves counter back, cost = price at counter 0 =12, sell later lower — loss. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738539,
+    "id": "20261115182854fc6a44580c4d4b27",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182854fc6a44580c4d4b27",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      },
+      "prompt_tokens": 2963,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3102
+    }
+  }
+}

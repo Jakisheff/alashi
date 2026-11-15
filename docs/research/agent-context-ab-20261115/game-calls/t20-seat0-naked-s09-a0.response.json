@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.141,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":25000000,\"reason\":\"25M взятка даёт +5 влияния: пост президента, контроль законов и бонус максимального влияния в итоге, что окупается больше, чем пара товаров.\"}",
+          "reasoning_content": "Cash 26M. Bribe 25M → 5 influence, gives me presidency and max influence bonus. But leaves me 1M. Influence matters for vote weight and final 5% bonus. Alternative: donkey/shuttle. Shuttle costs? Probably costs cash ~? Not specified clearly—likely costs some alashi. Donkey costs 1 alashi, gives 1 good. With cash 26, buy donkeys? Only one action per round. Options: bribe for influence (25M for 5 influence) — strong long-term: presidency, vote weight, final bonus. Others may also bribe though. I'll bribe 25M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738925,
+    "id": "2026111518351908c7ec2d12fc4d83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518351908c7ec2d12fc4d83",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      },
+      "prompt_tokens": 2010,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2207
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.493,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю обе единицы по 7 и 6 alashi, пока налога нет; кэш девальвирует, так что лучше монетизировать сейчас.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods, sold_counter=4. Prices start at index 4 → 7,6. Sell both ~13 alashi before tax 0. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738801,
+    "id": "20261115183314339c07c48aa7452f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183314339c07c48aa7452f",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 3299,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3392
+    }
+  }
+}

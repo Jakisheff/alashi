@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.786,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Субсидия даёт 3 товара бесплатно на продажу в последнем раунде; donkey/shuttle хуже по EV.\"}",
+          "reasoning_content": "Round 5 action, subsidy=1 so produce gives 3 goods. Competitor idx2 has 3 goods. Shuttle risky. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738024,
+    "id": "20261115182022a20474e90c054a39",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182022a20474e90c054a39",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 29
+      },
+      "prompt_tokens": 3220,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3286
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.998,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 товара по текущей высокой цене ~9 alashi, пока рынок не упал.\"}",
+          "reasoning_content": "Round 2 market. Price ladder at sold_counter=2 means next price index 9? Ladder [12,10,9,8,7,6,5,4,3,3,...], counter 2 means next sells at index 2 → 9 alashi. I have 2 goods. Sell now for ~9 each. Others also have goods; sell first? Order unclear, but sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739590,
+    "id": "202611151846274c0bcffae66048b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846274c0bcffae66048b7",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 88
+      },
+      "prompt_tokens": 1584,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1707
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.843,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% режет мою будущую выручку от продаж; если пройдёт — наложу вето как президент.\"}",
+          "reasoning_content": "Card 1: tax 10%. Tax applies to sales revenue — I plan to sell. Opponent 3 voted yes already. As president, I could veto if it passes. Tax hurts me; vote no, veto if needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739462,
+    "id": "20261115184420c62bf18056c14826",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184420c62bf18056c14826",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 2864,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2953
+    }
+  }
+}

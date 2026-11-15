@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.887,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок: продаю оба товара по топовой цене 12 до падения лестницы\"}",
+          "reasoning_content": "Final market. Prices start 12. I sell 2 first (sold_counter=0). Sell now — tax 0. Cash small; sell units 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739294,
+    "id": "20261115184130b4590fd953df4c8c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184130b4590fd953df4c8c",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 34
+      },
+      "prompt_tokens": 2783,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2852
+    }
+  }
+}

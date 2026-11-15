@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.004,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено и вето не требуется — хожу пассом, ожидая раунд 4 с лицензией.\"}",
+          "reasoning_content": "Voting done, card 4 result unknown; veto not pending. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737796,
+    "id": "2026111518163414c5f7b51b07410b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518163414c5f7b51b07410b",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 2739,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2794
+    }
+  }
+}

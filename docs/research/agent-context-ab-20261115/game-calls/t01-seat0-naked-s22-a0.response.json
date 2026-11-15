@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.519,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 3 (субсидия товара) уже ни на что не влияет — оставшиеся фазы финального раунда не используют товары.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — irrelevant now (market done, action phase over). Law phase; vote anything; abstain saves nothing really. Pass or abstain. Vote yes doesn't matter; outcome doesn't affect. But if law passes, subsidy_goods=1—no effect since no more produce? Action phase round 6 done. So no effect. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737863,
+    "id": "20261115181738c1921a77bfa74566",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181738c1921a77bfa74566",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 79
+      },
+      "prompt_tokens": 3286,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3411
+    }
+  }
+}

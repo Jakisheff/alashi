@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.358,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику), что ослабляет мой контроль и бонус влияния; при прохождении наложу вето как президент.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest — that's me (cash 10.6 vs 23.3...). Actually richest is faction 1. So vote no? Bonus max influence gives +5% bank share. Faction 1 getting +1 influence hurts me. Vote no. Opponent already voted yes probably. I have 3 votes (1+2) if... my action was produce, so weight 1. Two others weight 1 each; voted[2]=true. If both vote yes, 2-1 passes. I'm president — can veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738498,
+    "id": "202611151828136f250aae015d498c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828136f250aae015d498c",
+    "usage": {
+      "completion_tokens": 173,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 3400,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3573
+    }
+  }
+}

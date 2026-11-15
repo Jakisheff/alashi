@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.509,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Касса мала для bribes, shuttle даёт 3 товара: даже с риском 25% конфискации EV ~27 alashi против 24 от produce.\"}",
+          "reasoning_content": "Round 5 action, cash 9.4M, goods 0. Best: shuttle gives 3 goods (25% confiscation risk) → sell next round. Produce gives 2 free goods. Produce is safe, shuttle gives 3 but risk. Expected: produce 2 goods at price ~ (sold_counter 0? sold_counter reset per round? prices start at 12) → 2×12=24 alashi vs shuttle 3×12=36 minus 25% risk. Cash 9.4M covers donkey too? Shuttle better EV: 36×0.75=27 > 24. But wait, opponents may sell first... Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738848,
+    "id": "20261115183403d3d80e5d73df4937",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183403d3d80e5d73df4937",
+    "usage": {
+      "completion_tokens": 190,
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      },
+      "prompt_tokens": 3223,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3413
+    }
+  }
+}

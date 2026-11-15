@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.549,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, в post_vote нет осмысленных действий\"}",
+          "reasoning_content": "Round 2 law post_vote, card 5 voted down likely (my no, others?). voted all true. Action: pass is safe in post_vote? Allowed actions: vote_yes/no/abstain/veto/pass. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739236,
+    "id": "202611151840338bc66f5138204514",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840338bc66f5138204514",
+    "usage": {
+      "completion_tokens": 73,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 1870,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1943
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.948,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены ещё высокие (9 и 8 alashi), продаю до возможного падения и девальвации.\"}",
+          "reasoning_content": "I'm player 0 with 2 goods, sold_counter=2, prices: [12,10,9,8,...] next price is 9. Others have 2 goods each. Sell now at 9 (and 8). Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738294,
+    "id": "20261115182451924f5f3a8ca44b2f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182451924f5f3a8ca44b2f",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 2694,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2786
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.288,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт мне субсидию +1 товар к производству в раунде 6 — прямая выгода без побочных эффектов.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1, benefits all equally. Vote yes—free goods for me too. All produce anyway. Vote yes is neutral-positive.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739086,
+    "id": "20261115183804129a8dbac5b6450e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183804129a8dbac5b6450e",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 2887,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2964
+    }
+  }
+}

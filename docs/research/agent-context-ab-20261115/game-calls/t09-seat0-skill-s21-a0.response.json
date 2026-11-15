@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даёт +1 влияния беднейшему сопернику, а не мне — против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest; poorest is idx2. Gives rival influence — vote no. My weight 3 vs their 1+1... they may vote yes. 3 > 2 blocks. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738415,
+    "id": "20261115182651e1d389c48fb54fe2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182651e1d389c48fb54fe2",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3751,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3836
+    }
+  }
+}

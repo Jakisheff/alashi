@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.986,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 спишет мои непогашенные promissory с кредитных продаж раунда 4, а я президент с вето — голосую против.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I hold promissory notes from round 3 credit sales (3 units sold credit in round 3 market... wait, that was settled at round boundary). Round 4 market I sold 3 units credit — those outstanding promissories will settle at boundary round 5. Card 8 would wipe them. I'm president with veto... card 8 passing would cancel my promissory revenue (~big loss). Vote no; if passed, veto. So vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738272,
+    "id": "20261115182428d074805efad54646",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182428d074805efad54646",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 3781,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3937
+    }
+  }
+}

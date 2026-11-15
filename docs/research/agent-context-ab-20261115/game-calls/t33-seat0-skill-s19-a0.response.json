@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.192,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд: продаю все 2 товара на открытии по 12, держать нельзя, sell_credit не погасится.\"}",
+          "reasoning_content": "Sell 2 units at 12 each.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746669,
+    "id": "20261115204427d54b86d36df94b55",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204427d54b86d36df94b55",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 3530,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3584
+    }
+  }
+}

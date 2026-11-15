@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.282,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по верхней цене лестницы (12), налога нет\"}",
+          "reasoning_content": "We're in market round 2? Actually phase market. State shows goods=2, cash 0. Round? Not shown but likely round 2. Sell 2 units at top price 12 (boom/shift 0). Sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739446,
+    "id": "20261115184402d6097692ba5742b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184402d6097692ba5742b2",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 1510,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1590
+    }
+  }
+}

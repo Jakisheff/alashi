@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.887,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Если закон о +1 влияния беднейшему всё же прошёл, моё вето сохраняет мне единоличный максимум влияния и бонус 5% банка.\"}",
+          "reasoning_content": "Post_vote, I'm president, law 4 failed presumably (voted? unknown outcome). Veto applies to passed laws against me? Card 4 gives influence to poorest — if it passed, veto it. But vote results unknown; safest: veto to block if it passed. Actually veto on failed law wastes? Veto is free. If it passed, veto protects my influence bonus. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739357,
+    "id": "20261115184233fa032de0446a471a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184233fa032de0446a471a",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3195,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3323
+    }
+  }
+}

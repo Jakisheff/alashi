@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.571,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Пустая карта (0), голосование ничего не меняет.\"}",
+          "reasoning_content": "Law card 0 (nothing). Vote doesn't matter — voted already true for others? voted:[false,true,true], weights 3,3,4. Others voted; I can abstain/pass. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738886,
+    "id": "2026111518343934a05bdb6fed427c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518343934a05bdb6fed427c",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 43
+      },
+      "prompt_tokens": 2941,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3008
+    }
+  }
+}

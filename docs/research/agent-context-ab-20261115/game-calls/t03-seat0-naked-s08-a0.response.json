@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.86,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по высокой цене даёт ×1.25 и обгоняет девальвацию, так как обе стратегии теряют лишь одну девальвацию\"}",
+          "reasoning_content": "Round 3 market. I have 2 goods. Cash 21.25. Sell now at price 12? sold_counter=0, price 12 per unit. Sell 2 units = 24 alashi, taxed 0. But devaluation at round boundary: floor(cash/100)*62. Cash 21.25M = 21250000 units; deval applies at rounds 4+ boundaries (round 2+ boundaries). After selling 2: cash = 45.25M → floor(45250000/100)=452500*62=28075000... wait deval: cash becomes floor(cash/100)*62, that's harsh 62%. sell_credit gives ×1.25 but paid at next boundary — then deval applies at following boundary. Compare: sell now round 3: get 24, deval at boundary 3→4: cash becomes ~62% → ~14.88+... Actually sell_credit in round 3: promissory 30 added to cash after round 4 boundary, then deval at boundary 4→5 → 62%. Both get one devaluation, credit gives 25% more. Sell_credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737987,
+    "id": "202611151819391f77997ab9434dce",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819391f77997ab9434dce",
+    "usage": {
+      "completion_tokens": 301,
+      "completion_tokens_details": {
+        "reasoning_tokens": 251
+      },
+      "prompt_tokens": 1925,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2226
+    }
+  }
+}

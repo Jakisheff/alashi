@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.762,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику idx1), что усилит его в борьбе за бонус влияния — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest: idx1 (38.7M) vs me 27.4M vs idx2 33.5M — idx1 richest. Both rivals already voted (voted true). I haven't voted. My weight 3. If I vote yes, depends on their votes unknown. Card gives influence to rival — bad for me? Influence matters for 5% bonus payout. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739092,
+    "id": "202611151838092c8ca2bb87f549ff",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838092c8ca2bb87f549ff",
+    "usage": {
+      "completion_tokens": 139,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 3750,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3889
+    }
+  }
+}

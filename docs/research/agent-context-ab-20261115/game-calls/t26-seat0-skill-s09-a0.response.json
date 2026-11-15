@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.111,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% снижает выручку моих продаж в раундах 4-6 — голосую против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. It hits my future sales. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739283,
+    "id": "202611151841208f5f83e28ce34e12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841208f5f83e28ce34e12",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 18
+      },
+      "prompt_tokens": 2526,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2581
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.873,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Продам свою единицу на открытии по ~14 (лестница 12 + boom 2), дальше цены только падают.\"}",
+          "reasoning_content": "Sell 1 unit at price ~12+2=14.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738209,
+    "id": "20261115182327315fb952c56a48b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182327315fb952c56a48b2",
+    "usage": {
+      "completion_tokens": 56,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 2508,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2564
+    }
+  }
+}

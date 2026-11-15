@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.433,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2}",
+          "reasoning_content": "Round 2 market. I have 2 goods, price ladder at sold_counter=2 → next price 9. Sell both at ~9 each. Cash then floors at border: floor(18/100)*62 → 0? 18 alashi → floor(0.18)*62 = 0? floor(cash/100)*62 means cash in units? cash=18 alashi = 18,000,000 units; floor(18000000/100)=180000*62=11,160,000. Fine, sells fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738544,
+    "id": "20261115182900007c05ee748d47b7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182900007c05ee748d47b7",
+    "usage": {
+      "completion_tokens": 125,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 2675,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2800
+    }
+  }
+}

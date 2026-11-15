@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.299,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 сейчас ни на кого не влияет (никто не имеет promissory), тратить вес бессмысленно.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — bad for me only if I have credits; I don't. Card 8 wipes others' promissory too; all zero cash. It's neutral. But voting matters little; weight: I skipped action? I did produce, so weight 1+0? Weight = influence +2 if action passed. I produced (not passed). voted shows others voted already. I'm president, can veto free. Card 8 is neutral/harmless. Just vote yes or abstain. Abstain fine; but president veto power only matters if harmful. Card 8 protects against others' future credits? Actually it cancels promissory now — no one has any. Harmless. Vote yes? Abstain is safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739326,
+    "id": "202611151842000342ad7a043d4769",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842000342ad7a043d4769",
+    "usage": {
+      "completion_tokens": 198,
+      "completion_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "prompt_tokens": 2519,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2717
+    }
+  }
+}

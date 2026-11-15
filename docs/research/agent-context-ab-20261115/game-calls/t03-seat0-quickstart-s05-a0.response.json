@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.573,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо даёт ~2.25 товара против 2 у produce — больше выручки в следующем раунде.\"}",
+          "reasoning_content": "Action phase round 2. Cash 17, goods 0. Best: shuttle gives 3 goods, 25% confiscation risk — still good. I sold 2, price counter 6. Shuttle 3 goods worth maybe ~5-6 each → ~16 alashi vs confiscation risk. Expected ~12. Donkey gives 1 for 1. Produce gives 2 free. Produce is safe and good. Shuttle: 3 goods, 75% keep → 2.25 expected goods. Produce 2 guaranteed. Shuttle slightly better expected, but confiscation... at normal border just confiscation of goods. Shuttle expected 2.25 > 2. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737973,
+    "id": "202611151819279374878c0ecf4909",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819279374878c0ecf4909",
+    "usage": {
+      "completion_tokens": 182,
+      "completion_tokens_details": {
+        "reasoning_tokens": 142
+      },
+      "prompt_tokens": 2770,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2952
+    }
+  }
+}

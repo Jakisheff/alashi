@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.345,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара, произвожу базовые 2 единицы для будущих продаж.\"}",
+          "reasoning_content": "Produce (2 goods).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738416,
+    "id": "20261115182654c5709138828a4870",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182654c5709138828a4870",
+    "usage": {
+      "completion_tokens": 34,
+      "completion_tokens_details": {
+        "reasoning_tokens": 6
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2484
+    }
+  }
+}

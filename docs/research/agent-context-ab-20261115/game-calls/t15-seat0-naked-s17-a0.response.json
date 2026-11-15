@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.152,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатно ожидаемо ~2.25 товара против 2 у produce, монетизирую их кредитной продажей в финальном раунде.\"}",
+          "reasoning_content": "Round 5 action. I have 0 goods (sold 4 on credit), cash ~19M. Best: donkey? Shuttle costs nothing? Shuttle gives 3 goods but confiscation ~25%... shuttle gives 3+subsidy = 3 goods, risk 25% confiscation (no border favor, tariff?). Expected 2.25 goods. Donkey: 1 alashi for 1 good. Shuttle free, better. Then round 6 market sell.\n\nProduce gives 2+0=2 goods free, no risk. Shuttle expected 2.25. Shuttle slightly better. But shuttle could trigger tariff/duty at favorable border only; no role info. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738746,
+    "id": "20261115183220cdf975bdc8ad40e3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183220cdf975bdc8ad40e3",
+    "usage": {
+      "completion_tokens": 192,
+      "completion_tokens_details": {
+        "reasoning_tokens": 145
+      },
+      "prompt_tokens": 2916,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3108
+    }
+  }
+}

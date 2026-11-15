@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.233,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт субсидию +1 товар, я произвожу каждый раунд — закон выгоден\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1, benefits producers — vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739520,
+    "id": "20261115184518a4327f2b4f394849",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184518a4327f2b4f394849",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3358,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3409
+    }
+  }
+}

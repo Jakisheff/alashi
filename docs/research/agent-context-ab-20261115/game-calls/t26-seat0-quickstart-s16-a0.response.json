@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.039,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и вето не ожидается — хода нет.\"}",
+          "reasoning_content": "Post_vote, all voted, I'm not president, no veto pending — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739332,
+    "id": "20261115184209d937f28b4c764178",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184209d937f28b4c764178",
+    "usage": {
+      "completion_tokens": 47,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 3804,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3851
+    }
+  }
+}

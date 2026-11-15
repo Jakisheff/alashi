@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.078,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара сразу на высокой части лестницы — держать товар невыгодно.\"}",
+          "reasoning_content": "I have 2 goods, price ladder starts at 12 but sold_counter=2... two units already sold (others sold? No, others have 2 goods each... sold_counter=2 from round1? Actually I produced 2 goods round1; sold_counter=2 likely from others? Whatever—sell now at prices 9,8 ≈ 17 alashi. Tax 0. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739573,
+    "id": "202611151846090573cfd5071b4524",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846090573cfd5071b4524",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 2086,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2203
+    }
+  }
+}

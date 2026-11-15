@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.919,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Открытие рынка, лестница на максимуме 12 — продаю оба товара сразу.\"}",
+          "reasoning_content": "Sell 2 goods at price 12 each.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738811,
+    "id": "202611151833288979b4b8897d4af7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833288979b4b8897d4af7",
+    "usage": {
+      "completion_tokens": 43,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 2401,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2444
+    }
+  }
+}

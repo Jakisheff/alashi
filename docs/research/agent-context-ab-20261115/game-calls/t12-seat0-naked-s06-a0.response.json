@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.917,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 8 выгоден мне (нет promissory), уже прошёл моим голосом — вето не нужно, просто жду.\"}",
+          "reasoning_content": "Law card 8 already voted, post_vote stage, president. Card 8 wipes promissory — I have none, opponents may. Law likely passed (3 vs 1+1? my vote weight 3 yes vs 2 no → passes). No veto needed; veto pending false. Action: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738494,
+    "id": "2026111518281002f8013601374fb8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518281002f8013601374fb8",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 1808,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1912
+    }
+  }
+}

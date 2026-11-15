@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.825,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV трёх товаров (~31 alashi) заметно выше двух от produce даже с риском ~25% потери; возможная дань 2 alashi приемлема.\"}",
+          "reasoning_content": "Round 5 action. No cash for donkey? Cash ~13 alashi. Shuttle gives 3 goods free, small confiscation risk but cash 13 → tribute min(cash,2) if lucky border. Shuttle EV: 3 goods worth ~12,10,9 ≈ 31 later. Risk ~25% lose. Produce gives 2 goods (~12+10=22). Shuttle better EV. But goods carried to round 6 market, only 1 market left—prices fine (sold_counter resets each market). Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738222,
+    "id": "20261115182337c516c3cb04074e72",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182337c516c3cb04074e72",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2767,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2925
+    }
+  }
+}

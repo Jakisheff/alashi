@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.773,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара, покупка по 12 убыточна, кэш берегу для действий\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 8.16. Options: buy goods? Price 12 at counter 0. Buying moves counter back, buying at 12 to sell later... selling later at lower price is bad. Pass seems fine, but maybe buy to move counter for others? No. Actually could buy 1 at 12, then sell later at... counter moves back? Buy moves sold_counter back, so future prices higher for opponents too. Not profitable. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739274,
+    "id": "20261115184110007070bb5bef4fcf",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184110007070bb5bef4fcf",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2510,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2639
+    }
+  }
+}

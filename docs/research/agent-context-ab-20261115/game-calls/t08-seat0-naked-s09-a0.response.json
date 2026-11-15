@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.523,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Матожидание 3×0,75=2,25 товара больше, чем 2 от produce; товары продам в кредит и избегу девальвации.\"}",
+          "reasoning_content": "I have 21.25 cash. Options: donkey 1 alashi → 1 good (next market round 4, no devaluation? boundary after round 3 will devalue 62% on cash — but sell_credit keeps promissory. Actually cash devalues at boundary of round 2+... \"на границе раундов 2+ cash=floor(cash/100)*62\" — after each round from 2 onward. So cash now will devalue at end of round 3 too. Donkey: spend 1 now, get 1 good; sell credit next round. Better: shuttle costs? shuttle has cost? \"shuttle даёт 3+subsidy_goods товара\" — likely free, 25% confiscation. Shuttle gives 3 goods vs donkey 1 for 1 alashi. Shuttle free? Yes seems no cost mentioned. Risk 25% confiscation. Produce gives 2 free. Best: produce 2 + then? only one action. Produce=2 goods guaranteed. Shuttle=3 goods, ~25% lose all. Expected shuttle 2.25 > 2. But cash devaluation: cash 21.25 → 13.2 at boundary. Selling more goods as credit avoids devaluation. Take shuttle: 3 goods, expected value higher.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738302,
+    "id": "2026111518245589f4fc3706004b63",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518245589f4fc3706004b63",
+    "usage": {
+      "completion_tokens": 322,
+      "completion_tokens_details": {
+        "reasoning_tokens": 275
+      },
+      "prompt_tokens": 2016,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2338
+    }
+  }
+}

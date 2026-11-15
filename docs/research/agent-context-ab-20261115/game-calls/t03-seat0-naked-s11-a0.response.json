@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.921,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредит ×1.25 вернётся после девальвации и обойдёт потерю 38% cash, что почти удваивает выручку против обычной продажи\"}",
+          "reasoning_content": "I have 2 goods, price at sold_counter=4 → next price 8. Sell normally now. Cash devaluation: cash 40.675M → floor(40)*62... wait devaluation applies at round boundaries 2+. Selling now at price 8 gives 16 alashi, but they'd be devalued at boundary of round 4? Round 4 now; boundary after round 4 applies devaluation. sell_credit gives ×1.25 and returns at boundary of round 5... promissory adds to cash at start of next round (after devaluation? \"на границе раундов 2+ cash=floor(cash/100)*62, promissory прибавляется к cash\"). Credit returns after devaluation, avoiding one devaluation: 16*1.25=20 vs 16*0.62=9.9. Credit better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738017,
+    "id": "20261115182005823562ad127a4a5d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182005823562ad127a4a5d",
+    "usage": {
+      "completion_tokens": 238,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 2195,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2433
+    }
+  }
+}

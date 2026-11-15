@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.27,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товары некуда продать, а траты уменьшают итоговый cash.\"}",
+          "reasoning_content": "Round 6 action, no cash spending benefit? Cash counts at end; spending reduces payout. Donkey costs 1 alashi gives 1 good—but market already passed; goods can't be sold. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739202,
+    "id": "20261115183959359c4b73d2144dab",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183959359c4b73d2144dab",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 4048,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4128
+    }
+  }
+}

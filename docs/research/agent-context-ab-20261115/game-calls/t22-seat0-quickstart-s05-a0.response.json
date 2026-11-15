@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.276,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт ещё 2 товара; при нулевом кэше донки и взятки недоступны, а шаттл рискует конфискацией.\"}",
+          "reasoning_content": "Phase action round 2. I have cash 0? cash[0]=0. But I sold credit 2 units at 12,10 → 22 *1.25=27.5 promissory, returned at boundary → but state says cash[0]=0, that's current before boundary round 2→3? Actually the sale in round 2 market adds promissory. Wait round1 credit sale returned at boundary round2... cash[0]=0 though. Hmm, promissory counts toward... cash shows 0, odd — maybe promissory returned was devalued? Promissory adds to cash then devaluation floor(cash/100)*62 applies? \"On boundaries of rounds 2+ cash=floor(cash/100)*62... promissory is added to cash and reset to zero\". Order matters but cash=0 anyway? If promissory 27.5M added, floor(27500000/100)=275000 units*62... units seem 1M=1 alashi; floor(cash/100)*62 means cash in minimal units? 27500000/100=275000*62=17050000. But cash[0]=0. Maybe devaluation happens first, then promissory added — then promissory should show later. Yet cash=0. Maybe my round-1 credit sale never happened? It was in post_vote stage — perhaps not a valid market action there, replaced by pass. So I have no promissory, no cash, goods 2.\n\nRound 2 action: cash 0, so donkey unaffordable. Options: produce (+2 goods), shuttle (3 goods, risk confiscation). Goods 2 now; sell later. produce safest.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739055,
+    "id": "202611151837266a489ccb1b324a9c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837266a489ccb1b324a9c",
+    "usage": {
+      "completion_tokens": 419,
+      "completion_tokens_details": {
+        "reasoning_tokens": 368
+      },
+      "prompt_tokens": 2810,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3229
+    }
+  }
+}

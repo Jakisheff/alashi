@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.513,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия +1 товар усилит мой produce в последнем раунде, а моё доминирование во влиянии сохраняется.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — helps all equally, but I have 2 goods, produce gives 3 instead of 2 next round... everyone benefits. It's neutral-ish, but I'm president with max influence; vote yes? It gives +1 goods per produce to everyone including me. Opponents also produce. Marginal. Abstain or yes — I'd vote yes, slight benefit since I'll produce in round 6.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738960,
+    "id": "2026111518355669d1ce3d00b94f9e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518355669d1ce3d00b94f9e",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 2867,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3001
+    }
+  }
+}

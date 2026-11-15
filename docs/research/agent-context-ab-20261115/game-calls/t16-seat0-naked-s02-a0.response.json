@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.618,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Закон 8 аннулирует promissory, а я планирую использовать sell_credit с бонусом 1.25x.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes. No outstanding ones. Harmless either way. Pass to gain vote weight? Passing action gives +2 weight — that's for skipping action, not law. Vote: card 8 currently neutral. Abstain? Vote yes if I might later use sell_credit... card 8 cancels promissory — bad for me if I plan sell_credit. Vote no to keep promissory useful for me? But rivals also could use it. I likely will use sell_credit (1.25x). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738701,
+    "id": "20261115183136f4bb874f29b34b37",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183136f4bb874f29b34b37",
+    "usage": {
+      "completion_tokens": 152,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 1433,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1585
+    }
+  }
+}

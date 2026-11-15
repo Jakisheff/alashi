@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.684,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, что уменьшит выручку от моих 2 товаров\"}",
+          "reasoning_content": "Law card 6: prices next market -2. I have 2 goods to sell next round. Vote no. President is faction 2 (influence 2). Not president.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739190,
+    "id": "20261115183948b6d6ac83722f452b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183948b6d6ac83722f452b",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3204,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3281
+    }
+  }
+}

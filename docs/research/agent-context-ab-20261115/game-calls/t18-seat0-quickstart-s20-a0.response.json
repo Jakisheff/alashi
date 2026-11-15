@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.082,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% бьёт по мне как богатейшему; мой вес 3 гарантирует, что «за» (максимум 3) не превысит «против».\",\"action_note\":\"vote_no\"}",
+          "reasoning_content": "Tax 10%. I'm wealthiest, tax hurts me. My weight 3, opponent2 weight 2, opponent1 weight 1. Yes must exceed no. If I vote no: no=3, yes max 3 (2+1) — 3 not > 3, fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738933,
+    "id": "20261115183529d783f5c372e14940",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183529d783f5c372e14940",
+    "usage": {
+      "completion_tokens": 123,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 4252,
+      "prompt_tokens_details": {
+        "cached_tokens": 3968
+      },
+      "total_tokens": 4375
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.618,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний рынок: наличная продажа без девальвации при высоких стартовых ценах лестницы.\"}",
+          "reasoning_content": "Final round, sell 2 units for cash — cash doesn't devalue after round 6 (no more boundaries). Sell normal.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739692,
+    "id": "20261115184810ecfb078f492f4972",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184810ecfb078f492f4972",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 3160,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3223
+    }
+  }
+}

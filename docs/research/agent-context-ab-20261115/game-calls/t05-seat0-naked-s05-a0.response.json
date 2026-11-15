@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.592,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а карта спишет долги соперников-продавцов, ослабив их итоговый счёт.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — I have none. But rivals sold on credit? Player 2 sold 22M... Card 8 hurts sellers with promissory. I benefit relatively. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738108,
+    "id": "20261115182145bb9e7d66511c407e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182145bb9e7d66511c407e",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 1683,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1775
+    }
+  }
+}

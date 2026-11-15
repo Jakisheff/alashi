@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.02,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего — рынок R5 пропускается без потерь.\"}",
+          "reasoning_content": "Market R5, no goods — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738234,
+    "id": "20261115182352dba3e2800c164336",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182352dba3e2800c164336",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 3302,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3342
+    }
+  }
+}

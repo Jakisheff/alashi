@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.886,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег на осла, шаттл даёт 3 товара с ожидаемой ценностью выше produce.\"}",
+          "reasoning_content": "Action phase round 1: goods 0, cash 0. Produce gives 2 goods (no subsidy). Shuttle gives 3 goods but risk? Shuttle needs cost? Shuttle free, 25% confiscation. Donkey costs 1 cash which I don't have. So produce or shuttle. Shuttle gives 3 goods, ~25% confiscation at border... grey goods confiscation 25%. Expected 2.25 vs produce 2. But shuttle also border maybe tariff. No cash for duty. Produce is safe; shuttle expected higher. Confiscation likely loses all 3. Expected 2.25 goods. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738589,
+    "id": "2026111518294431df68cae9f5449a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518294431df68cae9f5449a",
+    "usage": {
+      "completion_tokens": 166,
+      "completion_tokens_details": {
+        "reasoning_tokens": 131
+      },
+      "prompt_tokens": 1841,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2007
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.461,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустая, результат голосования безразличен\"}",
+          "reasoning_content": "Law card 0 — empty, vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746715,
+    "id": "202611152045130f94460d328d4ad4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045130f94460d328d4ad4",
+    "usage": {
+      "completion_tokens": 39,
+      "completion_tokens_details": {
+        "reasoning_tokens": 11
+      },
+      "prompt_tokens": 3204,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3243
+    }
+  }
+}

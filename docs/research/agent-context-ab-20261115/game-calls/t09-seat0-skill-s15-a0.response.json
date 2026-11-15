@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.542,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, а покупка для перепродажи по той же лестнице убыточна — экономлю песо на взятки и продажи после produce.\"}",
+          "reasoning_content": "No goods, no point buying? Round 5 market, cash ~9.4, goods 0. Buying moves counter back, but price ladder resets each round? sold_counter=0, prices start at 12. Buying goods to resell? Buy price presumably same ladder — no profit. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738376,
+    "id": "20261115182612c0901f5bb32d44ef",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182612c0901f5bb32d44ef",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      },
+      "prompt_tokens": 3131,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3238
+    }
+  }
+}

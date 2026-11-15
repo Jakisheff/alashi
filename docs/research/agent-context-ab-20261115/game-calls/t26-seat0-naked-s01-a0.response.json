@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.841,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатно получаю 2 товара для продажи на следующем рынке; денег на другие действия нет.\"}",
+          "reasoning_content": "I passed market, so vote weight 3. Action phase: produce gives 2 goods. Donkey costs 1 (I have 0 cash) — impossible. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739262,
+    "id": "202611151840597d6b3c9b7fdb45fa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840597d6b3c9b7fdb45fa",
+    "usage": {
+      "completion_tokens": 67,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 1368,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1435
+    }
+  }
+}

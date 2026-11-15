@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.629,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон о субсидии мне выгоден и уже прошёл; вето доступно только президенту, я им не являюсь.\"}",
+          "reasoning_content": "Law 3 subsidy_goods=1 benefits me (shuttle next round gives 4 goods). It passed (I'm not president now; veto only president). Post_vote: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737862,
+    "id": "202611151817390cecbd68c05d4235",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151817390cecbd68c05d4235",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 4037,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4112
+    }
+  }
+}

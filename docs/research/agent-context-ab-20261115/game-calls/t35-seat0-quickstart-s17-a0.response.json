@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.681,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 1 вводит налог 10%, который урежет мою крупную продажу 5 товаров в финальном раунде\"}",
+          "reasoning_content": "Law card 1: tax 10%. Tax hurts my future sales — I have 5 goods to sell round 6. Opponents also sell, but I benefit most. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746742,
+    "id": "20261115204540f3257f200caf4935",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204540f3257f200caf4935",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3842,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3922
+    }
+  }
+}

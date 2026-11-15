@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.632,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Максимальная цена 12 на пустой лестнице — продаю оба товара немедленно.\"}",
+          "reasoning_content": "Sell 2 units at price 12. Cash will devalue 62% anyway, but selling now is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738603,
+    "id": "20261115183001173a5d586b004abc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183001173a5d586b004abc",
+    "usage": {
+      "completion_tokens": 59,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 3044,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3103
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.926,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":1,\"reason\":\"Последний раунд — продаю единицу товара немедленно по максимуму лестницы, без sell_credit.\"}",
+          "reasoning_content": "Final round, sell 1 unit at price 12.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739101,
+    "id": "20261115183818f514159371de4ff7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183818f514159371de4ff7",
+    "usage": {
+      "completion_tokens": 50,
+      "completion_tokens_details": {
+        "reasoning_tokens": 12
+      },
+      "prompt_tokens": 3429,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3479
+    }
+  }
+}

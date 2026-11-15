@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.849,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Бум +2 даёт высокие цены на вершине лестницы — продаю оба товара сейчас.\"}",
+          "reasoning_content": "I have 2 goods, boom +2. Others have 2 each. Price ladder starts at 12 with +2 = 14 for first unit. Sell 2 units: 14+13=27 alashi. Tax 0. Selling first gets high prices. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738067,
+    "id": "202611151821049d9f290d6dec449b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821049d9f290d6dec449b",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1578,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1672
+    }
+  }
+}

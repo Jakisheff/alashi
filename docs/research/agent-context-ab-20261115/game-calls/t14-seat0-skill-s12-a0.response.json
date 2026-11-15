@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.883,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 единицы сразу по текущей лестнице (~4-3-3), держать товар — терять ценность, и держу песо-кассу для ставки на лицензию в этом раунде.\"}",
+          "reasoning_content": "Sell 3 at round 4 market. Sold counter 7, prices ~3-2... sell anyway; don't hold. Actually last round is 6; still sell now, ladder at 7 → price 2? Ladder index: 12,10,9,8,7,6,5,4,3,3,2... index7=4. Sell 3 units at ~4-3-3. Better than holding. Sell all 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738637,
+    "id": "20261115183032e5a0bbf0857f40e6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183032e5a0bbf0857f40e6",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2837,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3001
+    }
+  }
+}

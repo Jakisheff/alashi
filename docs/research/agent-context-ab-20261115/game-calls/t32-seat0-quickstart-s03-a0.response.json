@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.362,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Я уже проголосовал воздержанием по нейтральной карте 8; дополнительных действий в фазе закона нет.\"}",
+          "reasoning_content": "Law card 8 already voted, I abstained; now post_vote stage? Phase still law, stage post_vote... Actions available: vote options likely still. Card 8 wipes promissory, harmless. Just pass or vote_abstain already done. Respond pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739607,
+    "id": "202611151846442b660feb83dc4eb2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846442b660feb83dc4eb2",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2623,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2714
+    }
+  }
+}

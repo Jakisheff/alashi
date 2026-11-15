@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.161,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему сопернику и угрожает моему бонусу 5% и президентству — применяю бесплатное вето.\"}",
+          "reasoning_content": "Card 5 gives influence to richest (opponent). I voted no; others likely voted? voted all true. If it passed, veto as president.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738613,
+    "id": "2026111518301078d670ec3a1042a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518301078d670ec3a1042a2",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 4070,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4150
+    }
+  }
+}

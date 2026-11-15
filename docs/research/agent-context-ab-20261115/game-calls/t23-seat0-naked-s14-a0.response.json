@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.236,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупка убыточна, кредитных продаж нет — пропускаю рынок.\"}",
+          "reasoning_content": "Cash ~12, goods 0, no promissory. Nothing to sell, can't buy meaningfully (buying loses money). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739160,
+    "id": "20261115183918a070a4c6062c44a7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183918a070a4c6062c44a7",
+    "usage": {
+      "completion_tokens": 63,
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      },
+      "prompt_tokens": 2517,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2580
+    }
+  }
+}

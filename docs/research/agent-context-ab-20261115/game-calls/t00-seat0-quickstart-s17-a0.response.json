@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.355,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия +1 товар усилит мой шаттл в последнем раунде (4 товара для продажи по высоким ценам), а вреда от карты нет.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — good for me, I have shuttle giving 3+1=4 goods next round? Actually subsidy applies next rounds produce/shuttle. I already shuttled this round, goods=3. Card 3 benefits everyone but I have most goods potential. Vote yes. Rival idx2 with influence 2 already voted (voted[2]=true). Card 3 gives subsidy_goods=1 to everyone — round 6 production. My round 6 action: shuttle gives 4 goods vs others too. It's symmetric, but final round more goods = more sales for all. It helps me sell more in final market. Marginal but yes vote fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737858,
+    "id": "2026111518173382849ba0b815475b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518173382849ba0b815475b",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 3933,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4124
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.648,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Финальный раунд: рынок пройден, производство и товар больше не монетизируются, никакое действие не увеличивает выплату.\"}",
+          "reasoning_content": "Round 6 action: cash 28.6 alashi. License already decided. Options: produce goods but market passed—produce gives goods but no more market. Donkey costs 1, no market to sell. Shuttle: grey goods confiscated, no market anyway. So best: pass? Goods worthless now. Pass is fine (no reason). Nothing profitable. Pass.\n\nActually bribe? No benefit at final. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739586,
+    "id": "20261115184621f237c2f79b224de2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184621f237c2f79b224de2",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 3744,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3872
+    }
+  }
+}

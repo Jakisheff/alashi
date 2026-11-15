@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.838,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% урежет мою выручку от продажи 3 товаров в следующем раунде, где я планирую продавать больше всех.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I have most cash. Tax affects revenue only, not cash. I plan to sell goods in round 4 market. 10% tax on revenue hurts me. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739293,
+    "id": "20261115184129c29ba166c6a24e30",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184129c29ba166c6a24e30",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 2054,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2144
+    }
+  }
+}

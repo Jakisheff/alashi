@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.601,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара по высоким ценам лестницы (9 и 8), пока рынок не насыщен.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, cash 0. Sell both — price ladder: sold_counter=2, so prices continue at index 2: 9 then 8. Sell both units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737769,
+    "id": "202611151816065f54d2af5da548a8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816065f54d2af5da548a8",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 2692,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2774
+    }
+  }
+}

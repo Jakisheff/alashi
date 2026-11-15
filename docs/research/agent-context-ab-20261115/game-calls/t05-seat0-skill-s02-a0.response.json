@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.664,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 2 — налог 20%, бьёт по моей будущей выручке, голосую против.\"}",
+          "reasoning_content": "Law card 2: tax 20% — harmful. Opponent voted yes already? voted[1]=true. Vote no. Not president, no veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738104,
+    "id": "202611151821418dde044a479d4f97",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821418dde044a479d4f97",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 33
+      },
+      "prompt_tokens": 1914,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1982
+    }
+  }
+}

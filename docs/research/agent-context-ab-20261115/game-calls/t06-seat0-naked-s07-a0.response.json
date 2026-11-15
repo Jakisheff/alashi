@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.028,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, закон о повышении цен мне выгоден — veto не нужно.\"}",
+          "reasoning_content": "Law 7 passed presumably; nothing to do post-vote.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738172,
+    "id": "202611151822501b3f3c3cc84b4459",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822501b3f3c3cc84b4459",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 1839,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1881
+    }
+  }
+}

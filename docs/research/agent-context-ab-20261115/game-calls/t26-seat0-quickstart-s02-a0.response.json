@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.544,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% снижает мою будущую выручку от продаж, голосую против.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm not president, veto_pending true means president may veto. Opponent 1 voted already (voted[1]=true, likely yes?). Tax 20% hurts sales. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739251,
+    "id": "20261115184046860dfb20c12c4e5a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184046860dfb20c12c4e5a",
+    "usage": {
+      "completion_tokens": 81,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 2522,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2603
+    }
+  }
+}

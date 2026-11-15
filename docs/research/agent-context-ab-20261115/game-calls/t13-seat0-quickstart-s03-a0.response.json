@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.296,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Уже проголосовал за карту 8, дальше пассивно ждём итог.\"}",
+          "reasoning_content": "Law card 8 wipes promissory notes; we already voted yes. Post_vote stage — just pass or wait? Phase law, actions vote_yes/no/abstain/veto/pass. Already voted. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738539,
+    "id": "202611151828578b2a5ebb9d044647",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828578b2a5ebb9d044647",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 2600,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2672
+    }
+  }
+}

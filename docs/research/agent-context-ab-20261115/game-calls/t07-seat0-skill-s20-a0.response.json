@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.252,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 1 вводит налог 10% на выручку, но рынок раунда 6 уже пройден — новых продаж не будет, закон нейтрален.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I just sold, tax applies to future market? Next round none — final round, no more market. So tax is neutral. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738276,
+    "id": "20261115182432b64cbe8b4dc84c9e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182432b64cbe8b4dc84c9e",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 3689,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3779
+    }
+  }
+}

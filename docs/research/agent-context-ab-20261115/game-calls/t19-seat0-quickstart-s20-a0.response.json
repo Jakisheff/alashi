@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.66,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок, лестница на старте даёт 12 и 10 за единицу — продаю оба товара без налога.\"}",
+          "reasoning_content": "Round 6 market, boom 0, sold_counter 0, I have 2 goods. Sell 2 at 12+10=22.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738977,
+    "id": "202611151836130e00a6820b134823",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151836130e00a6820b134823",
+    "usage": {
+      "completion_tokens": 76,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 4229,
+      "prompt_tokens_details": {
+        "cached_tokens": 3968
+      },
+      "total_tokens": 4305
+    }
+  }
+}

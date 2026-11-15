@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.146,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 4 уже провален (мой вес 4 против 1), veto не нужен, других действий в post_vote нет.\"}",
+          "reasoning_content": "Law 4: +1 influence to poorest (faction 2). Vote already cast no. Post_vote: president can veto. Did it pass? My weight 4 no vs 1 yes — no wins, law fails. No veto needed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738687,
+    "id": "202611151831246cc0d5bd67284d64",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831246cc0d5bd67284d64",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 3965,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4054
+    }
+  }
+}

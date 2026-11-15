@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.21,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает promissory — у меня их нет, а списание чужих долгов мне невыгодно, но тратить вес не стоит.\"}",
+          "reasoning_content": "Law card 8: writes off all promissory notes. I have none. Pass/abstain. Others voted already (voted true). Card 8 helps those with promissory — I have none; others may sell_credit later? It only affects current promissory. Vote no or abstain. Abstain is safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739000,
+    "id": "20261115183636f401368c9bf44bc1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183636f401368c9bf44bc1",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 71
+      },
+      "prompt_tokens": 2528,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2645
+    }
+  }
+}

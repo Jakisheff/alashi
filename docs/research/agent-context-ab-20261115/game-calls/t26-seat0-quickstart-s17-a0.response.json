@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.747,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Последний рынок без налога и с бумом +2: продаю все 3 единицы по максимальным ценам 14/12/11 alashi.\"}",
+          "reasoning_content": "Final market, boom +2, no tax. Sell 3 at 14/12/11 = 37.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739336,
+    "id": "20261115184213172143b49d8c47dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184213172143b49d8c47dc",
+    "usage": {
+      "completion_tokens": 74,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 3887,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 3961
+    }
+  }
+}

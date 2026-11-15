@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.832,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл — товар больше не продать; пропуск даёт +2 к весу голоса в финальном законе.\"}",
+          "reasoning_content": "Round 6 action, last round. No goods. Cash ~20.2. Actions: donkey gives 1 good but market already passed (sold_counter=5, I sold 1)... goods can't be sold anymore? Market phase already done in round 6, so donkey's good is useless. Best: pass to get +2 vote weight for law (card unknown). Vote weight matters for final law. Pass gives +2 weight. Donkey wasted 1 alashi. So pass.\n\nWait, but pass in action — rule: weight +2 if action skipped. Yes, pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739107,
+    "id": "20261115183821a43c5298de8140f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183821a43c5298de8140f0",
+    "usage": {
+      "completion_tokens": 164,
+      "completion_tokens_details": {
+        "reasoning_tokens": 123
+      },
+      "prompt_tokens": 3523,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3687
+    }
+  }
+}

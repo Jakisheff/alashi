@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.505,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 4 даст +1 влияния беднейшему (сопернику), что угрожает моему президентству и бонусу влияния — против.\"}",
+          "reasoning_content": "Card 4: +1 influence to poorest. I'm richest, poorest is player 2. That gives them influence, president advantage... vote weight influence+2. Current president is me (tie_order). Player 2 getting +1 influence could cost me presidency next rounds and the 5% bonus. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737791,
+    "id": "20261115181626ce3876af1c434529",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181626ce3876af1c434529",
+    "usage": {
+      "completion_tokens": 110,
+      "completion_tokens_details": {
+        "reasoning_tokens": 65
+      },
+      "prompt_tokens": 3210,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3320
+    }
+  }
+}

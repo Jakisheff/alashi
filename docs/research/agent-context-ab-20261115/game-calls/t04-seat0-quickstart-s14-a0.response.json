@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.648,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% ударит по более богатым соперникам, у меня почти нет наличных — поддерживаю.\"}",
+          "reasoning_content": "Law phase, card 2 = tax 20%. I'm poorest; tax hurts rivals more. Vote yes. They voted already? voted [false,true,false] — someone voted yes? Rival 1 voted true (unknown choice). My weight 3. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738150,
+    "id": "20261115182220d20a3f99076b4400",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182220d20a3f99076b4400",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 56
+      },
+      "prompt_tokens": 3612,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3704
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет денег на donkey, а shuttle даёт 3 товара вместо 2 даже с риском конфискации.\"}",
+          "reasoning_content": "I have no goods, cash 0. Opponents have 2 goods each. Donkey costs 1 alashi — no cash. Produce gives 2+0 goods. Shuttle gives 3. Shuttle risks confiscation ~25%, but gives 3 goods vs 2. Goods sell at 12 first units... 3 units sold at top prices. Shuttle better: 3 goods, expected value higher even with 25% confiscation? Expected 2.25 goods vs 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738152,
+    "id": "202611151822284f5588ac9e474de6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151822284f5588ac9e474de6",
+    "usage": {
+      "completion_tokens": 140,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1357,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1497
+    }
+  }
+}

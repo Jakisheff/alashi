@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.257,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный раунд, налога нет, лестница на максимуме — продаю оба товара немедленно.\"}",
+          "reasoning_content": "Round 6 market, final round. I have 2 goods, no tax, no boom. Sell 2 now at top prices (12,10).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739637,
+    "id": "202611151847144cdfe4e86a9a42e5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847144cdfe4e86a9a42e5",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 32
+      },
+      "prompt_tokens": 4076,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4147
+    }
+  }
+}

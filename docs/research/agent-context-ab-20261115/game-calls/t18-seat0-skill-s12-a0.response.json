@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.562,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Раунд 4, лицензия решает партию — ставка ~50% песо-касса (20 из 39.6M) без обнуления резерва.\"}",
+          "reasoning_content": "Round 4 action: bid. Cash ~39.65M. Bid 40-60%: ~16-24M. Bid 20M (20 alashi)? Amount in minimal units; multiples fine. Bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738879,
+    "id": "20261115183436cd1fa6bdf43c401b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183436cd1fa6bdf43c401b",
+    "usage": {
+      "completion_tokens": 106,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 2831,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2937
+    }
+  }
+}

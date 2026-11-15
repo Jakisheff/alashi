@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.734,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Контрабанда даёт 3 товара с ожидаемой ценностью выше produce, конвертируя cash в товар до девальвации границы раунда 3.\"}",
+          "reasoning_content": "Round 2 action. Cash 17, no goods. Options: shuttle (3 goods, risk confiscation ~25%), donkey needs goods? Donkey costs 1 alashi gives 1 good. Produce gives 2 goods. Later rounds 3-6. Shuttle gives 3 goods with 25% confiscation risk — expected value good. Next round devaluation 62%. Selling next round better via sell_credit? Devaluation cuts cash floor/100*62 at border of round 3+. Better to convert cash to goods? Buy? Actually action phase: shuttle best. Shuttle gives 3 goods, sell next round at prices around 7-5. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739678,
+    "id": "202611151847529add901bfc0148cd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847529add901bfc0148cd",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 139
+      },
+      "prompt_tokens": 1678,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1866
+    }
+  }
+}

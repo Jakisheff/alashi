@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.13,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Проигравшая ставка возвращается, поэтому ставлю максимум — при победе лицензия принесёт 20–60 alashi сверх доли.\"}",
+          "reasoning_content": "Round 4 action: bid for license available. My cash 20.17M ≈ 20 alashi. Opponents: 33.5M and 25.5M. License income 20-60 alashi. Bid? If I bid too low, someone outbids. Bid something like 30M? Cash 20.17M — I only have 20M, can't exceed cash presumably. Bid 20M (4 alashi... wait amounts in units; bid 20 alashi max). Bid all my cash? Risky: if I win, cash gone but license income 20-60 plus final share. Actually license paid \"superimposed on share\", so winning with bid of my cash means losing all cash but income 20-60 alashi plus devalued... cash 0 → share low. Others with 33M could outbid me up to 33M. So my all-in bid 20.17M could be outbid. Maybe bid anyway — if lose, money returned, no loss. Best: bid max cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739282,
+    "id": "202611151841135a16c9a45aa34139",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841135a16c9a45aa34139",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 224
+      },
+      "prompt_tokens": 3516,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3786
+    }
+  }
+}

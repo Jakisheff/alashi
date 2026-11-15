@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.679,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":28000000,\"reason\":\"Аукцион раунда 4: доход лицензии ~20–60 alashi, ставка 28 alashi даёт положительное матожидание, при проигрыше ставка возвращается.\"}",
+          "reasoning_content": "Round 4 action: auction available. Bid? License income 20-60 alashi, huge. Others also bid. My cash 37.17 alashi. Bid aggressive, e.g., 30 alashi (30000000)? If lose, refunded. If win, income 20-60 minus bid... expected ~40. Bid 30 → expected net +10? Risky if income 20. Bid ~25? Others may bid similarly. EV of license ~40, bid 28 gives ~+12 expected, and losing refund. But if I bid too low and win small... actually winning pays license income minus bid regardless. Bid 28 (28000000).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739493,
+    "id": "20261115184447a4493bd37be649c1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184447a4493bd37be649c1",
+    "usage": {
+      "completion_tokens": 196,
+      "completion_tokens_details": {
+        "reasoning_tokens": 140
+      },
+      "prompt_tokens": 3484,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3680
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.221,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница сброшена, цена максимальна (12 и 10), продаю оба товара.\"}",
+          "reasoning_content": "Sell 2 units. Prices 12,10 minus... sold_counter=0, no tax. Sell 2 → 22 gross? Tax 0. Cash now 10.54 after devaluation. Sell 2 units for 22 → 32.54. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739497,
+    "id": "2026111518445557e1d272726549eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518445557e1d272726549eb",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3035,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3130
+    }
+  }
+}

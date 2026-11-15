@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а покупка по лестнице цен лишь тратит кэш перед девальвацией.\"}",
+          "reasoning_content": "Round 5 market, no goods, cash 27.8M. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739097,
+    "id": "20261115183814bdd574dc33a74385",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183814bdd574dc33a74385",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 3764,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3817
+    }
+  }
+}

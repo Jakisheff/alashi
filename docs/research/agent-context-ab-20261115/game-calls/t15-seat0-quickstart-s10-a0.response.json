@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.28,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снизит цены следующего рынка, где я планирую продавать свои товары.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I have 3 goods, planning to sell round 4. Opponents also sell. Vote no. Pass? Just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738673,
+    "id": "20261115183109e44ebde9b24b43fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183109e44ebde9b24b43fb",
+    "usage": {
+      "completion_tokens": 69,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 3182,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3251
+    }
+  }
+}

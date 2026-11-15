@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.54,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Пустая карта (0) не имеет эффекта, исход не важен.\"}",
+          "reasoning_content": "Law card 0 — empty, pass/vote? Card 0 means nothing passes anyway. Abstain or pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739464,
+    "id": "20261115184422d9912c5047404eb5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184422d9912c5047404eb5",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 4002,
+      "prompt_tokens_details": {
+        "cached_tokens": 3712
+      },
+      "total_tokens": 4057
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.43,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"reason\":\"Продаю 2 единицы в кредит по ~5 alashi с бумом: ×1.25 выручка вернётся promissory на границе раунда и избежит девальвации\"}",
+          "reasoning_content": "Round 4 market, boom +2, sold_counter=4 → price 3+2=5 per unit. I have 2 goods. Sell credit 2 units: 10*1.25=12.5 promissory, paid at end of round 4 boundary? Round 5 boundary — yes, after round 4 it comes at boundary and then... round 5+ no devaluation for hard? Cash devaluation happens at rounds 2+ boundary. Promissory added at boundary. Then devaluation applies to cash at boundary rounds 2+. Actually promissory added after devaluation likely. Fine, sell_credit still good. But tax? 0. Sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738577,
+    "id": "202611151829326646135ff3df4ff7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829326646135ff3df4ff7",
+    "usage": {
+      "completion_tokens": 201,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2279,
+      "prompt_tokens_details": {
+        "cached_tokens": 2048
+      },
+      "total_tokens": 2480
+    }
+  }
+}

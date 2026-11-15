@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.68,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег, никакое рыночное действие невозможно.\"}",
+          "reasoning_content": "No goods, cash 0. Sell_credit sells units? Selling without goods rejected. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738070,
+    "id": "20261115182107dea64c7958d04007",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182107dea64c7958d04007",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1817
+    }
+  }
+}

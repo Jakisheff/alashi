@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.782,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":4,\"reason\":\"Лестница с нуля (12/10/9/8), кредитная премия 1.25 и защита от девальвации дают ~48.75 alashi к следующей границе.\"}",
+          "reasoning_content": "Round 5 market, I have 4 goods, sold_counter 0, sell 4 at 12/10/9/8... use sell_credit? Note round 6 boundary is after round 6? Border devaluation at rounds 2+; promissory from round 5 credits pays at end of round 5 boundary (start of round 6), still gets paid. Round 6's credit wouldn't. So sell_credit 4 now: price 12,10,9,8 = 39, ×1.25 ≈ 48.75 promissory. But tax 0. Yes, sell_credit 4.\n\nBut wait: if law card 8 (write off promissory) appears round 5... risk. Still sell_credit is strong; opponents may vote card 8? Uncertain. Cash-selling yields 39 vs 48.75. Difference 9.75. Risk exists but opponents have no promissory, they might vote yes to card 8. Hmm. Also devaluation of cash: 62% applied at boundary — I mean cash floor(cash/100)*62 at round borders. My cash 19M already... cash gets devalued each round 2+. Promissory avoids devaluation. So credit sale even better. Go sell_credit 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738740,
+    "id": "202611151832121a59fd7b2d7a48dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832121a59fd7b2d7a48dc",
+    "usage": {
+      "completion_tokens": 332,
+      "completion_tokens_details": {
+        "reasoning_tokens": 273
+      },
+      "prompt_tokens": 2802,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 3134
+    }
+  }
+}

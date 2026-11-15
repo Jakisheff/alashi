@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.764,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, карта 5 уже проголосована против — вето применю только если она пройдёт, сейчас пас.\"}",
+          "reasoning_content": "Law phase post_vote, card 5 already voted no. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738635,
+    "id": "20261115183031d1b8956018ca40f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183031d1b8956018ca40f8",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3633,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3687
+    }
+  }
+}

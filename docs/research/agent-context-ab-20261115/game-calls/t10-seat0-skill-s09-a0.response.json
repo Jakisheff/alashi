@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.569,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Товар — это выручка следующего рынка; produce бесплатно даёт 2 единицы при максимальных ценах открытия.\"}",
+          "reasoning_content": "Cash ~48 alashi. Action phase round 3. Options: produce (2 goods), donkey (1 alashi → 1 good), bribe... Goods sell next round. Produce gives 2 goods, no cost. Donkey costs 1 for 1. Both? Only one action. Produce. Maybe bribe for influence? Vote weight equal 3. Law unknown. Produce is standard.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738429,
+    "id": "202611151827061ef04123c9c44b4a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827061ef04123c9c44b4a",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      },
+      "prompt_tokens": 2540,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2661
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего — пропускаю рынок ради бесплатного produce в action.\"}",
+          "reasoning_content": "Round 5 market, no goods, no point. Cash 16 alashi. Bid lost (18M returned? Actually bid returned to cash? Cash 16 after devaluation). No goods → pass market, then action produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738618,
+    "id": "20261115183013277eb39ad9214173",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183013277eb39ad9214173",
+    "usage": {
+      "completion_tokens": 79,
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      },
+      "prompt_tokens": 3328,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3407
+    }
+  }
+}

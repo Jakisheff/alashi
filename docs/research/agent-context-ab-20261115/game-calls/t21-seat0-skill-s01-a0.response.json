@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.107,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара — produce даёт 2 единицы для продажи в следующем раунде.\"}",
+          "reasoning_content": "I passed market with no goods; now action phase. Produce gives 2 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739004,
+    "id": "2026111518364135b64e1d33a8480f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518364135b64e1d33a8480f",
+    "usage": {
+      "completion_tokens": 46,
+      "completion_tokens_details": {
+        "reasoning_tokens": 17
+      },
+      "prompt_tokens": 1840,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1886
+    }
+  }
+}

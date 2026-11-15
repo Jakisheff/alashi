@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.761,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 товара сразу на открытии раунда 4: дальше цены только падают, а выручка нужна для ставки на лицензию.\"}",
+          "reasoning_content": "Round 4 market, I have 3 goods, price boom +2, ladder at 12 (counter 7 resets? counter 7 → price 12-7=... ladder index 7 → price 3? Actually ladder [12,10,9,8,7,6,5,4,...] index 7 = 4, +2 boom = 6). Sell all 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737803,
+    "id": "20261115181638670b95ea2dfa470c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181638670b95ea2dfa470c",
+    "usage": {
+      "completion_tokens": 134,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 2831,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2965
+    }
+  }
+}

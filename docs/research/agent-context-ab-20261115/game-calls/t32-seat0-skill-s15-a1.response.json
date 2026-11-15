@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.927,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, покупка при падающей лестнице убыточна — сохраняю песо под финал.\"}",
+          "reasoning_content": "No goods, no point buying? Cash 10.6. Buying goods to sell? Buy moves counter back; buying price high early? Buy purchases goods at current price—could buy then sell later at higher price? Ladder falls; buy then sell same round not possible (market once). Could buy now, sell round 6 at lower price — bad. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746632,
+    "id": "202611152043490cd36c4d7a5c413a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152043490cd36c4d7a5c413a",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 3128,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3240
+    }
+  }
+}

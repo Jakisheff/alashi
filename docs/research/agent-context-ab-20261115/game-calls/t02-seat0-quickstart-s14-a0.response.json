@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.855,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает все promissory, включая мои ~18.75 alashi за кредитную продажу этого раунда; голосую против и наложу veto, если пройдёт.\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory. I have promissory from selling 3 units at ~ prices... sold counter 9, sold 6 before; my 3 units sold at positions 7,8,9: prices 6,5,4 → 15 * 1.25 = 18.75M promissory. Card 8 would wipe it. So vote no, and as president veto if passes. Vote no.\n\nWait, others voted already (voted true). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738037,
+    "id": "202611151820338cf971ee7c8643eb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151820338cf971ee7c8643eb",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 110
+      },
+      "prompt_tokens": 3685,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3848
+    }
+  }
+}

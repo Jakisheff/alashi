@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.955,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта даёт +1 влияния беднейшему (сопернику), что отдаст ему бонус за максимальное влияние; моим весом 3 закон проваливается.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. Poorest is player 2. That gives 2 influence to them, could affect the 5% influence bonus. My vote weight is 3 (passed action). If card passes, player 2 gets +1 influence → influence [1,1,2], max influence is player 2, they'd get the extra 5% bonus. If fails, tie at 1 and I win tie by cash. So vote no. My vote weight 3 vs others 1 each — my no (3) > yes (2) → fails.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739352,
+    "id": "20261115184227d379445db46a4963",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184227d379445db46a4963",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 4093,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4269
+    }
+  }
+}

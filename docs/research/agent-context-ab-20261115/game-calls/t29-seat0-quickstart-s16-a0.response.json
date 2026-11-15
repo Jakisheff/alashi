@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.606,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего; сохраняю позицию для производства в этой фазе действия.\"}",
+          "reasoning_content": "Round 5 market, no goods. Pass. But note: I bid 28 and lost? Cash 9174800 → after devaluation floor(9/100*62)? Actually cash 9174800 → floor to 9*62/100... cash became 5688376. Bid lost and returned? 9174800, devalued 62% → 5688376. Yes returned and devalued. No goods — pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739504,
+    "id": "20261115184500660d688cef3f4e54",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184500660d688cef3f4e54",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 101
+      },
+      "prompt_tokens": 3782,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3917
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.574,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара с ожиданием ~2.25 против 2 у produce, кэш 17 позволяет риск в раннем раунде 2.\"}",
+          "reasoning_content": "I'm idx 0, cash 17, vote weight 3 (others 3). Action phase. Options: produce gives 2 goods, shuttle 3 goods with 25% confiscation risk, donkey 1 for 1 alashi. Produce free gives 2. Shuttle gives 3 with risk. Cash 17, round 2 of 6. Produce is safe and free. Later sell at round 3 market. Choose produce.\n\nActually shuttle gives 3 goods vs 2; expected 2.25 vs 2. Slightly better plus risk. But confiscation loses all? \"grey goods may be confiscated\" ~25%. Expected 2.25 > 2, but production matters per-round. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739129,
+    "id": "2026111518384312a3870801ee407d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518384312a3870801ee407d",
+    "usage": {
+      "completion_tokens": 194,
+      "completion_tokens_details": {
+        "reasoning_tokens": 152
+      },
+      "prompt_tokens": 2093,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2287
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.575,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемые 2.25 единицы от шаттла лучше 2 от produce, а конфискация мне дешевле, чем риск упустить высокие цены финального рынка.\"}",
+          "reasoning_content": "Round 5 action. Cash 0.516M, low. License lost? Bid 24M lost apparently — cash returned partially? Cash 516k, so bid lost and returned minus... actually 24832400 - 24000000 = 832400, then devaluation floor(832400/100)*62 = 516088. Lost auction.\n\nNow produce gives 2 goods; shuttle gives 3 but confiscation ~25%; cash tiny so fine to shuttle. No cash for donkey benefit... donkey costs 1 alashi = 1M, have 0.5M — can't. Shuttle: 3 goods, 25% confiscation, expected 2.25 goods vs 2 produce. Round 5 market next round then devaluation. Sell round 6 market at ladder prices starting ~sold_counter 0: prices 12,10,9. So more goods valuable. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738443,
+    "id": "20261115182717cd90b2a22c104341",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182717cd90b2a22c104341",
+    "usage": {
+      "completion_tokens": 250,
+      "completion_tokens_details": {
+        "reasoning_tokens": 198
+      },
+      "prompt_tokens": 2612,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2862
+    }
+  }
+}

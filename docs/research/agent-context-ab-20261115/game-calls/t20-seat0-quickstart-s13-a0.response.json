@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.252,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 8 списывает непогашенные promissory у соперников, мне не вредит, а их относительное богатство снижает.\"}",
+          "reasoning_content": "Law card 8: cancels all outstanding promissory. I have none (I sold regular). Vote no? Card 8 wipes promissory — opponents may hold promissory. Vote no seems safe? Wiping others' promissory reduces their cash, benefiting me relatively. Final payout is rank-based, so relative cash matters. But payout is 50:30:15 by rank? Rank by cash, then split. Reducing rivals' cash helps my rank. But do they hold promissory? Unknown. Harmless to me anyway — vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738971,
+    "id": "20261115183606d308a117aa424271",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183606d308a117aa424271",
+    "usage": {
+      "completion_tokens": 159,
+      "completion_tokens_details": {
+        "reasoning_tokens": 117
+      },
+      "prompt_tokens": 3463,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3622
+    }
+  }
+}

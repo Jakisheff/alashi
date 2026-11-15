@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.913,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"reason\":\"Обычная выручка (≈22 alashi) обнулится девальвацией floor(cash/100)*62, а sell_credit даёт 1.25x и возвращается уже после девальвации\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods. Sell now? Cash devaluation at rounds 2+ (floor(cash/100)*62). Selling round 2 gives cash that persists... Actually devaluation happens at border of rounds 2+, so cash earned in round 2 market gets devalued at end of round 2. Sell credit gives 1.25x but returns next round boundary — added after devaluation? \"On round borders 2+ cash=floor(cash/100)*62, promissory added to cash and reset.\" Order: devalue then add promissory — so promissory escapes devaluation. So sell_credit is good: 2 units * price ~12-10... prices start at 12. If others also sell... sell 2 credit at ~12/10 = 22*1.25=27.5 promissory. vs sell now: 22 cash devalued to floor(22/100)*62=0! Yes, cash<100 → 0. So definitely sell_credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746692,
+    "id": "2026111520444789edba3fa1174a5f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520444789edba3fa1174a5f",
+    "usage": {
+      "completion_tokens": 277,
+      "completion_tokens_details": {
+        "reasoning_tokens": 218
+      },
+      "prompt_tokens": 1527,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1804
+    }
+  }
+}

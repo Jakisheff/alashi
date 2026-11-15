@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.038,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV шаттла 3·0.75=2.25 товара выше, чем 2 от produce, при цене следующего рынка ~12 это выгоднее\"}",
+          "reasoning_content": "Round 5 action: no cash advantage... I have cash 32.89, goods 0. Options: produce (free, 2 goods, sell round 6 market at 12), donkey costs 1 alashi for 1 good, shuttle 3 goods but 25% confiscation risk and cash payment? Shuttle gives 3 goods, grey may be confiscated. Produce gives 2 free. Shuttle: 3 goods vs 2, risk 25% lose all. EV shuttle = 2.25 goods > 2. But border tribute? Not privileged border. Price in round 6 likely 12 each. Shuttle EV slightly better. But goods value at 12 alashi each, 0.25 extra good worth ~3 alashi minus confiscation risk of losing 3 (0.25*3=0.75 loss) → EV 3-0.75=2.25 vs 2. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746739,
+    "id": "20261115204535cef0fae257b64bb9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204535cef0fae257b64bb9",
+    "usage": {
+      "completion_tokens": 240,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      },
+      "prompt_tokens": 3743,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3983
+    }
+  }
+}

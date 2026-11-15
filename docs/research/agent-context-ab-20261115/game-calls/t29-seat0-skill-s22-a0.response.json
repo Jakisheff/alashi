@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.668,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 2 (налог 20%) бьёт по выручке рынка, но рынков больше нет — закон нейтрален для всех.\"}",
+          "reasoning_content": "Card 2: tax 20% — already sold, but tax applies to future market? No more markets. Actually tax might apply this round's market — already done. So neutral? Tax applies to revenue — no more revenue. Harmless. But maybe it affects others more... No future revenue for anyone. Vote abstain. As president, could veto but irrelevant. I'll abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739539,
+    "id": "20261115184535b221c5678bab41e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184535b221c5678bab41e0",
+    "usage": {
+      "completion_tokens": 126,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 3741,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3867
+    }
+  }
+}

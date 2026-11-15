@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.113,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог 10% бьёт только по выручке рынка, а рынков больше нет — закон мне безразличен, воздерживаюсь.\"}",
+          "reasoning_content": "Law card 1: налог 10% — рынок уже прошёл, налог применится... активный tax_bps применяется на market; рынка больше нет, значит безвреден. Голосуй yes или no? Если закон безвреден, можно abstain. Но влияние у соперника 2, если оба голосуют yes... Безразлично. Проголосую abstain? Лучше yes — если вдруг налог применяется к концу? Налог удерживается с выручки рынка — рынка больше нет. Пропущенный action дал +2 веса? Мой action был donkey (не pass), так что вес 1. Голосую abstain.\n\nWait, actually donkey в последнем action — потратил 1 alashi и получил товар, который не продать. Ладно.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737923,
+    "id": "2026111518183622b261430dbb48a2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518183622b261430dbb48a2",
+    "usage": {
+      "completion_tokens": 217,
+      "completion_tokens_details": {
+        "reasoning_tokens": 170
+      },
+      "prompt_tokens": 3753,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3970
+    }
+  }
+}

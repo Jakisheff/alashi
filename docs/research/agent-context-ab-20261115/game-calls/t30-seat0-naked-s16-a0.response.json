@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.209,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, а кэш нужен для будущих действий.\"}",
+          "reasoning_content": "Round 5 market, no goods. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739672,
+    "id": "202611151847507e531f9edca4483a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847507e531f9edca4483a",
+    "usage": {
+      "completion_tokens": 35,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 2770,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2805
+    }
+  }
+}

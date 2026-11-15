@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.956,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит защищает выручку (1.25x) от девальвации на границе раунда, а кредит раунда 4 успеет погаситься.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=4, prices 6,5. I have 2 goods. Cash after devaluation round 4? Cash 20.17M. Sell now at 6,5. Alternative: sell_credit later? Round 4 boundary devalues cash floor/100*62, so selling credit now gives 1.25x added to cash then devalued — bad? Promissory added at boundary then cash devalued... actually devaluation happens then promissory added? \"На границе раундов 2+ cash=floor(cash/100)*62, promissory прибавляется к cash\" — promissory added after devaluation, so credit protects from devaluation. Sell credit 2 units: revenue (6+5)*1.25=13.75 alashi vs 11 now. After devaluation 11*0.62=6.82. Credit clearly better. Last round (6) credit not redeemed though; round 4 credit redeemed at boundary 5. So sell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739273,
+    "id": "202611151841067df2e1a6527d43df",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841067df2e1a6527d43df",
+    "usage": {
+      "completion_tokens": 280,
+      "completion_tokens_details": {
+        "reasoning_tokens": 222
+      },
+      "prompt_tokens": 3404,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3684
+    }
+  }
+}

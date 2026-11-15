@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.322,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование уже завершено, остаётся ждать исхода.\"}",
+          "reasoning_content": "Post-vote stage, card 8 was up, I voted no. Others voted. I should just pass (vote already done). Phase law, decision_stage post_vote — likely nothing to do; action \"pass\".",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746659,
+    "id": "202611152044175ad3a1ffb40b4d04",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044175ad3a1ffb40b4d04",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 2870,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2938
+    }
+  }
+}

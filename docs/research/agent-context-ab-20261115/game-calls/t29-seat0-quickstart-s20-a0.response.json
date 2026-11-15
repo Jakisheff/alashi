@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.347,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Финальный рынок без налога и сдвига: две единицы уйдут по 12 и 10 alashi, sell_credit в последнем раунде не погашается.\"}",
+          "reasoning_content": "Round 6 market, I have 2 goods, ladder top 12,11. Sell both. Use sell or sell_credit? Last round: sell_credit not redeemed after last round. So sell normally.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739526,
+    "id": "20261115184522251d8845173346c8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184522251d8845173346c8",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 4153,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4249
+    }
+  }
+}

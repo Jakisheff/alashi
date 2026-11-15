@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.658,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег — произвожу 2 единицы для продажи на следующем рынке.\"}",
+          "reasoning_content": "I passed market; opponents sold? sold_counter 0 but they have goods 2? Actually start 0 goods; they produced? No, it's round 1 action phase, goods [0,2,2] means they had 2 somehow—maybe they started with 2. I have 0 goods, 0 cash. Action options: produce gives 2 goods. Do it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738477,
+    "id": "202611151827521f2a5c4d555447be",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151827521f2a5c4d555447be",
+    "usage": {
+      "completion_tokens": 111,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 1843,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1954
+    }
+  }
+}

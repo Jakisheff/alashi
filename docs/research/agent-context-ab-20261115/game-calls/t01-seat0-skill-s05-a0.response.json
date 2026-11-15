@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.46,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"3 товара дают лучший EV (~2.25 против 2 у produce), а песо всё равно девальвируется — риск конфискации оправдан.\"}",
+          "reasoning_content": "I'm player 0, cash 17M, president, influence 1. Round 2 action. Opponents have goods. Options: produce (2 goods), donkey, shuttle. Cash will devalue at round boundary. Cash 17M → should spend down. Donkey costs 1 alashi per good. Produce gives 2 free. Could do produce or shuttle (3 goods, 25% confiscation). Shuttle gives 3 goods, ~25% risk — better EV than donkey? Shuttle 3 goods vs produce 2, risk of confiscation of grey goods. Confiscation chance ~25% loses all 3, EV 2.25 > 2. Also tariff tribute risk min(cash,2) if favorable border. But simple: shuttle. Actually confiscation ~25% chance lose goods; EV ~2.25 goods. Slight edge. But \"serый товар может быть конфискован\" — border role owner gets tribute if favorable border; we don't know. Take shuttle.\n\nAlso could bribe to gain influence for president status... president determined by influence; currently all 1, I'm president via tie_order? vote_weight [3,3,1] — wait, weight 3 for me and idx1? influence 1 each but weight 3? Maybe skipped action bonus... odd. Anyway, action: shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737772,
+    "id": "20261115181602a4de6320cdce4a3c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181602a4de6320cdce4a3c",
+    "usage": {
+      "completion_tokens": 328,
+      "completion_tokens_details": {
+        "reasoning_tokens": 283
+      },
+      "prompt_tokens": 2176,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2504
+    }
+  }
+}

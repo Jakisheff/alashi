@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.96,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынков больше не будет, производить товар бессмысленно — сохраняю cash до итога.\",\"action_json\":{\"action\":\"pass\"}}",
+          "reasoning_content": "Round 6 action: produce gives 3 goods but no more markets. Donkey costs 1, gives 1 goods — worthless. Shuttle risk. Best: pass (no market left). Bid not allowed (not round 4). So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738056,
+    "id": "20261115182053a51d9a2928504a47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182053a51d9a2928504a47",
+    "usage": {
+      "completion_tokens": 90,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 4128,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4218
+    }
+  }
+}

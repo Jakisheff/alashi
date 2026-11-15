@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.628,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 товара немедленно: 3×4=12 alashi, дальше лестница только падает.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=10, prices 2,2,2 +boom2=4 each. I have 3 goods. Sell all 3 now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739605,
+    "id": "20261115184642fd26252e230346be",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184642fd26252e230346be",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 36
+      },
+      "prompt_tokens": 2824,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2901
+    }
+  }
+}

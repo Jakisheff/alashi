@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.131,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Субсидия товара в раундах 5–6 усилит моё производство на продажу в кредит в конце игры.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1, benefits everyone. I have no goods, rivals have none either. But next round produce/shuttle gives +1. I vote; already voted? voted[0]=false, others true. Vote yes for subsidy.\n\nWait, veto_pending false, president is idx2. Card 3 helps everyone equally — fine. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738354,
+    "id": "20261115182549c736d1314afd4f05",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182549c736d1314afd4f05",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      },
+      "prompt_tokens": 3579,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3693
+    }
+  }
+}

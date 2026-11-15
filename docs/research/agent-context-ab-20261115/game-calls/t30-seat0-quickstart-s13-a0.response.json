@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.118,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":15000000,\"reason\":\"Ожидаемый доход лицензии ~40 alashi; ставка 15 alashi с возвратом при проигрыше — положительное EV, а наличные всё равно подлежат девальвации.\"}",
+          "reasoning_content": "Round 4 action: auction bid available. License income 20-60, paid above share. Bidding is costly; rivals may bid. My cash ~37.2. Bid maybe 10 alashi (10,000,000)? License income expected ~40; share of bank... Bid wins only if highest. Moderate bid ~10M seems fine. But cash devaluation? Round boundaries 2+: cash devalued at rounds 5,6. Bidding burns cash into bank. Expected value: license ~20-60, mean 40. Bid 10M gives EV +30 minus rivals may bid higher. Rivals cash ~37 and ~29. They may bid too. Bid 15M? If win, expected profit ~25. If lose, refunded. Risk: none besides opportunity. I'll bid 15,000,000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739519,
+    "id": "20261115184512cc675cffb242400a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184512cc675cffb242400a",
+    "usage": {
+      "completion_tokens": 235,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 3488,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3723
+    }
+  }
+}

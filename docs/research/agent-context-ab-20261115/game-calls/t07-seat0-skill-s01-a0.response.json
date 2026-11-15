@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.164,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Ноль товара и денег — produce даёт бесплатный товар для продажи на следующем рынке.\"}",
+          "reasoning_content": "I have 0 goods, 0 cash. Can't produce? produce gives 2 goods free. Yes, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738198,
+    "id": "20261115182315797fb624dfdf464d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182315797fb624dfdf464d",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 1847,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1901
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.508,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный рынок: кредит не погашается после игры, продаю все 3 единицы по высоким ценам.\"}",
+          "reasoning_content": "Round 6 final market, sell all 3. Cash ~9.3M below 100, no devaluation; sell normally (promissory wouldn't be paid after last round). Prices 12,10,9 = 31.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746673,
+    "id": "20261115204430346000e66da8433f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204430346000e66da8433f",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 4163,
+      "prompt_tokens_details": {
+        "cached_tokens": 3904
+      },
+      "total_tokens": 4252
+    }
+  }
+}

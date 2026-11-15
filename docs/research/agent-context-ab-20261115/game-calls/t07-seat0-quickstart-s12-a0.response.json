@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.827,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт 1.25x и обходит одну девальвацию: 7*1.25*0.62 заметно больше 7*0.62*0.62.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=4, price ladder index 4 → 7 alashi. I have 2 goods, subsidy active. Round 4 is last market where... actually 6 rounds; border devaluation cash=floor(cash/100)*62. sell_credit pays at next round border as promissory added to cash then... promissory added to cash and reset at border — but cash devaluation applies then promissory added? \"cash=floor(cash/100)*62 ... promissory прибавляется к cash и обнуляется\" — so promissory added after devaluation, avoiding devaluation. Sell credit gives 1.25x and lands at round 5 border, avoiding one devaluation but then it will sit in cash and get devalued at round 5→6 border. Hmm, promissory returns at border of next round (round 5), then that cash devalues at round 6 border. Regular sell: cash devalues twice (r4→5, r5→6). Credit sell: 1.25x, devalues once. So credit clearly better: 7*1.25*0.62 = 5.4 vs 7*0.62*0.62=2.7. Sell credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738262,
+    "id": "202611151824141fb451600065465b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824141fb451600065465b",
+    "usage": {
+      "completion_tokens": 331,
+      "completion_tokens_details": {
+        "reasoning_tokens": 272
+      },
+      "prompt_tokens": 3411,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3742
+    }
+  }
+}

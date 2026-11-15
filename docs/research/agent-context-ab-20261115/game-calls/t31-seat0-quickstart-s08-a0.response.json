@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.492,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Нет налога, цены на вершине лестницы (12,10,9) — продаю все 3 единицы за 31 alashi.\"}",
+          "reasoning_content": "Round 3 market, I have 3 goods, no tax, price ladder top 12,10,9. Sell all 3 → 12+10+9=31. But boom? none. Sell 3 units now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739581,
+    "id": "20261115184618419e13523edd4980",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184618419e13523edd4980",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 49
+      },
+      "prompt_tokens": 3059,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3153
+    }
+  }
+}

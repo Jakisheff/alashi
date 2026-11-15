@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.039,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Нет налога, счётчик 4 — цены 8 и 7 за единицу, продаю оба товара.IG,late\"}",
+          "reasoning_content": "Round 4 market. I have 2 goods, cash 20.17M. Sold counter 4 → next prices: 8,7. No tax. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738143,
+    "id": "20261115182220da68787550c44f19",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182220da68787550c44f19",
+    "usage": {
+      "completion_tokens": 80,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 3252,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3332
+    }
+  }
+}

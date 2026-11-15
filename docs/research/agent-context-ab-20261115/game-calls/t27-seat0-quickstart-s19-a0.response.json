@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.19,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено; вмешательство не улучшает результат — субсидия выгодна мне, вето не требуется.\"}",
+          "reasoning_content": "Vote passed already (all voted, weights 2-1-1, I voted yes; yes needs strict majority). I have 2 vs their 1+1; if they voted no: yes=2, no=2 → fails! Then subsidy doesn't pass. Can I do anything? Post_vote stage: veto is president's option. Veto would kill subsidy which benefits me. But if it failed already, veto is pointless. If it passed, no action needed. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739411,
+    "id": "20261115184327d032f32dac9d4af5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184327d032f32dac9d4af5",
+    "usage": {
+      "completion_tokens": 135,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 4103,
+      "prompt_tokens_details": {
+        "cached_tokens": 3840
+      },
+      "total_tokens": 4238
+    }
+  }
+}

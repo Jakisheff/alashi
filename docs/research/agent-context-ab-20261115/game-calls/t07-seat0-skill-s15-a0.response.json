@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.359,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Товара нет, а produce бесплатно даёт 3 единицы (субсидия) на продажу финальном рынке раунда 6 — прямой доход без затрат кассы.\"}",
+          "reasoning_content": "Round 5 action. Options: produce (2+subsidy=3 goods) for round 6 market sale; donkey? No cash enough but produce free is better. License holder? Bid result unknown; someone won. Produce gives 3 goods to sell in R6 market.\n\nWait — vote_weight [3,3,1] — I skipped action? No, I bid in R4, weight 3 means... anyway. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738252,
+    "id": "202611151824082c54ca9697fe4450",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151824082c54ca9697fe4450",
+    "usage": {
+      "completion_tokens": 143,
+      "completion_tokens_details": {
+        "reasoning_tokens": 92
+      },
+      "prompt_tokens": 3154,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3297
+    }
+  }
+}

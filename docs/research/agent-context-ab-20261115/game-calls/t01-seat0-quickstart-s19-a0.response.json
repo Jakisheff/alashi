@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.813,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Карта 2 (налог 20%) урежет выручку моей финальной продажи — блокирую бесплатным вето.\"}",
+          "reasoning_content": "Law 2 (20% tax) — I voted no, but it may pass; as president veto it.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737827,
+    "id": "202611151817030c3e39422b9248e8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151817030c3e39422b9248e8",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 4053,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4118
+    }
+  }
+}

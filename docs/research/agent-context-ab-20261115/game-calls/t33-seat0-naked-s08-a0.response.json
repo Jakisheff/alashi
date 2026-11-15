@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.191,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продам все 3 товара по вершине лестницы (12,10,9) без налога и девальвации.\"}",
+          "reasoning_content": "Sell 3 at prices 12,10,9, no tax. Do it now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739690,
+    "id": "20261115184808d03557d7d2854708",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184808d03557d7d2854708",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 1944,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2004
+    }
+  }
+}

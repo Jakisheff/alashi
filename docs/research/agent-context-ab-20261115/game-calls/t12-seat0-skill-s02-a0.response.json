@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.195,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% урежет выручку от моей продажи в следующем раунде — голосую против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I sell next round; tax hurts. Vote no. Player 1 already voted yes? voted[1]=true, unknown. President is... influence equal, not me. veto_pending true. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738481,
+    "id": "20261115182758b95d4cf055aa499a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182758b95d4cf055aa499a",
+    "usage": {
+      "completion_tokens": 87,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 1918,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2005
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.026,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Аукцион лицензии мне не выиграть с 3.72 alashi против 53 у соперника; бесплатный produce даст 2 товара на продажу в раунде 5.\"}",
+          "reasoning_content": "Auction in round 4. I have 3.72, opponent1 has 53. I can't win auction realistically. Skip action gives +2 vote weight? Vote weight already 8. Better keep cash — pass.\n\nCash small; produce gives 2 goods, sell next round for ~2-8 each = ~10 alashi. Produce is free and valuable. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738938,
+    "id": "20261115183535ec5fde45b8894d22",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183535ec5fde45b8894d22",
+    "usage": {
+      "completion_tokens": 129,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2384,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2513
+    }
+  }
+}

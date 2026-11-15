@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему — это соперник (35.4M против моих 33.0M), отклоняю.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. I'm richest (32.98M)? Cash: me 32.98M, others 35.4M, 29.9M. Player 1 is richest. So card 5 helps rival. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738815,
+    "id": "202611151833327841e1bb978e41f3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151833327841e1bb978e41f3",
+    "usage": {
+      "completion_tokens": 103,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 3670,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3773
+    }
+  }
+}

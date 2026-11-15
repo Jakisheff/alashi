@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.586,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт субсидию товара — выгодна мне, голосую за.\"}",
+          "reasoning_content": "Law card 3: subsidy_goods=1 — beneficial. I produced (didn't pass), voted weight 1. Others already voted. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739565,
+    "id": "202611151846039ac1b4a5f163446e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846039ac1b4a5f163446e",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      },
+      "prompt_tokens": 1923,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1984
+    }
+  }
+}

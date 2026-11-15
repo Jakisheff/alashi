@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.546,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нулевые ресурсы, бесплатный produce даёт 2 товара для продажи на следующем рынке\"}",
+          "reasoning_content": "Round 2 action, no cash, 0 goods. sell_credit revenue comes at boundary. Produce gives 2 goods — free. Donkey costs 1 but no cash. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746699,
+    "id": "202611152044570c0ebd38e0534ce5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152044570c0ebd38e0534ce5",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2783,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2851
+    }
+  }
+}

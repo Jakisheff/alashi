@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.316,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 0 — пустая, исход закона не влияет на выплату; голосовать бессмысленно.\"}",
+          "reasoning_content": "Law card 0 — nothing. But voting gives +2 weight if action skipped; I did produce, so no bonus. Card 0 empty; vote_abstain or pass. President is idx2 (influence 2), could veto. Card 0 does nothing. Just pass or abstain — no benefit either way. Choose vote_abstain? Harmless. Pass is fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739428,
+    "id": "20261115184345bc6eb30680d34a99",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184345bc6eb30680d34a99",
+    "usage": {
+      "completion_tokens": 112,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 3366,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3478
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.971,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 списывает векселя, которых ни у кого нет — мне безразлична, воздержусь.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — I have none, no promissory outstanding. Others likely none too. Neutral. Abstain or vote no? Card 8 cancels promissory — no effect now. Abstain.\n\nMy action was produce (not skipped), weight 1. Others voted... voted [false,true,true] — already voted. Unknown how. Abstain safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739656,
+    "id": "202611151847320c5028ca5b384d00",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847320c5028ca5b384d00",
+    "usage": {
+      "completion_tokens": 124,
+      "completion_tokens_details": {
+        "reasoning_tokens": 84
+      },
+      "prompt_tokens": 1918,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2042
+    }
+  }
+}

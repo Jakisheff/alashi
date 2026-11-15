@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.515,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Лестница ещё на максимумах (12/10/9) и налога нет — продаю все 3 товара за ~31 alashi до обесценивания.\"}",
+          "reasoning_content": "I have 3 goods, price ladder high (sold_counter 0, prices 12,10,9). Sell all 3 now at high prices. No tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737781,
+    "id": "202611151816184b64fbf7b4f14328",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816184b64fbf7b4f14328",
+    "usage": {
+      "completion_tokens": 85,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 3017,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3102
+    }
+  }
+}

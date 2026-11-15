@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.042,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего; ход пропускаю.\"}",
+          "reasoning_content": "Round 5 market, no goods, no pending promissory (credit sale from round 4 already paid at boundary). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738440,
+    "id": "2026111518271838d9fae3ab4f4021",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518271838d9fae3ab4f4021",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 3603,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3656
+    }
+  }
+}

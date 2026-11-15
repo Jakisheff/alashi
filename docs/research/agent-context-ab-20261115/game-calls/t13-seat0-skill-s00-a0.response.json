@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.392,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег — рынок пропустить нечего.\"}",
+          "reasoning_content": "No goods, cash 0. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738546,
+    "id": "20261115182904b416a20d64194cac",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182904b416a20d64194cac",
+    "usage": {
+      "completion_tokens": 30,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1805
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.332,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даст +1 влияния богатейшему (сопернику с 22M), что усилит его в борьбе за бонус и президентство — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is idx2 (22M). I'm not richest. Vote no to deny rival influence. Influence matters for bonus and presidency. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738599,
+    "id": "202611151829567f8e23171fec43a9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829567f8e23171fec43a9",
+    "usage": {
+      "completion_tokens": 89,
+      "completion_tokens_details": {
+        "reasoning_tokens": 42
+      },
+      "prompt_tokens": 2869,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2958
+    }
+  }
+}

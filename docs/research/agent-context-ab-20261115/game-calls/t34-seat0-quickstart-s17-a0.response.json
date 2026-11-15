@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.002,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% ударит по моей продаже на последнем рынке, влияния на исход всё равно не хватит терять ресурсы.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I'm not selling more this round (already at law phase; market done). Tax hits next market? Card 1 налог 10% — applies now/next? Round 6 market would tax my sales. I plan to sell 2 goods in round 6. Tax 10% on revenue — costs me ~2 alashi. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746715,
+    "id": "2026111520451182fdac2cf71a4f3a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111520451182fdac2cf71a4f3a",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 81
+      },
+      "prompt_tokens": 3885,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4006
+    }
+  }
+}

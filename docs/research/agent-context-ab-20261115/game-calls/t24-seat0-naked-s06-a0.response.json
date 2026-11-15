@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.665,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Повышение цен на следующем рынке напрямую увеличивает выручку от моих 2+ товаров.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market. Round 2, I have 2 goods, sold_counter=4. Law phase: vote? Card 7 benefits me (I plan to sell next round). Vote yes. Also influence 1, others maybe vote against. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739164,
+    "id": "2026111518392177a3833b9a5d4ee8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518392177a3833b9a5d4ee8",
+    "usage": {
+      "completion_tokens": 92,
+      "completion_tokens_details": {
+        "reasoning_tokens": 60
+      },
+      "prompt_tokens": 1825,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1917
+    }
+  }
+}

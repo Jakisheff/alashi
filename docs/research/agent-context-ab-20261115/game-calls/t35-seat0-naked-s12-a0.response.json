@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.722,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Лицензия приносит ~20–60 alashi сверх доли, а ставка в банк не девальвируется — умеренная ставка 20 alashi имеет положительное ожидание против дохода лицензии\"}",
+          "reasoning_content": "Round 4 action: auction available. Bid? Income 20-60 alashi, bid winner pays. My cash 47.5. Expected license income maybe ~40; shared payout weights... winning bid up to value. But cash gets devalued at boundary anyway. Bid amounts devalue? Bid goes to bank immediately, so it's spent at face value. I should bid some amount; value ~40 alashi expected, but paying also affects rank weights. A moderate bid like 15 alashi could win profit. Opponents also may bid. Let me bid 15,000,000? Risk: lose 40 income. Bid 20M. I'll bid 20000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746732,
+    "id": "202611152045277074c218c1614d4f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152045277074c218c1614d4f",
+    "usage": {
+      "completion_tokens": 202,
+      "completion_tokens_details": {
+        "reasoning_tokens": 143
+      },
+      "prompt_tokens": 2373,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2575
+    }
+  }
+}

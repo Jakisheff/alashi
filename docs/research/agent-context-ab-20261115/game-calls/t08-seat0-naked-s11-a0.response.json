@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.721,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа 3 единиц (8+7+6=21) с коэффициентом 1.25 даёт ~26 alashi без девальвации, тогда как обычная продажа потеряет ~38% на границе раунда.\"}",
+          "reasoning_content": "Round 4 market. I have 3 goods, no pending promissory (all settled). Cash 47.5M. Selling 3 at prices: counter 2, so prices 8,7,6 = 21. Devaluation at end of round? Border of rounds 2+ — round 4's cash will be devalued at boundary into round 5 (floor(cash/100)*62). So credit sale better: revenue*1.25 becomes promissory, settled at next boundary... wait, promissory is added at boundary of next round and doesn't devalue. Cash 47.5M would devalue: floor(47.5/100)... cash in units; floor(47535000/1000000)? Rule: cash=floor(cash/100)*62 — units in millions: floor(47.53/100)? Hmm, cash/100 in alashi units? 47535000/100 = 475350, *62... that interpretation wrong. Likely cash in alashi: 47.535/100 = 0 → 0? Actually cash stored in minimal units. floor(cash/100)*62 means cash 47535000 → floor(475350)*62 = 29467000. So devaluation applies. Sell credit avoids devaluation on that revenue and gives 1.25x. Sell all 3 credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738314,
+    "id": "2026111518250696043d03088f43f9",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518250696043d03088f43f9",
+    "usage": {
+      "completion_tokens": 366,
+      "completion_tokens_details": {
+        "reasoning_tokens": 297
+      },
+      "prompt_tokens": 2197,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2563
+    }
+  }
+}

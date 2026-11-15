@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.44,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю оба товара на открытии по цене 9, пока лестница не упала.\"}",
+          "reasoning_content": "I'm player 0 with 2 goods, round 2 market. Sell both at open. Price ladder: sold_counter=2, price index 2 = 9. Sell 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739123,
+    "id": "202611151838415e45462c379d4d6f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838415e45462c379d4d6f",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 2008,
+      "prompt_tokens_details": {
+        "cached_tokens": 1792
+      },
+      "total_tokens": 2083
+    }
+  }
+}

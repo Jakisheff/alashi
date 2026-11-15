@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.432,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара на продажу в следующем рынке выгоднее donkey, наличные сохраняю для ставки в раунде 4.\"}",
+          "reasoning_content": "I have 17 cash, no goods. Action phase round 2. Need cash for round 4 bid (~15-25 alashi). Donkey costs 1 gives 1 good worth selling ~5. Buy donkey? Donkey: spend 1 alashi, get 1 good; sell next round maybe ~4-5 alashi. Profitable. But donkey costs cash; do multiple? One action only per phase. Do donkey once (cost 1). Or produce gives 2 goods free. Produce gives 2 goods free — better than donkey. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739347,
+    "id": "202611151842209b7ac9681614434a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151842209b7ac9681614434a",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 2166,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2329
+    }
+  }
+}

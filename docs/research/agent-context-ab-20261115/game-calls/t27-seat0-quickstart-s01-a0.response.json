@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.217,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет наличных для осла, производим 2 товара бесплатно.\"}",
+          "reasoning_content": "I'm idx 0, passed market so vote weight 3. Action phase: produce gives 2 goods; donkey costs 1, gives 1. Cash 0 — donkey costs 1 alashi (unaffordable). Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739319,
+    "id": "202611151841502a4a2ed4a6fc4445",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841502a4a2ed4a6fc4445",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2525
+    }
+  }
+}

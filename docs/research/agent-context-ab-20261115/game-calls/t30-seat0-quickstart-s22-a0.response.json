@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.077,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Мой голос против (вес 4) уже заблокировал налог, вето не требуется.\", \"note\":\"pass\"}",
+          "reasoning_content": "Law card 2 (tax 20%) — already voted no; result unknown but weights 4:1:1, my no wins. Veto pending? No. It seems the vote failed (my weight 4 no). Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739570,
+    "id": "20261115184606464ec22d1b09480f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184606464ec22d1b09480f",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 4379,
+      "prompt_tokens_details": {
+        "cached_tokens": 4096
+      },
+      "total_tokens": 4465
+    }
+  }
+}

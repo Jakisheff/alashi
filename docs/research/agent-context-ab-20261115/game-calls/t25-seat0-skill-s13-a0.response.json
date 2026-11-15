@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.134,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 1 вводит налог 10% на будущие продажи — как продавцу в оставшиеся раунды мне это невыгодно.\"}",
+          "reasoning_content": "Law card 1: tax 10%. It hurts me as seller in future rounds. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739258,
+    "id": "202611151840555376096fde93419e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151840555376096fde93419e",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 2931,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2993
+    }
+  }
+}

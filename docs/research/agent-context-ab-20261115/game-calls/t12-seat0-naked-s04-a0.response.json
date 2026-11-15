@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.68,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":10000000,\"reason\":\"Кэш всё равно девальвируется на границе раунда (17→10.5), выгоднее конвертировать 10 в 2 влияния для контроля законов и президентства.\"}",
+          "reasoning_content": "Round 2 action. Cash 17M. Options: produce (2 goods), donkey, shuttle (3 goods, 25% confiscation), bribe. I sold 2 already. Cash devalues at round boundary: floor(17/100)*62 → 17→10.54? Actually floor(17000000/1000000)=17, *62 = 10.54M. So spending cash now is good. Bribe gives influence; influence matters for vote weights and final 5% bonus. But cash spent also reduces. Maybe shuttle for 3 goods (no tax now, prices ~7). Goods sell next round... devaluation hits cash not goods. Better convert cash to goods? Buying via donkey: 1 alashi → 1 good, sell next round at ~5-6... marginal.\n\nBest: produce free, but can only one action. Produce gives 2 goods. Shuttle gives 3 but confiscation risk. Influence: bribe 10M = 2 influence → helps presidency and vote weight, final 5% of bank bonus. But cash lost is devalued anyway (10M → 6.2M if held). Bribe converts devaluing cash into influence — good. But influence also from round weight... vote weight = influence +2 if passed action. Presidency gives veto power.\n\nI think bribe 10M for 2 influence is strong: converts devaluing cash into durable influence. But losing cash reduces final payout... influence 5% bonus and veto control. Alternatively shuttle gives 3 goods worth ~15+ alashi later, but devalued money...\n\nActually money from selling later isn't devalued. Selling goods in later rounds: cash only devalues at round boundaries; sell in round 6 no devaluation. Shuttle → 3 goods → sell ~5 each = 15 alashi. Bribe 10M=10 alashi → 2 influence. Hmm shuttle expected value: 75% × 3 goods × ~5 = 11.25 alashi, better than donkey. Compare bribe: 10 alashi → influence. Presidency + veto + 5% bonus likely worth more. I'll bribe 10M.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738484,
+    "id": "20261115182752fbf2f026a3b9403f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182752fbf2f026a3b9403f",
+    "usage": {
+      "completion_tokens": 525,
+      "completion_tokens_details": {
+        "reasoning_tokens": 460
+      },
+      "prompt_tokens": 1603,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 2128
+    }
+  }
+}

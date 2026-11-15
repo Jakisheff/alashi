@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.297,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидание 3*0.75=2.25 товара выше, чем 2 у produce, а выручку в следующем раунде продам через sell_credit, избегая девальвации.\"}",
+          "reasoning_content": "We have cash 21M, goods 0. Round 2 action. Produce gives 2 goods. Donkey gives 1 for 1 alashi. Shuttle gives 3 goods with confiscation risk ~25%. Prices: sold_counter 6, next prices [5,4,3,...] after 6 sold. Boom +2 next round? active_boom=2 likely applies next market too? Boom persists. Prices low (~7 next). Selling more units at low ladder may not be great. Devaluation at round boundary: cash floor(cash/100)*62 → 62% retained. So holding cash loses 38%. Promissory avoids devaluation (added to cash and reset—wait promissory added at boundary; but hard rule: cash=floor(cash/100)*62 applies then promissory added? \"На границе раундов 2+ cash=floor(cash/100)*62, promissory прибавляется к cash и обнуляется\" — promissory added after devaluation, so selling credit protects proceeds. Good move next market: sell_credit.\n\nNow action: produce 2 goods. Shuttle gives 3 goods, 25% confiscation. Expected 2.25 goods, better. Border role not favorable... shuttle has confiscation risk. Expected value of shuttle 3*0.75=2.25 vs produce 2. Extra 0.25 goods worth ~3 alashi. Marginal, but confiscation of \"gray\" — may confiscate all 3. Slight EV edge; take shuttle? Risk-neutral take shuttle. But variance vs small gain. I'll take shuttle for EV.\n\nActually confiscation ~25% loses all 3; produce deterministic 2. EV 2.25 vs 2 — take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738097,
+    "id": "2026111518212475e11088ab3b4b45",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518212475e11088ab3b4b45",
+    "usage": {
+      "completion_tokens": 430,
+      "completion_tokens_details": {
+        "reasoning_tokens": 372
+      },
+      "prompt_tokens": 2770,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3200
+    }
+  }
+}

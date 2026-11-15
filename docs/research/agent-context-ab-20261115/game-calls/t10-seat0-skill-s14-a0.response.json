@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.024,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, что ударит по моей продаже товара в раунде 5 — голосую против.\"}",
+          "reasoning_content": "Law card 6: prices -2 next market. I have no goods; next market I'll produce goods? Round 5 market I'll sell goods produced. Lower prices hurt me. Vote no. veto_pending, president is someone else. I'm not president, just vote_no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738447,
+    "id": "20261115182724a6273a1b2b574741",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182724a6273a1b2b574741",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3015,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3116
+    }
+  }
+}

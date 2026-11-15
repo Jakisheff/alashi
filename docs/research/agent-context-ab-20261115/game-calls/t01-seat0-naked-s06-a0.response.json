@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.952,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустая, закон ни на что не влияет, трафик веса не нужен.\"}",
+          "reasoning_content": "Law card 0 — empty. I'm president. voted: player2 already voted (true), others false. I should abstain or vote yes/no — card is empty, no effect. But if I pass action... my action was produce, so no +2 bonus. Card 0 passes or not — nothing happens. Abstain is fine; actually passing the law with no effect is harmless. I could vote yes to gain nothing. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737775,
+    "id": "202611151816106a2cb2e8ff9e4745",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816106a2cb2e8ff9e4745",
+    "usage": {
+      "completion_tokens": 128,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 1756,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1884
+    }
+  }
+}

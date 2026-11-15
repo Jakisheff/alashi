@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.493,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Бум +2 даёт высокие цены (14 и 12) без налога — продаю оба товара сейчас.\"}",
+          "reasoning_content": "Round 3 market, boom +2, ladder prices 14,12 for 2 units. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739142,
+    "id": "202611151838599bc9b8f694784916",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838599bc9b8f694784916",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 2953,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3015
+    }
+  }
+}

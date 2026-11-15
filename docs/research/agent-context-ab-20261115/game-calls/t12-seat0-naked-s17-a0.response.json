@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему — это соперник 1, а не я, мой вес 4 надёжно блокирует.\"}",
+          "reasoning_content": "Law 5: +1 influence to richest. Richest is faction 1 (27.5M vs my 24.8M). That helps rival. Vote no. I have weight 4, plus voted[2]=true unknown how? voted[2] true — someone voted already? Their vote unknown. My vote no with weight 4 blocks unless rival yes 2+... yes votes: rival 2 (weight 2?) plus 1 (1). If both yes = 3 < 4 no. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738546,
+    "id": "20261115182901ff3c5fa2ab84484d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182901ff3c5fa2ab84484d",
+    "usage": {
+      "completion_tokens": 156,
+      "completion_tokens_details": {
+        "reasoning_tokens": 111
+      },
+      "prompt_tokens": 2838,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2994
+    }
+  }
+}

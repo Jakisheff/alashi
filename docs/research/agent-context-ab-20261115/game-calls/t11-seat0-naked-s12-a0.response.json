@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.783,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"reason\":\"Кредитная продажа 2 единиц по ~7 даёт 17.5 промиссори после границы раунда 4, избегая одной децимации наличных и увеличивая итоговый ранг.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods, sold_counter=4, price ladder index 4 = 7. Tax 0. Sell 2 units at 7,7 = 14 alashi. Cash 40.675, need cash but round 4 boundary will devaluate cash (floor/100*62) — promissory better! sell_credit gives 14*1.25=17.5 promissory paid after this round's boundary? Round 4 → round 5 boundary: promissory added and reset. Yes, pays at boundary after round 4, so credited at start of round 5, avoiding this decimation. sell_credit 2.\n\nWait, but round 6 boundary also decimates? No—rounds 2+ each boundary decimates cash. Cash from round 4 boundary to end will face round 5 and 6 boundaries decimation. Selling now at 62% avoided at round-4 boundary but still decimated at 5 and 6 boundaries... regular sale: 14 added, all cash decimated at boundary 4. Credit: 17.5 added after boundary 4. Still decimated at 5,6. Credit better. Also there's auction in round 4 action — need cash. I have 40.675 cash. License income 20-60. Bid maybe with cash. Cash counts for final rank though — bidding goes to bank, wasted. Probably don't bid heavily. Keep cash, bid maybe? Payout rank matters: 50:30:15 weights. I'm leading. Bid cost vs license gain 20-60; rivals 37.5, 33.5 might bid. Keep decision for later.\n\nsell_credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738492,
+    "id": "2026111518280307fecc9a16ce407d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518280307fecc9a16ce407d",
+    "usage": {
+      "completion_tokens": 418,
+      "completion_tokens_details": {
+        "reasoning_tokens": 361
+      },
+      "prompt_tokens": 2416,
+      "prompt_tokens_details": {
+        "cached_tokens": 2112
+      },
+      "total_tokens": 2834
+    }
+  }
+}

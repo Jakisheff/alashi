@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.366,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x и защищает выручку от девальвации на границе раунда.\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, no cash. Price ladder at sold_counter=2: next unit price 9. Selling 2 gives ~9+8=17. But cash devaluation at border: cash floors to 62%. Wait, devaluation applies at end of round 2+ (cash=floor(cash/100)*62). So cash this round will be devalued anyway. Could sell_credit for 1.25x promissory added at next border — promissory is added to cash and zeroed after devaluation, so it avoids devaluation. Better sell_credit: 17*1.25=21.25 promissory.\n\nBut note border of round 2→3: devalue then add promissory. Yes, sell_credit avoids devaluation and gains 25%. Do sell_credit 2 units. But law card 8 risk already passed. Sell credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738713,
+    "id": "202611151831477346b88dd8ff410d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831477346b88dd8ff410d",
+    "usage": {
+      "completion_tokens": 236,
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      },
+      "prompt_tokens": 1595,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1831
+    }
+  }
+}

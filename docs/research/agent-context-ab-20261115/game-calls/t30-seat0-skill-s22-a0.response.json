@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.812,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 2 — налог 20% на рынки, рынков больше нет, но голосую против на всякий случай, мой вес 4 гарантирует отклонение.\"}",
+          "reasoning_content": "Card 2: 20% tax on future markets — no more markets, so harmless? Tax applies to market revenue; no markets left. Law 2 irrelevant. But my vote weight 4; rivals might pass it anyway (they have 1 each — no, 2 vs 1 no... votes: me no = 1 no weight 4, yes max 2 → fails). Vote no anyway cheap.\n\nAlso skipping action in R6 gave +2 weight already (vote_weight 4 includes +2). Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739591,
+    "id": "202611151846273747611477fd40fe",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151846273747611477fd40fe",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 3842,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 3999
+    }
+  }
+}

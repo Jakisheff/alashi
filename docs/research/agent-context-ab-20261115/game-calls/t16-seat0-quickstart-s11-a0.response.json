@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.965,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже отдан, в post_vote доступных действий нет\"}",
+          "reasoning_content": "Post_vote, vote already cast. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738742,
+    "id": "2026111518322091f4758d21d44107",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518322091f4758d21d44107",
+    "usage": {
+      "completion_tokens": 32,
+      "completion_tokens_details": {
+        "reasoning_tokens": 9
+      },
+      "prompt_tokens": 3308,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3340
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.351,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 8 (списание promissory) сейчас ничего не меняет — ни у кого нет непогашенных кредитных продаж.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. No one has promissory. Voting yes/no barely matters; I already acted (produce), so weight 1. Others voted already. Abstain is safe — card 8 is neutral/harmless (no promissory out). Actually if I ever plan sell_credit later... not relevant. Vote no harm? Card 8 wipes promissory — could hurt me later? Only applies now. No promissory exists. Abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738203,
+    "id": "20261115182318d479dcb469854bcc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182318d479dcb469854bcc",
+    "usage": {
+      "completion_tokens": 147,
+      "completion_tokens_details": {
+        "reasoning_tokens": 105
+      },
+      "prompt_tokens": 2525,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2672
+    }
+  }
+}

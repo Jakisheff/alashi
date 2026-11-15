@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.644,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Все при cash=0, есть шанс получить +1 влияния, что даёт вес в голосах и шанс на бонус влияния в итоге.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. All tied cash 0. Vote: gaining influence is good (bonus at end, presidency). I may benefit if tie_order picks me? Unknown. Vote yes — influence helps me generally if I'm richest (tied). Risky if goes to rival, but influence bonus 5% matters. Tie at 0 cash, tie_order unknown. Vote yes modestly.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739036,
+    "id": "202611151837111ac637ab0a4c40f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837111ac637ab0a4c40f4",
+    "usage": {
+      "completion_tokens": 127,
+      "completion_tokens_details": {
+        "reasoning_tokens": 86
+      },
+      "prompt_tokens": 1915,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2042
+    }
+  }
+}

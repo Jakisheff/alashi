@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.174,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Без риска получаю 3 единицы товара с субсидией для продажи на следующем рынке.\"}",
+          "reasoning_content": "Round 3 action, cash 32.54, no goods. Subsidy 1 → produce gives 3. Shuttle gives 4 with confiscation risk. I'm richest. Produce is safe: 3 goods, sell next market ~ prices lower counter 6. Shuttle gives 3+1=4 grey goods, risk confiscation ~25%. Extra unit worth ~5-6 minus risk. Expected shuttle: 0.75*4=3 vs produce 3, but variance; also donkey costs 1 each. Produce fine. Or produce + donkey not both. Choose produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739274,
+    "id": "20261115184109fe61d6a52db84f53",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184109fe61d6a52db84f53",
+    "usage": {
+      "completion_tokens": 154,
+      "completion_tokens_details": {
+        "reasoning_tokens": 124
+      },
+      "prompt_tokens": 3043,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3197
+    }
+  }
+}

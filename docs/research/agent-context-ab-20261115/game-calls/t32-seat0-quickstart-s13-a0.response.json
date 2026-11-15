@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.304,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":25000000,\"reason\":\"Аукцион только в этом раунде: ставка победителя уходит в банк и на 50% возвращается через мою долю, а лицензия даёт 20–60 alashi сверх, поэтому выгодно перебить соперников с меньшим cash.\"}",
+          "reasoning_content": "Round 4 action: bid for license? License income 20-60 alashi. Cash ~40.6. Bidding could win. But auction in round 4 only; winner pays bid to bank, gets license income. Expected value: license income ~40 mean, paid to bank — but bank redistribution: money to bank increases pool shared 50:30:15. My share 50%. So bid B costs effectively 50% of B (comes back via share). License pays extra ~20-60 to winner. So bid up to nearly double license value profitable. Others may bid too. Bid ~30 alashi? If win: net = license(~40) - 30*0.5 = +25. Rivals cash 33.5 and 25.5. Bid 30000000? That's nearly all my cash. If lose, bid returned. Risk: opponent wins. Bid 30 alashi seems strong; opponents would need to outbid their entire cash. But tie_order matters. Let me bid 25000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739660,
+    "id": "202611151847322b0d9c6e921d43d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847322b0d9c6e921d43d5",
+    "usage": {
+      "completion_tokens": 289,
+      "completion_tokens_details": {
+        "reasoning_tokens": 217
+      },
+      "prompt_tokens": 3547,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3836
+    }
+  }
+}

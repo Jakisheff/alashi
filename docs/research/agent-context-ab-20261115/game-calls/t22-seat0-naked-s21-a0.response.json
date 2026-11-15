@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.097,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Налог влияет только на выручку рынка, а рынков больше нет — исход мне безразличен.\"}",
+          "reasoning_content": "Law card 1: tax 10%. My cash is highest; tax reduces future revenue? Tax applies to market sales—market already done. Tax 10% affects... final payout? tax_bps на выручку рынка. No more market. So irrelevant? Vote abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739147,
+    "id": "2026111518390391a2498ac03b4fca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518390391a2498ac03b4fca",
+    "usage": {
+      "completion_tokens": 94,
+      "completion_tokens_details": {
+        "reasoning_tokens": 58
+      },
+      "prompt_tokens": 3222,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3316
+    }
+  }
+}

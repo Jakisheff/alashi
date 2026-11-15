@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 11.067,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар после рынка уже не продать, а взятка 10 млн ради возможных 5% банка не окупается — сохраняю лидерство по cash.\",\"reasoning\":\"Final round: goods can no longer be sold, producing is pointless, and buying influence via a 10M bribe costs more than the expected 5% bank bonus, so passing protects my cash lead.\"}",
+          "reasoning_content": "Round 6 action. I have 51.18M cash, no goods. Options: produce gives 3 goods (subsidy 1) — but can't sell, market done. Useless. Donkey 1 alashi for 1 good—useless. Bid not round 4. Bribe: influence gives max-influence bonus 5% bank. Currently idx2 has influence 2, I have 1. Bribe 10M gives 2 influence → tie? Tie broken by cash+hard, I'd have more cash, so I'd win max influence and get 5% of bank bonus. Bank size? License bid 20M went in. Bank = commission 5% of bank... bank roughly sums of everything spent. Hard to know. Bribe 5M gives 1 influence → still less than 2. 10M gives 2, tie with idx2; I have higher cash → I win. Cost 10M to opponent idx1? Bribe to idx1 gives them cash, ranking. Actually bribe money goes to recipient, increases their payoff. 10M spent to get 5% of bank bonus. Bank: license 20M + 5% commission of payouts... total bank payout 100%? Bank commission 5% of bank; bank is likely revenue pool. Unknown but likely >100M? Actually bank grows from bids, tariffs, taxes. If bank ~ 40M+, 5% = 2M — not worth 10M. Too risky. Pass is safer.\n\nActually donkey/shuttle goods worthless now. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738711,
+    "id": "20261115183140a47357fd622c4c6e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183140a47357fd622c4c6e",
+    "usage": {
+      "completion_tokens": 424,
+      "completion_tokens_details": {
+        "reasoning_tokens": 333
+      },
+      "prompt_tokens": 3053,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3477
+    }
+  }
+}

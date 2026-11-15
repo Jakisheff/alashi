@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.867,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок уже прошёл, товар больше некуда продать, а donkey лишь сжигает 1 alashi — pass оптимален.\"}",
+          "reasoning_content": "Round 6 action, no bid. Produce gives 2 goods but market already passed—goods worthless. Donkey costs 1 alashi, no. Pass is fine; no useful action. But rule says no pass without reason—reason: no goods can be sold.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738744,
+    "id": "20261115183219c4b8a9fc18ca498d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183219c4b8a9fc18ca498d",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 3499,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3594
+    }
+  }
+}

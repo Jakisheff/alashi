@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.449,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам все 2 товара сейчас по высокой цене лестницы с boom +2, cash нужен под ставку на лицензию в этом раунде\"}",
+          "reasoning_content": "Round 4 market, boom +2. Prices: counter 4 → price index 4 → 8, +2 = 10. I have 2 goods. Sell now. Note sell_credit repaid: my promissory ~25 alashi added at border? Wait, cash 34 alashi — actually promissory from R3 sell_credit added at border of R4 already (cash 34). Yes. Sell now for license bid later.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739499,
+    "id": "202611151844560e14aa0c06154692",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151844560e14aa0c06154692",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      },
+      "prompt_tokens": 2783,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2921
+    }
+  }
+}

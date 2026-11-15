@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.375,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и мало денег — покупка по высокой цене 12 для перепродажи убыточна.\"}",
+          "reasoning_content": "Round 5 market, cash 3.2M, no goods. No actions possible except buy — buying goods to sell? Buy at price ~12? sold_counter=0, first unit price 12. Buying at 12 and selling at lower price loses. Could sell_credit future... no goods. Pass.\n\nActually buy moves counter backward; no benefit. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739647,
+    "id": "202611151847247203abb29d2f4f32",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847247203abb29d2f4f32",
+    "usage": {
+      "completion_tokens": 108,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 2635,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2743
+    }
+  }
+}

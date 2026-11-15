@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.776,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":20000000,\"reason\":\"Аукцион: ожидаемый доход лицензии ~20..60 alashi, ставка 20 даёт положительное EV, а при проигрыше возвращается.\"}",
+          "reasoning_content": "Round 4 action: auction available. Bid? Cash 24.5 alashi. License income 20-60. Bidding could win but costs. Rival cash 37, 36 — they can outbid. Bid some amount, e.g., 10? Expected license value ~40, expected profit if win = 40 - bid. Risk of being outbid — losing bid returned. But this game: losing bid returned, so bid high? If tie/equality they can outbid. Bid e.g. 25 alashi — but that's most of my cash; expected value 40, profit 15. Rivals may bid higher with more cash. Bidding aggressively: bid 20,000,000. If outbid, returned, no loss. Then money returned — so bid high to maximize chance? But bid amount matters only if won. So bid near license value minus? Bid 30M — profit ~10 if value 40. Risk value only 20, loss 10. Expected value mid 40. Bid 20M safer EV.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738690,
+    "id": "202611151831216628db3242a84431",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831216628db3242a84431",
+    "usage": {
+      "completion_tokens": 270,
+      "completion_tokens_details": {
+        "reasoning_tokens": 221
+      },
+      "prompt_tokens": 3450,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3720
+    }
+  }
+}

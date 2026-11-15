@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.903,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продаю обе единицы на рынке до падения лестницы, получаю песо-кассу под ставку на лицензию в action этого раунда.\"}",
+          "reasoning_content": "Round 4 market, sold_counter=4, price ladder index 4 → 7 alashi. Sell 2 units. Cash needed for bid in action. Sell now (not credit, credit only pays next round — round 6? It pays at boundary of next round, so sell_credit still redeems at round 5 boundary. But rule says last round no credit; round 4 credit pays at round 5 boundary — acceptable with 1.25x. But keep simple: sell for cash to fund bid. Bid needs peso cash. Sell 2 units at ~7 each = 14 alashi cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738440,
+    "id": "20261115182716f036b3c393884b21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182716f036b3c393884b21",
+    "usage": {
+      "completion_tokens": 176,
+      "completion_tokens_details": {
+        "reasoning_tokens": 127
+      },
+      "prompt_tokens": 2806,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2982
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.882,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и рынки закончились; взятка 20M ради бонуса влияния (5% банка) не окупается — сохраняю cash для итогового ранга.\"}",
+          "reasoning_content": "Round 6 action, cash 22M, no goods. Bid not available (only round 4). Bribe? Influence bonus 5% of bank... I'm poorest, influence 1 vs rival 2. Bribe 20M gives 4 influence → max influence bonus. 20M bribe costs me 20M but gives bonus 5% of bank. Bank size? Unknown; total cash ~82M, bank entry fees etc. 5% of bank likely small relative to 20M. But rank matters: 50:30:15 shares of remainder + own cash ranking? Final ranking by cash+hard only determines tie? Actually payout is shares 50:30:15 — presumably by rank. Losing 20M shifts my rank to last. Donkey: 1 alashi for 1 goods, no market left (market of round 6 already passed). No value. Bribe to gain influence bonus: risky. Keep cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738176,
+    "id": "20261115182247d88bb6bc24954e20",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182247d88bb6bc24954e20",
+    "usage": {
+      "completion_tokens": 247,
+      "completion_tokens_details": {
+        "reasoning_tokens": 199
+      },
+      "prompt_tokens": 4064,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4311
+    }
+  }
+}

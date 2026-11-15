@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.563,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 5 даёт +1 влияния мне как богатейшему — усиливает мою долю бонуса влияния в итоговой выплате\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. I'm richest, influence 2 → 3, boosts my influence bonus share (5% of bank). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738798,
+    "id": "20261115183315d1dfd1840fcf4762",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183315d1dfd1840fcf4762",
+    "usage": {
+      "completion_tokens": 77,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 4353,
+      "prompt_tokens_details": {
+        "cached_tokens": 4032
+      },
+      "total_tokens": 4430
+    }
+  }
+}

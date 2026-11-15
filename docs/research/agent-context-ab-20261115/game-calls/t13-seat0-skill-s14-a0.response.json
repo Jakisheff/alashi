@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.169,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 4 даёт +1 влияния самому бедному — это я (25.8 alashi против 41.5 и 37.5), а влияние даёт бонус доли комиссии.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm not poorest (cash 25.8 vs 41.5, 37.5 — actually I AM poorest). Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738609,
+    "id": "202611151830073fce6f062d99456e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830073fce6f062d99456e",
+    "usage": {
+      "completion_tokens": 93,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 3128,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3221
+    }
+  }
+}

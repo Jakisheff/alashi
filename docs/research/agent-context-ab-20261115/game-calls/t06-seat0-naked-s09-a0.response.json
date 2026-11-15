@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 12.328,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара без риска конфискации, влияние уже лидирует, деньги сохраняю на аукцион раунда 4.\"}",
+          "reasoning_content": "I'm president with 37 cash. Action phase round 3. Options: produce (2 goods), donkey, shuttle, bribe, roof. Later sell in round 4+ market. Round 4 auction bid. Influence matters for final bonus. Bribe gives influence floor(amount/5M). Bribing opponent gives them money though. Final payout: rank by cash + shares; 5% bonus to max influence. My influence 2, others 1. Bribe 5M to someone gives me +1 influence. But cost 5M. Influence bonus worth 5% of bank; bank size unknown. Also president status matters.\n\nSimplest: produce goods now to sell later (round 4 with boom? boom applies to current market — sold already). Boom likely only round 3 market. Future prices lower. Produce 2 goods, sell next round ~9/8 each. Alternatively donkey: 1 alashi for 1 good, marginal. Shuttle: 3 goods free but 25% confiscation of grey goods — but I have 0 goods, shuttle gives 3+0=3 grey, risk confiscation. Expected 2.25 goods vs 2 free — produce safer.\n\nAlso consider bribe for influence to keep presidency and influence bonus. Bribing 5M to faction 1 (richest after me... actually I'm richest). Influence bonus 5% of bank — bank is sum of taxes etc. Likely worth more than 5M? Unknown. Keeping influence lead: I'm at 2 vs 1. Bonus likely decided by influence max; I already lead. So bribe unnecessary.\n\nAction: produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738189,
+    "id": "20261115182257e0276bb43acc4c48",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182257e0276bb43acc4c48",
+    "usage": {
+      "completion_tokens": 385,
+      "completion_tokens_details": {
+        "reasoning_tokens": 343
+      },
+      "prompt_tokens": 2015,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2400
+    }
+  }
+}

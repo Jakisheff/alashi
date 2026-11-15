@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.419,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег; produce даёт 2 единицы для продажи в следующем раунде.\"}",
+          "reasoning_content": "I have 0 goods, vote_weight 3 means I passed in market (+2). Produce gives 2 goods. Donkey costs 1 alashi (cash 0 — impossible? cash 0, cost 1, would fail). Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737954,
+    "id": "20261115181911d333be7a43154433",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181911d333be7a43154433",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 2450,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2532
+    }
+  }
+}

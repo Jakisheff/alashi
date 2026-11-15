@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.49,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% режет мою будущую выручку как продавца — против.\"}",
+          "reasoning_content": "Tax 10% hurts me as seller. Player2 already voted yes. I have weight 1. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746629,
+    "id": "202611152043476beadb6488e04446",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611152043476beadb6488e04446",
+    "usage": {
+      "completion_tokens": 55,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 2176,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 2231
+    }
+  }
+}

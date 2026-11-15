@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.827,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, продавать нечего; покупка в первом раунде невыгодна.\"}",
+          "reasoning_content": "First round, no goods. Action: produce later. Market phase: nothing to sell. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737951,
+    "id": "20261115181909b0a0b178bb1443c0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181909b0a0b178bb1443c0",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 20
+      },
+      "prompt_tokens": 1295,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1346
+    }
+  }
+}

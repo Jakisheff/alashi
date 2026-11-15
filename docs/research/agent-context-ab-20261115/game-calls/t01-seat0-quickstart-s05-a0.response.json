@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.684,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Ожидаемо ~2.25 товара бесплатно против 2 у produce; риск конфискации приемлем.\"}",
+          "reasoning_content": "Round 2 action, I'm president, no law yet. Cash 17M. Best: shuttle gives 3 goods but confiscation risk at border (~25%); donkey costs 1 alashi for 1 good. Produce gives 2 free goods. Round 2 of 6. Cash becomes floor(17/100)*62 = 10.54M at border? Wait cash devalues. Spending cash before border is good — donkey converts cash to goods. Shuttle 25% confiscation chance; expected 2.25 goods free. Donkey: spend 1 get 1. I could do shuttle. But confiscation loses all 3? Probably all shuttle goods. Expected value: shuttle 0.75*3=2.25 goods free vs produce 2 free. Donkey: 3M? donkey costs 1 alashi = 1M units for 1 good. Cash will devalue 17→10.54; spend 1 on donkey keeps value. Choose shuttle: better expected goods, free.\n\nActually donkey cost is only 1M units = 1 alashi. Hmm \"donkey стоит 1 alashi\". Buy one good for 1 alashi that sells at ~6-8. Good deal. But only one action. Shuttle expected 2.25 goods at higher variance. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737771,
+    "id": "202611151816039aacc841324d48ed",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816039aacc841324d48ed",
+    "usage": {
+      "completion_tokens": 317,
+      "completion_tokens_details": {
+        "reasoning_tokens": 281
+      },
+      "prompt_tokens": 2771,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3088
+    }
+  }
+}

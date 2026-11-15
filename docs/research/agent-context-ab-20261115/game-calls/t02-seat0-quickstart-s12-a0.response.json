@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.182,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Кредитная продажа 3 единиц по 5/4/3 с множителем 1.25 избегает девальвации на границе раунда.\"}",
+          "reasoning_content": "Round 4 market. I have 3 goods, sold_counter=6, prices: index 6→5? Ladder [12,10,9,8,7,6,5,...] next units at 5,4,3. Sell credit 3 units → (5+4+3)*1.25=15 alashi promissory. But wait — devaluation at round boundary: cash floor(cash/100)*62. Promissory added to cash at boundary and not devalued itself? \"promissory прибавляется к cash и обнуляется\" — added after devaluation, so credit avoids devaluation. Yes, sell_credit 3.\n\nBut after last round (6) credit not redeemed — round 4 fine.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738024,
+    "id": "2026111518201841332165f2544d47",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518201841332165f2544d47",
+    "usage": {
+      "completion_tokens": 211,
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      },
+      "prompt_tokens": 3465,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3676
+    }
+  }
+}

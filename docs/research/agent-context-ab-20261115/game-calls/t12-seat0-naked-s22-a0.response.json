@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.61,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Закон 7 уже не влияет на итог (рынок сыгран), вето не нужно.\"}",
+          "reasoning_content": "Law 7 passed, harmless (market done). No veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738571,
+    "id": "202611151829291b4143940bc34c83",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829291b4143940bc34c83",
+    "usage": {
+      "completion_tokens": 44,
+      "completion_tokens_details": {
+        "reasoning_tokens": 13
+      },
+      "prompt_tokens": 3338,
+      "prompt_tokens_details": {
+        "cached_tokens": 3072
+      },
+      "total_tokens": 3382
+    }
+  }
+}

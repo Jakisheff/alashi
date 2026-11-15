@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.797,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Товара нет, shuttle даёт больше единиц (3 против 2) для продажи на следующем рынке с бумом, ожидаемая ценность выше риска конфискации\"}",
+          "reasoning_content": "Action phase, round 3. I have cash 21.25, no goods. Options: produce (2 goods), donkey (1 good for 1), shuttle (3 goods, 25% confiscation—no border role known). Produce free gives 2 goods. Shuttle gives 3+ goods worth ~5-7 each at higher sold counter; but 25% confiscation risk. Price ladder at 7 units: next prices ~5,4,3... with boom +2. Selling 3 units gives ~ (5+4+3)+6=18 vs 2 units (5+4)+4=13 (prices next market). Shuttle expected 0.75*3 units value vs produce 2. Probably shuttle slightly better: expected goods 2.25 vs 2. Marginal. Also grey goods. Take shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739388,
+    "id": "20261115184301f9c618c78f3d4a41",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184301f9c618c78f3d4a41",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 176
+      },
+      "prompt_tokens": 1996,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2222
+    }
+  }
+}

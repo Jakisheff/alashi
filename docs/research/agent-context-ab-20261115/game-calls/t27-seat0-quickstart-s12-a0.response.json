@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.748,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа ×1.25 избегает девальвации (погашение на границе раунда 5) и даёт выручку ~16 alashi против 13 при обычной продаже.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods, sold_counter=4. Prices: ladder index 4 → 7? Actually price for next units: at sold_counter 4, next price = ladder[4]=7. Selling 2 units at 7 and 6 = 13. Sell credit? Credit pays at round 5 border; round 6 sales still fine. But devaluation floor(cash/100)*62 — promissory added to cash after devaluation, so credit avoids devaluation. Good: sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739380,
+    "id": "20261115184255a5c625d32417404d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184255a5c625d32417404d",
+    "usage": {
+      "completion_tokens": 177,
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      },
+      "prompt_tokens": 3422,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3599
+    }
+  }
+}

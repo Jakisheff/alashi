@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.05,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"abstain\",\"reason\":\"Карта 2 (налог 20%) касается только выручки будущих продаж, а рынков больше нет — закон нейтрален.\"}",
+          "reasoning_content": "Card 2: tax 20% — but market already done, tax applies to revenue... final round market finished; tax irrelevant? Tax applies on future sales — no more sales. Actually cash is counted, tax only on sales revenue. So harmless. Vote no anyway or abstain. Abstain is fine; better vote no? If irrelevant, abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739092,
+    "id": "20261115183808345ba42bf59547f4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183808345ba42bf59547f4",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 3670,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3787
+    }
+  }
+}

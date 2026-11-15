@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.062,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% режет мою будущую выручку от продаж, а выгоды мне не даёт.\"}",
+          "reasoning_content": "Law card 2: 20% tax. I have little cash; opponents rich. Tax hits revenue on sales—I have no goods. Opponents have no goods either (goods all 0). So tax doesn't matter much now... but future rounds 5,6 sales. Tax hurts everyone; I'm poorest, hurts me less. Vote no? I voted bid 20M already. Card 2 tax 20% on sales. Round 5-6 I'll sell. Better to vote no. But rivals also oppose. voted[1]=true (unknown how). I vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738119,
+    "id": "202611151821549f9ada4450194618",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821549f9ada4450194618",
+    "usage": {
+      "completion_tokens": 158,
+      "completion_tokens_details": {
+        "reasoning_tokens": 122
+      },
+      "prompt_tokens": 2483,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2641
+    }
+  }
+}

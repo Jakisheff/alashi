@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.43,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 8 списывает promissory — у меня их нет, а в будущем может понадобиться sell_credit, закон мне невыгоден.\"}",
+          "reasoning_content": "Law card 8: cancels all promissory notes. I have none — voting yes hurts anyone who used sell_credit; currently nobody has cash... it wipes promissory debts. I have none, so no benefit. Others likely also none yet. Vote no or abstain? Passing card 8 doesn't help me; also future me might use sell_credit. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737960,
+    "id": "20261115181915d20e687cc24c46d5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181915d20e687cc24c46d5",
+    "usage": {
+      "completion_tokens": 119,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      },
+      "prompt_tokens": 2526,
+      "prompt_tokens_details": {
+        "cached_tokens": 2304
+      },
+      "total_tokens": 2645
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.872,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, карта 8 безвредна — остаётся только завершить фазу.\"}",
+          "reasoning_content": "We're in law phase post_vote — but we must still return a law action? Voted already true. Action likely pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739219,
+    "id": "20261115184017ed1294c9b8b640d6",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184017ed1294c9b8b640d6",
+    "usage": {
+      "completion_tokens": 60,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 2004,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2064
+    }
+  }
+}

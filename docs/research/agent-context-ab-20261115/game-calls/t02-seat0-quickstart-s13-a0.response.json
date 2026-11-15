@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.621,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":30000000,\"reason\":\"Аукцион раунда 4: доход лицензии ~20..60 alashi сверх доли, а ставка в банк частично вернётся через распределение, ожидаемая прибыль положительная.\"}",
+          "reasoning_content": "Round 4 action, auction available. Bid for license. Cash 40.675M. Income 20-60 alashi, plus license money pays out beyond share. Bid amount goes to bank. A bid of e.g. 25 alashi? Expected value: license ~40 alashi, but money paid to bank is lost (bank redistributed though — bid goes to bank, increasing pool, which is shared 50:30:15; I get 50% back effectively). So paying A costs 0.5A net, gains ~40. Rivals may also bid. Bid something like 30M (30 alashi)? Net cost 15, gain ~40 — worth. But rivals might outbid; I have more cash than rival 2 (42.5? actually 42.5M > my 40.7M). Rival 2 has more cash. Bid conservatively high: 30 alashi = 30000000. Cash would be 10.675M after. Risk: overpaying. Expected license 40; paying 30 with 50% recovery → net 25 gain. Even 35 fine. Bid 30000000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738032,
+    "id": "202611151820241270319de8d04017",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151820241270319de8d04017",
+    "usage": {
+      "completion_tokens": 304,
+      "completion_tokens_details": {
+        "reasoning_tokens": 246
+      },
+      "prompt_tokens": 3573,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 3877
+    }
+  }
+}

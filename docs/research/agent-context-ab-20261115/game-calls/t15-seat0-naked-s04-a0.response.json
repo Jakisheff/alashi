@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.187,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит по высокой цене (9) даёт 1.25x выручки и обходит девальвацию.\"}",
+          "reasoning_content": "I have 2 goods, cash 0. Subsidy active. Sell now at price? sold_counter=2, price ladder next is index 2: 9 alashi? Ladder [12,10,9,...], counter 2 means next unit sells at 9. Better sell both now at 9 each = 18. Or sell_credit for 1.25x — cash becomes promissory, but devaluation at round boundary applies to cash floor(cash/100)*62... promissory returns at boundary. Devaluation 62% — sell_credit avoids devaluation and gives 1.25x. Revenue 18*1.25=22.5 alashi promissory, returned at boundary of round 3, no tax? Tax applied. No tax now (0). Sell credit is strictly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738649,
+    "id": "202611151830433eecce1b8c4b4820",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830433eecce1b8c4b4820",
+    "usage": {
+      "completion_tokens": 217,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 1583,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1800
+    }
+  }
+}

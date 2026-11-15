@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.501,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара на финальный рынок раунда 6 — максимальная цена при sold_counter=0.\"}",
+          "reasoning_content": "I'm idx 0, cash 10.6, goods 0. Produce gives 2 goods for round 6 market. Vote weight: I have 3 already? vote_weight [3,3,1] — I skipped market? No, weight 3 means base 1+2 skipped action? Actually weight +2 if action skipped. I haven't acted yet this round. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739417,
+    "id": "202611151843337491b8d8e1924e89",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151843337491b8d8e1924e89",
+    "usage": {
+      "completion_tokens": 121,
+      "completion_tokens_details": {
+        "reasoning_tokens": 82
+      },
+      "prompt_tokens": 3279,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3400
+    }
+  }
+}

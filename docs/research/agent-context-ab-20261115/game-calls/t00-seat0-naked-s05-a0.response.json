@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.527,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара для продажи на рынке раунда 3; донки недоступны без денег.\"}",
+          "reasoning_content": "I'm player 0, cash 0, goods 0, influence 1, president. Round 2 action. I have promissory 25 (from 2 units credit? Actually sold_counter=6 — others sold). I have 0 goods, 0 cash. Options: produce (free, 2 goods). Best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737774,
+    "id": "202611151816101a29ed355f5c4bf8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151816101a29ed355f5c4bf8",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 1703,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1807
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.066,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Производство бесплатно даёт 2 товара для следующего рынка, а кэш всё равно сильно девальвирует на границе раунда.\"}",
+          "reasoning_content": "Round 2 action. Cash 17M, others have goods. Vote weight shows sold goods? sold_counter 6 means prices dropping. Action: produce gives 2 goods for next market. Donkey costs 1 alashi per good. I have cash 17M; buying goods at ~? Market prices after 6 sold: ladder index 6 → 5,4,3... but next round counter resets? Not sure. Produce is free; also I'm not president, others may produce. Produce gives 2. Consider donkey too but only one action. Produce is safe.\n\nWait, devaluation at round 2+ border: cash=floor(cash/100)*62. Hmm, cash 17,000,000 → floor(17000000/100)*62? That would devalue to 10.54M? Actually cash in units; floor(cash/100)... 170000*62=10.54M. Yes, hard devaluation of 62%. So spending cash now is better. Donkey: 1 alashi (1M units) for 1 good — expensive but avoids devaluation? Cash devalues regardless. Actually spending 1M on donkey converts cash to good worth ~5-9 later. Still, produce gives 2 free. Only one action per round. Produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739132,
+    "id": "2026111518384345ebb69a904f482e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518384345ebb69a904f482e",
+    "usage": {
+      "completion_tokens": 317,
+      "completion_tokens_details": {
+        "reasoning_tokens": 274
+      },
+      "prompt_tokens": 2700,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3017
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.29,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% больше не применяется — продаж не будет, исход голосования безразличен, поэтому подтверждаю формально.\"}",
+          "reasoning_content": "Law card 2: 20% tax on revenue — irrelevant, no more sales. Market already passed. But tax applies to revenue only; nothing to sell. So voting doesn't matter for me; but it could reduce... card 2 sets tax_bps 2000 — no future market. Vote yes/no irrelevant. Could extract favor? Just abstain or yes. Pass is allowed? law phase allows pass. Vote yes — harmless either way. Rivals might abstain to gain +2 weight? Weights already fixed. I'll vote yes (no effect).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738091,
+    "id": "20261115182126f6421250fd7c46e0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182126f6421250fd7c46e0",
+    "usage": {
+      "completion_tokens": 155,
+      "completion_tokens_details": {
+        "reasoning_tokens": 116
+      },
+      "prompt_tokens": 3409,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3564
+    }
+  }
+}

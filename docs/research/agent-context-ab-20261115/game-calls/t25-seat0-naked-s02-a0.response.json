@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.907,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет promissory, карта сейчас безвредна, а у меня нет причин блокировать\"}",
+          "reasoning_content": "Card 8: cancels promissory notes. I have none. Others may. voted: others true. I should vote? I have no promissory, opponents might. Card 8 hurts whoever has promissory — no one yet (round1 market before devaluation). Actually no promissory exists yet. So card is neutral. Vote yes/no? Skip action → weight 3, but president is someone else (tie_order, I'm idx0, is_president false... someone else has higher tie). Card 8 has no effect now. Vote yes harmlessly; or abstain. I'll vote_yes (neutral, passes) — fine either way. Actually if it cancels promissory notes, could hurt future me when I use sell_credit. But active now, only current promissories. Neutral. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739209,
+    "id": "20261115184002618b92a54b414ac3",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184002618b92a54b414ac3",
+    "usage": {
+      "completion_tokens": 205,
+      "completion_tokens_details": {
+        "reasoning_tokens": 173
+      },
+      "prompt_tokens": 1432,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1637
+    }
+  }
+}

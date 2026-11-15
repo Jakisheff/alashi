@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.918,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 20% заметно урежет выручку моих трёх товаров на рынке раунда 6, а выгоды от него не вижу.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I just sold on credit; tax applied at sale time already? Tax bps active at market. Card 2 would apply to round 6 market. A 20% tax on my round 6 sales hurts. But presidency? Player 2 has influence 2, I'm not president. Card 2 hurts everyone; opponents also sell. Actually tax reduces everyone's revenue; my future sales 3 goods, tax 20% costs me ~13 alashi*0.2≈2.6. Vote no. But note: no tax active now; card 2 would set tax 20%. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738048,
+    "id": "2026111518204277de99dd2a4e4cfb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518204277de99dd2a4e4cfb",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 3931,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4111
+    }
+  }
+}

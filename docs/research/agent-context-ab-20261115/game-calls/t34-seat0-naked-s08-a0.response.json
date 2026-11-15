@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.931,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Shuttle даёт 3 товара бесплатно — лучший ожидаемый результат (2.25 против 2 у produce), риск конфискации приемлем.\"}",
+          "reasoning_content": "I'm player 0, cash 9.3, goods 0. Options: produce (2), donkey (1), shuttle (3). I have 38.75 promissory incoming at round-4 boundary (added to cash then devalued? Actually promissory added to cash and reset at boundary — devaluation applies cash=floor(cash/100)*62 at rounds 2+. At round 4 boundary promissory added... order matters; likely promissory added then devaluation? \"На границе раундов 2+ cash=floor(cash/100)*62... promissory прибавляется к cash и обнуляется\" — promissory added, so devalued too? Ambiguous. Either way shuttle best: expected 2.25 goods.\n\nShuttle cost 0, gives 3 goods.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746670,
+    "id": "20261115204425a942add692164883",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204425a942add692164883",
+    "usage": {
+      "completion_tokens": 220,
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      },
+      "prompt_tokens": 2057,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2277
+    }
+  }
+}

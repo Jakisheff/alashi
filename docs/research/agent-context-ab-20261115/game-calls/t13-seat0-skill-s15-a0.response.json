@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.907,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, карта 4 даёт мне +1 влияния как беднейшему — вето не нужно.\"}",
+          "reasoning_content": "Post-vote, no veto pending, I voted yes. Law 4 benefits me (poorest gets influence). Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738612,
+    "id": "2026111518301007cda0e9ab0c4d31",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518301007cda0e9ab0c4d31",
+    "usage": {
+      "completion_tokens": 62,
+      "completion_tokens_details": {
+        "reasoning_tokens": 26
+      },
+      "prompt_tokens": 3237,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3299
+    }
+  }
+}

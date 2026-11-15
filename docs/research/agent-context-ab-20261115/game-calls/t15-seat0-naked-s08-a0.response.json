@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.345,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":3,\"reason\":\"Продажа в кредит по высоким ценам (12/10/9) с коэффициентом 1.25 и без девальвации даёт ~38.75 alashi против ~19 при обычной продаже.\"}",
+          "reasoning_content": "I have 3 goods. Prices start high (12,10,9...). Sell now at 12,10,9 = 31, or wait for later rounds with devaluation (62%). Selling now cash gets devalued at round 4 boundary: floor(cash/100)*62 → ~19. Sell credit: promissory added at next round boundary without devaluation, 1.25x. Sell credit 3 units: 31*1.25=38.75 promissory → full at round 4 boundary. That's better than 19. So sell_credit 3.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738671,
+    "id": "202611151831067261f6cb94a24e08",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831067261f6cb94a24e08",
+    "usage": {
+      "completion_tokens": 185,
+      "completion_tokens_details": {
+        "reasoning_tokens": 126
+      },
+      "prompt_tokens": 1934,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2119
+    }
+  }
+}

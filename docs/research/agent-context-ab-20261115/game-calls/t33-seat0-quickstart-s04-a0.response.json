@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.393,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Денег меньше 100, девальвация не страшна, а кредит даёт выручку ×1.25 без риска.\",\"units_note\":2}",
+          "reasoning_content": "Round 2 market, I have 2 goods, cash 0, opponent 3 has 22 cash. Sell now at decent price? sold_counter=2, prices start [12,10,9,...] with counter 2 means next unit sells at 9. Price shift 0. Sell 2 units at 9 and 8 (minus nothing, tax 0) = 17. Or sell_credit 1.25x but devaluation floor(cash/100)*62 hits cash, promissory added after devaluation at border — actually cash devalues at round border, promissory added after. Selling credit avoids devaluation and gains 25%. Devaluation: cash 17 → floor(17/100)*62=0 since <100. No devaluation effect under 100. So credit gives 1.25x with no downside. sell_credit 2 units → 21.25 promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739682,
+    "id": "2026111518475591b4af988d0a4d58",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518475591b4af988d0a4d58",
+    "usage": {
+      "completion_tokens": 240,
+      "completion_tokens_details": {
+        "reasoning_tokens": 192
+      },
+      "prompt_tokens": 2663,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2903
+    }
+  }
+}

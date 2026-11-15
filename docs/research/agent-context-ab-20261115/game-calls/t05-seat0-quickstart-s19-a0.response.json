@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.533,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Рынок финального раунда пройден, товар больше не продать, а взятка за влияние стоит дороже ожидаемого бонуса.\"}",
+          "reasoning_content": "Round 6 action: no goods, cash 27M. Options: donkey costs 1 alashi gives 1 good — but market already passed (final market done). Goods useless now. Bid not available (only round 4). So pass. Bribe for influence? Influence bonus: max influence holder gets extra 5% of bank. Rival has influence 2; I could bribe 10M to get +2 influence → 3, tie with rival (2)... bribe gives floor(amount/5M)=2 influence for 10M, cost 10M reduces cash. Bank is commission pool; extra 5% of bank likely small relative to 10M. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738183,
+    "id": "20261115182257aee8360da05a4107",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182257aee8360da05a4107",
+    "usage": {
+      "completion_tokens": 188,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      },
+      "prompt_tokens": 4082,
+      "prompt_tokens_details": {
+        "cached_tokens": 3776
+      },
+      "total_tokens": 4270
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.084,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продажа на верхних ступенях лестницы (12 и 10) без налога — максимум выручки.\"}",
+          "reasoning_content": "Round 3 market, sold_counter 0, price 12, no tax. Sell both units: 12+10=22.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739034,
+    "id": "202611151837102e17d4778f5c42da",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151837102e17d4778f5c42da",
+    "usage": {
+      "completion_tokens": 68,
+      "completion_tokens_details": {
+        "reasoning_tokens": 28
+      },
+      "prompt_tokens": 2405,
+      "prompt_tokens_details": {
+        "cached_tokens": 2176
+      },
+      "total_tokens": 2473
+    }
+  }
+}

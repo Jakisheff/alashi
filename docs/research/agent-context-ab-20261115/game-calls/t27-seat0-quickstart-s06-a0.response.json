@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.25,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% режет мою будущую выручку от продаж; голосую против, при необходимости применю вето как президент.\"}",
+          "reasoning_content": "Law card 1: tax 10%. Tax applies to sales revenue. I plan to sell goods round 3+. A 10% tax hurts me; but I'm president with veto option... vote_no is likely enough — others voted? voted[2]=true (yes?). Unknown. I have weight 1, others 1 each. If both vote yes, it passes 2-1; veto then. Simpler: vote_no first, veto later if needed.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739345,
+    "id": "20261115184221e41cbf7ba2844905",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184221e41cbf7ba2844905",
+    "usage": {
+      "completion_tokens": 138,
+      "completion_tokens_details": {
+        "reasoning_tokens": 97
+      },
+      "prompt_tokens": 2861,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2999
+    }
+  }
+}

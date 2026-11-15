@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.166,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Продажа в кредит даёт 1.25x и деньги приходят на границе раунда после девальвации, избегая списания 62% наличных.\"}",
+          "reasoning_content": "Round 4 market. I have 2 goods, cash 21.7M. Sold counter 4, ladder price at index 4 = 7. Sell both. Should I sell or sell_credit? Devaluation: cash floor(cash/100)*62 means cash keeps 62%? Actually cash is in units where 100 alashi... cash=21712400 units = 21.7 alashi. floor(2171/100)... hmm, floor(cash/100)*62 → floor(21712400/100)=217124, *62 = 13,461,688? That's a big haircut. Wait 1000000 units = 1 alashi. floor(21712400/100)*62 = 217124*62=13.46M units = 13.46 alashi? That seems drastic. Anyway sell now for cash vs sell_credit gives 1.25x but pays next round boundary and cash then partially survives? Round 4 of 6; boundary after round 4 devalues cash; promissory added after devaluation, so sell_credit avoids the 62% haircut and gives 1.25x. So sell_credit 2 units.\n\nPrice ~7 each → 14 *1.25 = 17.5 alashi promissory, vs cash 14→ devalued. Sell_credit clearly better.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738430,
+    "id": "20261115182701e19fed5aea6e41dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182701e19fed5aea6e41dd",
+    "usage": {
+      "completion_tokens": 341,
+      "completion_tokens_details": {
+        "reasoning_tokens": 286
+      },
+      "prompt_tokens": 3274,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3615
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.245,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 5 даёт +1 влияния богатейшему (сопернику), усиливая его вес и бонус влияния в итоге — против.\"}",
+          "reasoning_content": "Card 5: +1 influence to richest. Richest is faction 1 (23.27M), not me. But influence bonus at end gives 5% bank share. Me voting no? Others voted: idx2 voted yes. I'm poorest. Card benefits player 1, hurts me relatively. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738536,
+    "id": "2026111518285269e68fc0847a41d4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518285269e68fc0847a41d4",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 66
+      },
+      "prompt_tokens": 3705,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3814
+    }
+  }
+}

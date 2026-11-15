@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.461,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены +2 на будущих рынках, где я снова буду продавать — голосую за.\"}",
+          "reasoning_content": "Law card 7: prices +2 — beneficial for seller. I have no goods though; future rounds I'll produce/sell. Vote yes. Also action was bid (not pass), so weight 3. Rivals already voted? voted[1]=true, [2]=true — unknown. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737808,
+    "id": "20261115181645eb0dd6ddba514aad",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181645eb0dd6ddba514aad",
+    "usage": {
+      "completion_tokens": 101,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      },
+      "prompt_tokens": 3046,
+      "prompt_tokens_details": {
+        "cached_tokens": 2752
+      },
+      "total_tokens": 3147
+    }
+  }
+}

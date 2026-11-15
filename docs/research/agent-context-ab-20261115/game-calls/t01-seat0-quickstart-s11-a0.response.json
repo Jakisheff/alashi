@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.308,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"veto\",\"reason\":\"Вето бесплатно блокирует карту 4, дающую +1 влияния сопернику и угрожающую моему президентству и бонусу.\"}",
+          "reasoning_content": "I'm president, voted no. Others voted; if yes wins, veto? Card 4 gives influence to poorest — rival. Use veto to be safe? Votes unknown but likely someone yes. Veto is free and prevents rival influence. Veto.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737794,
+    "id": "20261115181631e10e46e88b8b4352",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181631e10e46e88b8b4352",
+    "usage": {
+      "completion_tokens": 91,
+      "completion_tokens_details": {
+        "reasoning_tokens": 51
+      },
+      "prompt_tokens": 3309,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3400
+    }
+  }
+}

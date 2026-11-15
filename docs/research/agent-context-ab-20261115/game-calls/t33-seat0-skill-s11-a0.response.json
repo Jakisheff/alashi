@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.069,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Продаю все 3 товара сразу на открытии рынка 4, пока лестница не упала ниже — держать товар дольше невыгодно, и в раунде 4 нужен песо-кассал под ставку на лицензию.\"}",
+          "reasoning_content": "I have 3 goods. Sell all now. sold_counter=4, price index next: ladder [12,10,9,8,7,6,5,4,3,3,2,2,2,1,1,1] — next unit price 6,5,4... Sell 3 units anyway.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746647,
+    "id": "20261115204404c546df03853b4e7a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204404c546df03853b4e7a",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2731,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2868
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.831,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара для продажи, покупка при сбросе счётчика невыгодна\"}",
+          "reasoning_content": "Round 5 market. My cash 40.87M, goods 0. No goods to sell. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739442,
+    "id": "20261115184359a7155c2e3dbf45d0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184359a7155c2e3dbf45d0",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 2672,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2723
+    }
+  }
+}

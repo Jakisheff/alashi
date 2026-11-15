@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.805,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 пустая и ничего не меняет, а мой голос всё равно не решает исход при весах 3 и 4 у соперников.\"}",
+          "reasoning_content": "Law card 0, empty. Others already voted (voted true for them). Vote weight: me 1, others 3 and 4. Card 0 does nothing — abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738887,
+    "id": "2026111518344515cc9ed39e6443e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518344515cc9ed39e6443e4",
+    "usage": {
+      "completion_tokens": 86,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 3529,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3615
+    }
+  }
+}

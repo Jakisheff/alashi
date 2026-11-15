@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный раунд: обычная продажа 3 единиц по высокой цене (12), кредит уже не погасится.\",\"reason\":\"...\"}",
+          "reasoning_content": "Round 6 market, I have 3 goods, cash 59.3M. Final round — sell_credit won't be redeemed. Sell normally at price 12 (sold_counter 0), tax 0.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738754,
+    "id": "20261115183231c76b07d5af1c4929",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183231c76b07d5af1c4929",
+    "usage": {
+      "completion_tokens": 88,
+      "completion_tokens_details": {
+        "reasoning_tokens": 44
+      },
+      "prompt_tokens": 3107,
+      "prompt_tokens_details": {
+        "cached_tokens": 2816
+      },
+      "total_tokens": 3195
+    }
+  }
+}

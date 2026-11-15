@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.292,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товар и рынков больше нет, влияние уже максимально — никакое действие не увеличивает выплату.\",\"action_detail\":{\"action\":\"pass\"}}",
+          "reasoning_content": "Round 6 action: goods 0, no license income yet? Cash high. Options: donkey costs 1 alashi gives 1 good — but no more market. Bribe gives influence → extra 5% of bank commission to max influence. I already have influence 2 vs 1,1, so I keep max influence regardless. So pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739421,
+    "id": "20261115184337094773e1b6354d3b",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184337094773e1b6354d3b",
+    "usage": {
+      "completion_tokens": 114,
+      "completion_tokens_details": {
+        "reasoning_tokens": 74
+      },
+      "prompt_tokens": 4291,
+      "prompt_tokens_details": {
+        "cached_tokens": 4032
+      },
+      "total_tokens": 4405
+    }
+  }
+}

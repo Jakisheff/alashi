@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.165,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"У меня нет товара, произвожу 2 единицы бесплатно, пока соперники уже с товаром.\"}",
+          "reasoning_content": "I have 0 goods, opponents have 2 each. Produce gives 2 goods. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738377,
+    "id": "20261115182614c535cdae4f4a49b2",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182614c535cdae4f4a49b2",
+    "usage": {
+      "completion_tokens": 54,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 1362,
+      "prompt_tokens_details": {
+        "cached_tokens": 1152
+      },
+      "total_tokens": 1416
+    }
+  }
+}

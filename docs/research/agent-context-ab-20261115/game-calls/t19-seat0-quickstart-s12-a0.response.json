@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.728,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница ещё даёт 7 и 6 за единицу, у меня 2 товара и нет конкуренции — продаю сейчас, cash сохранится до аукциона лицензии.\"}",
+          "reasoning_content": "Round 4 market. I'm idx0, cash 20.2M, goods 2. Prices: counter=4, so next prices ~7,6. Others have no goods. Sell 2. Later round 4 auction bid. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738944,
+    "id": "20261115183540325a15623d464ea7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183540325a15623d464ea7",
+    "usage": {
+      "completion_tokens": 109,
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "prompt_tokens": 3451,
+      "prompt_tokens_details": {
+        "cached_tokens": 3200
+      },
+      "total_tokens": 3560
+    }
+  }
+}

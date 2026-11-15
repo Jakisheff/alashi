@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.974,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"У меня нет непогашенных promissory, а списание чужих обязательств снижает выплаты соперников и улучшает мой ранг.\"}",
+          "reasoning_content": "Law card 8 cancels promissory notes. I have none (sold normal). Rival 3 sold earlier — possibly credit? Card 8 wipes promissories — harms those holding credit, not me. I have no promissory. But voting yes could wipe others' promissory; voting no if others benefited. Unknown. Neutral card for me; vote no/abstain. Actually wiping rivals' promissory helps my ranking. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738406,
+    "id": "202611151826422aa09df533e94616",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151826422aa09df533e94616",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      },
+      "prompt_tokens": 2853,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2990
+    }
+  }
+}

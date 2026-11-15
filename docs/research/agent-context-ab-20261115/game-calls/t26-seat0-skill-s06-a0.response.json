@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.981,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент и вето недоступно.\"}",
+          "reasoning_content": "Post_vote, everyone voted, phase law. Only pass available? Actions allowed: vote_yes/no/abstain/veto/pass. Votes done, not president, no veto. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739272,
+    "id": "202611151841090b0e78c28c3f468e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151841090b0e78c28c3f468e",
+    "usage": {
+      "completion_tokens": 64,
+      "completion_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "prompt_tokens": 2255,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2319
+    }
+  }
+}

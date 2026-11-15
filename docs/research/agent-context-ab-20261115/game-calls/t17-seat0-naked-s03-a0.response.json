@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.455,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, я не президент и не могу применить вето\"}",
+          "reasoning_content": "We need answer to current request? We are in law phase round1 post_vote? Need choose action? The history shows action already? Actually user sends history and state phase law decision_stage post_vote. Need return JSON action allowed law. We need infer current situation. In law phase, voted all true, law_card 6, not president? Need maybe veto_pending false. What action now? Maybe after vote, maybe decision_stage post_vote means choose veto? But is_president false, no veto? In protocol law actions includes vote_yes/no/abstain/veto/pass. Since already voted (this observation action was vote_no?) History includes action for round1 law vote_no. Then state post_vote; likely need action after vote maybe pass. We need respond exactly one JSON. Choose pass because not president and vote done. Need ensure valid.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738758,
+    "id": "202611151832296a74c376d6c84873",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832296a74c376d6c84873",
+    "usage": {
+      "completion_tokens": 197,
+      "completion_tokens_details": {
+        "reasoning_tokens": 171
+      },
+      "prompt_tokens": 1516,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1713
+    }
+  }
+}

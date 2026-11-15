@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.818,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница на 9 alashi/ед. без налога — продаю обе единицы сейчас, не откладывая, и держу кассу под ставку на лицензию в R4.\"}",
+          "reasoning_content": "Sell 2 units at price ~10+? sold_counter=2, ladder: first 10 alashi? Counter=2 means next price index 2 = 9. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794746727,
+    "id": "20261115204524e2e0b864ee4c4be7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115204524e2e0b864ee4c4be7",
+    "usage": {
+      "completion_tokens": 96,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 2699,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 2795
+    }
+  }
+}

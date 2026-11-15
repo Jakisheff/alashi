@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.316,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цены ещё высокие (8 и 7), налога нет — продаю оба товара сейчас.IG,late\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods. Price ladder starts at 12,10,... sold_counter=2 means next prices start at 8? Ladder index 2 → 8. Others have 2 goods each. Tax 0. Sell 2 now at 8,7 = 15. If others sell first... I act now; sell 2 units immediately.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738105,
+    "id": "20261115182143900131005dd349f8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182143900131005dd349f8",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 80
+      },
+      "prompt_tokens": 2606,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2723
+    }
+  }
+}

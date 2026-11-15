@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.081,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатный shuttle даёт ожидаемо ~2.25 товара против 2 у produce — максимизирует товар для финальной продажи.\"}",
+          "reasoning_content": "Round 5 action: no goods, cash ~23. Produce gives 2 free goods. Donkey costs 1 for 1. Shuttle gives 3 with 25% confiscation risk (fine). Free goods best: shuttle gives expected 2.25 > produce 2, free. But confiscation ~25% chance lose 3; expected 2.25. Slight edge to shuttle. Also could bribe for influence, but influence 2 vs others 1; president already. Produce is safe. Choose shuttle? Goods needed for sale round 6 (final) — sell directly, no promissory credit final round. Shuttle expected higher. Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738773,
+    "id": "202611151832481ee32ee5e30a4f62",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832481ee32ee5e30a4f62",
+    "usage": {
+      "completion_tokens": 180,
+      "completion_tokens_details": {
+        "reasoning_tokens": 138
+      },
+      "prompt_tokens": 3854,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 4034
+    }
+  }
+}

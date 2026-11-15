@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.898,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"С субсидией shuttle даёт 4 товара при 25% риска конфискации (ожидание 3, как produce), поэтому беру безрисковый produce.\"}",
+          "reasoning_content": "Round 5 action: I have 0 goods, subsidy=1, so shuttle gives 4 goods (25% confiscation risk) vs produce 3. Shuttle expected 3 goods vs produce 3 — shuttle gives 3+1=4, expected 0.75*4=3, equal, plus risk. But confiscation could take all? Probably loses all grey goods. Expected equal; confiscation risk of losing more... expected value equal but variance; also at preferential border tribute. Choose produce for safety? Expected equal, produce certain 3. But actually confiscation ~25% of grey goods — maybe partial. Safer: produce.\n\nWait, in round 5 I'd sell goods in round 5 law? No—market passed. Goods sold round 6 market. Shuttle 4 goods expected 3 vs produce 3 deterministic. Take produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738366,
+    "id": "2026111518260147b1d1be78474b25",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518260147b1d1be78474b25",
+    "usage": {
+      "completion_tokens": 226,
+      "completion_tokens_details": {
+        "reasoning_tokens": 179
+      },
+      "prompt_tokens": 3835,
+      "prompt_tokens_details": {
+        "cached_tokens": 3584
+      },
+      "total_tokens": 4061
+    }
+  }
+}

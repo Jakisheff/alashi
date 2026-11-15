@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.992,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Нет товара и cash после девальвации мал; шаттл даёт 3 единицы (EV ~2.25) для продажи в последнем раунде по высоким ценам без последующей девальвации.\"}",
+          "reasoning_content": "Round 5 action, no goods. Shuttle gives 3 goods, ~25% confiscation. No tariff protection. Shuttle EV: 2.25 goods × ~price... selling round 6 with possible law 8 wipes promissory? Round 6 sell_credit won't redeem. Sell in round 6 market for cash, no devaluation after final round. Prices ~12? sold_counter 0, so high prices. Shuttle EV positive. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738505,
+    "id": "202611151828200f7b572e01254fd8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151828200f7b572e01254fd8",
+    "usage": {
+      "completion_tokens": 153,
+      "completion_tokens_details": {
+        "reasoning_tokens": 95
+      },
+      "prompt_tokens": 3804,
+      "prompt_tokens_details": {
+        "cached_tokens": 3520
+      },
+      "total_tokens": 3957
+    }
+  }
+}

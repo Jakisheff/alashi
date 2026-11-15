@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.489,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос против уже подан, на стадии post_vote менять нечего\"}",
+          "reasoning_content": "Card 5 gives +1 influence to richest (opponent). Vote no already cast; all voted. Post_vote stage: pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737978,
+    "id": "20261115181935003d13b4e68e4ac0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181935003d13b4e68e4ac0",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      },
+      "prompt_tokens": 1849,
+      "prompt_tokens_details": {
+        "cached_tokens": 1600
+      },
+      "total_tokens": 1900
+    }
+  }
+}

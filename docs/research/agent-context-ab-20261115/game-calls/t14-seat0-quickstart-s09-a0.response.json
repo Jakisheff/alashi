@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.533,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bribe\",\"to\":1,\"amount\":25000000,\"reason\":\"Наличные всё равно девальвируются до 62%, конвертирую 25M в 5 влияния — становлюсь лидером влияния и президентом, а деньги уходят более слабому сопернику.\"}",
+          "reasoning_content": "Action phase, round 3, cash 32.5M. Devaluation 62% at border. Bribe gives influence — influence affects votes and final 5% bonus. Spending cash that would be devalued anyway is good. Bribe 20M → 4 influence to whom? Bribe to a rival transfers money away. Alternative: produce free goods. Best: bribe to gain influence (cash devalues anyway). Bribe 25M (5 influence) to faction 2? Giving money to rival boosts them. But influence helps me win laws and bonus. Bribe amount must be multiple of 5M. Cash 32.54M, bribe 25M → 5 influence, keep ~7.5M. That makes me top influence (6), plus president next law. Do bribe 25M to idx 1 (poorer rival).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738613,
+    "id": "202611151830043422df31543c414d",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151830043422df31543c414d",
+    "usage": {
+      "completion_tokens": 251,
+      "completion_tokens_details": {
+        "reasoning_tokens": 182
+      },
+      "prompt_tokens": 3132,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3383
+    }
+  }
+}

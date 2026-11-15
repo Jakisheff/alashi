@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 14.368,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Бесплатные 3 товара с риском конфискации лучше осла; наличные сохраняю для взяток.\"}",
+          "reasoning_content": "Round 2 action. I have 17M cash, 0 goods. Others have goods. Devaluation at round 2+: floor(cash/100)*62 — my 17M becomes ~10.5M hard? Actually cash devalued to 62%. Spend cash before devaluation: donkey costs 1 alashi per good — buy goods now? Donkey gives 1 good per 1 alashi, cheap. Spend 17M on donkey? Action donkey gives 1 good per use? \"donkey costs 1 alashi, gives 1 good\" — probably single use per action. So one donkey: 1 good. Better to spend cash on bribes? Influence matters for final 5% bonus and presidency. Bribe gives influence floor(amount/5M). Bribe 15M → 3 influence, cost 15M cash (avoid devaluation loss ~38%). But bribing enriches rival. Devaluation: 17M → 10.5M, lose 6.5M. Bribe 15M to a rival gives 3 influence, I keep 2M. Alternatively bribe smaller: 5M → 1 influence.\n\nValue of influence: presidency veto, vote weight, 5% bank bonus. Bank includes entry fees etc. Uncertain. A donkey gives 1 good worth ~5-7 alashi later — good deal vs devaluation (1 alashi spent saves... actually cash already at 17M; spending 1M on donkey keeps 1M value as good; keeping it devalues to 0.62M). Donkey best: cheap goods.\n\nI think bribe 15M to weakest rival (idx1, 13M) for 3 influence, plus that reduces devaluation loss. But giving rival 15M cash (they face same devaluation) boosts their payout share. Alternatively shuttle: gives 3 goods, 25% confiscation risk, free. Shuttle gives more goods free! Shuttle: 3 goods, ~25% confiscation. Expected 2.25 goods free. Better than donkey. Do shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738327,
+    "id": "202611151825139c1dc27042ca4892",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825139c1dc27042ca4892",
+    "usage": {
+      "completion_tokens": 480,
+      "completion_tokens_details": {
+        "reasoning_tokens": 443
+      },
+      "prompt_tokens": 2687,
+      "prompt_tokens_details": {
+        "cached_tokens": 2432
+      },
+      "total_tokens": 3167
+    }
+  }
+}

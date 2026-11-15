@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.913,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"С субсидией даёт 4 товара против 3 у produce; даже с риском конфискации EV выше\"}",
+          "reasoning_content": "Phase action round 2. I have 17M cash. Subsidy active: shuttle gives 3+1=4 goods, produce gives 2+1=3. Donkey costs 1. Buy goods? No buy in action phase — buy is market. Best: shuttle gives 4 goods, risk 25% confiscation — still best EV. Or produce 3 free. Shuttle EV 4*0.75=3 vs produce 3. Shuttle slightly better, and no cash tribute issue (no favorable border role mentioned). Go shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738680,
+    "id": "2026111518311616fd52df1d194559",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518311616fd52df1d194559",
+    "usage": {
+      "completion_tokens": 151,
+      "completion_tokens_details": {
+        "reasoning_tokens": 115
+      },
+      "prompt_tokens": 2143,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2294
+    }
+  }
+}

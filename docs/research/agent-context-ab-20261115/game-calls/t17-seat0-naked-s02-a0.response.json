@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.121,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Снижение цен следующего рынка мне невыгодно, у меня больше всех товаров для продажи\"}",
+          "reasoning_content": "Law card 6: цены следующего рынка -2. I'm not president. Votes: others voted (unknown how). I should vote — card 6 hurts everyone equally; likely both vote no. I vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738748,
+    "id": "202611151832251f3d548d4c7f4585",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151832251f3d548d4c7f4585",
+    "usage": {
+      "completion_tokens": 75,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      },
+      "prompt_tokens": 1440,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1515
+    }
+  }
+}

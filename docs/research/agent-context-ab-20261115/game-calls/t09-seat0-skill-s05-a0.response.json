@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.342,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"У меня нет непогашенных векселей, списывать нечего, а rivals могут получить выгоду — против.\"}",
+          "reasoning_content": "Card 8 cancels promissory notes — I have none, but do opponents? Player 2 sold 22... seen cash 22M — actually player 2 sold 2 units at 11 each? No credit visible. Card 8 only matters if someone has promissory. I don't. Unknown rivals. Vote yes if it cancels rivals' notes? I have none; rivals likely none (sold normally). Abstain or no. Pass hurts (no +2 weight unless skip action — already skipped round1 action? Actually skipped market only). Vote: I gain nothing; maybe rivals have credit. Just vote_no (harmless).",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738341,
+    "id": "202611151825357aca7f476c4c44f0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151825357aca7f476c4c44f0",
+    "usage": {
+      "completion_tokens": 172,
+      "completion_tokens_details": {
+        "reasoning_tokens": 135
+      },
+      "prompt_tokens": 2162,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2334
+    }
+  }
+}

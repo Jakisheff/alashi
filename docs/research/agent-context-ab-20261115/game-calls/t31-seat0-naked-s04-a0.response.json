@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.034,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Прямая продажа даст кэш, который девальвирует на границе раунда; sell_credit даёт 1.25x и погашается уже после девальвации.\"}",
+          "reasoning_content": "I have 2 goods, subsidy active. Round 2 market. Sell now at price ~10 (sold_counter=2). Selling later rounds might face devaluation? Cash floor(cash/100)*62 at round boundaries 2+ — that's harsh devaluation (only if cash is soft? presumably all cash devaluates). Wait \"cash=floor(cash/100)*62\" — 38% loss each boundary. So holding cash is bad; spending cash (bribes, donkeys) preserves value. Sell now: price 10, tax 0 → 20 alashi, but that cash devalues at boundary 3? Boundary at end of round 2 applies... \"на границе раундов 2+\" — so end of round 2 devaluation applies. Actually sell_credit gives 1.25x paid at next boundary — better! Sell 2 credit: 25 alashi promissory at boundary round 3. But promissory added to cash then... at boundary 3 cash devalues? Devaluation happens then promissory added? Order unclear: \"cash=floor(cash/100)*62, promissory прибавляется к cash\". So promissory added after devaluation — sell_credit avoids devaluation and gets 1.25x. Best: sell_credit all.\n\nSell credit 2 units: 2*10*1.25=25 alashi promissory.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739565,
+    "id": "20261115184557f74acf4de4eb4745",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184557f74acf4de4eb4745",
+    "usage": {
+      "completion_tokens": 354,
+      "completion_tokens_details": {
+        "reasoning_tokens": 297
+      },
+      "prompt_tokens": 1587,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1941
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 18.962,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"reason\":\"Лицензия даёт 20–60 alashi сверх доли, а оплата ставки сейчас ещё и спасает эти деньги от девальвации на границе раунда — ставкаю 30 alashi.\",\"amount\":30000000}",
+          "reasoning_content": "Round 4 action: auction available. Bid? License income 20-60 alashi, above share. Cash ~41.75. Rivals have 36.3 and 41.7. Bidding competitive. My rank depends on cash; winner pays bank. Expected license value ~40 alashi vs paying bid. If I bid ~25 and win, gain ~15 net but lose cash affecting rank... rank is by final cash+hard; license paid goes to bank, reduces my cash. Net EV positive if bid < ~40 minus rank considerations. But cash devalues at round boundary (floor(cash/100)*62): paying 25 alashi now... actually bid comes from cash; cash is devalued at round 5 boundary anyway. Rivals also face same.\n\nRisk: rivals outbid me and my cash burns? Losing bids refunded. If I win at bid B, I gain license L (20-60, mean 40) minus B. Also bidding raises spent cash... bid paid to bank.\n\nShould I bid? EV positive if B < expected L. But then again, rank-based final: shares 50:30:15 by rank; losing 40 alashi vs gaining 40 license is cash-neutral but bank redistribution... complex. Simple: bid moderately, e.g. 20 alashi = 20000000. Competitors may bid higher. If tie/win logic, my tie_order? my_idx 0. Modest bid 25.\n\nActually not bidding risk: rival wins license, gains extra. But that's their gain. My EV: bid B, win prob p, net p*(L-B). B=20, likely rivals bid? They each have ~40 cash, could bid 30+. Given devaluation, cash now worth 62% after boundary — spending cash now vs holding loses 38% of value! Bid paid now is not devalued... wait cash is devalued at boundary; spending cash before boundary avoids devaluation. So paying bid now is cheaper. If I win, license pays ~40 later. So bid generously, e.g. 30 alashi.\n\nBut rank determined at end; cash spent reduces rank standing... final payout rank by cash+hard after round 6. Spending 30 now to get 40 later is net +10 anyway plus avoided devaluation (+11). Strong yes. Bid 30.\n\n{\"action\":\"bid\",\"amount\":30000000}",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737822,
+    "id": "20261115181644f693d790c92443ca",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181644f693d790c92443ca",
+    "usage": {
+      "completion_tokens": 562,
+      "completion_tokens_details": {
+        "reasoning_tokens": 500
+      },
+      "prompt_tokens": 3537,
+      "prompt_tokens_details": {
+        "cached_tokens": 3264
+      },
+      "total_tokens": 4099
+    }
+  }
+}

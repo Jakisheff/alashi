@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.745,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 товара по стартовой цене 12 без налогов — максимум выручки.\"}",
+          "reasoning_content": "Round 3 market. Cash was devalued. Sell 2 goods at price 12, no tax.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739034,
+    "id": "20261115183711e7e401acc6174b07",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183711e7e401acc6174b07",
+    "usage": {
+      "completion_tokens": 57,
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      },
+      "prompt_tokens": 1942,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1999
+    }
+  }
+}

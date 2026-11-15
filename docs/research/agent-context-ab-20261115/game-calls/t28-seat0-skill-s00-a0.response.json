@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и денег для покупки — market в раунде 1 пропуск оправдан.\"}",
+          "reasoning_content": "No goods. Pass... but rule says never pass in market with no goods — no goods, so pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739361,
+    "id": "2026111518423886299cb403854faa",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518423886299cb403854faa",
+    "usage": {
+      "completion_tokens": 51,
+      "completion_tokens_details": {
+        "reasoning_tokens": 22
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1826
+    }
+  }
+}

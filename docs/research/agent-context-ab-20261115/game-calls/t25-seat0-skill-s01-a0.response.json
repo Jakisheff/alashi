@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.537,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Нет товара и денег — produce даст 2 единицы на продажу в следующем рынке.\"}",
+          "reasoning_content": "Action phase r1: produce gives 2 goods. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739211,
+    "id": "20261115184009b85d9703d6714798",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184009b85d9703d6714798",
+    "usage": {
+      "completion_tokens": 42,
+      "completion_tokens_details": {
+        "reasoning_tokens": 14
+      },
+      "prompt_tokens": 1846,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 1888
+    }
+  }
+}

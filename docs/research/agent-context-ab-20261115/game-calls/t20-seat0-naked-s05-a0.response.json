@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.862,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара дадут выручку на будущем рынке, cash=0, действие безопасно.\"}",
+          "reasoning_content": "I have 0 cash, 0 goods. Donkey costs 1 alashi — can't afford. Pass again? Producing gives 2 goods free. Produce gives 2+subsidy goods — free. Do produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738908,
+    "id": "20261115183505b38011e476134147",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183505b38011e476134147",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 48
+      },
+      "prompt_tokens": 1680,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1762
+    }
+  }
+}

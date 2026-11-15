@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.215,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Двумя товарами с раунда 5 смогу продать на последнем рынке раунда 6 по лестнице, что даёт больше, чем донки за ~10 alashi девальвированной наличности.\"}",
+          "reasoning_content": "I already sold 2 units credit this round; now action phase, round 5. Cash 9.7M. Round 6 market next; produce gives 2 goods for round 6 selling. Yes, produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738518,
+    "id": "20261115182834bb3f6cd7d7594cf5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182834bb3f6cd7d7594cf5",
+    "usage": {
+      "completion_tokens": 107,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      },
+      "prompt_tokens": 2923,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3030
+    }
+  }
+}

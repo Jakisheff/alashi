@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.185,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, я не президент — вмешиваться нечем.\"}",
+          "reasoning_content": "Post-vote, nothing to do; president is 2. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739443,
+    "id": "20261115184401b911be1b547649c7",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184401b911be1b547649c7",
+    "usage": {
+      "completion_tokens": 40,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3695,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3735
+    }
+  }
+}

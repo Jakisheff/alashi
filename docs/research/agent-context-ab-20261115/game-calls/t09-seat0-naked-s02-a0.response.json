@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.834,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Налог 10% уменьшит мою будущую выручку от продажи товара, поэтому против.\"}",
+          "reasoning_content": "Law card 1: tax 10%. I produced. Tax hurts me (I'll sell goods). Vote no. Veto pending means president may veto. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738300,
+    "id": "20261115182458dda2b02e0e5b4c21",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182458dda2b02e0e5b4c21",
+    "usage": {
+      "completion_tokens": 70,
+      "completion_tokens_details": {
+        "reasoning_tokens": 35
+      },
+      "prompt_tokens": 1440,
+      "prompt_tokens_details": {
+        "cached_tokens": 1216
+      },
+      "total_tokens": 1510
+    }
+  }
+}

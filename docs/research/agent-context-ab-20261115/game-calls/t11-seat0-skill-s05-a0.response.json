@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.175,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 2 товара сохраняют песо для будущей ставки и дают товар на следующий рынок.\"}",
+          "reasoning_content": "I sold 2 units, got 17 (tax 0? sold_counter 6 means others sold 4 before). My cash 17M... wait 17 alashi? cash 17000000 = 17 alashi? 1M = 1 alashi, so 17. Round 2 action. Others: 13 and 22. I have 0 goods. I'm president with weight 3.\n\nOptions: produce (free, 2 goods — but wait produce gives 2+subsidy; subsidy 0), donkey costs 1 gives 1. Produce free gives 2 goods. Best: produce.\n\nNote round 2 border devaluation: cash floor(cash/100)*62 — cash in units of 100? cash 17,000,000... floor(17,000,000/100)=170,000 *62=10,540,000? That seems harsh — 62% retention. Keep some pesos for R4 bid (15-25). We have 17 now. Buy hard not available in actions (no buy_hard action listed actually — only produce/donkey/shuttle/bribe/roof/bid). So just produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738444,
+    "id": "20261115182718db6bf1c5610f4894",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182718db6bf1c5610f4894",
+    "usage": {
+      "completion_tokens": 279,
+      "completion_tokens_details": {
+        "reasoning_tokens": 248
+      },
+      "prompt_tokens": 2159,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2438
+    }
+  }
+}

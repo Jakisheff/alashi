@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.167,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта 6 снижает цены следующего рынка на 2, а я планирую продавать — против.\"}",
+          "reasoning_content": "Law card 6: prices next market -2. I'm a seller; bad for me. Vote no. I already have influence 1, weight 3. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739664,
+    "id": "202611151847413714e640ea1f4f0a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151847413714e640ea1f4f0a",
+    "usage": {
+      "completion_tokens": 71,
+      "completion_tokens_details": {
+        "reasoning_tokens": 37
+      },
+      "prompt_tokens": 3673,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3744
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.559,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Цена 10 без налога, sell_credit даёт 25 вместо ~12 после девальвации\"}",
+          "reasoning_content": "Round 2 market. I have 2 goods, cash 0. Prices start at counter 2: 10 each. No tax. Sell 2 for 20? Selling pushes counter for others. Sell now at 10/unit. Or sell_credit gives 1.25x promissory paid next round boundary — better value (25 alashi vs 20, but devaluation? cash floor(cash/100)*62 devaluation applies... promissory added to cash then next boundary devalues again? Promissory returns at next round boundary, added to cash and reset; then subsequent boundaries devalue. If I sell regular, cash 20 gets devalued at end of round 2: floor(2000/100)*62 → 2000*... units: 20,000,000 → floor(20,000,000/100,000)*... Actually cash in units of 1; floor(cash/100)*62: 20,000,000 → 200,000*62=12,400,000, i.e. 62%. Sell_credit: promissory 25M returned at round 3 boundary without devaluation? \"promissory прибавляется к cash и обнуляется\" at boundary — added after devaluation? Cash devalues at boundary 2+; promissory added to cash... likely promissory avoids one devaluation. 25 > 12.4. Sell_credit 2 units.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739364,
+    "id": "20261115184236d131d2aed64e4ee5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184236d131d2aed64e4ee5",
+    "usage": {
+      "completion_tokens": 340,
+      "completion_tokens_details": {
+        "reasoning_tokens": 303
+      },
+      "prompt_tokens": 1579,
+      "prompt_tokens_details": {
+        "cached_tokens": 1344
+      },
+      "total_tokens": 1919
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.481,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Счётчик сброшен, продаю 2 единицы по максимальным ценам 12 и 10 alashi без налога.\"}",
+          "reasoning_content": "Round 3 market, sell 2 units at prices 12,10 = 22 alashi.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739268,
+    "id": "2026111518410588b2e2cac4ff4c0c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518410588b2e2cac4ff4c0c",
+    "usage": {
+      "completion_tokens": 66,
+      "completion_tokens_details": {
+        "reasoning_tokens": 21
+      },
+      "prompt_tokens": 2945,
+      "prompt_tokens_details": {
+        "cached_tokens": 2688
+      },
+      "total_tokens": 3011
+    }
+  }
+}

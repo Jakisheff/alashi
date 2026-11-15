@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.243,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Я богатейший, карта даёт +1 влияния беднейшему — усиливает соперника в борьбе за бонус влияния, против.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest, so it goes to poorest (idx1). That increases their vote weight. Does it matter for me? Final payout has 5% bonus for max influence. Card gives influence to poorest, not me. Vote no? Influence also matters for presidency/payout bonus. Giving influence to idx1 could hurt me in the 5% influence bonus tie-break later. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738140,
+    "id": "20261115182216725945034a5c48ee",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182216725945034a5c48ee",
+    "usage": {
+      "completion_tokens": 130,
+      "completion_tokens_details": {
+        "reasoning_tokens": 90
+      },
+      "prompt_tokens": 3157,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3287
+    }
+  }
+}

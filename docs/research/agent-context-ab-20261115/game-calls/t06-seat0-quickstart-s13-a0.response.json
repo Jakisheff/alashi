@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 8.48,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"bid\",\"amount\":35000000,\"reason\":\"Ставка 35 alashi превышает максимум соперников (~34.8 и ~26.7), выигрываю лицензию с ожидаемым доходом ~40 alashi, а уплаченная сумма частично вернётся через мою долю банка.\"}",
+          "reasoning_content": "Round 4 action: bid available. License income 20-60, expected ~40. Bid amount? My cash 52.78M. Losing bids returned; winner pays to bank but gets license income. Bid just above what rivals can outbid? They have ~35M and ~27M. Bid 30M? Expected value: license income ~40 minus bid, distributed? Bid goes to bank (increases bank pool, which returns 50% to me as leader by rank... actually bank split by weights 50:30:15 based on final rank). Bidding large transfers to bank, part returns. Bidding ~35M likely wins. Rival with 34.8M can't beat 35M... they could bid 34.5M max. Bid 35,000,000 wins against both (one can't exceed, other 26.7M). License expected ~40, of which I'd otherwise get 50% of bank share... net gain roughly 40 - 35 + 0.5*35 ≈ 22.5. Better than passing. But wait, is bid in whole alashi? amount integer minimum units, multiples? Bribes multiple of 5M; bids not specified. Bid 35,000,000.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738267,
+    "id": "20261115182419b5b3a9516e594b0e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182419b5b3a9516e594b0e",
+    "usage": {
+      "completion_tokens": 336,
+      "completion_tokens_details": {
+        "reasoning_tokens": 265
+      },
+      "prompt_tokens": 3654,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3990
+    }
+  }
+}

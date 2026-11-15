@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.888,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Рынок раунда 6 уже прошёл, налог мне не навредит, но и выгоды нет — голосую против на всякий случай.\"}",
+          "reasoning_content": "Law card 2: tax 20%. Vote weight mode 1: my weight 3? vote_weight [3,2,1] — I have 3 (skipped action gives +2? I passed action, so +2). Tax 20% on round 6 market — but market already done. Does tax apply now? Tax applies to future sales; market round 6 is over, so tax irrelevant. Vote no anyway — safe.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739106,
+    "id": "202611151838226caedff662b041dd",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838226caedff662b041dd",
+    "usage": {
+      "completion_tokens": 136,
+      "completion_tokens_details": {
+        "reasoning_tokens": 93
+      },
+      "prompt_tokens": 3269,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3405
+    }
+  }
+}

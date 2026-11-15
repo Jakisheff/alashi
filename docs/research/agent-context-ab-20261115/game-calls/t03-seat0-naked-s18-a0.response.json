@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.912,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":4,\"reason\":\"Финальный раунд: обычная продажа по высоким начальным ценам лестницы, кредит после последнего раунда не погашается\"}",
+          "reasoning_content": "Final round market, price ladder starts at 12, no tax. I have 4 goods. Sell (not credit — credit won't be redeemed after last round). Sell 4 units: 12+10+9+8=39, but others may sell first? I act now; selling first gets top prices. Sell 4.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738058,
+    "id": "20261115182055505efc5c56cf4a6f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182055505efc5c56cf4a6f",
+    "usage": {
+      "completion_tokens": 113,
+      "completion_tokens_details": {
+        "reasoning_tokens": 70
+      },
+      "prompt_tokens": 2901,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3014
+    }
+  }
+}

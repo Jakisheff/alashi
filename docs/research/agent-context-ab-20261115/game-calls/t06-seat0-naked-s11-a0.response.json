@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.563,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голосование завершено, закон о субсидии мне выгоден — veto не нужно.\"}",
+          "reasoning_content": "Post-vote, nothing to do but pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738195,
+    "id": "202611151823132b80e8059580406c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151823132b80e8059580406c",
+    "usage": {
+      "completion_tokens": 39,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 2203,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2242
+    }
+  }
+}

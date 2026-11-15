@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.029,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатные 3 товара при субсидии — лучшее действие.\"}",
+          "reasoning_content": "Round 2 action, subsidy_goods=1, so produce gives 3. I have 17 cash. Donkey costs 1 for 1. Produce free gives 3. Best: produce. Could also donkey for extra goods: prices later maybe lower. Just produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738651,
+    "id": "20261115183047c3d7972cb26144dc",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183047c3d7972cb26144dc",
+    "usage": {
+      "completion_tokens": 82,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      },
+      "prompt_tokens": 2745,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 2827
+    }
+  }
+}

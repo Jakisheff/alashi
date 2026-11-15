@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.33,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Цена ещё 7 при sold_counter=4, продаю оба товара, чтобы иметь кэш на аукцион лицензии в этом раунде\"}",
+          "reasoning_content": "Round 4 market, sold_counter=4, price = ladder[4]=7. I have 2 goods. Selling now gets 7+7=14 before tax? tax 0. But auction in round 4 action — I need cash. Cash 20.17. Sell now.\n\nWait, my cash 20.17 but seen last law was 32.5 — devaluation happened. Sell 2 units at 7 each = 14 alashi. Yes sell.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739258,
+    "id": "2026111518405360f55119b89445e4",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518405360f55119b89445e4",
+    "usage": {
+      "completion_tokens": 146,
+      "completion_tokens_details": {
+        "reasoning_tokens": 100
+      },
+      "prompt_tokens": 2218,
+      "prompt_tokens_details": {
+        "cached_tokens": 1920
+      },
+      "total_tokens": 2364
+    }
+  }
+}

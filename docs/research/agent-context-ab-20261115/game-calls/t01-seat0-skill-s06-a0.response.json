@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.942,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 пустая, закон ни на что не влияет — воздерживаюсь и сохраняю нейтралитет.\"}",
+          "reasoning_content": "Law phase, round 2, card 0 = empty. Everyone equal. Pass/vote? Card 0 nothing. voted[2]=true already? Odd. I should vote something; card 0 neutral — abstain or pass. Abstain keeps it safe; pass also fine. Card 0 = empty, law no effect. vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737777,
+    "id": "20261115181613c1d05c0a4074482e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181613c1d05c0a4074482e",
+    "usage": {
+      "completion_tokens": 116,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 2272,
+      "prompt_tokens_details": {
+        "cached_tokens": 1984
+      },
+      "total_tokens": 2388
+    }
+  }
+}

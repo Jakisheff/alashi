@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 7.907,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell_credit\",\"units\":2,\"reason\":\"Кредитная продажа даёт ×1.25 и придёт на границе раунда 4 без девальвации cash\"}",
+          "reasoning_content": "Sell 2 goods at price ~10-12? Sold counter 0, prices start at 12. Sell both, cash (not credit? credit gives 1.25x paid next round border — round 3 credit pays at round 4 border, still useful, and cash devalues 62%). Cash currently 21.25M hard? No, cash will devalue at borders 2+... Already at round 3 start. Next border round 4. Sell credit gives 1.25x at round 4 border, no devaluation. Sell credit 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738559,
+    "id": "202611151829129fa30d6ed540478a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829129fa30d6ed540478a",
+    "usage": {
+      "completion_tokens": 163,
+      "completion_tokens_details": {
+        "reasoning_tokens": 120
+      },
+      "prompt_tokens": 1933,
+      "prompt_tokens_details": {
+        "cached_tokens": 1664
+      },
+      "total_tokens": 2096
+    }
+  }
+}

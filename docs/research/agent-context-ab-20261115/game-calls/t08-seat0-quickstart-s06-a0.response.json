@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.068,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 7 повышает цены следующего рынка (+2), что выгодно мне с товаром на продажу в раунде 3.\"}",
+          "reasoning_content": "Law card 7: prices +2 next market. I have 2 goods to sell next round. Vote yes. President already voted? voted[2]=true — third player voted. Not president, card benefits everyone roughly equally but I want higher prices. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738304,
+    "id": "20261115182500a75af1de01e445fb",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182500a75af1de01e445fb",
+    "usage": {
+      "completion_tokens": 95,
+      "completion_tokens_details": {
+        "reasoning_tokens": 55
+      },
+      "prompt_tokens": 2872,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 2967
+    }
+  }
+}

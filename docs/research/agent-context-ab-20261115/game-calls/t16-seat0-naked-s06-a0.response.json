@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.151,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Карта 0 — пустая, закон ничего не меняет, пропускаю.\"}",
+          "reasoning_content": "Law card 0 = empty. Vote yes to get subsidy? Card 0 means empty. Pass or abstain. Just abstain/pass. I voted? voted[2]=true means president already voted. I should vote — card 0 does nothing, vote yes doesn't matter. Pass is fine but voting yes/no matters if card empty — nothing changes. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738721,
+    "id": "202611151831582dc671a4b927428c",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831582dc671a4b927428c",
+    "usage": {
+      "completion_tokens": 104,
+      "completion_tokens_details": {
+        "reasoning_tokens": 75
+      },
+      "prompt_tokens": 1770,
+      "prompt_tokens_details": {
+        "cached_tokens": 1536
+      },
+      "total_tokens": 1874
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 10.964,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Товара нет, аукцион только в раунде 4, взятка 10 млн за шанс на бонус ~7.6 млн — чистый убыток; пропускаю.\"}",
+          "reasoning_content": "Action phase, round 6. Cash 90M, no goods. Bid not available (only round 4). Bribe could buy influence for max-influence 5% bank bonus? Bank total: sum cash... bribe gives floor(amount/5M) influence. Current influence: me 1, opponent 2. Extra 5% of bank — bank is sum of cash? 90+35+26 = ~152M, commission 5% ≈ 7.6M, plus extra 5% ≈ 7.6M. To beat influence 2, I need bribe 10M for 2 influence (tie → better cash+hard wins tie for bonus). That's 10M cost for ~7.6M gain... but bribe money goes to opponent, reducing my cash. 10M spent for 7.6M bonus — net loss. Also payout shares depend on cash+hard rank... final rank by cash+hard. Bribe reduces my cash. Not worth. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738765,
+    "id": "2026111518323533320e8f08244c67",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518323533320e8f08244c67",
+    "usage": {
+      "completion_tokens": 266,
+      "completion_tokens_details": {
+        "reasoning_tokens": 214
+      },
+      "prompt_tokens": 3179,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3445
+    }
+  }
+}

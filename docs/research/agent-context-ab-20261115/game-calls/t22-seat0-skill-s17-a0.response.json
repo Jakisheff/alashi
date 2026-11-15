@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.272,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_abstain\",\"reason\":\"Карта 0 — пустая, исход не влияет на выплату.\"}",
+          "reasoning_content": "Law card 0 — пусто. Пропустить? voted: я не голосовал, но карта 0 ничего не делает. Пропуск action уже сделан (donkey), так что веса нет. Лучше vote_abstain.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739095,
+    "id": "202611151838133bae70672e4d4588",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151838133bae70672e4d4588",
+    "usage": {
+      "completion_tokens": 78,
+      "completion_tokens_details": {
+        "reasoning_tokens": 50
+      },
+      "prompt_tokens": 3266,
+      "prompt_tokens_details": {
+        "cached_tokens": 3008
+      },
+      "total_tokens": 3344
+    }
+  }
+}

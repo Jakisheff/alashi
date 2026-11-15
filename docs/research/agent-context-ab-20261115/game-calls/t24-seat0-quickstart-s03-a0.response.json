@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.023,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Я не президент и уже проголосовал; вето недоступно.\"}",
+          "reasoning_content": "Law phase, card 8, already voted no. Stage post_vote — action already cast, likely pass or veto. I'm not president, veto not allowed? veto only president. Just pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739154,
+    "id": "20261115183911c3d0363de6994ca8",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183911c3d0363de6994ca8",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 40
+      },
+      "prompt_tokens": 2596,
+      "prompt_tokens_details": {
+        "cached_tokens": 2368
+      },
+      "total_tokens": 2661
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.432,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"Shuttle даёт 3 товара для последнего рынка при высоких ценах — ожидаемая ценность (~23+ alashi с учётом риска) многократно превышает альтернативы.\"}",
+          "reasoning_content": "Round 5 action. I have ~20 alashi cash, no goods. Shuttle gives 3 goods, ~25% confiscation risk at normal border, no tariff mentioned. Cash 20 alashi; donkey costs 1 alashi gives 1 good. Round 6 market prices start high (sold_counter=0? That's odd — likely reset). Shuttle gives 3 goods worth ~12+10+9 ≈ 31 alashi, risk losing ~25%. Expected high. But wait — round 5 law could drop prices; still fine. Choose shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738446,
+    "id": "2026111518272171578240153e4544",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518272171578240153e4544",
+    "usage": {
+      "completion_tokens": 171,
+      "completion_tokens_details": {
+        "reasoning_tokens": 118
+      },
+      "prompt_tokens": 3683,
+      "prompt_tokens_details": {
+        "cached_tokens": 3392
+      },
+      "total_tokens": 3854
+    }
+  }
+}

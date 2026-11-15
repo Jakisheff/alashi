@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.846,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 товара по максимальной цене 12 без налогов и риска промиссаров.\"}",
+          "reasoning_content": "Round 2 market phase. My cash 0, goods 2. Others also have goods. Sell 2 at price 12 minus tax 0? Tax law card 8 passed? Law 8 wipes promissories — passed maybe. Sell now at price 12 (sold_counter 0, shift 0). Sell 2 units.\n\nActually consider selling via sell_credit for 1.25x with devaluation risk (62% haircut, card 8 wipes promissory). Cash round boundary: promissory added then? \"cash=floor(cash/100)*62, promissory прибавляется и обнуляется\" — promissory added to cash... likely after devaluation, so credit is good (1.25x). But law 8 wipes promissories. Sell cash now is safe. Prices will decline; selling now at 12 is best. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738998,
+    "id": "20261115183633f44c2cef057f49f5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115183633f44c2cef057f49f5",
+    "usage": {
+      "completion_tokens": 222,
+      "completion_tokens_details": {
+        "reasoning_tokens": 186
+      },
+      "prompt_tokens": 1511,
+      "prompt_tokens_details": {
+        "cached_tokens": 1280
+      },
+      "total_tokens": 1733
+    }
+  }
+}

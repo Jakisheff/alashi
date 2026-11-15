@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.193,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Нет товара и нет денег для покупки в раунде 1.\"}",
+          "reasoning_content": "No goods. Must act in market: can't sell. Buy? Buying costs cash (cash=0). Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737951,
+    "id": "202611151819099d16c538d2754c3e",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151819099d16c538d2754c3e",
+    "usage": {
+      "completion_tokens": 48,
+      "completion_tokens_details": {
+        "reasoning_tokens": 24
+      },
+      "prompt_tokens": 1775,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 1823
+    }
+  }
+}

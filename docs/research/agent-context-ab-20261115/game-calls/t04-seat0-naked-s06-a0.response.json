@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 9.08,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Плюс влияния получит богатейший соперник (26M), а не я — против.\"}",
+          "reasoning_content": "Law card 5: +1 influence to richest. Richest is idx2 (26M). I'm not richest. Vote no. Voted third player already yes presumably. Weight: me 1+2 (didn't skip? my action was produce, so no +2). Weight 1 each. Player2 voted yes already (weight 1). Players 1 and I vote: if I vote no, 1 vs 1... player1 unknown. Strictly more yes needed. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738082,
+    "id": "20261115182114b4aba0c39f1745a0",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115182114b4aba0c39f1745a0",
+    "usage": {
+      "completion_tokens": 137,
+      "completion_tokens_details": {
+        "reasoning_tokens": 104
+      },
+      "prompt_tokens": 1752,
+      "prompt_tokens_details": {
+        "cached_tokens": 1472
+      },
+      "total_tokens": 1889
+    }
+  }
+}

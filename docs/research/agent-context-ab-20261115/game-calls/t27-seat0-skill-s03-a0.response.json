@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.618,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Голос уже подан, решение не требуется.\"}",
+          "reasoning_content": "Law phase post_vote? The state says decision_stage post_vote, my action was already abstain. I need to respond anyway — probably pass. But this is law phase; voted already. Return pass? Schema expects action. Return {\"action\":\"pass\"}.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739337,
+    "id": "2026111518421467193db549b74f3a",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518421467193db549b74f3a",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 52
+      },
+      "prompt_tokens": 2017,
+      "prompt_tokens_details": {
+        "cached_tokens": 1728
+      },
+      "total_tokens": 2089
+    }
+  }
+}

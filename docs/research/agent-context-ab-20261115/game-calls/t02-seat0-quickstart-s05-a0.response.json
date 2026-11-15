@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.539,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Кэш ноль, donkey недоступен; produce бесплатно даёт 2 товара под следующий рынок, а промиссори вернётся на границе раунда.\"}",
+          "reasoning_content": "Round 2 action. I have 0 cash, 0 goods, influence 2, president. I have pending promissory from selling 2 units in credit (round 1 credit sales? Actually round1 post_vote sell_credit 2 units — revenue 2*12? sold_counter now 6, prices declined). Promissory will pay at round boundary. Now action phase: best is produce (free 2 goods). Donkey costs 1 alashi which I don't have (cash 0). So produce.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737979,
+    "id": "20261115181934f44de6769fd14284",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181934f44de6769fd14284",
+    "usage": {
+      "completion_tokens": 157,
+      "completion_tokens_details": {
+        "reasoning_tokens": 109
+      },
+      "prompt_tokens": 2829,
+      "prompt_tokens_details": {
+        "cached_tokens": 2560
+      },
+      "total_tokens": 2986
+    }
+  }
+}

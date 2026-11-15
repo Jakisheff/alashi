@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.269,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Бесплатное производство 2 товаров — лучший ход для продажи на следующем рынке\"}",
+          "reasoning_content": "Round 2 action. I have 17 cash, no goods, influence 1. Options: produce (free 2 goods), donkey, shuttle, bribe. Produce is best.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738894,
+    "id": "202611151834513b8fa9481c02483f",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151834513b8fa9481c02483f",
+    "usage": {
+      "completion_tokens": 65,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      },
+      "prompt_tokens": 1699,
+      "prompt_tokens_details": {
+        "cached_tokens": 1408
+      },
+      "total_tokens": 1764
+    }
+  }
+}

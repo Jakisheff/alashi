@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.466,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Лестница цен падает, продаю оба товара сейчас по 9 alashi, кредит не нужен.\"}",
+          "reasoning_content": "Round 2 market, I have 2 goods, price ladder at counter 2 → price 9. Sell now.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794737761,
+    "id": "20261115181559ebc0bc7b12b54105",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115181559ebc0bc7b12b54105",
+    "usage": {
+      "completion_tokens": 61,
+      "completion_tokens_details": {
+        "reasoning_tokens": 25
+      },
+      "prompt_tokens": 2089,
+      "prompt_tokens_details": {
+        "cached_tokens": 1856
+      },
+      "total_tokens": 2150
+    }
+  }
+}

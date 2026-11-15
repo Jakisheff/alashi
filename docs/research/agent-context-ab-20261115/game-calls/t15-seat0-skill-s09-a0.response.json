@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.786,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"shuttle\",\"reason\":\"EV шаттла (3 товара, ~75% без конфискации) выше produce, а песо-кассу 10.5 сохраняю для ставки R4\"}",
+          "reasoning_content": "Round 3 action, cash 10.54 alashi. Options: produce (2 goods), shuttle (3 goods, risk), donkey cost 1. Need peso for R4 bid. Subsidy 0. Shuttle gives 3 goods, ~25% confiscation — EV: sell at prices ~4-3... sold_counter 6, prices ~4,3,3. Shuttle 3 goods ~ (4+3+3)*0.75 ≈ 7.5 vs produce 2 goods ~ (4+3)=7 minus? Produce is safe 2 goods ≈ 7. Shuttle EV 7.5, slightly better. Also keep cash 10.5 for bid. Shuttle.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738704,
+    "id": "202611151831389d0005bd4bdb4665",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831389d0005bd4bdb4665",
+    "usage": {
+      "completion_tokens": 199,
+      "completion_tokens_details": {
+        "reasoning_tokens": 149
+      },
+      "prompt_tokens": 2483,
+      "prompt_tokens_details": {
+        "cached_tokens": 2240
+      },
+      "total_tokens": 2682
+    }
+  }
+}

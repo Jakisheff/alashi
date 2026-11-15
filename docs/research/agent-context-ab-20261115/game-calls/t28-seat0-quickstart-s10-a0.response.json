@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.08,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Карта 3 даёт субсидию +1 товар, я продаю больше всех — выгодно мне.\"}",
+          "reasoning_content": "Card 3: subsidy_goods=1 — good for me, I produce. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739408,
+    "id": "20261115184326bd5c2677d5f24a70",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "20261115184326bd5c2677d5f24a70",
+    "usage": {
+      "completion_tokens": 53,
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      },
+      "prompt_tokens": 3212,
+      "prompt_tokens_details": {
+        "cached_tokens": 2944
+      },
+      "total_tokens": 3265
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.567,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"produce\",\"reason\":\"Shuttle даёт ожидаемо 3 товара при риске 25% конфискации — produce надёжно даёт 3 с субсидией.\"}",
+          "reasoning_content": "Round 2 action. I have 17 cash, others 13 and 22. Subsidy 1: produce gives 3 goods, shuttle gives 4 with 25% confiscation risk. Produce is safe: 3 goods, sell next round ~prices after counter 6+... prices: ladder index 6 → 5? Sold counter 6, next sell price would be ladder[6]=5? Actually prices: [12,10,9,8,7,6,5,4,3...] counter 6 → next unit at 5. Round 3 prices lower. Shuttle gives 4 goods but risk confiscation of all grey? \"grey goods may be confiscated\" — probably shuttle goods confiscated with 25% chance entirely. Expected: shuttle 4×0.75=3 vs produce 3. Equal. Donkey: pay 1 for 1 good — not worth at price ~5. Just produce. Maybe save cash.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794739567,
+    "id": "2026111518460277cc29a72bac48b5",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518460277cc29a72bac48b5",
+    "usage": {
+      "completion_tokens": 244,
+      "completion_tokens_details": {
+        "reasoning_tokens": 200
+      },
+      "prompt_tokens": 2779,
+      "prompt_tokens_details": {
+        "cached_tokens": 2496
+      },
+      "total_tokens": 3023
+    }
+  }
+}

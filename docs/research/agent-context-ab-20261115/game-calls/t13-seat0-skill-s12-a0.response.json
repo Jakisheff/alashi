@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.486,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам обе единицы на открытии с бумом +2, пока лестница не упала; кредит в раунде 4 не нужен, кэш нужен для ставки на лицензию.\"}",
+          "reasoning_content": "Sell 2 goods at ladder. Sold counter 4, prices start at 5th: [.. index 4]=7? Ladder [12,10,9,8,7,...], counter 4 means next unit price 7? Boom +2 → ~9. Sell both.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738602,
+    "id": "202611151829598579fa4f0f954a29",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829598579fa4f0f954a29",
+    "usage": {
+      "completion_tokens": 117,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      },
+      "prompt_tokens": 2896,
+      "prompt_tokens_details": {
+        "cached_tokens": 2624
+      },
+      "total_tokens": 3013
+    }
+  }
+}

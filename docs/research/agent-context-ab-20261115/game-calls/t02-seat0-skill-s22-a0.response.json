@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 6.621,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_yes\",\"reason\":\"Налог 20% ударит по выручке соперников на оставшемся рынке, у меня товара уже нет — голосую за.\"}",
+          "reasoning_content": "Law card 2: tax 20%. I'm president, cash highest. Tax hurts me as seller? Tax on revenue next market — no more markets for me (goods 0? I sold all; others have goods... I have 0 goods). Tax affects rivals' sales. Actually no more my sales; tax harms rivals' revenue. Vote yes.\n\nWait cash shows rival 49.4M > my 47.3M? State cash [47327898,49412204,27506016] — but that's after everyone sold in market; other sold 2+... Whatever. Tax 20% applies to revenue of remaining sales — only rival 1 has 2 goods. Vote yes.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738088,
+    "id": "2026111518212227f76d263d7c4461",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518212227f76d263d7c4461",
+    "usage": {
+      "completion_tokens": 191,
+      "completion_tokens_details": {
+        "reasoning_tokens": 151
+      },
+      "prompt_tokens": 3932,
+      "prompt_tokens_details": {
+        "cached_tokens": 3648
+      },
+      "total_tokens": 4123
+    }
+  }
+}

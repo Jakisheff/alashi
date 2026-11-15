@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.032,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":3,\"reason\":\"Финальный рынок: продаю все 3 товара обычной продажей с бумом +2 и сброшенным счётчиком, sell_credit в последнем раунде не погасится.\"}",
+          "reasoning_content": "Round 6, final market, sell all 3, no credit.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738074,
+    "id": "202611151821102bbdf288a0774f12",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151821102bbdf288a0774f12",
+    "usage": {
+      "completion_tokens": 72,
+      "completion_tokens_details": {
+        "reasoning_tokens": 15
+      },
+      "prompt_tokens": 3717,
+      "prompt_tokens_details": {
+        "cached_tokens": 3456
+      },
+      "total_tokens": 3789
+    }
+  }
+}

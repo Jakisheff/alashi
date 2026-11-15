@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 2.744,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Последний раунд: продаю оба товара на вершине лестницы, держать или кредитовать бессмысленно.\"}",
+          "reasoning_content": "Sell 2 units at round 6 opening.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738504,
+    "id": "2026111518282243520942df6e4027",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518282243520942df6e4027",
+    "usage": {
+      "completion_tokens": 48,
+      "completion_tokens_details": {
+        "reasoning_tokens": 10
+      },
+      "prompt_tokens": 3605,
+      "prompt_tokens_details": {
+        "cached_tokens": 3328
+      },
+      "total_tokens": 3653
+    }
+  }
+}

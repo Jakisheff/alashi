@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 5.064,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"vote_no\",\"reason\":\"Карта даёт +1 влияния беднейшему (сопернику), усиливая его в борьбе за бонус влияния; мой вес 3 блокирует закон.\"}",
+          "reasoning_content": "Law card 4: +1 influence to poorest. I'm richest. Poorest is idx2 (25.6M). That gives idx2 influence 3 vs my 1. Final influence bonus 5% of bank — likely goes to idx2 anyway (influence 2 already). Vote: my weight 3 vs their 2+2? Weights: mine 3, idx1 1, idx2 2. Yes needs strictly more. If I vote no: no=3, yes=2 (if both vote yes) — fails. Vote no.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738716,
+    "id": "202611151831529e3c6fcd78b74706",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151831529e3c6fcd78b74706",
+    "usage": {
+      "completion_tokens": 165,
+      "completion_tokens_details": {
+        "reasoning_tokens": 119
+      },
+      "prompt_tokens": 3200,
+      "prompt_tokens_details": {
+        "cached_tokens": 2880
+      },
+      "total_tokens": 3365
+    }
+  }
+}

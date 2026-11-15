@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 3.156,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"sell\",\"units\":2,\"reason\":\"Продам 2 единицы по ~9 и 8 alashi с бумом, налога нет — максимум выручки сейчас.\"}",
+          "reasoning_content": "Round 4 market, I have 2 goods. Sell at sold_counter=4, so prices 7,6 plus boom 2 = 9,8. No tax. Sell 2.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738584,
+    "id": "202611151829419b54f36e48f741a1",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "202611151829419b54f36e48f741a1",
+    "usage": {
+      "completion_tokens": 84,
+      "completion_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "prompt_tokens": 3380,
+      "prompt_tokens_details": {
+        "cached_tokens": 3136
+      },
+      "total_tokens": 3464
+    }
+  }
+}

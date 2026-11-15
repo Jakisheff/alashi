@@ -1,0 +1,32 @@
+{
+  "elapsed_s": 4.436,
+  "raw": {
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "content": "{\"action\":\"pass\",\"reason\":\"Налог 20% касается только рыночной выручки, а рынок финального раунда уже прошёл — исход закона на мою выплату не влияет.\"}",
+          "reasoning_content": "Law card 2: tax 20% on market revenue — market already done, final round. Doesn't affect me. My vote_no counted; outcome irrelevant. Post_vote stage — likely veto option. No harm passing. Card doesn't affect payouts. Pass.",
+          "role": "assistant"
+        }
+      }
+    ],
+    "created": 1794738311,
+    "id": "2026111518250764246d6357504795",
+    "model": "glm-5.3",
+    "object": "chat.completion",
+    "request_id": "2026111518250764246d6357504795",
+    "usage": {
+      "completion_tokens": 100,
+      "completion_tokens_details": {
+        "reasoning_tokens": 53
+      },
+      "prompt_tokens": 4587,
+      "prompt_tokens_details": {
+        "cached_tokens": 4288
+      },
+      "total_tokens": 4687
+    }
+  }
+}
