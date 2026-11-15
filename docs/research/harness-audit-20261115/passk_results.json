@@ -1,55 +1,128 @@
 {
-  "paired_positions": 36,
-  "arms": {
-    "license_won": {
-      "n_pairs": 36,
-      "A0_wins": 30,
-      "A1_wins": 29,
-      "pass_hat_1": 0.8194,
-      "pass_at_2_empirical": 0.9444,
-      "pass_at_2_independent_model": 0.9674,
-      "pass_hat_2_empirical": 0.6944,
-      "pass_hat_2_ci95": [
-        0.544,
-        0.8449
-      ],
-      "pass_hat_2_if_independent": 0.6715,
-      "pass_hat_3_if_independent": 0.5502,
-      "pass_hat_8_if_independent": 0.2033
+  "source": "/Users/amir/Downloads/alashi/docs/research/harness-learning-20261020",
+  "arms": [
+    "A0",
+    "A1",
+    "H"
+  ],
+  "bool_fields": [
+    "license_won",
+    "wealth_first"
+  ],
+  "pairs": {
+    "A0-A1": {
+      "license_won": {
+        "n_pairs": 36,
+        "arm_a_wins": 30,
+        "arm_b_wins": 29,
+        "pass_hat_1": 0.8194,
+        "pass_at_2_empirical": 0.9444,
+        "pass_hat_2_empirical": 0.6944,
+        "pass_hat_2_ci95": [
+          0.544,
+          0.8449
+        ],
+        "pass_hat_2_if_independent": 0.6715,
+        "pass_hat_3_if_independent": 0.5502,
+        "pass_hat_8_if_independent": 0.2033
+      },
+      "wealth_first": {
+        "n_pairs": 36,
+        "arm_a_wins": 32,
+        "arm_b_wins": 31,
+        "pass_hat_1": 0.875,
+        "pass_at_2_empirical": 0.9444,
+        "pass_hat_2_empirical": 0.8056,
+        "pass_hat_2_ci95": [
+          0.6763,
+          0.9348
+        ],
+        "pass_hat_2_if_independent": 0.7656,
+        "pass_hat_3_if_independent": 0.6699,
+        "pass_hat_8_if_independent": 0.3436
+      }
     },
-    "wealth_first": {
-      "n_pairs": 36,
-      "A0_wins": 32,
-      "A1_wins": 31,
-      "pass_hat_1": 0.875,
-      "pass_at_2_empirical": 0.9444,
-      "pass_at_2_independent_model": 0.9844,
-      "pass_hat_2_empirical": 0.8056,
-      "pass_hat_2_ci95": [
-        0.6763,
-        0.9348
-      ],
-      "pass_hat_2_if_independent": 0.7656,
-      "pass_hat_3_if_independent": 0.6699
+    "A0-H": {
+      "license_won": {
+        "n_pairs": 36,
+        "arm_a_wins": 30,
+        "arm_b_wins": 35,
+        "pass_hat_1": 0.9028,
+        "pass_at_2_empirical": 1.0,
+        "pass_hat_2_empirical": 0.8056,
+        "pass_hat_2_ci95": [
+          0.6763,
+          0.9348
+        ],
+        "pass_hat_2_if_independent": 0.815,
+        "pass_hat_3_if_independent": 0.7358,
+        "pass_hat_8_if_independent": 0.4412
+      },
+      "wealth_first": {
+        "n_pairs": 36,
+        "arm_a_wins": 32,
+        "arm_b_wins": 31,
+        "pass_hat_1": 0.875,
+        "pass_at_2_empirical": 0.9444,
+        "pass_hat_2_empirical": 0.8056,
+        "pass_hat_2_ci95": [
+          0.6763,
+          0.9348
+        ],
+        "pass_hat_2_if_independent": 0.7656,
+        "pass_hat_3_if_independent": 0.6699,
+        "pass_hat_8_if_independent": 0.3436
+      }
+    },
+    "A1-H": {
+      "license_won": {
+        "n_pairs": 36,
+        "arm_a_wins": 29,
+        "arm_b_wins": 35,
+        "pass_hat_1": 0.8889,
+        "pass_at_2_empirical": 1.0,
+        "pass_hat_2_empirical": 0.7778,
+        "pass_hat_2_ci95": [
+          0.642,
+          0.9136
+        ],
+        "pass_hat_2_if_independent": 0.7901,
+        "pass_hat_3_if_independent": 0.7023,
+        "pass_hat_8_if_independent": 0.3897
+      },
+      "wealth_first": {
+        "n_pairs": 36,
+        "arm_a_wins": 31,
+        "arm_b_wins": 31,
+        "pass_hat_1": 0.8611,
+        "pass_at_2_empirical": 1.0,
+        "pass_hat_2_empirical": 0.7222,
+        "pass_hat_2_ci95": [
+          0.5759,
+          0.8685
+        ],
+        "pass_hat_2_if_independent": 0.7415,
+        "pass_hat_3_if_independent": 0.6385,
+        "pass_hat_8_if_independent": 0.3023
+      }
     }
   },
-  "tokens_per_decision": {
+  "tokens_per_saved_call": {
     "A0": {
-      "input": 2713.1,
-      "output": 143.2
+      "calls": 706,
+      "input": 3102.5,
+      "output": 163.8
     },
     "A1": {
-      "input": 2657.1,
-      "output": 138.6
+      "calls": 699,
+      "input": 3068.9,
+      "output": 160.0
     },
     "H": {
-      "input": 3117.6,
-      "output": 105.7
+      "calls": 692,
+      "input": 3637.2,
+      "output": 123.3
     }
-  },
-  "memory_layer_tax": {
-    "input_delta_pct": 16.1,
-    "output_delta_pct": -25.0
   },
   "reliability": {
     "planned_games": 108,
