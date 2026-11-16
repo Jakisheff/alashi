@@ -11,6 +11,7 @@
 - [architecture.md](../architecture.md)
 - [api.md](../api.md)
 - [AGENT_GUIDE.md](../AGENT_GUIDE.md)
+- [20261117-rules-wasm-canon.md](../200_ZETTEL/20261117-rules-wasm-canon.md) — единый источник правил для клиента (rules → WASM, гейт свежести)
 
 ## Открытые вопросы
 
