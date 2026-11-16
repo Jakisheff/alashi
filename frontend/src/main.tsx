@@ -5,6 +5,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { routeTree } from './routeTree.gen'
 import { primeOwnerFragment } from './owner/pairing'
+import { initRules } from './rules/browserInit'
 
 const queryClient = new QueryClient()
 
@@ -32,10 +33,14 @@ declare module '@tanstack/react-router' {
 // chunk instead of after it. App's React.lazy then resolves from the same module request.
 if (location.pathname === '/') void import('./genie/Scene')
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  </StrictMode>,
-)
+// Canonical game terms live in the rules crate (WASM); every rules-derived view
+// (law names, donkey terms) calls into it, so init must precede the first render.
+initRules().then(() => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+})

@@ -2,6 +2,10 @@ import assert from 'node:assert/strict'
 import { projectDonkeyRisk, type DonkeyRiskInput, type DonkeyReceipt } from '../src/devnet/donkey/model.ts'
 import { decodeCandidateDonkeySnapshot, DONKEY_CANDIDATE_SOURCE } from '../src/devnet/donkey/candidate.ts'
 import { ChainApiError, CHAIN_PROGRAM } from '../src/devnet/client.ts'
+import { initRulesNode } from './nodeRulesInit.ts'
+
+// Donkey terms come from the WASM canon of the rules crate.
+await initRulesNode()
 
 // Isolated local fixtures only; no chain call, signing, real game or owner session.
 const game = 'GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b'

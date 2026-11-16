@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict'
 import { CHAIN_PROGRAM, chainSnapshot, decodeSnapshot, formatCash, validBase58, ChainApiError } from '../src/devnet/client.ts'
 import { defaultWinner, eventLabel, liveAdditions, newLiveCursor, playerEvents, playerStandings, visualAction } from '../src/devnet/playback.ts'
+import { initRulesNode } from './nodeRulesInit.ts'
+
+// Law display names come from the WASM canon of the rules crate.
+await initRulesNode()
 const pda = 'GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b'
 const faction = { pda: '11111111111111111111111111111111', wallet: 'DmqGyi9wBz1RQyueGFRmF7ZuZ4p44YbQKR9LHysbduFo', name: 'Unit fixture', cash: '68800000', hard: '1000000', alive: true, goods: 2, influence: 2, vote: 'Yes' }
 const event = { id: `${'1'.repeat(64)}:0`, signature: '1'.repeat(64), slot: 1, event_index: 0, log_index: 0, block_time: null, type: 'sold', game: pda, faction: faction.pda, units: 1 }
