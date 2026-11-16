@@ -1240,18 +1240,8 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
 }
 
 pub fn law_name(card: u8) -> &'static str {
-    match card {
-        LAW_STATUS_QUO => "status_quo",
-        LAW_TAX_10 => "tax_10",
-        LAW_TAX_20 => "tax_20",
-        LAW_SUBSIDY_PRODUCE => "subsidy_produce",
-        LAW_SUBSIDY_POOR => "subsidy_poor",
-        LAW_SUBSIDY_RICH => "subsidy_rich",
-        LAW_EMBARGO => "embargo",
-        LAW_BOOM => "boom",
-        8 => "vzaimozachet",
-        _ => "no_law",
-    }
+    // Канон имён карт живёт в rules (единственный источник); арена только ретранслирует.
+    alashi_rules::constants::law_wire_name(card)
 }
 
 // ---------- обработчики ----------

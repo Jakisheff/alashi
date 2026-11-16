@@ -19,6 +19,10 @@ pub const BRIBE_PRICE: u64 = 5 * PESO;
 pub const MAX_INFLUENCE: u16 = 1_000;
 pub const MAX_NAME: usize = 16;
 
+/// Версия правил для клиентских производных (WASM-слой фронта).
+/// Поднимается при любом изменении констант или law_wire_name.
+pub const RULES_VERSION: u32 = 1;
+
 pub const NO_LAW: u8 = 255;
 pub const LAW_STATUS_QUO: u8 = 0;
 pub const LAW_TAX_10: u8 = 1;
@@ -59,6 +63,23 @@ pub const EPOCH_90S: u8 = 1;
 /// Match known epochs explicitly so a future epoch is never enabled by range.
 pub const fn has_90s_rules(epoch: u8) -> bool {
     epoch == EPOCH_90S || epoch == EPOCH_DONKEY_RISK
+}
+
+/// Канонические wire-имена карт законов (единый источник для арены
+/// и клиентского WASM-слоя; display-тексты живут во фронтенде).
+pub fn law_wire_name(card: u8) -> &'static str {
+    match card {
+        LAW_STATUS_QUO => "status_quo",
+        LAW_TAX_10 => "tax_10",
+        LAW_TAX_20 => "tax_20",
+        LAW_SUBSIDY_PRODUCE => "subsidy_produce",
+        LAW_SUBSIDY_POOR => "subsidy_poor",
+        LAW_SUBSIDY_RICH => "subsidy_rich",
+        LAW_EMBARGO => "embargo",
+        LAW_BOOM => "boom",
+        LAW_AMNESTY => "vzaimozachet",
+        _ => "no_law",
+    }
 }
 // M1 девальвация: кэш ×0.62 в начале каждого раунда r>=2.
 // Калибровка по фактуре: тенге 4.7/USD (15.11.1993) -> 50+/USD (11.1994),
