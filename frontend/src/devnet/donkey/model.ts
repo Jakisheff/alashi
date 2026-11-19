@@ -1,7 +1,10 @@
 import { validBase58, type Phase } from '../client.ts'
+import { donkeyLimits, donkeyTerms, totalRounds } from '../../rules/canon.ts'
+
+export { donkeyLimits, donkeyTerms, totalRounds }
 
 // Internal presentation inputs only. These names are NOT the draft program/API wire.
-export const DONKEY_TERMS = { feeUnits: '5000000', goods: 5, successPercent: 60, emptyPercent: 40 } as const
+// Donkey terms and limits come from the canonical rules crate via WASM (src/rules/canon.ts).
 type Receipt = {
   epoch: 2; game: string; faction: string; round: number; attemptKey: string
   id: string; signature: string; slot: number; logIndex: number; journalIndex: number
@@ -48,11 +51,12 @@ function money(value: string | null): bigint | null {
 }
 function eligibility(input: DonkeyRiskInput): EligibilityReason[] {
   const reasons: EligibilityReason[] = []
+  const limits = donkeyLimits()
   if (input.phase !== 'Action') reasons.push('phase')
-  if (input.round >= 6) reasons.push('finalRound')
+  if (input.round > limits.lastPlayableRound) reasons.push('finalRound')
   const cash = money(input.cashUnits)
-  if (cash !== null && cash < BigInt(DONKEY_TERMS.feeUnits)) reasons.push('cash')
-  if (input.goods !== null && integer(input.goods) && input.goods > 65535 - DONKEY_TERMS.goods) reasons.push('overflow')
+  if (cash !== null && cash < BigInt(limits.minCashUnits)) reasons.push('cash')
+  if (input.goods !== null && integer(input.goods) && input.goods > limits.maxGoodsBeforeAttempt) reasons.push('overflow')
   if (input.actionUsed === true) reasons.push('acted')
   if (input.alive === false) reasons.push('inactive')
   if (input.oracleReady === false) reasons.push('oracle')
@@ -62,15 +66,16 @@ function eligibility(input: DonkeyRiskInput): EligibilityReason[] {
   return reasons
 }
 function validReceipt(e: DonkeyReceipt, through: number): boolean {
+  const limits = donkeyLimits(), terms = donkeyTerms()
   if (e.epoch !== 2 || !validBase58(e.game) || !validBase58(e.faction) ||
-      !integer(e.round) || e.round < 1 || e.round >= 6 ||
+      !integer(e.round) || e.round < 1 || e.round > limits.lastPlayableRound ||
       typeof e.attemptKey !== 'string' || !e.attemptKey || e.attemptKey.length > 160 ||
       !validBase58(e.signature, 64) || !integer(e.slot) || e.slot > through ||
       !integer(e.logIndex) || !integer(e.journalIndex) || e.id !== `${e.signature}:${e.logIndex}` ||
-      e.feeUnits !== DONKEY_TERMS.feeUnits) return false
+      e.feeUnits !== terms.feeUnits) return false
   if (e.kind === 'attempt') return true
   if (e.kind !== 'resolution' || typeof e.success !== 'boolean' || !integer(e.goods)) return false
-  return e.reason === 0 ? e.goods === (e.success ? DONKEY_TERMS.goods : 0)
+  return e.reason === 0 ? e.goods === (e.success ? terms.goods : 0)
     : e.reason === 1 && e.success === false && e.goods === 0
 }
 function fingerprint(e: DonkeyReceipt): string {
@@ -86,7 +91,7 @@ export function projectDonkeyRisk(input: DonkeyRiskInput): DonkeyRiskView {
   const unavailable = (detail: string): DonkeyRiskView => ({ ...view, detail, attempt: null, resolution: null })
   if (input.source !== 'confirmed-chain' && input.source !== 'local-fixture')
     return unavailable('The event source could not be verified.')
-  if (!validBase58(input.game) || !validBase58(input.faction) || !integer(input.round) || input.round < 1 || input.round > 6)
+  if (!validBase58(input.game) || !validBase58(input.faction) || !integer(input.round) || input.round < 1 || input.round > totalRounds())
     return unavailable('Game, player or round could not be verified.')
   if (input.epoch === 0 || input.epoch === 1)
     return { ...view, kind: 'legacy', detail: 'Historical rules: 1 good for 1 in-game alashi. No lottery.' }

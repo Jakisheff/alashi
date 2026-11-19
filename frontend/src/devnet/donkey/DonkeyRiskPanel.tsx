@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import { formatCash } from '../client'
-import { DONKEY_TERMS, ELIGIBILITY, projectDonkeyRisk, type DonkeyReceipt, type DonkeyRiskInput } from './model'
+import { donkeyTerms, ELIGIBILITY, projectDonkeyRisk, type DonkeyReceipt, type DonkeyRiskInput } from './model'
 import './donkeyRisk.css'
 
 const TITLES = {
@@ -41,7 +41,7 @@ export function DonkeyRiskPanel({ input }: { input: DonkeyRiskInput }) {
       </dl> : <div className="donkey-risk-terms">
         <p><strong>5 in-game alashi + one Action</strong><span>Fee spent on either outcome. No same-turn retry.</span></p>
         <div className="donkey-risk-chances" aria-label="60 percent chance of 5 goods; 40 percent chance of zero goods">
-          <span><strong>{DONKEY_TERMS.successPercent}%</strong> +5 goods</span><span><strong>{DONKEY_TERMS.emptyPercent}%</strong> 0 goods</span>
+          <span><strong>{donkeyTerms().successPercent}%</strong> +{donkeyTerms().goods} goods</span><span><strong>{donkeyTerms().emptyPercent}%</strong> 0 goods</span>
         </div>
         <p className="donkey-risk-reveal">Goods arrive after verified Law reveal.</p>
       </div>}

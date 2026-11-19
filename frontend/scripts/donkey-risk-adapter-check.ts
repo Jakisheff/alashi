@@ -3,6 +3,10 @@ import { chainSnapshot, CHAIN_PROGRAM } from '../src/devnet/client.ts'
 import { decodePublicDonkeySnapshot, donkeySnapshotInput, replayJournalPrefix } from '../src/devnet/donkey/adapter.ts'
 import { projectDonkeyRisk } from '../src/devnet/donkey/model.ts'
 import { eventLabel, playerEvents, visualAction } from '../src/devnet/playback.ts'
+import { initRulesNode } from './nodeRulesInit.ts'
+
+// Law names and donkey terms come from the WASM canon of the rules crate.
+await initRulesNode()
 
 // Local DTO fixtures and fetch mocks; never a production outcome or transaction.
 const game = 'GqHZBaWuJDNERi8xJHXnYF5eWBsLSmEXcAGJYAP94M1b'
