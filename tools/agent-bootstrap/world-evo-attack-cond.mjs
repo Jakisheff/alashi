@@ -56,6 +56,10 @@ function resolveGenome(genome, agent, snapshot) {
   } else if (genome.cond.kind === 'cash_threshold') {
     const ownCash = genome.__cash?.get(agent.actor) ?? -1
     patch = ownCash > genome.cond.threshold ? genome.cond.over : genome.cond.under
+  } else if (genome.cond.kind === 'warm_target') {
+    // no static patch: the accepted-bribe preference is applied inside
+    // chooseForAgent via the warmTarget argument
+    patch = {}
   } else {
     throw new Error(`unknown_cond_${genome.cond.kind}`)
   }
@@ -89,7 +93,7 @@ function createWorker(binary) {
   }
 }
 
-function chooseForAgent(genome, agent, snapshot, lastTarget) {
+function chooseForAgent(genome, agent, snapshot, lastTarget, warmTarget) {
   genome = resolveGenome(genome, agent, snapshot)
   const menu = agent.allowed_actions
   const bribes = menu.filter((a) => a.action === 'bribe')
@@ -145,7 +149,9 @@ function chooseForAgent(genome, agent, snapshot, lastTarget) {
         const sticky = lastTarget !== undefined && genome.k > 0
           && hashDraw(snapshot.step, agent.actor, 'stick') < genome.k / 8
           ? bribes.find((b) => b.params.to === lastTarget) : undefined
-        offer = sticky ?? pickTarget()
+        const warm = genome.cond?.kind === 'warm_target' && warmTarget !== undefined
+          ? bribes.find((b) => b.params.to === warmTarget) : undefined
+        offer = sticky ?? warm ?? pickTarget()
         agent.__lastTarget = offer.params.to
         return offer
       }
@@ -175,6 +181,7 @@ export async function playGame({ worker, binary, seed, genome, agents = 100 }) {
   try {
     let snap = await own.request({ op: 'init', experimental: true, game_id: seed, seed, agents, epoch: 0, entry_fee: 10_000_000 })
     const lastTargets = new Array(agents).fill(undefined)
+    const warmTargets = new Array(agents).fill(undefined)
     const bribeCounts = {}
     let accepted = 0, rejected = 0, skipped = 0
     let condTally = {}
@@ -185,7 +192,7 @@ export async function playGame({ worker, binary, seed, genome, agents = 100 }) {
       const g = { ...genome, __cash: cash, __influence: influence }
       const decisions = snap.required_actors.map((actor) => {
         const agent = snap.agents.find((a) => a.actor === actor)
-        const choice = chooseForAgent(g, agent, snap, lastTargets[actor])
+        const choice = chooseForAgent(g, agent, snap, lastTargets[actor], warmTargets[actor])
         lastTargets[actor] = agent.__lastTarget ?? lastTargets[actor]
         return { actor, action: choice.action, params: choice.params }
       })
@@ -195,8 +202,10 @@ export async function playGame({ worker, binary, seed, genome, agents = 100 }) {
         else if (r.accepted) accepted++
         else rejected++
       }
-      for (const d of decisions) if (d.action === 'bribe' && applied.receipts.find((r) => r.actor === d.actor && r.accepted && !r.skipped))
+      for (const d of decisions) if (d.action === 'bribe' && applied.receipts.find((r) => r.actor === d.actor && r.accepted && !r.skipped)) {
         bribeCounts[d.params.to] = (bribeCounts[d.params.to] ?? 0) + 1
+        warmTargets[d.actor] = d.params.to
+      }
       if (genome.cond) condTally[`${snap.round}:${snap.phase}`] = (condTally[`${snap.round}:${snap.phase}`] ?? 0) + 1
       snap = applied.snapshot
     }
