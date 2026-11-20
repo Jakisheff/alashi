@@ -79,6 +79,25 @@ not mapped. The donkey action's economic effect (goods transport
 changing bribe affordability rhythm) deserves its own decomposition
 before any mechanism response.
 
+## Correction (21.11.2026, after the composition/conditional campaign)
+
+The appetite gene in [world-evo-attack.mjs](../../tools/agent-bootstrap/world-evo-attack.mjs)
+was never wired: `__bribeOps` lives on the per-snapshot agent object and
+resets every step, so `1 % (a+1) === 1` always held and every appetite
+value behaved as a=0. The OAT row "non-influential: bribe appetite"
+above is therefore vacuous, not evidence; appetite remains untested.
+Stickiness was genuinely wired but is structurally neutralized by the
+rotating three-peer bribe menus (the previous target is usually illegal
+next round), verified bit-for-bit across anchor and non-anchor targets
+([genome43](../200_ZETTEL/20261121-genome43-prereg.md),
+[genome45](../200_ZETTEL/20261121-genome45-static-compositions-prereg.md)).
+Conditional round/cash policies and their results:
+[genome44](../200_ZETTEL/20261121-genome44-cond-prereg.md) — the share
+and HHI thresholds need a minimum-bribe-volume guard; a near-passive
+cash-threshold policy collapses the denominator (0.50/0.50 on 2-3
+bribes) while every full-flow conditional stayed under the static
+worst case.
+
 Artifacts: [oat.json](world100-attack-20261114/oat.json),
 [enumerate results](world100-attack-20261114/enumerate-t,s,alt.results.json),
 [held-out results](world100-attack-20261114/heldout-genomes.jsonl.results.json),
