@@ -140,6 +140,7 @@ export async function playGame({ worker, binary, seed, genome, agents = 100 }) {
   try {
     let snap = await own.request({ op: 'init', experimental: true, game_id: seed, seed, agents, epoch: 0, entry_fee: 10_000_000 })
     const lastTargets = new Array(agents).fill(undefined)
+    const bribeOps = new Array(agents).fill(0)
     const bribeCounts = {}
     let accepted = 0, rejected = 0, skipped = 0
     while (snap.phase !== 'finished') {
@@ -149,7 +150,9 @@ export async function playGame({ worker, binary, seed, genome, agents = 100 }) {
       const g = { ...genome, __cash: cash, __influence: influence }
       const decisions = snap.required_actors.map((actor) => {
         const agent = snap.agents.find((a) => a.actor === actor)
+        agent.__bribeOps = bribeOps[actor]
         const choice = chooseForAgent(g, agent, snap, lastTargets[actor])
+        bribeOps[actor] = agent.__bribeOps ?? bribeOps[actor]
         lastTargets[actor] = agent.__lastTarget ?? lastTargets[actor]
         return { actor, action: choice.action, params: choice.params }
       })
