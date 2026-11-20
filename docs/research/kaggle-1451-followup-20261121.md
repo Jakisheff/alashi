@@ -32,7 +32,7 @@ Output for seed 20261121 (three independent runs, bit-identical):
 The run directory keeps the frozen config, every decision, and the engine
 replay receipt; re-running the same seed reproduces the same `state_hash`.
 
-**2. The dataset is alive.** world-100-grid (50 recorded 100-agent games,
+**2. Dataset update.** world-100-grid (50 recorded 100-agent games,
 `verify.py` recomputes all 24 claims from published rows, CI-checked on every
 push) moved from 44 to 144 downloads in six days. One command reproduces the
 headline claims: `pip install pyarrow && python verify.py`.
