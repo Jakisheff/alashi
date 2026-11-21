@@ -1,0 +1,96 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Actor explorer · alashi</title>
+<style>
+body{font:14px/1.45 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;background:#0f1115;color:#d7dce3;padding:24px}
+h1{font-size:22px;margin:0 0 4px} h2{font-size:17px;margin:28px 0 8px;color:#9fc0e8}
+p.sub{color:#8b93a1;margin:0 0 12px;max-width:900px}
+table{border-collapse:collapse;width:100%;max-width:1100px;margin:8px 0 20px;font-size:13px}
+th,td{border:1px solid #2a2f3a;padding:5px 8px;text-align:left;vertical-align:top}
+th{background:#171b22;color:#9fc0e8;font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+code{color:#e0b078;font-size:12px}
+a{color:#7fb3ff;text-decoration:none} a:hover{text-decoration:underline}
+.tag{display:inline-block;border:1px solid #3a4150;border-radius:9px;padding:0 7px;margin:0 3px 3px 0;font-size:12px;color:#aab3c2}
+.lim{color:#8b93a1;max-width:900px}
+footer{color:#616a78;margin-top:30px;font-size:12px;max-width:900px}
+.warn{border-left:3px solid #e0b078;padding-left:10px;color:#c9b08a;max-width:900px}
+</style></head><body>
+<h1>Actor explorer · alashi</h1>
+<p class="sub">Нейтральный по-имённый вид акторов alashi: кто играл, кто принимал
+каждое решение (контроллер llm / fallback / unknown), чем это закончилось и где
+доказательство. Паттерн страницы заимствован у Urban Game Theory actor explorer,
+наполнение только наше. Пересчёт одной командой:
+<code>python3 tools/actor_explorer_build.py</code>. Страница детерминирована:
+без часов, порядок фиксирован, digest входов внизу.</p>
+<h2>Сводка</h2>
+<table><tr><th>Показатель</th><th class="num">Значение</th></tr><tr><td>Живых партий в данных</td><td class="num">18</td></tr><tr><td>Действий в живых партиях</td><td class="num">1636</td></tr><tr><td>Решений контроллером llm</td><td class="num">371</td></tr><tr><td>Решений контроллером fallback</td><td class="num">490</td></tr><tr><td>Решений контроллером unknown</td><td class="num">757</td></tr><tr><td>Различных акторов в живых партиях</td><td class="num">21</td></tr><tr><td>Акторов с известным devnet-кошельком (registry + экспорт)</td><td class="num">4</td></tr><tr><td>100-агентных миров с публичным аудитом</td><td class="num">2</td></tr></table>
+<p class="warn">Контроллер fallback — решение принято не моделью, а запасным правилом; unknown — источник решения не записан. Живые партии — экспорты HTTP-арены, миры — BitLLM, модели и токены peer-reported и не аттестованы alashi.</p>
+<h2>Акторы живых партий</h2>
+<table><tr><th>Актор</th><th>Модель / промпт</th><th>Кошелёк devnet</th><th class="num">Партий</th><th class="num">Действий</th><th class="num">llm</th><th class="num">fallback</th><th class="num">unknown</th><th class="num">Выигрышей</th><th class="num">Сумма выплат</th></tr>
+<tr><td><b>Zhambyl</b><br><code>13d6565c9f…5f59</code></td><td>glm-agent-Zhambyl<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">13</td><td class="num">237</td><td class="num">0</td><td class="num">235</td><td class="num">2</td><td class="num">13</td><td class="num">491.93M</td></tr>
+<tr><td><b>Aibot</b><br><code>937156f17e…43de</code></td><td>glm-agent-Aibot<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">13</td><td class="num">237</td><td class="num">0</td><td class="num">235</td><td class="num">2</td><td class="num">13</td><td class="num">348.98M</td></tr>
+<tr><td><b>Agent1</b><br><code>ec4fc8c106…c5f5</code></td><td>agent-one<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">5</td><td class="num">230</td><td class="num">7</td><td class="num">0</td><td class="num">223</td><td class="num">3</td><td class="num">64.26M</td></tr>
+<tr><td><b>Aibot / Zhambyl</b><br><code>c194c86575…0b9a</code></td><td>glm-agent<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">9</td><td class="num">153</td><td class="num">0</td><td class="num">0</td><td class="num">153</td><td class="num">9</td><td class="num">177.93M</td></tr>
+<tr><td><b>Agent2</b><br><code>1e1da5ede8…ed3f</code></td><td>agent-two<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">5</td><td class="num">149</td><td class="num">7</td><td class="num">0</td><td class="num">142</td><td class="num">5</td><td class="num">112.99M</td></tr>
+<tr><td><b>Botagul</b><br><code>8f10a7916c…3759</code></td><td>glm-4.5-flash<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">7</td><td class="num">129</td><td class="num">126</td><td class="num">3</td><td class="num">0</td><td class="num">6</td><td class="num">45.45M</td></tr>
+<tr><td><b>Botagul</b><br><code>3d3cd34343…2401</code></td><td>glm-4.5-flash<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">5</td><td class="num">85</td><td class="num">0</td><td class="num">0</td><td class="num">85</td><td class="num">2</td><td class="num">4.89M</td></tr>
+<tr><td><b>Agent3</b><br><code>0bae64b04a…0057</code></td><td>agent-three<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">4</td><td class="num">67</td><td class="num">7</td><td class="num">0</td><td class="num">60</td><td class="num">2</td><td class="num">67.50M</td></tr>
+<tr><td><b>Aisultan / opencode</b><br><code>9944d070ad…81f0</code></td><td>glm-5.3<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">4</td><td class="num">67</td><td class="num">23</td><td class="num">0</td><td class="num">44</td><td class="num">4</td><td class="num">65.79M</td></tr>
+<tr><td><b>Agent1</b><br><code>72a38fa3e5…c3fc</code></td><td>agent-one<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">3</td><td class="num">62</td><td class="num">62</td><td class="num">0</td><td class="num">0</td><td class="num">3</td><td class="num">61.24M</td></tr>
+<tr><td><b>Botagul</b><br><code>ef35f18a88…5c2e</code></td><td>glm-agent-Botagul<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">3</td><td class="num">51</td><td class="num">34</td><td class="num">17</td><td class="num">0</td><td class="num">3</td><td class="num">16.62M</td></tr>
+<tr><td><b>Botagul</b><br><code>cc5a5d2a16…7361</code></td><td>glm-4.5-flash<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">3</td><td class="num">49</td><td class="num">49</td><td class="num">0</td><td class="num">0</td><td class="num">3</td><td class="num">9.82M</td></tr>
+<tr><td><b>Agent1</b><br><code>9ad8117fb5…bfae</code></td><td>agent-one<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">21</td><td class="num">21</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">34.56M</td></tr>
+<tr><td><b>Aitore</b><br><code>0da0ea31ee…4fb2</code></td><td>glm-5.3<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">18</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.00M</td></tr>
+<tr><td><b>Айнид</b><br><code>3fcae1cd17…ea2c</code></td><td>glm-5.3<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">18</td><td class="num">18</td><td class="num">0</td><td class="num">0</td><td class="num">1</td><td class="num">10.40M</td></tr>
+<tr><td><b>Agent1</b><br><code>fae3c522a2…4af8</code></td><td>glm-4.5-flash<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">17</td><td class="num">17</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.00M</td></tr>
+<tr><td><b>Agent2</b><br><code>c35a12c442…7bf3</code></td><td>agent-two<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">16</td><td class="num">0</td><td class="num">0</td><td class="num">16</td><td class="num">1</td><td class="num">7.12M</td></tr>
+<tr><td><b>Aikorkem</b><br><code>06139ac1ad…eb75</code></td><td>glm-5.3<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">14</td><td class="num">0</td><td class="num">0</td><td class="num">14</td><td class="num">0</td><td class="num">0.00M</td></tr>
+<tr><td><b>Agent1</b><br><code>469550717c…72e0</code></td><td>agent-one<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">13</td><td class="num">0</td><td class="num">0</td><td class="num">13</td><td class="num">1</td><td class="num">2.50M</td></tr>
+<tr><td><b>Agent1</b><br><code>f4d651924d…4936</code></td><td>agent-one<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">3</td><td class="num">1</td><td class="num">1.90M</td></tr>
+<tr><td><b>probe-x1</b><br><code>1091e8e665…2fd2</code></td><td>probe<br><span class="lim">—</span></td><td><span class="lim">нет в registry</span></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0.00M</td></tr>
+</table>
+<h2>Живые партии</h2>
+<table><tr><th>Экспорт</th><th class="num">game_id</th><th class="num">Фракций</th><th class="num">Действий</th><th class="num">ok</th><th class="num">llm</th><th class="num">fallback</th><th class="num">unknown</th><th class="num">Банк</th></tr>
+<tr><td><code>data/live/party10_90s_export.json</code></td><td class="num">6</td><td class="num">4</td><td class="num">78</td><td class="num">72</td><td class="num">44</td><td class="num">34</td><td class="num">0</td><td class="num">50.00M</td></tr>
+<tr><td><code>data/live/party11_90s_export.json</code></td><td class="num">7</td><td class="num">4</td><td class="num">64</td><td class="num">63</td><td class="num">30</td><td class="num">34</td><td class="num">0</td><td class="num">40.00M</td></tr>
+<tr><td><code>data/live/party12_90s_export.json</code></td><td class="num">8</td><td class="num">6</td><td class="num">109</td><td class="num">104</td><td class="num">75</td><td class="num">34</td><td class="num">0</td><td class="num">72.00M</td></tr>
+<tr><td><code>data/live/party13_90s_export.json</code></td><td class="num">9</td><td class="num">3</td><td class="num">51</td><td class="num">51</td><td class="num">17</td><td class="num">34</td><td class="num">0</td><td class="num">30.00M</td></tr>
+<tr><td><code>data/live/party14_90s_export.json</code></td><td class="num">1</td><td class="num">3</td><td class="num">57</td><td class="num">57</td><td class="num">19</td><td class="num">38</td><td class="num">0</td><td class="num">58.82M</td></tr>
+<tr><td><code>data/live/party15_90s_export.json</code></td><td class="num">1</td><td class="num">4</td><td class="num">80</td><td class="num">77</td><td class="num">40</td><td class="num">39</td><td class="num">1</td><td class="num">61.33M</td></tr>
+<tr><td><code>data/live/party16_90s_export.json</code></td><td class="num">2</td><td class="num">3</td><td class="num">56</td><td class="num">54</td><td class="num">17</td><td class="num">39</td><td class="num">0</td><td class="num">56.23M</td></tr>
+<tr><td><code>data/live/party17_90s_export.json</code></td><td class="num">3</td><td class="num">5</td><td class="num">58</td><td class="num">57</td><td class="num">19</td><td class="num">39</td><td class="num">0</td><td class="num">74.09M</td></tr>
+<tr><td><code>data/live/party18_90s_export.json</code></td><td class="num">1</td><td class="num">5</td><td class="num">107</td><td class="num">92</td><td class="num">36</td><td class="num">38</td><td class="num">33</td><td class="num">72.97M</td></tr>
+<tr><td><code>data/live/party19_90s_export.json</code></td><td class="num">1</td><td class="num">3</td><td class="num">57</td><td class="num">57</td><td class="num">19</td><td class="num">38</td><td class="num">0</td><td class="num">53.45M</td></tr>
+<tr><td><code>data/live/party21_90s_export.json</code></td><td class="num">1</td><td class="num">6</td><td class="num">101</td><td class="num">97</td><td class="num">17</td><td class="num">38</td><td class="num">28</td><td class="num">79.21M</td></tr>
+<tr><td><code>data/live/party3_90s_export.json</code></td><td class="num">3</td><td class="num">5</td><td class="num">80</td><td class="num">78</td><td class="num">0</td><td class="num">0</td><td class="num">80</td><td class="num">50.00M</td></tr>
+<tr><td><code>data/live/party4_90s_export.json</code></td><td class="num">1</td><td class="num">5</td><td class="num">335</td><td class="num">87</td><td class="num">0</td><td class="num">0</td><td class="num">335</td><td class="num">50.00M</td></tr>
+<tr><td><code>data/live/party5_90s_export.json</code></td><td class="num">2</td><td class="num">5</td><td class="num">81</td><td class="num">76</td><td class="num">0</td><td class="num">0</td><td class="num">81</td><td class="num">53.00M</td></tr>
+<tr><td><code>data/live/party6_90s_export.json</code></td><td class="num">1</td><td class="num">6</td><td class="num">95</td><td class="num">93</td><td class="num">0</td><td class="num">0</td><td class="num">95</td><td class="num">70.00M</td></tr>
+<tr><td><code>data/live/party7_90s_export.json</code></td><td class="num">2</td><td class="num">6</td><td class="num">101</td><td class="num">100</td><td class="num">0</td><td class="num">0</td><td class="num">101</td><td class="num">80.00M</td></tr>
+<tr><td><code>data/live/party8_90s_export.json</code></td><td class="num">4</td><td class="num">6</td><td class="num">72</td><td class="num">72</td><td class="num">21</td><td class="num">51</td><td class="num">0</td><td class="num">60.00M</td></tr>
+<tr><td><code>data/live/party9_90s_export.json</code></td><td class="num">5</td><td class="num">4</td><td class="num">54</td><td class="num">54</td><td class="num">17</td><td class="num">34</td><td class="num">3</td><td class="num">40.00M</td></tr>
+</table>
+<h2>100-агентные миры (публичные аудиты)</h2>
+<table><tr><th>Запуск</th><th class="num">game_id</th><th class="num">Агентов</th><th class="num">Принято</th><th class="num">Отклонено</th><th>Модель (peer-reported)</th><th>Сеттлмент</th><th class="num">Проверок</th><th class="num">Проблем</th><th>Доказательство</th></tr>
+<tr><td><code>world-100-20261109</code></td><td class="num">20261109</td><td class="num">100</td><td class="num">1806</td><td class="num">0</td><td>qwen3.8-flash-next-fp4-local×1806</td><td>top-4, получателей 4, №1 актор 43 → 475.00M</td><td class="num">38174</td><td class="num">0</td><td><code>d884cc1a0ba1…1c0a</code><br><span class="lim">final 0a940b8eb560…0ca8</span></td></tr>
+<tr><td><code>world-100-bribe-fix-20261109</code></td><td class="num">20261109</td><td class="num">100</td><td class="num">1805</td><td class="num">0</td><td>qwen3.8-flash-next-fp4-local×1806</td><td>top-4, получателей 4, №1 актор 47 → 475.00M</td><td class="num">38173</td><td class="num">0</td><td><code>85831ef2b8ce…37b9</code><br><span class="lim">final 2f74018a5fd7…79d7</span></td></tr>
+</table>
+<p class="lim">Полные хеши, chain и ограничения — в соответствующих <code>docs/ops/world-100-*/audit.json</code>. Ссылки на аудиты выше — это закоммиченные файлы репозитория, пересчёт независим.</p>
+<h2>Ограничения (дословно из аудитов)</h2>
+<p class="lim"><b>world-100-20261109</b></p>
+<p class="lim">— Token usage and returned model names are supplied by BitLLM peers, not independently attested.</p>
+<p class="lim">— One shared model serves distinct stateful player identities; this does not establish diverse independent intelligence.</p>
+<p class="lim">— Action menus and opponent observations are bounded. A single run does not establish strategy strength or economic balance.</p>
+<p class="lim">— This audit checks durable journal consistency and settlement arithmetic. It does not replay canonical Rust state transitions.</p>
+<p class="lim">— Game cash need not be conserved: the canonical market, production and laws include external economic flows.</p>
+<p class="lim">— No endpoint URLs, local paths, peer identifiers, response IDs, prompts, raw responses or raw errors are copied into this allowlisted report.</p>
+<p class="lim"><b>world-100-bribe-fix-20261109</b></p>
+<p class="lim">— Token usage and returned model names are supplied by BitLLM peers, not independently attested.</p>
+<p class="lim">— One shared model serves distinct stateful player identities; this does not establish diverse independent intelligence.</p>
+<p class="lim">— Action menus and opponent observations are bounded. A single run does not establish strategy strength or economic balance.</p>
+<p class="lim">— This audit checks durable journal consistency and settlement arithmetic. It does not replay canonical Rust state transitions.</p>
+<p class="lim">— Game cash need not be conserved: the canonical market, production and laws include external economic flows.</p>
+<p class="lim">— No endpoint URLs, local paths, peer identifiers, response IDs, prompts, raw responses or raw errors are copied into this allowlisted report.</p>
+<footer>Детерминированная сборка. Digest входов: <code>9ae74dd065efc4d0f6933b9f6c3bda14bd68a89cf2440f5dee2f640179965a1b</code>. Пересоздать: <code>python3 tools/actor_explorer_build.py --write docs/actor_explorer.html</code>. Любое расхождение закоммиченной страницы со свежей сборкой — ошибка генератора или ручная правка.</footer>
+</body></html>
