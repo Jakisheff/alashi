@@ -8,6 +8,10 @@ primary_region = "fra"
 [env]
 ALASHI_SEQ_FILE = "/data/arena_party_no.txt"
 ALASHI_STATE_FILE = "/data/arena_state.json"
+# D1 (ADR-001): атомарное SQLite WAL-хранилище вместо пары плоских файлов.
+# При первом старте данные из arena_state.json + arena_party_no.txt
+# мигрируются в arena.db одной транзакцией.
+ALASHI_DB_FILE = "/data/arena.db"
 
 [[mounts]]
 source = "alashi_data"

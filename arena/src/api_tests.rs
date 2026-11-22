@@ -134,6 +134,81 @@ fn invalid_creation_parameters_cannot_reach_the_crank() {
     assert_eq!(good["ok"], true);
 }
 
+fn isolated_db() -> (Arc<AppState>, std::path::PathBuf, std::path::PathBuf) {
+    static NEXT_DB: AtomicU64 = AtomicU64::new(1);
+    let dir = std::env::temp_dir().join(format!(
+        "alashi_demo_db_{}_{}_{}", std::process::id(),
+        SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos(),
+        NEXT_DB.fetch_add(1, Ordering::SeqCst),
+    ));
+    let snapshot = dir.join("state.json");
+    let seq = dir.join("seq");
+    let db = dir.join("arena.db");
+    (new_state_with_db(snapshot.clone(), seq.clone(), db.clone()), snapshot, seq)
+}
+
+#[test]
+fn sqlite_mode_persists_state_and_spends_party_no_only_with_snapshot() {
+    let (state, snapshot, seq) = isolated_db();
+    let gid = create(&state);
+    join(&state, gid, 0);
+    let first_no = state.games.lock().unwrap()[&gid].party_no;
+    assert!(first_no >= 19, "first party_no after canonical 18: {first_no}");
+
+    // Restart from the same db: the party and the counter survive together.
+    let restored = new_state_with_db(snapshot.clone(), seq.clone(), snapshot.parent().unwrap().join("arena.db"));
+    load_snapshot(&restored).unwrap();
+    assert!(restored.games.lock().unwrap().contains_key(&gid), "party survives in db");
+    let gid2 = create(&restored);
+    let second_no = restored.games.lock().unwrap()[&gid2].party_no;
+    assert_eq!(second_no, first_no + 1, "party_no spends monotonically");
+
+    // Flat files must not be written in db mode at all.
+    assert!(!snapshot.exists(), "legacy snapshot file must stay absent in db mode");
+    assert!(!seq.exists(), "legacy seq file must stay absent in db mode");
+}
+
+#[test]
+fn sqlite_mode_migrates_flat_files_in_one_shot() {
+    // Legacy state first: party + snapshot + seq file.
+    let dir = std::env::temp_dir().join(format!(
+        "alashi_migrate_{}_{}", std::process::id(),
+        SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos(),
+    ));
+    let snapshot = dir.join("state.json");
+    let seq = dir.join("seq");
+    let legacy = new_state_with_files(snapshot.clone(), seq.clone());
+    let gid = create(&legacy);
+    join(&legacy, gid, 0);
+    let legacy_no = legacy.games.lock().unwrap()[&gid].party_no;
+    assert!(snapshot.exists() && seq.exists());
+
+    // Opening the db migrates snapshot + party counter in one transaction.
+    let state = new_state_with_db(snapshot.clone(), seq.clone(), dir.join("arena.db"));
+    load_snapshot(&state).unwrap();
+    assert!(state.games.lock().unwrap().contains_key(&gid), "migrated party is visible");
+    let gid2 = create(&state);
+    assert_eq!(state.games.lock().unwrap()[&gid2].party_no, legacy_no + 1, "counter migrated from flat seq file");
+}
+
+#[test]
+fn sqlite_party_no_never_resets_after_a_corrupt_free_restart() {
+    let (state, snapshot, seq) = isolated_db();
+    let gid = create(&state);
+    join(&state, gid, 0);
+    let spent = state.games.lock().unwrap()[&gid].party_no;
+
+    // Simulate the old failure mode: a torn flat counter file (empty/partial
+    // write after OOM). In db mode the counter lives in the committed kv row
+    // and cannot fall back to 18.
+    std::fs::write(&seq, "").unwrap();
+    let restored = new_state_with_db(snapshot.clone(), seq.clone(), snapshot.parent().unwrap().join("arena.db"));
+    load_snapshot(&restored).unwrap();
+    let gid2 = create(&restored);
+    let next = restored.games.lock().unwrap()[&gid2].party_no;
+    assert_eq!(next, spent + 1, "counter must continue from the committed value, not reset to 19");
+}
+
 #[test]
 fn phase_close_records_timed_out_factions() {
     let state = isolated();

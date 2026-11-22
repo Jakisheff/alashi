@@ -32,7 +32,7 @@ use alashi_rules::state::{Faction, Game, Phase, VoteChoice};
 use borsh;
 use sha2::{Digest, Sha256};
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::net::{TcpListener, TcpStream};
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -185,6 +185,9 @@ pub struct AppState {
     proposal_key: Mutex<Option<String>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
+    /// D1 (ADR-001): атомарное SQLite WAL-хранилище. None — legacy-режим
+    /// пары плоских файлов (совместимость тестов и локальных прогонов).
+    db: Option<Mutex<rusqlite::Connection>>,
     // ponytail: one transaction gate for this single-file arena. Split persistence
     // per game if contention matters; every writer acquires this before games.
     snapshot_lock: Mutex<()>,
@@ -248,8 +251,7 @@ pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
 // Caller holds snapshot_lock for the full mutation -> save -> rollback cycle.
 pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
-    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
-    let arr: Vec<serde_json::Value> = games
+    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());    let arr: Vec<serde_json::Value> = games
         .iter()
         .map(|(gid, e)| {
             serde_json::json!({
@@ -300,6 +302,25 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     });
     drop(completed);
     drop(games);
+    let doc_text = doc.to_string();
+    if let Some(db) = &state.db {
+        // D1: снапшот и счётчик партий — одна транзакция. Номер расходуется
+        // только вместе с зафиксированным снапшотом; откат невозможен.
+        let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+        let tx = conn.unchecked_transaction()
+            .map_err(|e| std::io::Error::other(format!("db tx: {e}")))?;
+        db_kv_put(&tx, "snapshot", &doc_text)
+            .map_err(|e| std::io::Error::other(e))?;
+        let stored: u64 = db_kv_get(&tx, "party_no")
+            .map_err(|e| std::io::Error::other(e))?
+            .and_then(|s| s.trim().parse().ok())
+            .unwrap_or(18);
+        let observed = max_party_no_in_snapshot(&doc_text).unwrap_or(18);
+        db_kv_put(&tx, "party_no", &stored.max(observed).to_string())
+            .map_err(|e| std::io::Error::other(e))?;
+        tx.commit().map_err(|e| std::io::Error::other(format!("db commit: {e}")))?;
+        return Ok(());
+    }
     let p = &state.snapshot_path;
     if let Some(dir) = p.parent() {
         std::fs::create_dir_all(dir)?;
@@ -328,10 +349,22 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
 /// сохраняется рядом как .corrupt.<ts>, пустое состояние не подменяет
 /// данные. Вызывающая сторона (serve) обязана отказаться от старта.
 pub fn load_snapshot(state: &AppState) -> Result<(), String> {
-    let txt = match std::fs::read_to_string(&state.snapshot_path) {
-        Ok(txt) => txt,
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
-        Err(e) => return Err(format!("снимок не читается: {e}")),
+    // D1 (ADR-001): источник состояния — SQLite WAL, если он включён;
+    // в db-режиме пустая kv-ячейка snapshot = чистый старт (после миграции
+    // при открытии), битые записи невозможны по построению.
+    let txt = match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            match db_kv_get(&conn, "snapshot").map_err(|e| format!("снимок не читается: {e}"))? {
+                Some(txt) => txt,
+                None => return Ok(()),
+            }
+        }
+        None => match std::fs::read_to_string(&state.snapshot_path) {
+            Ok(txt) => txt,
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+            Err(e) => return Err(format!("снимок не читается: {e}")),
+        },
     };
     let backup_path = state
         .snapshot_path
@@ -642,6 +675,23 @@ fn next_party_no(path: &std::path::Path) -> std::io::Result<u64> {
     Ok(next)
 }
 
+/// D1 (ADR-001): в db-режиме номер только читается; расходуется он вместе
+/// со снапшотом в save_snapshot_locked (одна транзакция). Падение до
+/// коммита не тратит номер, откат счётчика невозможен в принципе.
+fn next_party_no_state(state: &AppState) -> std::io::Result<u64> {
+    match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            let last: u64 = db_kv_get(&conn, "party_no")
+                .map_err(std::io::Error::other)?
+                .and_then(|s| s.trim().parse().ok())
+                .unwrap_or(18);
+            Ok(last.saturating_add(1))
+        }
+        None => next_party_no(&state.sequence_path),
+    }
+}
+
 /// Аудит 27.09 (S3): секрет арены берётся из ОС, а не из времени.
 /// Для локальных воспроизводимых прогонов: ALASHI_MASTER_SEED=<u64>.
 fn master_seed_from_env_or_os() -> u64 {
@@ -770,6 +820,10 @@ pub fn new_state() -> Arc<AppState> {
 }
 
 pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: impl Into<PathBuf>) -> Arc<AppState> {
+    let snapshot_path = snapshot_path.into();
+    let sequence_path = sequence_path.into();
+    let db = db_from_env().map(|path| open_arena_db(&path, &snapshot_path, &sequence_path)
+        .unwrap_or_else(|e| panic!("arena db {path:?} unusable: {e}")));
     Arc::new(AppState {
         games: Mutex::new(HashMap::new()),
         next_id: AtomicU64::new(1),
@@ -787,13 +841,104 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         chain_conversations: Mutex::new(chain_conversations::ConversationState::default()),
         chain_dialogue: Mutex::new(chain_dialogue::DialogueState::default()),
         proposal_key: Mutex::new(None),
-        snapshot_path: snapshot_path.into(),
-        sequence_path: sequence_path.into(),
+        snapshot_path,
+        sequence_path,
+        db: db.map(Mutex::new),
         snapshot_lock: Mutex::new(()),
         connections: Arc::new(AtomicU64::new(0)),
         waiters: Arc::new(AtomicU64::new(0)),
         confirmations: Arc::new(AtomicU64::new(0)),
     })
+}
+
+/// Тот же конструктор, но с явным путём к SQLite-хранилищу (тесты и явные
+/// конфигурации без чтения окружения).
+pub fn new_state_with_db(snapshot_path: impl Into<PathBuf>, sequence_path: impl Into<PathBuf>, db_path: impl Into<PathBuf>) -> Arc<AppState> {
+    let db_path = db_path.into();
+    let mut state = new_state_with_files(snapshot_path, sequence_path);
+    // new_state_with_files без ALASHI_DB_FILE строит legacy-состояние; заменяем
+    // хранилище на явно переданное (тесты не зависят от окружения).
+    let conn = open_arena_db(&db_path, &state.snapshot_path, &state.sequence_path)
+        .unwrap_or_else(|e| panic!("arena db {db_path:?} unusable: {e}"));
+    if let Some(s) = Arc::get_mut(&mut state) {
+        s.db = Some(Mutex::new(conn));
+    } else {
+        panic!("fresh state is uniquely owned");
+    }
+    state
+}
+
+fn db_from_env() -> Option<PathBuf> {
+    std::env::var("ALASHI_DB_FILE").ok().map(PathBuf::from)
+}
+
+/// D1 (ADR-001): единое атомарное SQLite WAL-хранилище вместо пары плоских
+/// файлов /data/arena_state.json + /data/arena_party_no.txt. Схема — одна
+/// kv-таблица: 'snapshot' (тот же JSON-документ) и 'party_no'. Битая запись
+/// невозможна (WAL + синхронные коммиты), счётчик партий не может молча
+/// откатиться к 18, снапшот и номер живут в одной транзакции.
+fn open_arena_db(db_path: &std::path::Path, legacy_snapshot: &std::path::Path, legacy_seq: &std::path::Path)
+    -> Result<rusqlite::Connection, String>
+{
+    use rusqlite::Connection;
+    if let Some(dir) = db_path.parent() {
+        std::fs::create_dir_all(dir).map_err(|e| format!("db dir: {e}"))?;
+    }
+    let conn = Connection::open(db_path).map_err(|e| format!("open: {e}"))?;
+    conn.pragma_update(None, "journal_mode", "WAL").map_err(|e| format!("wal: {e}"))?;
+    conn.pragma_update(None, "synchronous", "FULL").map_err(|e| format!("sync: {e}"))?;
+    conn.execute_batch(
+        "CREATE TABLE IF NOT EXISTS arena_kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);",
+    ).map_err(|e| format!("schema: {e}"))?;
+    let have: i64 = conn.query_row("SELECT COUNT(*) FROM arena_kv", [], |r| r.get(0))
+        .map_err(|e| format!("count: {e}"))?;
+    if have == 0 {
+        // Миграция из пары плоских файлов в одной транзакции.
+        let snapshot_txt = std::fs::read_to_string(legacy_snapshot).ok();
+        let party_no = std::fs::read_to_string(legacy_seq).ok()
+            .and_then(|s| s.trim().parse::<u64>().ok());
+        let party_no = match (party_no, &snapshot_txt) {
+            (Some(n), _) => n,
+            (None, Some(txt)) => max_party_no_in_snapshot(txt).unwrap_or(18),
+            (None, None) => 18,
+        };
+        let tx = conn.unchecked_transaction().map_err(|e| format!("tx: {e}"))?;
+        if let Some(txt) = snapshot_txt {
+            tx.execute("INSERT OR REPLACE INTO arena_kv(key, value) VALUES('snapshot', ?1)",
+                [&txt]).map_err(|e| format!("migrate snapshot: {e}"))?;
+        }
+        tx.execute("INSERT OR REPLACE INTO arena_kv(key, value) VALUES('party_no', ?1)",
+            [party_no.to_string()]).map_err(|e| format!("migrate party_no: {e}"))?;
+        tx.commit().map_err(|e| format!("commit migration: {e}"))?;
+    }
+    Ok(conn)
+}
+
+fn max_party_no_in_snapshot(txt: &str) -> Option<u64> {
+    let doc: serde_json::Value = serde_json::from_str(txt).ok()?;
+    let games = doc.get("games")?.as_array()?;
+    let live = games.iter().filter_map(|g| g["party_no"].as_u64()).max();
+    let done = doc.get("completed")?.as_array()?
+        .iter().filter_map(|s| s.as_str())
+        .filter_map(|s| serde_json::from_str::<serde_json::Value>(s).ok())
+        .filter_map(|v| v["party_no"].as_u64()).max();
+    live.max(done)
+}
+
+fn db_kv_get(conn: &rusqlite::Connection, key: &str) -> Result<Option<String>, String> {
+    let mut stmt = conn.prepare("SELECT value FROM arena_kv WHERE key = ?1")
+        .map_err(|e| format!("select {key}: {e}"))?;
+    let mut rows = stmt.query([key]).map_err(|e| format!("query {key}: {e}"))?;
+    match rows.next() {
+        Ok(Some(row)) => Ok(Some(row.get::<_, String>(0).map_err(|e| format!("read {key}: {e}"))?)),
+        Ok(None) => Ok(None),
+        Err(e) => Err(format!("iterate {key}: {e}")),
+    }
+}
+
+fn db_kv_put(tx: &rusqlite::Transaction, key: &str, value: &str) -> Result<(), String> {
+    tx.execute("INSERT OR REPLACE INTO arena_kv(key, value) VALUES(?1, ?2)", rusqlite::params![key, value])
+        .map(|_| ()).map_err(|e| format!("put {key}: {e}"))
 }
 
 // ---------- служебное ----------
@@ -1386,7 +1531,7 @@ fn h_new_game_locked(state: &AppState, body: &serde_json::Value, managed_match: 
     // дефолт прежний phase_duration x LOBBY_MULT. Пола нет: тесты
     // и быстрые смоуки используют короткие фазы.
     sim.game.phase_ends_at = now() + lobby_duration;
-    let party_no = match next_party_no(&state.sequence_path) {
+    let party_no = match next_party_no_state(&state) {
         Ok(number) => number,
         Err(e) => {
             eprintln!("[ERROR] party sequence: {e}");
@@ -3575,7 +3720,14 @@ fn accept_connections(listener: TcpListener, state: Arc<AppState>) {
 // Public canonical runtime must never silently start with a fresh proposal key
 // or a reset party counter. Keep local development's clean-start behavior.
 fn validate_existing_state(state: &AppState, expected_key_hash: Option<&str>) -> std::io::Result<()> {
-    let txt = std::fs::read_to_string(&state.snapshot_path)?;
+    let txt = match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            db_kv_get(&conn, "snapshot").map_err(std::io::Error::other)?
+                .ok_or_else(|| std::io::Error::new(std::io::ErrorKind::NotFound, "no snapshot in db"))?
+        }
+        None => std::fs::read_to_string(&state.snapshot_path)?,
+    };
     let doc: serde_json::Value = serde_json::from_str(&txt)
         .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
     let key = doc.get("proposal_key").and_then(|v| v.as_str())
@@ -3589,8 +3741,24 @@ fn validate_existing_state(state: &AppState, expected_key_hash: Option<&str>) ->
                 "canonical proposal_key fingerprint mismatch"));
         }
     }
-    let seq = std::fs::read_to_string(&state.sequence_path)?;
-    if seq.trim().parse::<u64>().ok().filter(|n| (18..u64::MAX).contains(n)).is_none() {
+    let seq_ok = match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            match db_kv_get(&conn, "party_no").map_err(std::io::Error::other)? {
+                Some(s) => s.trim().parse::<u64>().ok()
+                    .is_some_and(|n| (18..u64::MAX).contains(&n)),
+                None => return Err(std::io::Error::new(std::io::ErrorKind::NotFound,
+                    "no party_no row in db")),
+            }
+        }
+        None => {
+            // Отсутствие файла — NotFound (как раньше); битое содержимое — InvalidData.
+            let seq_txt = std::fs::read_to_string(&state.sequence_path)?;
+            seq_txt.trim().parse::<u64>().ok()
+                .is_some_and(|n| (18..u64::MAX).contains(&n))
+        }
+    };
+    if !seq_ok {
         return Err(std::io::Error::new(std::io::ErrorKind::InvalidData,
             "canonical party sequence is invalid"));
     }
