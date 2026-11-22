@@ -230,16 +230,20 @@ fn engine_step_latency_stays_under_the_adr_budget() {
     let mut budget_ms = 0.0_f64;
     let mut steps = 0u32;
     let start = Instant::now();
+    // Falsification R4: with a frozen wall clock every advance after the
+    // first is a TooEarly no-op, so the gate measured nothing. Virtual time
+    // advances one phase per step, so every iteration is a real transition
+    // (plus an agent action where the phase allows one).
+    let mut t = now();
     while sim.game.phase != alashi_rules::state::Phase::Finished && steps < 2000 {
         let seed = random_u64().unwrap_or(steps as u64);
         let t0 = Instant::now();
-        // ADR T4 counts a full engine turn: an agent action where the phase
-        // allows one, then the deterministic phase transition.
         if sim.game.phase == alashi_rules::state::Phase::Action && !sim.factions.is_empty() {
             let _ = crate::runner::apply_action(&mut sim, 0, &crate::strategies::ActionAction::Produce);
         }
-        let _ = sim.advance(now(), seed);
+        let _ = sim.advance(t, seed);
         budget_ms += t0.elapsed().as_secs_f64() * 1000.0;
+        t += 1; // == phase_duration of this simulator
         steps += 1;
     }
     let total = start.elapsed().as_secs_f64() * 1000.0;
