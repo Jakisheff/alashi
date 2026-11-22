@@ -109,6 +109,10 @@ const server = http.createServer(async (req, res) => {
       return json(res, 403, { error: 'disallowed_endpoint', message: 'endpoint host is not in ALASHI_EGRESS_ALLOWED_HOSTS' });
     }
     if (!keyEnv || !/^[A-Z][A-Z0-9_]{0,127}$/.test(keyEnv)) return json(res, 400, { error: 'bad_key_env', message: 'X-Alashi-Key-Env must name an environment variable' });
+    // Falsification R4b: service variables must never be usable as bearer
+    // material - ALASHI_EGRESS_SEED matches the name regex and would leak
+    // the receipt signing identity to whatever host the caller allowlisted.
+    if (keyEnv.startsWith('ALASHI_')) return json(res, 400, { error: 'bad_key_env', message: 'X-Alashi-Key-Env must not name an ALASHI_* service variable' });
     const apiKey = env(keyEnv);
     if (!apiKey) return json(res, 400, { error: 'unknown_key_env', message: `no such key variable in proxy env: ${keyEnv}` });
 

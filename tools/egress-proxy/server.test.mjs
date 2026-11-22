@@ -106,6 +106,14 @@ test('receipts: signed, usage normalized, key never leaks, budget cuts off', asy
     assert.equal((await r2b.json()).error, 'disallowed_endpoint');
     assert.equal(provider.seen.calls, before, 'no upstream call on disallowed endpoint');
 
+    // 2c. service-variable guard: the signing seed must never be attachable
+    // as a bearer token, even to an allowlisted host.
+    const r2c = await callProxy(port, { endpoint: `http://127.0.0.1:${provider.port}/v1/chat/completions`, keyEnv: 'ALASHI_EGRESS_SEED' });
+    assert.equal(r2c.status, 400);
+    assert.equal((await r2c.json()).error, 'bad_key_env');
+    assert.equal(provider.seen.calls, before, 'service-variable probe never reaches the provider');
+    assert.equal(provider.seen.auth, `Bearer ${PROVIDER_KEY}`, 'seed must not replace the provider key upstream');
+
     // 3. budget: the cap (150) is crossed by the second attested call
     //    (120 + 120 = 240); every next call is cut before the provider.
     const r3 = await callProxy(port, { endpoint: `http://127.0.0.1:${provider.port}/v1/chat/completions`, keyEnv: 'TEST_PROVIDER_KEY' });

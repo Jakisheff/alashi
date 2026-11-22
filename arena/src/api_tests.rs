@@ -243,8 +243,12 @@ fn engine_step_latency_stays_under_the_adr_budget() {
         }
         let _ = sim.advance(t, seed);
         budget_ms += t0.elapsed().as_secs_f64() * 1000.0;
-        t += 1; // == phase_duration of this simulator
+        t += sim.game.phase_duration.max(1); // tied to the simulator's own field, not a magic 1
         steps += 1;
+    }
+    if steps < 2000 {
+        assert_eq!(sim.game.phase, alashi_rules::state::Phase::Finished,
+            "loop must end by finishing the game, not by exhausting iterations (steps={steps})");
     }
     let total = start.elapsed().as_secs_f64() * 1000.0;
     let per_step = if steps > 0 { budget_ms / steps as f64 } else { f64::INFINITY };
