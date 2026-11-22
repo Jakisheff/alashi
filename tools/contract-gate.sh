@@ -4,19 +4,15 @@
 # Lesson of 22.11 (f2f69e6d post-mortem): a green suite on the side you
 # edited proves nothing about the contract the other side validates. This
 # gate maps changed files to every suite that knows their interfaces and
-# refuses to pass until all of them ran green in one go.
+# refuses to pass until all of them ran green in one go. (Local pre-push
+# tool by design: in CI the pushed tree is clean and the script reports
+# "no changes"; it is not a CI gate.)
 #
 # Usage: bash tools/contract-gate.sh [base]   (default base: origin/main)
 
 set -uo pipefail
 cd "$(dirname "$0")/.."
 BASE="${1:-origin/main}"
-
-changed() {
-  git diff --name-only "$BASE"...HEAD 2>/dev/null
-  git diff --name-only 2>/dev/null
-  git status --porcelain | awk '{print $2}'
-}
 
 changed() {
   { git diff --name-only "$BASE"...HEAD 2>/dev/null

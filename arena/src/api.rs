@@ -893,8 +893,20 @@ fn open_arena_db(db_path: &std::path::Path, legacy_snapshot: &std::path::Path, l
     let have: i64 = conn.query_row("SELECT COUNT(*) FROM arena_kv", [], |r| r.get(0))
         .map_err(|e| format!("count: {e}"))?;
     if have == 0 {
-        // Миграция из пары плоских файлов в одной транзакции.
-        let snapshot_txt = std::fs::read_to_string(legacy_snapshot).ok();
+        // Миграция из пары плоских файлов в одной транзакции. Fail-closed по
+        // данным игр (falsification A4): существующий, но нечитаемый снапшот —
+        // отказ старта, а не тихий старт с пустой ареной; seq-файл слабее:
+        // битое значение числа не рушит игры, счётчик берётся из снапшота.
+        let snapshot_txt = match std::fs::read_to_string(legacy_snapshot) {
+            Ok(txt) => Some(txt),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
+            Err(e) => return Err(format!(
+                "legacy snapshot {legacy_snapshot:?} существует, но не читается: {e}; отказ старта (fail-closed)")),
+        };
+        if let Some(txt) = &snapshot_txt {
+            serde_json::from_str::<serde_json::Value>(txt).map_err(|e| format!(
+                "legacy snapshot {legacy_snapshot:?} не парсится как JSON: {e}; отказ старта (fail-closed)"))?;
+        }
         let party_no = std::fs::read_to_string(legacy_seq).ok()
             .and_then(|s| s.trim().parse::<u64>().ok());
         let party_no = match (party_no, &snapshot_txt) {

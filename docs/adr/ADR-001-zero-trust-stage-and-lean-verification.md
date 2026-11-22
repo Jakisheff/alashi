@@ -84,7 +84,7 @@ games.parquet; протокол — числа воспроизводятся к
 
 - [CLOSED | rules/] HashMap/BTreeMap в rules/src — 0 совпадений grep'ом:
   SipHash-недетерминизм в формировании offers[] отсутствует.
-- [CONFIRMED | rules/] saturating_* найден в 4 местах: logic.rs:81
+- [CONFIRMED | rules/] saturating_sub найден ровно в 4 местах (поправка фальсификации: всего saturating_* вызовов в rules/src — 10, checked_* — 3; остальные — saturating_add/mul без рискованного обнуления): logic.rs:81
   (rank0_amount дележа банка), logic.rs:348, transitions.rs:186 (grey_goods),
   transitions.rs:268 (commit/reveal слоты). Кандидат на checked_* с отказом
   инварианта — делёж банка (logic.rs:81): saturating там молча обнуляет

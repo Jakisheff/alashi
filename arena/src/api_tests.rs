@@ -233,6 +233,11 @@ fn engine_step_latency_stays_under_the_adr_budget() {
     while sim.game.phase != alashi_rules::state::Phase::Finished && steps < 2000 {
         let seed = random_u64().unwrap_or(steps as u64);
         let t0 = Instant::now();
+        // ADR T4 counts a full engine turn: an agent action where the phase
+        // allows one, then the deterministic phase transition.
+        if sim.game.phase == alashi_rules::state::Phase::Action && !sim.factions.is_empty() {
+            let _ = crate::runner::apply_action(&mut sim, 0, &crate::strategies::ActionAction::Produce);
+        }
         let _ = sim.advance(now(), seed);
         budget_ms += t0.elapsed().as_secs_f64() * 1000.0;
         steps += 1;
@@ -241,6 +246,21 @@ fn engine_step_latency_stays_under_the_adr_budget() {
     let per_step = if steps > 0 { budget_ms / steps as f64 } else { f64::INFINITY };
     assert!(steps > 10, "engine must run a meaningful number of steps, got {steps}");
     assert!(per_step < 10.0, "ADR-001 D6 budget blown: {per_step:.3} ms/step over {steps} steps ({total:.0} ms total)");
+}
+
+#[test]
+#[should_panic(expected = "fail-closed")]
+fn sqlite_migration_refuses_to_swallow_an_unreadable_legacy_snapshot() {
+    // Falsification A4: an existing-but-unreadable legacy snapshot must stop
+    // the startup instead of silently booting an empty arena.
+    let dir = std::env::temp_dir().join(format!(
+        "alashi_badlegacy_{}_{}", std::process::id(),
+        SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos(),
+    ));
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("state.json"), b"{broken").unwrap();
+    std::fs::write(dir.join("seq"), b"25").unwrap();
+    let _ = new_state_with_db(dir.join("state.json"), dir.join("seq"), dir.join("arena.db"));
 }
 
 #[test]
