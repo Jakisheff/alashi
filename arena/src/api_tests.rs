@@ -181,8 +181,7 @@ fn timed_out_survives_action_log_trimming() {
         let accepted_seq = entry.action_log[0]["seq"].as_u64().unwrap();
         let mut seq = accepted_seq;
         let base = entry.action_log[0].clone();
-        while entry.action_log.len() < entry.action_log.len() + 1 {
-            if entry.action_log.len() >= 300 { break; }
+        while entry.action_log.len() < 300 {
             seq += 1;
             let mut rejected = base.clone();
             rejected["seq"] = json!(seq);
@@ -190,7 +189,12 @@ fn timed_out_survives_action_log_trimming() {
             rejected["ok"] = json!(false);
             entry.action_log.push(rejected);
         }
-        assert!(entry.action_log.iter().all(|a| a["actor"].as_u64() != Some(0) || a["ok"] == true));
+        // The real h_act drain: the log keeps only the last MAX_ACTION_LOG
+        // entries, which removes faction 0's accepted move.
+        let excess = entry.action_log.len() - MAX_ACTION_LOG;
+        entry.action_log.drain(0..excess);
+        assert!(entry.action_log.iter().all(|a| a["actor"].as_u64() != Some(0)), "fixture must actually trim the accepted move");
+        assert!(entry.phase_acted.values().any(|s| s.contains(&0)), "phase_acted must retain the fact");
     }
     {
         let mut games = state.games.lock().unwrap();

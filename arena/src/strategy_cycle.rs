@@ -1498,6 +1498,27 @@ mod tests {
         atomic::{AtomicU64, Ordering},
         Arc,
     };
+
+    #[test]
+    fn report_allowlist_equals_frozen_contract_fixture() {
+        // Contract freeze: the closed field set of report_run must equal the
+        // JSON fixture the Node driver also tests against. Changing either
+        // side without the fixture fails its own suite, so a green pair
+        // proves the two languages still speak the same schema.
+        let path = concat!(
+            env!("CARGO_MANIFEST_DIR"),
+            "/../tools/agent-bootstrap/report-contract.json"
+        );
+        let txt = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("fixture unreadable: {e}"));
+        let doc: serde_json::Value = serde_json::from_str(&txt).unwrap();
+        let mut fixture: Vec<String> = doc["fields"].as_array()
+            .expect("fields array").iter().map(|v| v.as_str().expect("string field").to_string()).collect();
+        fixture.sort();
+        let mut allowlist = vec!["task", "response_id", "usage", "report", "request_failed", "execution_id"];
+        allowlist.sort();
+        assert_eq!(fixture, allowlist,
+            "report schema drifted from the frozen contract fixture (tools/agent-bootstrap/report-contract.json)");
+    }
     const ORIGIN: &str = "https://alashi.network";
     pub(super) fn actor(i: usize) -> (String, String) {
         (

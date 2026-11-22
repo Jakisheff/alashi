@@ -75,6 +75,45 @@ test('egress mode routes through the attestation proxy without holding a key', a
   delete process.env.ALASHI_EGRESS_URL;
 });
 
+test('report POST body keys equal the frozen contract fixture (both sides freeze the same schema)', async t => {
+  const contract = JSON.parse(readFileSync(new URL('./report-contract.json', import.meta.url), 'utf8'));
+  const expected = [...contract.fields].sort();
+  const id = 'a'.repeat(64);
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-contract-'));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const run = { id, record: 'b'.repeat(64), version: 'c'.repeat(64), status: 'running',
+    deadline_at: Math.floor(Date.now() / 1000) + 600, calls: {}, brief: {} };
+  const version = { id: run.version, content: { owner: 'w', plan: [{ id: 'deliver', kind: 'model', tool: null, depends_on: [], instruction: 'x' }] } };
+  const reported = [];
+  const usage = { prompt_tokens: 2, completion_tokens: 1, total_tokens: 3, cached_tokens: 0 };
+  const api = {
+    record: run.record,
+    get: async () => ({ runs: [structuredClone(run)], versions: [structuredClone(version)] }),
+    request: async () => ({ versions: [] }),
+    post: async (path, body) => {
+      if (path === `/strategy-runs/${id}/reserve`) {
+        run.calls[body.task] = { ...(run.calls[body.task] ?? {}), execution_claimed: true };
+        return { run: structuredClone(run) };
+      }
+      if (path === `/strategy-runs/${id}/report`) {
+        reported.push(body);
+        run.calls[body.task] = { ...run.calls[body.task], quality_passed: true, usage, report: body.report ?? {} };
+        return { run: structuredClone(run) };
+      }
+      throw new Error(`unexpected post ${path}`);
+    },
+  };
+  const provider = { source: 'provider_reported', provider: 'local', model: 'mock',
+    complete: async () => ({ report: { ok: true }, usage, response_id: 'r1', request_failed: false, attestation: { receipt_id: 'x', proxy_sig: 'y' } }) };
+  try {
+    await runCycle({ api, id, provider, journalPath: join(dir, 'journal') });
+  } catch { /* finish/verify paths beyond the first report are not under test */ }
+  assert.ok(reported.length >= 1, 'at least one report POST must happen');
+  for (const body of reported) {
+    assert.deepEqual(Object.keys(body).sort(), expected, 'POST body keys must equal the frozen contract fields exactly');
+  }
+});
+
 test('a missing trade executor stops before reserving or calling a model',async()=>{
  const id='a'.repeat(64),record='b'.repeat(64),dir=mkdtempSync(join(tmpdir(),'alashi-trade-preflight-'));let calls=0;
  const api={record,get:async()=>({runs:[{id,record,status:'running',brief:{trading:{mode:'http'}}}]}),request:async()=>{calls++;},post:async()=>{calls++;}};
