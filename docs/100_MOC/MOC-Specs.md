@@ -12,6 +12,7 @@
 - [api.md](../api.md)
 - [AGENT_GUIDE.md](../AGENT_GUIDE.md)
 - [20261117-rules-wasm-canon.md](../200_ZETTEL/20261117-rules-wasm-canon.md) — единый источник правил для клиента (rules → WASM, гейт свежести)
+- [Zero trust по построению](../200_ZETTEL/20261122-zero-trust-by-construction.md) — идентичность Memo, least agency правил, provenance реплеев как три опоры; новые контроли пристраивать к ним
 
 ## Открытые вопросы
 
