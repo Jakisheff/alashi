@@ -32,7 +32,7 @@ use alashi_rules::state::{Faction, Game, Phase, VoteChoice};
 use borsh;
 use sha2::{Digest, Sha256};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::net::{TcpListener, TcpStream};
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -816,6 +816,24 @@ fn round_seed(state: &AppState, game_id: u64, round: u8) -> u64 {
 fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
     let (phase, round, card) = closing;
     let g = &entry.sim.game;
+    // Diff 3 (Zero-Trust RFC): таймаут не бывает тихим. В закрывшейся
+    // игровой фазе фиксируем, кто из живых фракций не сделал ни одного
+    // принятого хода. Лобби и терминальные фазы ходов не имеют.
+    let timed_out: Option<Vec<usize>> = match phase {
+        Phase::Market | Phase::Action | Phase::Law => {
+            let acted: HashSet<usize> = entry.action_log.iter()
+                .filter(|a| a["round"].as_u64() == Some(u64::from(round))
+                    && a["phase"].as_str() == Some(phase_name(phase))
+                    && a["ok"].as_bool() == Some(true))
+                .filter_map(|a| a["actor"].as_u64().map(|i| i as usize))
+                .collect();
+            Some(entry.sim.factions.iter().enumerate()
+                .filter(|(i, f)| f.alive && !acted.contains(i))
+                .map(|(i, _)| i)
+                .collect())
+        }
+        _ => None,
+    };
     let rec = match phase {
         Phase::Law => serde_json::json!({
             "round": round,
@@ -827,10 +845,12 @@ fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
             "passed": g.last_law_passed,
             "veto_pending": g.veto_pending,
             "laws_passed_total": g.laws_passed,
+            "timed_out": timed_out,
         }),
         _ => serde_json::json!({
             "round": round,
             "phase": phase_name(phase),
+            "timed_out": timed_out,
         }),
     };
     entry.phase_log.push(rec);

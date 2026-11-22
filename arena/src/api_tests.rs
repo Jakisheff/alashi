@@ -135,6 +135,32 @@ fn invalid_creation_parameters_cannot_reach_the_crank() {
 }
 
 #[test]
+fn phase_close_records_timed_out_factions() {
+    let state = isolated();
+    let gid = create(&state);
+    let moved = join(&state, gid, 0);
+    for i in 1..6 { join(&state, gid, i); }
+    crank_once(&state); // Lobby -> Market
+    {
+        let mut games = state.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    assert_eq!(h_act(&state, gid, &json!({"token": moved["token"], "action": "produce"}))["ok"], true);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase_ends_at = 0;
+    crank_once(&state); // Action -> advance
+    let rec = state.games.lock().unwrap()[&gid].phase_log.last().cloned().unwrap();
+    assert_eq!(rec["phase"], "action", "{rec}");
+    // Diff 3 (Zero-Trust RFC): закрывшаяся фаза оставляет явный след,
+    // кто не сделал ни одного принятого хода — таймаут не бывает тихим.
+    assert_eq!(rec["timed_out"], json!([1, 2, 3, 4, 5]), "{rec}");
+    save_snapshot(&state).unwrap();
+    let restored = restore(&state);
+    let kept = restored.games.lock().unwrap()[&gid].phase_log.last().cloned().unwrap();
+    assert_eq!(kept["timed_out"], json!([1, 2, 3, 4, 5]));
+}
+
+#[test]
 fn recover_full_started_game_revokes_old_token_and_survives_restart() {
     let state = isolated();
     let gid = create(&state);
