@@ -37,6 +37,44 @@ test('thinking options are explicit, bounded, copied and sent without changing l
   assert.equal(bodies.length,3);
 });
 
+test('egress mode routes through the attestation proxy without holding a key', async t => {
+  const seen = [];
+  t.mock.method(globalThis, 'fetch', async (target, options) => {
+    seen.push({ target: String(target), headers: options.headers, body: JSON.parse(options.body) });
+    const receipt = Buffer.from(JSON.stringify({ receipt_id: '1-1', proxy_sig: 'sig', usage: { input_fresh: 2, input_cache_read: 0, input_cache_write: null, output: 1 }, prompt_cache_prefix_sha256: 'abc' })).toString('base64');
+    return new Response(JSON.stringify({id:'test',choices:[{message:{content:'{"ok":true}'}}],usage:{prompt_tokens:2,completion_tokens:1,total_tokens:3}}), { headers: { 'x-alashi-receipt': receipt } });
+  });
+  const providerUrl = 'http://127.0.0.1:7778/v1/chat/completions';
+  const config = {url: providerUrl, model: 'example'};
+
+  // No egress env -> legacy direct call with Authorization when a key exists.
+  delete process.env.ALASHI_EGRESS_URL;
+  const direct = modelProvider({...config, key: 'k1'});
+  await direct.complete([]);
+  assert.equal(seen[0].target, providerUrl);
+  assert.equal(seen[0].headers.Authorization, 'Bearer k1');
+
+  // Egress env -> proxy URL, endpoint named in a header, no Authorization at all.
+  process.env.ALASHI_EGRESS_URL = 'http://127.0.0.1:7799/';
+  process.env.ALASHI_EGRESS_KEY_ENV = 'TEST_PROVIDER_KEY';
+  const viaProxy = modelProvider(config);
+  const result = await viaProxy.complete([]);
+  assert.equal(seen.at(-1).target, 'http://127.0.0.1:7799/v1/chat/completions');
+  assert.equal(seen.at(-1).headers['X-Alashi-Endpoint'], providerUrl);
+  assert.equal(seen.at(-1).headers['X-Alashi-Key-Env'], 'TEST_PROVIDER_KEY');
+  assert.equal(Object.hasOwn(seen.at(-1).headers, 'Authorization'), false, 'driver must not hold or send a key in egress mode');
+  assert.equal(result.attestation.receipt_id, '1-1');
+  assert.equal(result.attestation.prompt_cache_prefix_sha256, 'abc');
+  assert.deepEqual(result.report, {ok: true});
+
+  // A key together with egress mode is a conflict, not a second channel.
+  assert.throws(() => modelProvider({...config, key: 'k1'}), /egress_key_conflict/);
+  // Egress without the key-env name is refused before any call.
+  delete process.env.ALASHI_EGRESS_KEY_ENV;
+  assert.throws(() => modelProvider(config), /egress_key_env_required/);
+  delete process.env.ALASHI_EGRESS_URL;
+});
+
 test('a missing trade executor stops before reserving or calling a model',async()=>{
  const id='a'.repeat(64),record='b'.repeat(64),dir=mkdtempSync(join(tmpdir(),'alashi-trade-preflight-'));let calls=0;
  const api={record,get:async()=>({runs:[{id,record,status:'running',brief:{trading:{mode:'http'}}}]}),request:async()=>{calls++;},post:async()=>{calls++;}};

@@ -98,6 +98,13 @@ function providerEndpoint(url, test) {
 export function modelProvider({url, key, model, test = false, chat_template_kwargs}) {
   const u = providerEndpoint(url, test);
   if (!model || model.length > 128) fail('invalid_provider_config');
+  // Diff 2 (Zero-Trust RFC v2): when ALASHI_EGRESS_URL is set, model calls
+  // leave through the attestation proxy. The driver then holds no key at
+  // all: the proxy owns provider credentials and returns a signed
+  // InferenceReceipt per call. Legacy direct mode is unchanged.
+  const egressUrl = process.env.ALASHI_EGRESS_URL ? providerEndpoint(process.env.ALASHI_EGRESS_URL, false) : null;
+  if (egressUrl && key) fail('egress_key_conflict');
+  if (egressUrl && !process.env.ALASHI_EGRESS_KEY_ENV) fail('egress_key_env_required');
   // Only the two known boolean thinking switches are supported, one per profile.
   // Copy before use so caller mutation cannot change a frozen experiment's request.
   let template;
@@ -110,10 +117,19 @@ export function modelProvider({url, key, model, test = false, chat_template_kwar
   const options = template === undefined ? {} : { chat_template_kwargs: template };
   return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,...options,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
-    const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0,...options})});
+    const payload = JSON.stringify({model,messages,max_tokens:256,temperature:0,...options});
+    let response, attestation = null;
+    if (egressUrl) {
+      response = await fetch(egressUrl.href+'v1/chat/completions',{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),
+        headers:{'Content-Type':'application/json','X-Alashi-Endpoint':url,'X-Alashi-Key-Env':process.env.ALASHI_EGRESS_KEY_ENV},body:payload});
+      const receiptHeader = response.headers.get('x-alashi-receipt');
+      if (receiptHeader) attestation = JSON.parse(Buffer.from(receiptHeader,'base64').toString('utf8'));
+    } else {
+      response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:payload});
+    }
     const text = await providerText(response);
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
-    return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
+    return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};
   }};
 }
 export function messagesFor(run, version, task, reports) {
