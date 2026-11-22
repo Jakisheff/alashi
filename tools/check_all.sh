@@ -24,6 +24,9 @@ cargo build --locked --manifest-path bots/Cargo.toml || fail "bots"
 step "cargo check программы alashi (компиляция без SBF-тестов)"
 cargo check --locked -p alashi || fail "cargo check alashi"
 
+step "rules-wasm freshness (ADR-001 D3: закоммиченный WASM обязан совпадать с rules/src/constants.rs)"
+(cd frontend && node --experimental-strip-types --no-warnings scripts/rules-wasm-check.ts) || fail "rules-wasm-check"
+
 step "agent config lint (AGENTS.md budget, SKILL.md manifests)"
 python3 tools/lint_agent_configs.py || fail "lint_agent_configs"
 

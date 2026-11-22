@@ -210,6 +210,40 @@ fn sqlite_party_no_never_resets_after_a_corrupt_free_restart() {
 }
 
 #[test]
+fn engine_step_latency_stays_under_the_adr_budget() {
+    // D6 (ADR-001 T4): the embedded in-process verifier must answer a move
+    // in < 10 ms so adversarial sweeps and paired seeds run before any LLM
+    // or devnet spend. Budget is per advance+apply on the largest legal
+    // rules configuration (MAX_FACTIONS); generous headroom included.
+    use std::time::Instant;
+    let mut sim = alashi_rules::sim::Simulator::new(
+        1,
+        PESO,
+        1,
+        alashi_rules::constants::ENTROPY_SLOTHASH,
+    );
+    let capacity = alashi_rules::constants::MAX_FACTIONS;
+    while sim.game.faction_count < capacity {
+        let wallet = alashi_rules::anchor_lang::prelude::Pubkey::new_from_array([sim.game.faction_count; 32]);
+        let _ = sim.join(wallet, "bench");
+    }
+    let mut budget_ms = 0.0_f64;
+    let mut steps = 0u32;
+    let start = Instant::now();
+    while sim.game.phase != alashi_rules::state::Phase::Finished && steps < 2000 {
+        let seed = random_u64().unwrap_or(steps as u64);
+        let t0 = Instant::now();
+        let _ = sim.advance(now(), seed);
+        budget_ms += t0.elapsed().as_secs_f64() * 1000.0;
+        steps += 1;
+    }
+    let total = start.elapsed().as_secs_f64() * 1000.0;
+    let per_step = if steps > 0 { budget_ms / steps as f64 } else { f64::INFINITY };
+    assert!(steps > 10, "engine must run a meaningful number of steps, got {steps}");
+    assert!(per_step < 10.0, "ADR-001 D6 budget blown: {per_step:.3} ms/step over {steps} steps ({total:.0} ms total)");
+}
+
+#[test]
 fn phase_close_records_timed_out_factions() {
     let state = isolated();
     let gid = create(&state);
