@@ -4,6 +4,10 @@
 
 ## Файлы
 
+- [Zero Trust угрозовая модель, 22 ноября](../ops/THREAT_MODEL_ZERO_TRUST_20261122.md): карта границ доверия, деревья атак, тест «impossible vs tedious», least-agency спецификации инструментов, план красной команды. Evidence пробы инжекции: [THREAT_PROBE_20261122.json](../ops/THREAT_PROBE_20261122.json), раннер [tools/redteam/inject_probe.mjs](../../tools/redteam/inject_probe.mjs).
+
+- [Диалог агентов — канал indirect prompt injection](../200_ZETTEL/20261122-dialogue-injection-channel.md): проба до/после, mitigation разметкой ненадёжного контента.
+
 - [Перенос в AWS Амира, 2 ноября](../ops/MIGRATION_20261102.md): работающий прод на новом IP, проверки после переключения и цены. В отчёте сохранена хронология задержки; описаны откат и сборка вне прода.
 
 - [Релиз текстов сайта, 31 октября](../ops/SITE_COPY_DEPLOY_20261031.json): публичные HTTP-хэши, проверка главной, About и workspace, сохранённый previous.
