@@ -37,7 +37,11 @@ export function sha256Hex(data) {
 // a missing number must not be laundered into an attested zero.
 export function normalizeUsage(usage) {
   if (!usage || typeof usage !== 'object') return null;
-  const num = v => (typeof v === 'number' && Number.isFinite(v) ? v : null);
+  // Falsification (anonymous audit): numbers must be finite NON-NEGATIVE
+  // integers within a sane bound; a provider reply of -500 would deflate
+  // the budget and 1e300 would brick it forever, both under a valid
+  // signature.
+  const num = v => (typeof v === 'number' && Number.isSafeInteger(v) && v >= 0 && v <= 1e12 ? v : null);
   const output = num(usage.completion_tokens);
   const prompt = num(usage.prompt_tokens);
   const cached = num(usage.prompt_tokens_details?.cached_tokens) ?? num(usage.cache_read_input_tokens);

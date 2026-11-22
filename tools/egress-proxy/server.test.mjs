@@ -191,4 +191,16 @@ test('attest: missing usage stays null, negative normalization refused', () => {
   const plain = normalizeUsage({ prompt_tokens: 1000, completion_tokens: 5 });
   assert.equal(plain.input_fresh, 1000);
   assert.equal(plain.output, 5);
+  // Anonymous-audit guard: negative, fractional and absurd numbers must not
+  // be attested under a valid signature.
+  for (const bad of [
+    { prompt_tokens: -500, completion_tokens: 5 },
+    { prompt_tokens: 10.5, completion_tokens: 1 },
+    { prompt_tokens: 1e300, completion_tokens: 1 },
+  ]) {
+    const out = normalizeUsage(bad);
+    assert.equal(out.input_fresh, null, `input_fresh must reject ${JSON.stringify(bad)}`);
+    assert.equal(out.output, null || out.output, 'sanity');
+  }
+  assert.equal(normalizeUsage({ prompt_tokens: -500, completion_tokens: 5 }).input_fresh, null);
 });

@@ -132,6 +132,7 @@ const server = http.createServer(async (req, res) => {
       try {
         upstream = await fetch(endpoint, {
           method: 'POST',
+          redirect: 'error',
           headers: { 'content-type': 'application/json', authorization: `Bearer ${apiKey}` },
           body: requestBody,
           signal: AbortSignal.timeout(Number(env('ALASHI_EGRESS_TIMEOUT_MS') || 120000)),
@@ -160,7 +161,13 @@ const server = http.createServer(async (req, res) => {
         http_status: upstream.status,
       };
       const proxy_sig = signReceipt(receipt, priv);
-      writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
+      try {
+        writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
+      } catch (e) {
+        // The call completed without a durable receipt: say so instead of
+        // dying silently inside the serialized chain (anonymous-audit #6).
+        return json(res, 500, { error: 'receipt_write_failed', message: String(e && e.message || e) });
+      }
 
       const receiptHeader = Buffer.from(JSON.stringify({ ...receipt, proxy_sig })).toString('base64');
       res.writeHead(upstream.status, {
