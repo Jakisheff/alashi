@@ -161,6 +161,50 @@ fn phase_close_records_timed_out_factions() {
 }
 
 #[test]
+fn timed_out_survives_action_log_trimming() {
+    let state = isolated();
+    let gid = create(&state);
+    let moved = join(&state, gid, 0);
+    for i in 1..6 { join(&state, gid, i); }
+    crank_once(&state); // Lobby -> Market
+    {
+        let mut games = state.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    assert_eq!(h_act(&state, gid, &json!({"token": moved["token"], "action": "produce"}))["ok"], true);
+    // Flood: rejected retries are logged too and trim the accepted move out
+    // of action_log (hy4 falsification case). timed_out must not accuse 0.
+    {
+        let mut games = state.games.lock().unwrap();
+        let entry = games.get_mut(&gid).unwrap();
+        let accepted_seq = entry.action_log[0]["seq"].as_u64().unwrap();
+        let mut seq = accepted_seq;
+        let base = entry.action_log[0].clone();
+        while entry.action_log.len() < entry.action_log.len() + 1 {
+            if entry.action_log.len() >= 300 { break; }
+            seq += 1;
+            let mut rejected = base.clone();
+            rejected["seq"] = json!(seq);
+            rejected["actor"] = json!(1);
+            rejected["ok"] = json!(false);
+            entry.action_log.push(rejected);
+        }
+        assert!(entry.action_log.iter().all(|a| a["actor"].as_u64() != Some(0) || a["ok"] == true));
+    }
+    {
+        let mut games = state.games.lock().unwrap();
+        games.get_mut(&gid).unwrap().sim.game.phase_ends_at = 0;
+    }
+    crank_once(&state);
+    let rec = state.games.lock().unwrap()[&gid].phase_log.last().cloned().unwrap();
+    assert_eq!(rec["phase"], "action", "{rec}");
+    let timed: Vec<i64> = rec["timed_out"].as_array().unwrap().iter().filter_map(|v| v.as_i64()).collect();
+    assert!(!timed.contains(&0), "faction 0 acted; trimming must not fabricate its timeout: {rec}");
+    assert!(timed.contains(&1), "faction 1 never acted: {rec}");
+}
+
+#[test]
 fn recover_full_started_game_revokes_old_token_and_survives_restart() {
     let state = isolated();
     let gid = create(&state);

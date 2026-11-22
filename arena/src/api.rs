@@ -145,6 +145,11 @@ pub struct GameEntry {
     pub grace_s: i64,
     /// Полный протокол партии для /export: каждый ход с фазой и раундом.
     pub action_log: Vec<serde_json::Value>,
+    /// Diff 3 (Zero-Trust RFC v2): факт «фракция сходила в этой фазе» живёт
+    /// отдельно от вытесняемого action_log (максимум MAX_ACTION_LOG), чтобы
+    /// timed_out при закрытии фазы не оговаривал фракцию, чей ход вытеснен
+    /// отклонёнными повторами. Ключ — "round:phase".
+    pub phase_acted: HashMap<String, std::collections::HashSet<usize>>,
     pub op_state: HashMap<String, OpState>,
     /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
     pub phase_log: Vec<serde_json::Value>,
@@ -269,6 +274,7 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
                 })).collect::<Vec<_>>(),
                 "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
                 "action_log": e.action_log,
+                "phase_acted": &e.phase_acted,
                 "op_state": e.op_state,
                 "phase_log": e.phase_log,
             })
@@ -538,6 +544,27 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                     return fail(format!("партия {gid}: нарушен порядок op_state"));
                 }
             }
+            let phase_acted: HashMap<String, std::collections::HashSet<usize>> = match g.get("phase_acted") {
+                Some(value) => match serde_json::from_value(value.clone()) {
+                    Ok(state) => state, Err(_) => return fail(format!("партия {gid}: битые phase_acted")),
+                },
+                None => HashMap::new(),
+            };
+            // Upgrade path (hy4 falsification): a snapshot written before
+            // phase_acted must not accuse factions whose accepted moves were
+            // trimmed from action_log. Backfill the CURRENT phase from the
+            // retained log; closed phases are already in phase_log.
+            let mut phase_acted = phase_acted;
+            if phase_acted.is_empty() {
+                let key = format!("{}:{}", sim.game.round, phase_name(sim.game.phase));
+                let acted: std::collections::HashSet<usize> = action_log.iter()
+                    .filter(|a| a["round"].as_u64() == Some(u64::from(sim.game.round))
+                        && a["phase"].as_str() == Some(phase_name(sim.game.phase))
+                        && a["ok"].as_bool() == Some(true))
+                    .filter_map(|a| a["actor"].as_u64().map(|i| i as usize))
+                    .collect();
+                if !acted.is_empty() { phase_acted.insert(key, acted); }
+            }
             let entry = GameEntry {
                 sim,
                 entry_fee: g["entry_fee"].as_u64().unwrap_or(10 * PESO),
@@ -546,6 +573,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 created: g["created"].as_i64().unwrap_or(now()),
                 grace_s: g["grace_s"].as_i64().unwrap_or(3),
                 action_log,
+                phase_acted,
                 op_state,
                 phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
                 party_no: g["party_no"].as_u64().unwrap_or(0),
@@ -818,15 +846,13 @@ fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
     let g = &entry.sim.game;
     // Diff 3 (Zero-Trust RFC): таймаут не бывает тихим. В закрывшейся
     // игровой фазе фиксируем, кто из живых фракций не сделал ни одного
-    // принятого хода. Лобби и терминальные фазы ходов не имеют.
+    // принятого хода. Источник фактов — phase_acted (не вытесняется),
+    // а не action_log (ограничен MAX_ACTION_LOG). Лобби и терминальные
+    // фазы ходов не имеют.
+    let phase_key = format!("{round}:{}", phase_name(phase));
     let timed_out: Option<Vec<usize>> = match phase {
         Phase::Market | Phase::Action | Phase::Law => {
-            let acted: HashSet<usize> = entry.action_log.iter()
-                .filter(|a| a["round"].as_u64() == Some(u64::from(round))
-                    && a["phase"].as_str() == Some(phase_name(phase))
-                    && a["ok"].as_bool() == Some(true))
-                .filter_map(|a| a["actor"].as_u64().map(|i| i as usize))
-                .collect();
+            let acted = entry.phase_acted.remove(&phase_key).unwrap_or_default();
             Some(entry.sim.factions.iter().enumerate()
                 .filter(|(i, f)| f.alive && !acted.contains(i))
                 .map(|(i, _)| i)
@@ -1380,6 +1406,7 @@ fn h_new_game_locked(state: &AppState, body: &serde_json::Value, managed_match: 
         created: now(),
         grace_s,
         action_log: vec![],
+        phase_acted: HashMap::new(),
         op_state: HashMap::new(),
         phase_log: vec![],
         insiders: Default::default(),
@@ -2532,6 +2559,14 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
     };
     let ok = log.ok;
     let err = log.err.clone();
+    // Diff 3: факт принятого хода фиксируется отдельно от вытесняемого
+    // action_log — timed_out при закрытии фазы читает его отсюда.
+    if ok {
+        entry.phase_acted
+            .entry(format!("{}:{}", entry.sim.game.round, phase_name(entry.sim.game.phase)))
+            .or_default()
+            .insert(idx);
+    }
     // протокол хода: фаза, раунд, актёр, действие, исход (для /export).
     // Аудит 27.09 (S2): у отклонённых действий параметры не сохраняются
     entry.action_log.push(serde_json::json!({

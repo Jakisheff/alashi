@@ -32,12 +32,38 @@ if (!seed || !/^[0-9a-fA-F]{64}$/.test(seed)) {
 }
 const { priv, pubRaw } = keyPairFromSeed(seed);
 
+// Blocker fix (hy4 falsification): the proxy attaches provider credentials,
+// so an arbitrary X-Alashi-Endpoint would hand the key to any host a local
+// process names. Endpoints are allowlisted explicitly; no list, no calls.
+const allowedHosts = new Set(
+  (env('ALASHI_EGRESS_ALLOWED_HOSTS') || '')
+    .split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+);
+if (allowedHosts.size === 0) {
+  console.error('egress-proxy: ALASHI_EGRESS_ALLOWED_HOSTS is required (comma-separated provider hosts; no default trust)');
+  process.exit(2);
+}
+function endpointAllowed(endpointUrl) {
+  const host = endpointUrl.port ? `${endpointUrl.hostname}:${endpointUrl.port}` : endpointUrl.hostname;
+  return allowedHosts.has(host.toLowerCase());
+}
+
 const journalPath = env('ALASHI_EGRESS_JOURNAL') || 'egress-receipts.jsonl';
 const maxTotalTokens = Number(env('ALASHI_EGRESS_MAX_TOTAL_TOKENS') || 0);
 const maxCalls = Number(env('ALASHI_EGRESS_MAX_CALLS') || 0);
 
 let spentTokens = 0;
 let calls = 0;
+
+// Major fix (hy4 falsification): check-then-fetch-then-increment raced under
+// concurrent requests. All budget mutations and journal appends now run in
+// one serialized chain, so the counters are consistent per proxy process.
+let queue = Promise.resolve();
+function serialized(task) {
+  const run = queue.then(task, task);
+  queue = run.then(() => {}, () => {});
+  return run;
+}
 
 import { appendFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -79,6 +105,9 @@ const server = http.createServer(async (req, res) => {
     if (!(endpointUrl.protocol === 'https:' || (endpointUrl.protocol === 'http:' && loopback))) {
       return json(res, 400, { error: 'bad_endpoint', message: 'https required outside loopback' });
     }
+    if (!endpointAllowed(endpointUrl)) {
+      return json(res, 403, { error: 'disallowed_endpoint', message: 'endpoint host is not in ALASHI_EGRESS_ALLOWED_HOSTS' });
+    }
     if (!keyEnv || !/^[A-Z][A-Z0-9_]{0,127}$/.test(keyEnv)) return json(res, 400, { error: 'bad_key_env', message: 'X-Alashi-Key-Env must name an environment variable' });
     const apiKey = env(keyEnv);
     if (!apiKey) return json(res, 400, { error: 'unknown_key_env', message: `no such key variable in proxy env: ${keyEnv}` });
@@ -90,51 +119,53 @@ const server = http.createServer(async (req, res) => {
     try { body = JSON.parse(requestBody.toString('utf8')); } catch { return json(res, 400, { error: 'bad_json', message: 'request body must be JSON' }); }
     const model = typeof body?.model === 'string' ? body.model : '';
 
-    const over = budgetExceeded();
-    if (over) return json(res, 429, { error: 'budget_exceeded', detail: over, calls, spent_tokens: spentTokens });
+    return serialized(async () => {
+      const over = budgetExceeded();
+      if (over) return json(res, 429, { error: 'budget_exceeded', detail: over, calls, spent_tokens: spentTokens });
 
-    const started = Date.now();
-    let upstream;
-    try {
-      upstream = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'content-type': 'application/json', authorization: `Bearer ${apiKey}` },
-        body: requestBody,
-        signal: AbortSignal.timeout(Number(env('ALASHI_EGRESS_TIMEOUT_MS') || 120000)),
+      const started = Date.now();
+      let upstream;
+      try {
+        upstream = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', authorization: `Bearer ${apiKey}` },
+          body: requestBody,
+          signal: AbortSignal.timeout(Number(env('ALASHI_EGRESS_TIMEOUT_MS') || 120000)),
+        });
+      } catch (e) {
+        return json(res, 502, { error: 'provider_unreachable', message: String(e && e.message || e) });
+      }
+      const responseBuf = Buffer.from(await upstream.arrayBuffer());
+      let responseJson = null;
+      try { responseJson = JSON.parse(responseBuf.toString('utf8')); } catch { /* non-JSON provider body still gets a receipt */ }
+      const usage = normalizeUsage(responseJson?.usage);
+      const total = usage ? (usage.output ?? 0) + (usage.input_cache_read ?? 0) + (usage.input_cache_write ?? 0) + (usage.input_fresh ?? 0) : 0;
+      calls += 1;
+      spentTokens += total;
+
+      const receipt = {
+        receipt_id: `${started}-${calls}`,
+        ts_ms: started,
+        model_id: model,
+        endpoint_host: new URL(endpoint).host,
+        request_sha256: sha256Hex(requestBody),
+        response_sha256: sha256Hex(responseBuf),
+        prompt_cache_prefix_sha256: promptCachePrefixSha256(model, body),
+        usage,
+        latency_ms: Date.now() - started,
+        http_status: upstream.status,
+      };
+      const proxy_sig = signReceipt(receipt, priv);
+      writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
+
+      const receiptHeader = Buffer.from(JSON.stringify({ ...receipt, proxy_sig })).toString('base64');
+      res.writeHead(upstream.status, {
+        'content-type': upstream.headers.get('content-type') || 'application/json',
+        'cache-control': 'no-store',
+        'x-alashi-receipt': receiptHeader,
       });
-    } catch (e) {
-      return json(res, 502, { error: 'provider_unreachable', message: String(e && e.message || e) });
-    }
-    const responseBuf = Buffer.from(await upstream.arrayBuffer());
-    let responseJson = null;
-    try { responseJson = JSON.parse(responseBuf.toString('utf8')); } catch { /* non-JSON provider body still gets a receipt */ }
-    const usage = normalizeUsage(responseJson?.usage);
-    const total = usage ? (usage.output ?? 0) + (usage.input_cache_read ?? 0) + (usage.input_cache_write ?? 0) + (usage.input_fresh ?? 0) : 0;
-    calls += 1;
-    spentTokens += total;
-
-    const receipt = {
-      receipt_id: `${started}-${calls}`,
-      ts_ms: started,
-      model_id: model,
-      endpoint_host: new URL(endpoint).host,
-      request_sha256: sha256Hex(requestBody),
-      response_sha256: sha256Hex(responseBuf),
-      prompt_cache_prefix_sha256: promptCachePrefixSha256(model, body),
-      usage,
-      latency_ms: Date.now() - started,
-      http_status: upstream.status,
-    };
-    const proxy_sig = signReceipt(receipt, priv);
-    writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
-
-    const receiptHeader = Buffer.from(JSON.stringify({ ...receipt, proxy_sig })).toString('base64');
-    res.writeHead(upstream.status, {
-      'content-type': upstream.headers.get('content-type') || 'application/json',
-      'cache-control': 'no-store',
-      'x-alashi-receipt': receiptHeader,
+      res.end(responseBuf);
     });
-    return res.end(responseBuf);
   }
   return json(res, 404, { error: 'not_found' });
 });

@@ -71,6 +71,7 @@ test('receipts: signed, usage normalized, key never leaks, budget cuts off', asy
     ALASHI_EGRESS_SEED: SEED,
     ALASHI_EGRESS_JOURNAL: journal,
     ALASHI_EGRESS_MAX_TOTAL_TOKENS: '150',
+    ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
     TEST_PROVIDER_KEY: PROVIDER_KEY,
   });
   try {
@@ -98,6 +99,13 @@ test('receipts: signed, usage normalized, key never leaks, budget cuts off', asy
     assert.equal((await r2.json()).error, 'unknown_key_env');
     assert.equal(provider.seen.calls, before, 'no upstream call on unknown key env');
 
+    // 2b. SSRF guard: a host outside the allowlist is refused before any
+    // upstream call, so the proxy key can never be attached to it.
+    const r2b = await callProxy(port, { endpoint: 'https://evil.example.internal/admin', keyEnv: 'TEST_PROVIDER_KEY' });
+    assert.equal(r2b.status, 403);
+    assert.equal((await r2b.json()).error, 'disallowed_endpoint');
+    assert.equal(provider.seen.calls, before, 'no upstream call on disallowed endpoint');
+
     // 3. budget: the cap (150) is crossed by the second attested call
     //    (120 + 120 = 240); every next call is cut before the provider.
     const r3 = await callProxy(port, { endpoint: `http://127.0.0.1:${provider.port}/v1/chat/completions`, keyEnv: 'TEST_PROVIDER_KEY' });
@@ -123,6 +131,41 @@ test('receipts: signed, usage normalized, key never leaks, budget cuts off', asy
     const tv = verifyReceipt(JSON.stringify(tampered), pubRaw);
     assert.equal(tv.ok, false);
     assert.equal(tv.reason, 'signature_mismatch');
+
+    // 6. outside judge: replayed line and empty journal must both fail.
+    const replayJournal = join(dir, 'replay.jsonl');
+    const { writeFileSync } = await import('node:fs');
+    writeFileSync(replayJournal, lines[0] + '\n' + lines[0] + '\n');
+    assert.throws(() => execFileSync(process.execPath, [join(here, 'verify.mjs'), replayJournal, '--pubkey', pubRaw.toString('hex')], { encoding: 'utf8', stdio: 'pipe' }), /duplicate receipt_id/);
+    const emptyJournal = join(dir, 'empty.jsonl');
+    writeFileSync(emptyJournal, '');
+    assert.throws(() => execFileSync(process.execPath, [join(here, 'verify.mjs'), emptyJournal, '--pubkey', pubRaw.toString('hex')], { encoding: 'utf8', stdio: 'pipe' }), /empty_journal/);
+  } finally {
+    child.kill();
+    provider.server.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('budget counters are serialized: concurrent calls cannot exceed the cap', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-egress-race-'));
+  const journal = join(dir, 'receipts.jsonl');
+  const provider = await startMockProvider();
+  const { child, port } = await startProxy({
+    ALASHI_EGRESS_SEED: SEED,
+    ALASHI_EGRESS_JOURNAL: journal,
+    ALASHI_EGRESS_MAX_CALLS: '1',
+    ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
+    TEST_PROVIDER_KEY: PROVIDER_KEY,
+  });
+  try {
+    const target = `http://127.0.0.1:${provider.port}/v1/chat/completions`;
+    const results = await Promise.all([1, 2, 3].map(() => callProxy(port, { endpoint: target, keyEnv: 'TEST_PROVIDER_KEY' })));
+    assert.equal(provider.seen.calls, 1, 'exactly one call may reach the provider under MAX_CALLS=1');
+    assert.equal(results.filter(r => r.status === 200).length, 1);
+    assert.equal(results.filter(r => r.status === 429).length, 2);
+    const lines = readFileSync(journal, 'utf8').trim().split('\n');
+    assert.equal(lines.length, 1);
   } finally {
     child.kill();
     provider.server.close();
@@ -136,4 +179,8 @@ test('attest: missing usage stays null, negative normalization refused', () => {
   const u = normalizeUsage({ prompt_tokens: 10, completion_tokens: 5, prompt_tokens_details: { cached_tokens: 80 } });
   assert.equal(u.input_fresh, null, 'cached > prompt must not produce a negative attested number');
   assert.equal(u.input_cache_read, 80);
+  // A plain usage block without a cache breakdown is fully fresh input.
+  const plain = normalizeUsage({ prompt_tokens: 1000, completion_tokens: 5 });
+  assert.equal(plain.input_fresh, 1000);
+  assert.equal(plain.output, 5);
 });

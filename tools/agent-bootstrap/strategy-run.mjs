@@ -120,7 +120,7 @@ export function modelProvider({url, key, model, test = false, chat_template_kwar
     const payload = JSON.stringify({model,messages,max_tokens:256,temperature:0,...options});
     let response, attestation = null;
     if (egressUrl) {
-      response = await fetch(egressUrl.href+'v1/chat/completions',{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),
+      response = await fetch(new URL('v1/chat/completions', egressUrl),{method:'POST',redirect:'error',signal:AbortSignal.timeout(Number(process.env.ALASHI_EGRESS_TIMEOUT_MS) || 60_000),
         headers:{'Content-Type':'application/json','X-Alashi-Endpoint':url,'X-Alashi-Key-Env':process.env.ALASHI_EGRESS_KEY_ENV},body:payload});
       const receiptHeader = response.headers.get('x-alashi-receipt');
       if (receiptHeader) attestation = JSON.parse(Buffer.from(receiptHeader,'base64').toString('utf8'));
@@ -240,7 +240,10 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
         }
         save(journalPath,journal);
       }
-      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result,...(entry.execution_id?{execution_id:entry.execution_id}:{})});
+      // The arena report schema is a closed field set: attestation stays in
+      // the local journal only and must never leak into api.post.
+      const {attestation: _localOnly, ...reported} = entry.result ?? {};
+      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...reported,...(entry.execution_id?{execution_id:entry.execution_id}:{})});
       // Responses can arrive out of order. Merge only this task, never an older full snapshot.
       run.calls[spec.id]=receipt.run.calls[spec.id];
       reports[spec.id]=receipt.run.calls[spec.id].report;onProgress({task:spec.id,status:receipt.run.status,known_tokens:receipt.run.known_tokens});

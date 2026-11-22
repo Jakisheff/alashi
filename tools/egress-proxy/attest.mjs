@@ -42,9 +42,11 @@ export function normalizeUsage(usage) {
   const prompt = num(usage.prompt_tokens);
   const cached = num(usage.prompt_tokens_details?.cached_tokens) ?? num(usage.cache_read_input_tokens);
   const cacheWrite = num(usage.cache_creation_input_tokens) ?? num(usage.prompt_tokens_details?.cache_write_input_tokens);
+  // Fresh input is whatever the provider charged beyond cache hits; a plain
+  // prompt_tokens with no cache breakdown is fully fresh input.
   let inputFresh = null;
-  if (prompt !== null && cached !== null) {
-    inputFresh = prompt - cached - (cacheWrite ?? 0);
+  if (prompt !== null) {
+    inputFresh = prompt - (cached ?? 0) - (cacheWrite ?? 0);
     if (inputFresh < 0) inputFresh = null;
   }
   return { input_fresh: inputFresh, input_cache_read: cached, input_cache_write: cacheWrite, output };
