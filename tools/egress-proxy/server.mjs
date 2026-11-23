@@ -165,11 +165,17 @@ const server = http.createServer(async (req, res) => {
         writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
       } catch (e) {
         // The call completed without a durable receipt: say so AND hand the
-        // signed receipt to the caller, so a retry can be reconciled instead
-        // of silently double-spending the budget (falsification C). The
-        // budget was already spent for this call.
-        return json(res, 500, { error: 'receipt_write_failed', message: String(e && e.message || e),
-          receipt: { ...receipt, proxy_sig } });
+        // signed receipt to the caller - in the BODY and in the header the
+        // driver already reads, so a retry reconciles by request_sha256
+        // instead of silently double-spending the budget (falsification C +
+        // anonymous round 2: the body alone never reached the driver).
+        const receiptJson = JSON.stringify({ ...receipt, proxy_sig });
+        res.writeHead(500, {
+          'content-type': 'application/json',
+          'cache-control': 'no-store',
+          'x-alashi-receipt': Buffer.from(receiptJson).toString('base64'),
+        });
+        return res.end(JSON.stringify({ error: 'receipt_write_failed', message: String(e && e.message || e), receipt: { ...receipt, proxy_sig } }));
       }
 
       const receiptHeader = Buffer.from(JSON.stringify({ ...receipt, proxy_sig })).toString('base64');

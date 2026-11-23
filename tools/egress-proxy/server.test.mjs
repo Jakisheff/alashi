@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import http from 'node:http';
@@ -174,6 +174,40 @@ test('budget counters are serialized: concurrent calls cannot exceed the cap', a
     assert.equal(results.filter(r => r.status === 429).length, 2);
     const lines = readFileSync(journal, 'utf8').trim().split('\n');
     assert.equal(lines.length, 1);
+  } finally {
+    child.kill();
+    provider.server.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('a receipt-journal write failure returns the signed receipt in header and body', async t => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-egress-wfail-'));
+  const blocker = join(dir, 'blocker');
+  writeFileSync(blocker, 'x'); // a FILE where a directory would be needed
+  const provider = await startMockProvider();
+  const { child, port } = await startProxy({
+    ALASHI_EGRESS_SEED: SEED,
+    ALASHI_EGRESS_JOURNAL: join(blocker, 'receipts.jsonl'), // ENOTDIR on write
+    ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
+    TEST_PROVIDER_KEY: PROVIDER_KEY,
+  });
+  try {
+    const r = await callProxy(port, { endpoint: `http://127.0.0.1:${provider.port}/v1/chat/completions`, keyEnv: 'TEST_PROVIDER_KEY' });
+    assert.equal(r.status, 500);
+    const body = await r.json();
+    assert.equal(body.error, 'receipt_write_failed');
+    assert.ok(body.receipt && typeof body.receipt.proxy_sig === 'string');
+    // The header the driver reads must carry the same signed receipt, so a
+    // retry reconciles instead of double-spending (anonymous round 2).
+    const header = r.headers.get('x-alashi-receipt');
+    assert.ok(header, '500 must carry x-alashi-receipt');
+    const fromHeader = JSON.parse(Buffer.from(header, 'base64').toString('utf8'));
+    assert.equal(fromHeader.proxy_sig, body.receipt.proxy_sig);
+    const { keyPairFromSeed } = await import('./attest.mjs');
+    const { verifyReceipt } = await import('./attest.mjs');
+    assert.equal(verifyReceipt(JSON.stringify(fromHeader), keyPairFromSeed(SEED).pubRaw).ok, true);
+    assert.equal(provider.seen.calls, 1, 'provider was called exactly once');
   } finally {
     child.kill();
     provider.server.close();

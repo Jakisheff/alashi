@@ -150,7 +150,7 @@ test('an ambiguous Solana submission never starts another signer; a supplied sig
  assert.equal(request.journal.trade.provenance,'operator_supplied');
  assert.equal(request.journal.trade.signature_verified,false);
  // Garbage must not reach the arena as a trade receipt: decode, don't guess.
- for(const bad of ['known-signature', '', 'I'.repeat(88) + '0', 'l'.repeat(87), '0'.repeat(88), '1'.repeat(87), '2'.repeat(86)]) {
+ for(const bad of ['known-signature', '', 'I'.repeat(88) + '0', 'l'.repeat(87), '0'.repeat(88), '1'.repeat(87), '2'.repeat(86), '1'.repeat(64)]) {
    await assert.rejects(solanaTrade({signature:bad})(request), /trade_signature_invalid/);
  }
  assert.equal(posts, 1);

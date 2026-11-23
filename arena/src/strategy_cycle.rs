@@ -517,6 +517,41 @@ fn duplicate_receipt(data: &StrategyState, id: &str, body: &Value) -> bool {
 fn err(code: &str) -> Value {
     json!({"ok":false,"error":code})
 }
+
+/// Base58-декодирование с требованием ровно 64 ненулевых байт подписи
+/// ed25519 (зеркало драйверного base58Decode64; ранее принималась любая
+/// строка 80-100 символов алфавита).
+fn base58_decode64_signature(s: &str) -> Option<[u8; 64]> {
+    const ALPHABET: &[u8; 58] = b"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+    if s.is_empty() || s.len() > 120 {
+        return None;
+    }
+    // little-endian accumulator
+    let mut out = [0u8; 64];
+    for ch in s.bytes() {
+        let value = ALPHABET.iter().position(|&a| a == ch)? as u32;
+        let mut carry = value;
+        for b in out.iter_mut() {
+            let acc = (*b as u32) * 58 + carry;
+            *b = (acc & 0xff) as u8;
+            carry = acc >> 8;
+        }
+        if carry > 0 {
+            return None; // value does not fit in 64 bytes
+        }
+    }
+    if out.iter().all(|&b| b == 0) {
+        return None; // all '1's: 64 zero bytes is not a signature
+    }
+    // significant byte length of the number (big-endian size)
+    let byte_len = 64 - out.iter().rev().take_while(|&&b| b == 0).count();
+    // each leading '1' encodes one leading zero byte
+    let leading_zeros = s.bytes().take_while(|&c| c == b'1').count();
+    if leading_zeros + byte_len != 64 {
+        return None;
+    }
+    Some(out)
+}
 fn own(state: &AppState, record: &str, origin: &str, bearer: &str) -> Result<String> {
     if !owner_auth::origin_ok(origin) {
         return Err("owner_origin_forbidden");
@@ -1428,11 +1463,11 @@ pub fn confirm_chain_trade(
     if fields(body, &["signature"]).is_err() {
         return err("bad_trade_receipt");
     }
-    let Some(signature) = body["signature"].as_str().filter(|s| {
-        (80..=100).contains(&s.len())
-            && s.bytes()
-                .all(|b| b"123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".contains(&b))
-    }) else {
+    // Double falsification (contexted round): the arena used to accept any
+    // 80-100 char base58 string while the driver enforced a real 64-byte
+    // decode - garbage passed here after being rejected there. Decode and
+    // require exactly 64 non-zero bytes, mirroring the driver.
+    let Some(signature) = body["signature"].as_str().filter(|s| base58_decode64_signature(s).is_some()) else {
         return err("bad_trade_receipt");
     };
     let (context, decision) = {
@@ -2167,5 +2202,23 @@ mod tests {
             .unwrap()
             .comparisons
             .is_empty());
+    }
+}
+
+#[cfg(test)]
+mod base58_tests {
+    use super::base58_decode64_signature;
+    #[test]
+    fn mirrors_the_driver_boundaries() {
+        // valid: 87-88 char real signatures decode to exactly 64 bytes
+        let ok_sig = format!("2{}", "k".repeat(86));
+        assert!(base58_decode64_signature(&ok_sig).is_some());
+        // all-ones (64 zero bytes) and short/long garbage are rejected
+        assert!(base58_decode64_signature(&"1".repeat(64)).is_none());
+        assert!(base58_decode64_signature(&"1".repeat(87)).is_none());
+        assert!(base58_decode64_signature(&"2".repeat(86)).is_none()); // 63 bytes
+        assert!(base58_decode64_signature(&"2".repeat(89)).is_none()); // 65 bytes
+        assert!(base58_decode64_signature("").is_none());
+        assert!(base58_decode64_signature(&"2".repeat(200)).is_none()); // length bound
     }
 }

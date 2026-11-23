@@ -402,7 +402,14 @@ function base58Decode64(s) {
   let zeros = 0;
   while (zeros < s.length && s[zeros] === '1') zeros++;
   const full = new Array(zeros).fill(0).concat(bytes);
-  return full.length === 64 ? full : null;
+  if (full.length !== 64) return null;
+  // Anonymous round 2: 64 zero bytes ('1'.repeat(64)) is not an ed25519
+  // signature; the arena would reject it later, but garbage must not even
+  // reach the journal as a receipt. Also bound the input length (the
+  // BigInt loop is quadratic): 64 bytes never render longer than 88 chars.
+  if (s.length > 120) return null;
+  if (full.every(b => b === 0)) return null;
+  return full;
 }
 export function solanaTrade({binary,keyPath,signature}) {
   return async({api,run,journal,save})=>{
@@ -414,7 +421,7 @@ export function solanaTrade({binary,keyPath,signature}) {
       // exactly 64 bytes of ed25519 signature; the journal records that the
       // driver did NOT verify the cryptography - only the Solana network can.
       if (!base58Decode64(signature)) fail('trade_signature_invalid');
-      journal.trade={signature, provenance:'operator_supplied', signature_verified:false};save();
+      journal.trade={signature, provenance:'operator_supplied', signature_verified:false, game:context.game, round:context.round};save();
     }
     if(!journal.trade) {
       if(!binary||!keyPath)fail('trade_signer_required');
@@ -430,7 +437,13 @@ export function solanaTrade({binary,keyPath,signature}) {
         child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify(run.calls.deliver.report));
       });
       if(typeof result.receipt?.signature!=='string')fail('trade_outcome_unknown');
-      journal.trade={signature:result.receipt.signature, provenance:'local_signer', signature_verified:false};save();
+      journal.trade={signature:result.receipt.signature, provenance:'local_signer', signature_verified:false, game:context.game, round:context.round};save();
+    }
+    if(journal.trade && journal.trade.signature && journal.trade.game !== undefined
+       && (journal.trade.game !== context.game || journal.trade.round !== context.round)) {
+      // Anonymous round 2: a receipt left over from another game/round must
+      // not be replayed as this run's trade receipt.
+      fail('stale_trade_journal');
     }
     if(!journal.trade.signature)fail('trade_outcome_unknown');
     await api.post(`/strategy-runs/${run.id}/trade-receipt`,{signature:journal.trade.signature});
