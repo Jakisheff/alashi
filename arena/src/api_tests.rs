@@ -229,6 +229,7 @@ fn engine_step_latency_stays_under_the_adr_budget() {
     }
     let mut budget_ms = 0.0_f64;
     let mut steps = 0u32;
+    let mut applies = 0u32;
     let start = Instant::now();
     // Falsification R4: with a frozen wall clock every advance after the
     // first is a TooEarly no-op, so the gate measured nothing. Virtual time
@@ -240,16 +241,19 @@ fn engine_step_latency_stays_under_the_adr_budget() {
         let t0 = Instant::now();
         if sim.game.phase == alashi_rules::state::Phase::Action && !sim.factions.is_empty() {
             let _ = crate::runner::apply_action(&mut sim, 0, &crate::strategies::ActionAction::Produce);
+            applies += 1;
         }
         let _ = sim.advance(t, seed);
         budget_ms += t0.elapsed().as_secs_f64() * 1000.0;
         t += sim.game.phase_duration.max(1); // tied to the simulator's own field, not a magic 1
         steps += 1;
     }
-    if steps < 2000 {
-        assert_eq!(sim.game.phase, alashi_rules::state::Phase::Finished,
-            "loop must end by finishing the game, not by exhausting iterations (steps={steps})");
-    }
+    // Unconditional on purpose (battery round, 23.11: the conditional form
+    // let frozen clocks burn the budget and pass; the earlier journal claim
+    // that this assert was unconditional turned out to be false).
+    assert_eq!(sim.game.phase, alashi_rules::state::Phase::Finished,
+        "the game must finish; burning the iteration budget means the clock is frozen again (steps={steps})");
+    assert!(applies > 0, "the gate must time at least one real agent action, not only transitions");
     let total = start.elapsed().as_secs_f64() * 1000.0;
     let per_step = if steps > 0 { budget_ms / steps as f64 } else { f64::INFINITY };
     assert!(steps > 10, "engine must run a meaningful number of steps, got {steps}");
