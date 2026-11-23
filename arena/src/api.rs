@@ -535,6 +535,12 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                             let raw = a["token"].as_str()?.to_string();
                             if a["token_hashed"].as_bool().unwrap_or(false) {
                                 raw
+                            } else if a["agent_record_id"].as_str().is_some() {
+                                // Pre-marker snapshots already stored the
+                                // sha256 for v2 agents (falsification A):
+                                // hashing again would break every live
+                                // bearer after the deploy.
+                                raw
                             } else {
                                 sha256_hex(&raw)
                             }

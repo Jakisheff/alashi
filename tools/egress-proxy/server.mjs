@@ -164,9 +164,12 @@ const server = http.createServer(async (req, res) => {
       try {
         writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
       } catch (e) {
-        // The call completed without a durable receipt: say so instead of
-        // dying silently inside the serialized chain (anonymous-audit #6).
-        return json(res, 500, { error: 'receipt_write_failed', message: String(e && e.message || e) });
+        // The call completed without a durable receipt: say so AND hand the
+        // signed receipt to the caller, so a retry can be reconciled instead
+        // of silently double-spending the budget (falsification C). The
+        // budget was already spent for this call.
+        return json(res, 500, { error: 'receipt_write_failed', message: String(e && e.message || e),
+          receipt: { ...receipt, proxy_sig } });
       }
 
       const receiptHeader = Buffer.from(JSON.stringify({ ...receipt, proxy_sig })).toString('base64');

@@ -318,6 +318,45 @@ fn legacy_plaintext_tokens_are_hashed_by_the_snapshot_migration() {
 }
 
 #[test]
+fn pre_marker_v2_snapshots_keep_their_hashed_bearers_working() {
+    // Falsification A (critical): snapshots written before token_hashed
+    // already stored sha256 for v2 agents. Re-hashing them on load would
+    // return bad_token to every live bearer after the deploy.
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let bearer: String = joined["token"].as_str().unwrap().to_string();
+    save_snapshot(&state).unwrap();
+
+    // Build the exact pre-deploy v2 shape by hand: token already the
+    // sha256 of the bearer, agent_record_id present, session live,
+    // no token_hashed field anywhere yet.
+    let bearer_hash = {
+        use sha2::Digest;
+        hex_enc(&Sha256::digest(bearer.as_bytes()))
+    };
+    {
+        let txt = std::fs::read_to_string(&state.snapshot_path).unwrap();
+        let mut doc: serde_json::Value = serde_json::from_str(&txt).unwrap();
+        let agent = &mut doc["games"][0]["agents"][0];
+        agent["token"] = serde_json::json!(bearer_hash);
+        agent["agent_record_id"] = serde_json::json!("c".repeat(64));
+        agent["session_expires_at"] = serde_json::json!(now() + 3600);
+        agent.as_object_mut().unwrap().remove("token_hashed");
+        std::fs::write(&state.snapshot_path, doc.to_string()).unwrap();
+    }
+
+    let restored = restore(&state);
+    {
+        let mut games = restored.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    let act = h_act(&restored, gid, &json!({"token": bearer, "op_id": 1, "action": "produce"}));
+    assert_eq!(act["ok"], serde_json::json!(true), "pre-marker v2 bearer must keep working: {act}");
+}
+
+#[test]
 fn phase_close_records_timed_out_factions() {
     let state = isolated();
     let gid = create(&state);

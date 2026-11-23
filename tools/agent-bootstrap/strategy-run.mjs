@@ -389,19 +389,31 @@ export function httpTrade(sessionPath, fetcher=fetch) {
     } finally {release();}
   };
 }
+// Falsification D: length+alphabet alone admits '1'.repeat(87) (decodes to
+// 87 zero bytes, not a signature) and could reject real 64-byte values that
+// render shorter. Decode and require exactly 64 bytes.
+const B58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+function base58Decode64(s) {
+  if (typeof s !== 'string' || !s.length || !/^[1-9A-HJ-NP-Za-km-z]+$/.test(s)) return null;
+  let num = 0n;
+  for (const ch of s) num = num * 58n + BigInt(B58_ALPHABET.indexOf(ch));
+  const bytes = [];
+  while (num > 0n) { bytes.unshift(Number(num & 0xffn)); num >>= 8n; }
+  let zeros = 0;
+  while (zeros < s.length && s[zeros] === '1') zeros++;
+  const full = new Array(zeros).fill(0).concat(bytes);
+  return full.length === 64 ? full : null;
+}
 export function solanaTrade({binary,keyPath,signature}) {
   return async({api,run,journal,save})=>{
     if(run.status==='completed')return;
     const context=run.brief.trading;
     if(context.mode!=='solana')fail('trade_session_mismatch');
     if(signature !== undefined) {
-      // Anonymous-audit #5: an operator-supplied signature is accepted only
-      // in canonical base58 form (a 64-byte ed25519 signature is 87-88
-      // chars), and the journal records that the driver did NOT verify the
-      // cryptography - only the Solana network can. Garbage no longer
-      // reaches the arena as a trade receipt.
-      if (typeof signature !== 'string' || !(signature.length === 87 || signature.length === 88)
-          || !/^[1-9A-HJ-NP-Za-km-z]+$/.test(signature)) fail('trade_signature_invalid');
+      // Anonymous-audit #5: an operator-supplied signature must decode to
+      // exactly 64 bytes of ed25519 signature; the journal records that the
+      // driver did NOT verify the cryptography - only the Solana network can.
+      if (!base58Decode64(signature)) fail('trade_signature_invalid');
       journal.trade={signature, provenance:'operator_supplied', signature_verified:false};save();
     }
     if(!journal.trade) {
