@@ -201,12 +201,27 @@ def detector_green(mut, root):
     return not killed, kind_of
 
 
+def make_sandbox():
+    """Лёгкая изолированная копия исходников (без .git/target/node_modules/
+    data): git worktree требует ~460МБ из-за data/, копия — ~10МБ, а общий
+    CARGO_TARGET_DIR прогревает cargo-детекторы так же."""
+    root = tempfile.mkdtemp(prefix="falsify-selfcheck-")
+    dst = os.path.join(root, "tree")
+    subprocess.run(["rsync", "-a", "--exclude", ".git", "--exclude", "target",
+                    "--exclude", "node_modules", "--exclude", "data",
+                    "--exclude", ".falsify_state.json",
+                    REPO + "/", dst], check=True, capture_output=True)
+    return root, dst
+
+
+def cleanup_sandbox(root):
+    shutil.rmtree(root, ignore_errors=True)
+
+
 def do_selfcheck(args):
     st = read_state()
-    root = tempfile.mkdtemp(prefix="falsify-selfcheck-")
+    root, tree = make_sandbox()
     try:
-        subprocess.run(["git", "worktree", "add", "--detach", root, "HEAD"],
-                       cwd=REPO, check=True, capture_output=True)
         failures = []
         results = []
         for mid in st["battery"]:
@@ -214,18 +229,18 @@ def do_selfcheck(args):
             # Positive control: the detector MUST be green on the clean tree
             # before injection; a red baseline means the environment, not the
             # mutant, colours the detector.
-            green, why = detector_green(mut, root)
+            green, why = detector_green(mut, tree)
             if not green:
                 failures.append(f"{mid}: BASELINE-RED (detector already failing: {why})")
                 continue
             def detect():
-                killed, kind_of, tail = run_detector(mut, root)
+                killed, kind_of, tail = run_detector(mut, tree)
                 if not killed:
                     return {"result": "survived", "tail": tail[-200:]}
                 if kind_of != "assert":
                     return {"result": "env_fail", "kind": kind_of, "tail": tail[-200:]}
                 return {"result": "killed", "by": "assert"}
-            ok, note, outcome = with_mutant(mut, root, detect)
+            ok, note, outcome = with_mutant(mut, tree, detect)
             if not ok:
                 failures.append(f"{mid}: inject failed: {note}")
                 continue
@@ -239,9 +254,7 @@ def do_selfcheck(args):
         print(json.dumps(verdict, ensure_ascii=False, indent=2))
         sys.exit(1 if failures else 0)
     finally:
-        subprocess.run(["git", "worktree", "remove", "--force", root],
-                       cwd=REPO, capture_output=True)
-        shutil.rmtree(root, ignore_errors=True)
+        cleanup_sandbox(root)
 
 
 def do_audit_prepare(args):
@@ -280,9 +293,10 @@ def do_audit_report(args):
 
 def do_reveal(args):
     st = read_state()
-    payload = json.dumps({"ts": st["payload"] and json.loads(st["payload"]),
-                          "ignored": 0}, sort_keys=True)  # placeholder
-    # Настоящая проверка: payload в состоянии неизменен с момента commit.
+    # The plan is the payload stored at commit time: recompute the hash and
+    # compare. (This internal check cannot be trusted to check itself -
+    # the reveal-always-true self-mutant - so the auditor also runs
+    # external_check.py, which recomputes independently.)
     recomputed = hashlib.sha256((st["payload"] + st["salt"]).encode()).hexdigest()
     matches = recomputed == st["plan_hash"]
     print(json.dumps({"matches": matches, "plan_hash": st["plan_hash"]}))
@@ -315,9 +329,9 @@ def do_selfapply(args):
     an uncaught self-mutant is a hole in the harness."""
     SELF_MUTANTS = {
         "noop-inject": {
-            "old": "    if text.count(old) != 1:\n        return False, f\"anchor not found or ambiguous in {mut['file']}\"",
-            "new": "    if False:\n        return False, f\"anchor not found or ambiguous in {mut['file']}\"",
-            "how": "selfcheck must report SURVIVED (mutants never land)",
+            "old": "    with open(path, \"w\") as fh:\n        fh.write(text.replace(old, new))\n    return True, \"ok\"",
+            "new": "    return True, \"ok (noop)\"",
+            "how": "selfcheck must report SURVIVED everywhere (mutants never land)",
         },
         "always-killed": {
             "old": "    markers = (\"panicked at\", \"AssertionError\", \"assert\", \"FAIL \", \"✖\", \"not ok\", \"FAILED\")\n    kind_of = \"green\" if proc.returncode == 0 else (\n        \"assert\" if any(m in out for m in markers) else \"env\")\n    return proc.returncode != 0, kind_of, out[-400:]",
@@ -351,19 +365,31 @@ def do_selfapply(args):
                     ok = proc.returncode != 0 and "BASELINE-RED" in proc.stdout
                 else:
                     # Tamper the committed plan, run the mutated reveal (it
-                    # lies "true"), then recompute externally: the auditor's
-                    # independent check is the only catcher by design.
+                    # lies "true"), then recompute EXTERNALLY: the auditor's
+                    # independent checker is the only catcher by design.
                     st = read_state()
                     tampered = dict(st)
-                    tampered["payload"] = st["payload"] + "X"
+                    # Swap to ANOTHER valid payload (same shape, different
+                    # plan): breaking the JSON would crash the mutated
+                    # reveal before it can lie, which is not the scenario.
+                    try:
+                        parsed = json.loads(st["payload"])
+                        if isinstance(parsed, dict) and "k" in parsed:
+                            parsed["k"] = parsed.get("k", 6) + 1
+                            tampered["payload"] = json.dumps(parsed, sort_keys=True)
+                        else:
+                            tampered["payload"] = st["payload"][:-1]
+                    except json.JSONDecodeError:
+                        tampered["payload"] = st["payload"][:-1]
                     with open(STATE, "w") as fh:
                         json.dump(tampered, fh)
                     proc = subprocess.run([sys.executable, harness_path, "reveal"],
                                           capture_output=True, text=True, timeout=60)
                     revealed_true = '"matches": true' in proc.stdout
-                    recomputed = hashlib.sha256(
-                        (tampered["payload"] + tampered["salt"]).encode()).hexdigest()
-                    external_says_false = recomputed != tampered["plan_hash"]
+                    ext = subprocess.run([sys.executable,
+                                          os.path.join(os.path.dirname(harness_path), "external_check.py")],
+                                         capture_output=True, text=True, timeout=60)
+                    external_says_false = ext.returncode != 0
                     ok = revealed_true and external_says_false
                     with open(STATE, "w") as fh:
                         json.dump(st, fh)

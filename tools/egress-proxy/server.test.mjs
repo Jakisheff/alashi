@@ -215,6 +215,48 @@ test('a receipt-journal write failure returns the signed receipt in header and b
   }
 });
 
+test('a 302 from an allowlisted provider is refused, not followed', async () => {
+  // Hold-out hole (redirect-follow): removing redirect:'error' was not
+  // caught by any test. The proxy must never follow a redirect: the
+  // receipt signs the original host, while the body would arrive from
+  // wherever the provider points. The redirect target here is a LIVE
+  // local server returning 200, so accidental DNS failures cannot fake a
+  // pass: following the redirect ends in a 200 from the wrong host.
+  let targetHit = 0;
+  const target = http.createServer((req, res) => {
+    targetHit += 1;
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify({ id: 'evil', choices: [{ message: { content: '{}' } }], usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 } }));
+  });
+  await new Promise(r => target.listen(0, '127.0.0.1', r));
+  const tport = target.address().port;
+  const redirector = http.createServer((req, res) => {
+    res.writeHead(302, { location: `http://127.0.0.1:${tport}/evil` });
+    res.end();
+  });
+  await new Promise(r => redirector.listen(0, '127.0.0.1', r));
+  const rport = redirector.address().port;
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-egress-redir-'));
+  const { child, port } = await startProxy({
+    ALASHI_EGRESS_SEED: SEED,
+    ALASHI_EGRESS_JOURNAL: join(dir, 'r.jsonl'),
+    ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${rport}`,
+    TEST_PROVIDER_KEY: PROVIDER_KEY,
+  });
+  try {
+    const r = await callProxy(port, { endpoint: `http://127.0.0.1:${rport}/v1/chat/completions`, keyEnv: 'TEST_PROVIDER_KEY' });
+    assert.equal(r.status, 502, 'a redirect must be an explicit upstream failure');
+    assert.equal((await r.json()).error, 'provider_unreachable');
+    assert.equal(targetHit, 0, 'the redirect target must never be reached');
+    assert.ok(!r.headers.get('x-alashi-receipt'), 'no receipt may be signed for a redirect');
+  } finally {
+    child.kill();
+    redirector.close();
+    target.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('attest: missing usage stays null, negative normalization refused', () => {
   assert.equal(normalizeUsage(undefined), null);
   assert.equal(normalizeUsage({}).output, null);
