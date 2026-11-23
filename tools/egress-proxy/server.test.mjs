@@ -20,13 +20,13 @@ function startProxy(env) {
     const onLine = l => {
       try {
         const m = JSON.parse(l);
-        if (m.ok && m.port) { child.stdout.off('data', chunker); resolve({ child, port: m.port }); }
+        if (m.ok && m.port) { clearTimeout(startTimer); child.stdout.off('data', chunker); resolve({ child, port: m.port }); }
       } catch { /* startup noise */ }
     };
     const chunker = d => d.toString().split('\n').forEach(onLine);
     child.stdout.on('data', chunker);
     child.on('exit', code => reject(new Error(`proxy exited ${code}`)));
-    setTimeout(() => { child.kill('SIGKILL'); reject(new Error('proxy start timeout')); }, 10000);
+    const startTimer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('proxy start timeout')); }, 10000);
   });
 }
 
@@ -210,6 +210,25 @@ test('idempotent budget: a retried request body is served from the record, not d
     const health = await (await fetch(`http://127.0.0.1:${port}/healthz`)).json();
     assert.equal(health.calls, 1, 'budget counts one call');
     assert.equal(health.spent_tokens, 120, 'tokens spent exactly once');
+    // Blind-audit #1: a FAILED commit must charge nothing; the retry after
+    // the failure is a fresh call that CAN commit.
+    const child2 = spawn(process.execPath, [new URL('./server.mjs', import.meta.url).pathname], {
+      env: { ...process.env, ALASHI_EGRESS_SEED: SEED, ALASHI_EGRESS_JOURNAL: join(dir, 'r2.jsonl'),
+             ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`, TEST_PROVIDER_KEY: PROVIDER_KEY,
+             ALASHI_EGRESS_FAIL_COMMIT: '1', NODE_ENV: 'test' }, stdio: ['ignore', 'pipe', 'inherit'] });
+    const port2 = await new Promise((resolve, reject) => {
+      const onLine = l => { try { const m = JSON.parse(l); if (m.ok && m.port) resolve(m.port); } catch {} };
+      child2.stdout.on('data', d => d.toString().split('\n').forEach(onLine));
+      setTimeout(() => reject(new Error('start timeout 2')), 10000);
+    });
+    try {
+      const rf = await fetch(`http://127.0.0.1:${port2}/v1/chat/completions`, { method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-alashi-endpoint': target, 'x-alashi-key-env': 'TEST_PROVIDER_KEY' },
+        body: JSON.stringify(sameBody) });
+      assert.equal(rf.status, 500);
+      const hf = await (await fetch(`http://127.0.0.1:${port2}/healthz`)).json();
+      assert.equal(hf.spent_tokens, 0, 'a failed commit must charge nothing (db is the ledger)');
+    } finally { child2.kill('SIGKILL'); }
   } finally {
     child.kill();
     provider.server.close();
@@ -226,6 +245,7 @@ test('a receipt-journal write failure returns the signed receipt in header and b
     ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
     TEST_PROVIDER_KEY: PROVIDER_KEY,
     ALASHI_EGRESS_FAIL_COMMIT: '1',
+    NODE_ENV: 'test',
   });
   try {
     const r = await callProxy(port, { endpoint: `http://127.0.0.1:${provider.port}/v1/chat/completions`, keyEnv: 'TEST_PROVIDER_KEY' });

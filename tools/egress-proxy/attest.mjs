@@ -2,7 +2,7 @@
 // Inference receipts: every provider call that leaves through the proxy is
 // reduced to a signed record, so "model usage" stops being owner-submitted
 // prose inside experiment journals and becomes an attestable trail.
-// No external dependencies: node:crypto only.
+// Dependencies: node:crypto, node:fs, node:sqlite (journal reader).
 
 import { createHash, createPrivateKey, createPublicKey, sign as edSign, verify as edVerify } from 'node:crypto';
 // Deterministic Ed25519 keypair from a 32-byte seed (hex). PKCS8 DER prefix
@@ -104,19 +104,21 @@ export const REQUIRED_RECEIPT_FIELDS = [
 
 // Receipt journal reader: transparently supports the legacy JSONL file and
 // the current sqlite store (receipts.jsonl.db).
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { DatabaseSync } from 'node:sqlite';
 export function readJournalLines(journalPath) {
-  try {
-    return readFileSync(journalPath, 'utf8').split('\n').filter(l => l.trim());
-  } catch (e) {
-    if (e.code !== 'ENOENT') throw e;
+  // Blind-audit #3: the sqlite store takes PRECEDENCE when it exists; the
+  // legacy JSONL is read only for pre-upgrade journals. (A leftover empty
+  // .jsonl next to a .db used to shadow the store entirely.)
+  const dbPath = journalPath + '.db';
+  if (existsSync(dbPath)) {
+    const db = new DatabaseSync(dbPath, { readOnly: true });
+    try {
+      return db.prepare('SELECT receipt_json FROM receipts ORDER BY rowid').all()
+        .map(r => r.receipt_json);
+    } finally {
+      db.close();
+    }
   }
-  const db = new DatabaseSync(journalPath + '.db', { readOnly: true });
-  try {
-    return db.prepare('SELECT receipt_json FROM receipts ORDER BY rowid').all()
-      .map(r => r.receipt_json);
-  } finally {
-    db.close();
-  }
+  return readFileSync(journalPath, 'utf8').split('\n').filter(l => l.trim());
 }

@@ -53,8 +53,13 @@ const journalPath = env('ALASHI_EGRESS_JOURNAL') || 'egress-receipts.jsonl';
 const maxTotalTokens = Number(env('ALASHI_EGRESS_MAX_TOTAL_TOKENS') || 0);
 const maxCalls = Number(env('ALASHI_EGRESS_MAX_CALLS') || 0);
 
-let spentTokens = 0;
-let calls = 0;
+// Budget counters are DERIVED from the committed store (blind-audit #1/#2):
+// in-memory counters incremented before the commit double-charged retries
+// when the commit failed, and reset on restart while the db survived.
+function budgetState() {
+  const row = store.prepare('SELECT COUNT(*) AS n, COALESCE(SUM(tokens), 0) AS tok FROM receipts').get();
+  return { calls: Number(row.n), spentTokens: Number(row.tok) };
+}
 
 // Idempotent budget + durable receipt journal (falsification C closed):
 // one sqlite database holds the receipts AND the per-request spend, so a
@@ -77,7 +82,7 @@ function commitReceipt(requestSha, receiptJson, tokens) {
   // Fault-injection hook (tests only): a deterministic commit failure with
   // an already-open RW descriptor cannot be triggered by chmod, and ENOSPC
   // is not reproducible on demand. Explicitly gated by an env var.
-  if (env('ALASHI_EGRESS_FAIL_COMMIT') === '1') {
+  if (env('ALASHI_EGRESS_FAIL_COMMIT') === '1' && env('NODE_ENV') === 'test') {
     throw new Error('simulated receipt commit failure');
   }
   store.exec('BEGIN');
@@ -105,6 +110,7 @@ function serialized(task) {
 // is called. The tokens of the call that crosses the line are still spent and
 // attested; every later call is refused.
 function budgetExceeded() {
+  const { calls, spentTokens } = budgetState();
   if (maxCalls > 0 && calls >= maxCalls) return `calls ${calls} >= ${maxCalls}`;
   if (maxTotalTokens > 0 && spentTokens >= maxTotalTokens) return `tokens ${spentTokens} >= ${maxTotalTokens}`;
   return null;
@@ -117,7 +123,7 @@ function json(res, status, value, extraHeaders = {}) {
 }
 
 const server = http.createServer(async (req, res) => {
-  if (req.method === 'GET' && req.url === '/healthz') return json(res, 200, { ok: true, calls, spent_tokens: spentTokens });
+  if (req.method === 'GET' && req.url === '/healthz') { const s = budgetState(); return json(res, 200, { ok: true, calls: s.calls, spent_tokens: s.spentTokens }); }
   if (req.method === 'GET' && req.url === '/pubkey') {
     res.writeHead(200, { 'content-type': 'application/octet-stream' });
     return res.end(pubRaw);
@@ -155,7 +161,10 @@ const server = http.createServer(async (req, res) => {
       // Idempotency: the same request body retried is served from the
       // committed record - no second provider call, no double budget spend
       // (falsification C: a 500 + client retry used to spend twice).
-      const requestSha = sha256Hex(requestBody);
+      // Blind-audit #2: the idempotency key binds endpoint AND key env to
+      // the body, so the same payload to different hosts is not served a
+      // stranger's receipt.
+      const requestSha = sha256Hex(endpoint + '\0' + keyEnv + '\0' + requestBody.toString('utf8'));
       const prior = lookupRequest(requestSha);
       if (prior) {
         return json(res, 409, { error: 'duplicate_request',
@@ -165,7 +174,7 @@ const server = http.createServer(async (req, res) => {
         });
       }
       const over = budgetExceeded();
-      if (over) return json(res, 429, { error: 'budget_exceeded', detail: over, calls, spent_tokens: spentTokens });
+      if (over) { const s = budgetState(); return json(res, 429, { error: 'budget_exceeded', detail: over, calls: s.calls, spent_tokens: s.spentTokens }); }
 
       const started = Date.now();
       let upstream;
@@ -185,15 +194,14 @@ const server = http.createServer(async (req, res) => {
       try { responseJson = JSON.parse(responseBuf.toString('utf8')); } catch { /* non-JSON provider body still gets a receipt */ }
       const usage = normalizeUsage(responseJson?.usage);
       const total = usage ? (usage.output ?? 0) + (usage.input_cache_read ?? 0) + (usage.input_cache_write ?? 0) + (usage.input_fresh ?? 0) : 0;
-      calls += 1;
-      spentTokens += total;
 
+      const { calls: committedCalls } = budgetState();
       const receipt = {
-        receipt_id: `${started}-${calls}`,
+        receipt_id: `${started}-${committedCalls + 1}`,
         ts_ms: started,
         model_id: model,
         endpoint_host: new URL(endpoint).host,
-        request_sha256: sha256Hex(requestBody),
+        request_sha256: requestSha,
         response_sha256: sha256Hex(responseBuf),
         prompt_cache_prefix_sha256: promptCachePrefixSha256(model, body),
         usage,
