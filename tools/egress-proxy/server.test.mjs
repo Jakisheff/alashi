@@ -217,9 +217,10 @@ test('idempotent budget: a retried request body is served from the record, not d
              ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`, TEST_PROVIDER_KEY: PROVIDER_KEY,
              ALASHI_EGRESS_FAIL_COMMIT: '1', NODE_ENV: 'test' }, stdio: ['ignore', 'pipe', 'inherit'] });
     const port2 = await new Promise((resolve, reject) => {
-      const onLine = l => { try { const m = JSON.parse(l); if (m.ok && m.port) resolve(m.port); } catch {} };
+      const onLine = l => { try { const m = JSON.parse(l); if (m.ok && m.port) { done2(); resolve(m.port); } } catch {} };
       child2.stdout.on('data', d => d.toString().split('\n').forEach(onLine));
-      setTimeout(() => reject(new Error('start timeout 2')), 10000);
+      const t2 = setTimeout(() => reject(new Error('start timeout 2')), 10000);
+      const done2 = () => clearTimeout(t2);
     });
     try {
       const rf = await fetch(`http://127.0.0.1:${port2}/v1/chat/completions`, { method: 'POST',
@@ -227,8 +228,49 @@ test('idempotent budget: a retried request body is served from the record, not d
         body: JSON.stringify(sameBody) });
       assert.equal(rf.status, 500);
       const hf = await (await fetch(`http://127.0.0.1:${port2}/healthz`)).json();
-      assert.equal(hf.spent_tokens, 0, 'a failed commit must charge nothing (db is the ledger)');
+      // New semantics (blind-audit #1 closed): the provider call IS charged
+      // (pending) even when the receipt commit fails - real money must
+      // never be invisible; tokens settle only with the receipt.
+      assert.equal(hf.calls, 1, 'the charge book counts the failed-receipt call');
+      assert.ok(hf.spent_tokens >= 0, 'tokens settle with the receipt; pending carries the call count');
     } finally { child2.kill('SIGKILL'); }
+  } finally {
+    child.kill();
+    provider.server.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('a failed receipt commit leaves a pending charge that blocks and accounts the retry', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-egress-pending-'));
+  const journal = join(dir, 'receipts.jsonl');
+  const provider = await startMockProvider();
+  const { child, port } = await startProxy({
+    ALASHI_EGRESS_SEED: SEED,
+    ALASHI_EGRESS_JOURNAL: journal,
+    ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
+    TEST_PROVIDER_KEY: PROVIDER_KEY,
+    ALASHI_EGRESS_FAIL_COMMIT: '1',
+    NODE_ENV: 'test',
+  });
+  try {
+    const target = `http://127.0.0.1:${provider.port}/v1/chat/completions`;
+    const same = { model: 'm', messages: [{ role: 'user', content: 'x' }] };
+    const r1 = await callProxy(port, { endpoint: target, keyEnv: 'TEST_PROVIDER_KEY', body: same });
+    assert.equal(r1.status, 500, 'receipt commit fails');
+    assert.equal(provider.seen.calls, 1, 'provider was called once');
+    let health = await (await fetch(`http://127.0.0.1:${port}/healthz`)).json();
+    assert.equal(health.calls, 1, 'the charge book counts the call even without a receipt');
+    // Retry of the same key: refused, provider NOT called again.
+    const r2 = await callProxy(port, { endpoint: target, keyEnv: 'TEST_PROVIDER_KEY', body: same });
+    assert.equal(r2.status, 409);
+    const body2 = await r2.json();
+    assert.equal(body2.error, 'duplicate_request');
+    assert.equal(body2.charge_state, 'pending');
+    assert.equal(provider.seen.calls, 1, 'no second provider call');
+    health = await (await fetch(`http://127.0.0.1:${port}/healthz`)).json();
+    assert.equal(health.calls, 1);
+    // Budget caps see charges: MAX_CALLS would trip on the pending charge.
   } finally {
     child.kill();
     provider.server.close();

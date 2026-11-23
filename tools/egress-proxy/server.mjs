@@ -23,6 +23,7 @@
 import http from 'node:http';
 import { keyPairFromSeed, sha256Hex, normalizeUsage, promptCachePrefixSha256, signReceipt } from './attest.mjs';
 import { DatabaseSync } from 'node:sqlite';
+import { existsSync, readFileSync } from 'node:fs';
 
 const env = name => process.env[name];
 
@@ -57,25 +58,78 @@ const maxCalls = Number(env('ALASHI_EGRESS_MAX_CALLS') || 0);
 // in-memory counters incremented before the commit double-charged retries
 // when the commit failed, and reset on restart while the db survived.
 function budgetState() {
-  const row = store.prepare('SELECT COUNT(*) AS n, COALESCE(SUM(tokens), 0) AS tok FROM receipts').get();
+  // charges = money actually committed to the provider (pending or settled);
+  // receipts = settled only. The budget counts CHARGES (blind-audit: a
+  // failed receipt commit used to make real provider calls invisible).
+  const row = store.prepare('SELECT COUNT(*) AS n, COALESCE(SUM(tokens), 0) AS tok FROM charges').get();
   return { calls: Number(row.n), spentTokens: Number(row.tok) };
 }
 
-// Idempotent budget + durable receipt journal (falsification C closed):
-// one sqlite database holds the receipts AND the per-request spend, so a
-// retry of the same request body (same request_sha256) is served from the
-// committed record: no second provider accounting, no double budget spend.
-const store = new DatabaseSync(journalPath + '.db');
+// Idempotent budget + durable receipt journal (falsification C + blind
+// rounds): sqlite holds receipts AND a charges book; a charge commits
+// BEFORE the provider call (a failed receipt cannot hide real spend), the
+// receipt settles it; retries of the same key are refused with the
+// committed state.
+const dbPath = journalPath + '.db';
+const existedDb = existsSync(dbPath);
+const store = new DatabaseSync(dbPath);
 store.exec('PRAGMA journal_mode = WAL;');
+if (!existedDb) {
+  // Blind-audit #3: a legacy .jsonl next to a fresh .db used to be
+  // shadowed (its receipts invisible, budget zeroed). Migrate on first open.
+  try {
+    const legacy = readFileSync(journalPath, 'utf8').split('\n').filter(l => l.trim());
+    store.exec('BEGIN');
+    for (const line of legacy) {
+      const rec = JSON.parse(line);
+      store.prepare('INSERT OR IGNORE INTO receipts(request_sha256, receipt_json, tokens, ts_ms) VALUES(?, ?, ?, ?)')
+        .run(rec.request_sha256, line, rec.usage ? (rec.usage.output ?? 0) + (rec.usage.input_fresh ?? 0) + (rec.usage.input_cache_read ?? 0) + (rec.usage.input_cache_write ?? 0) : 0, rec.ts_ms ?? 0);
+      store.prepare('INSERT OR IGNORE INTO charges(request_sha256, tokens, state, ts_ms) VALUES(?, ?, ?, ?)')
+        .run(rec.request_sha256, rec.usage ? (rec.usage.output ?? 0) + (rec.usage.input_fresh ?? 0) + (rec.usage.input_cache_read ?? 0) + (rec.usage.input_cache_write ?? 0) : 0, 'settled', rec.ts_ms ?? 0);
+    }
+    store.exec('COMMIT');
+  } catch (e) {
+    try { store.exec('ROLLBACK'); } catch {}
+  }
+}
 store.exec(`CREATE TABLE IF NOT EXISTS receipts (
   request_sha256 TEXT PRIMARY KEY,
   receipt_json TEXT NOT NULL,
   tokens INTEGER NOT NULL,
   ts_ms INTEGER NOT NULL);`);
+store.exec(`CREATE TABLE IF NOT EXISTS charges (
+  request_sha256 TEXT PRIMARY KEY,
+  tokens INTEGER NOT NULL DEFAULT 0,
+  state TEXT NOT NULL DEFAULT 'pending',
+  ts_ms INTEGER NOT NULL);`);
 
 function lookupRequest(requestSha) {
-  const row = store.prepare('SELECT receipt_json, tokens FROM receipts WHERE request_sha256 = ?').get(requestSha);
+  const row = store.prepare('SELECT receipt_json FROM receipts WHERE request_sha256 = ?').get(requestSha);
   return row || null;
+}
+
+function lookupCharge(requestSha) {
+  const row = store.prepare('SELECT state FROM charges WHERE request_sha256 = ?').get(requestSha);
+  return row || null;
+}
+
+function chargeRequest(requestSha, tokens) {
+  // A charge is committed BEFORE the provider call: even if the receipt
+  // commit later fails, the provider call is accounted (blind-audit #1).
+  store.exec('BEGIN IMMEDIATE');
+  try {
+    store.prepare('INSERT OR IGNORE INTO charges(request_sha256, tokens, state, ts_ms) VALUES(?, ?, ?, ?)')
+      .run(requestSha, tokens, 'pending', Date.now());
+    store.exec('COMMIT');
+  } catch (e) {
+    store.exec('ROLLBACK');
+    throw e;
+  }
+}
+
+function settleCharge(requestSha, tokens) {
+  store.prepare('UPDATE charges SET tokens = ?, state = ? WHERE request_sha256 = ?')
+    .run(tokens, 'settled', requestSha);
 }
 
 function commitReceipt(requestSha, receiptJson, tokens) {
@@ -87,8 +141,11 @@ function commitReceipt(requestSha, receiptJson, tokens) {
   }
   store.exec('BEGIN');
   try {
-    store.prepare('INSERT OR REPLACE INTO receipts(request_sha256, receipt_json, tokens, ts_ms) VALUES(?, ?, ?, ?)')
+    store.prepare('INSERT INTO receipts(request_sha256, receipt_json, tokens, ts_ms) VALUES(?, ?, ?, ?)')
       .run(requestSha, receiptJson, tokens, Date.now());
+    // Settle only inside the successful transaction: a failed receipt
+    // leaves the charge pending (blind-audit semantics).
+    settleCharge(requestSha, tokens);
     store.exec('COMMIT');
   } catch (e) {
     store.exec('ROLLBACK');
@@ -158,14 +215,14 @@ const server = http.createServer(async (req, res) => {
     const model = typeof body?.model === 'string' ? body.model : '';
 
     return serialized(async () => {
-      // Idempotency: the same request body retried is served from the
-      // committed record - no second provider call, no double budget spend
-      // (falsification C: a 500 + client retry used to spend twice).
+      // Idempotency: the same request KEY (endpoint+keyEnv+body) retried is
+      // served from the committed record - no second provider call.
       // Blind-audit #2: the idempotency key binds endpoint AND key env to
       // the body, so the same payload to different hosts is not served a
       // stranger's receipt.
       const requestSha = sha256Hex(endpoint + '\0' + keyEnv + '\0' + requestBody.toString('utf8'));
       const prior = lookupRequest(requestSha);
+      const priorCharge = lookupCharge(requestSha);
       if (prior) {
         return json(res, 409, { error: 'duplicate_request',
           message: 'this exact request body was already processed; receipt attached',
@@ -173,9 +230,20 @@ const server = http.createServer(async (req, res) => {
           'x-alashi-receipt': Buffer.from(prior.receipt_json).toString('base64'),
         });
       }
+      if (priorCharge) {
+        // The request was already sent to the provider but its receipt
+        // commit failed (crash, fault injection). Refuse the retry: the
+        // provider call happened and is charged in the charges book.
+        return json(res, 409, { error: 'duplicate_request',
+          message: 'this request was already sent to the provider; its receipt commit failed and the charge is pending',
+          charge_state: priorCharge.state });
+      }
       const over = budgetExceeded();
       if (over) { const s = budgetState(); return json(res, 429, { error: 'budget_exceeded', detail: over, calls: s.calls, spent_tokens: s.spentTokens }); }
 
+      // Charge before the provider call (blind-audit #1): a failed receipt
+      // commit must not make the provider call invisible to the budget.
+      chargeRequest(requestSha, 0);
       const started = Date.now();
       let upstream;
       try {
