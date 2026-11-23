@@ -53,7 +53,7 @@ MUTANTS = {
         "file": "tools/agent-bootstrap/strategy-run.mjs",
         "old": "      return {response_id:receiptId(raw.id),usage:attested,report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};",
         "new": "      return {response_id:receiptId(raw.id),usage:attested ? JSON.stringify(attested) : attested,report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};",
-        "detector": ("node", ["--test", "strategy-run.test.mjs"], "tools/agent-bootstrap"),
+        "detector": ("cargo", ["test", "--locked", "--manifest-path", "arena/Cargo.toml", "--", "signed_"], None),
     },
     "fail-open-migration": {
         "file": "arena/src/api.rs",
@@ -71,7 +71,7 @@ MUTANTS = {
         "file": "tools/agent-bootstrap/strategy-run.mjs",
         "old": "      const {attestation: _localOnly, ...reported} = entry.result ?? {};\n      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...reported,",
         "new": "      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...(entry.result??{}),",
-        "detector": ("node", ["--test", "strategy-run.test.mjs"], "tools/agent-bootstrap"),
+        "detector": ("node", ["detectors/egress_usage_type.mjs"], "tools/falsify"),
     },
     "negative-usage-passes": {
         "file": "tools/egress-proxy/attest.mjs",
@@ -160,16 +160,45 @@ def apply_mutant(mut, root, revert=False):
     return True, "ok"
 
 
+def with_mutant(mut, root, fn):
+    """Inject -> fn() -> restore the EXACT original bytes. Reverting by
+    string replacement breaks when the mutant's new text is empty
+    (replace('', x) inserts between every character); a byte-exact backup
+    closes that whole class (found by selfapply round 1)."""
+    path = os.path.join(root, mut["file"])
+    backup = open(path, "rb").read()
+    try:
+        ok, note = apply_mutant(mut, root)
+        if not ok:
+            return False, note, None
+        result = fn()
+        return True, "ok", result
+    finally:
+        with open(path, "wb") as fh:
+            fh.write(backup)
+
+
 def run_detector(mut, root):
     kind, argv, cwd = mut["detector"]
     wd = os.path.join(root, cwd) if cwd else root
     env = dict(os.environ)
     if kind == "cargo":
         env["CARGO_TARGET_DIR"] = os.path.join(REPO, "target")
-        # cargo требует манифест от корня репо worktree
-        argv = list(argv)
     proc = subprocess.run([kind, *argv], cwd=wd, env=env, capture_output=True, text=True)
-    return proc.returncode != 0, (proc.stdout + proc.stderr)[-400:]
+    out = proc.stdout + proc.stderr
+    # Kill attribution (self-application round): a red detector is not a
+    # kill by itself. Only an assertion failure of the detector counts;
+    # environment failures (compile error, missing tool, timeout) are env
+    # failures and must NOT inflate the kill count.
+    markers = ("panicked at", "AssertionError", "assert", "FAIL ", "✖", "not ok", "FAILED")
+    kind_of = "green" if proc.returncode == 0 else (
+        "assert" if any(m in out for m in markers) else "env")
+    return proc.returncode != 0, kind_of, out[-400:]
+
+
+def detector_green(mut, root):
+    killed, kind_of, _ = run_detector(mut, root)
+    return not killed, kind_of
 
 
 def do_selfcheck(args):
@@ -178,20 +207,35 @@ def do_selfcheck(args):
     try:
         subprocess.run(["git", "worktree", "add", "--detach", root, "HEAD"],
                        cwd=REPO, check=True, capture_output=True)
-        # clean tree baseline: детекторы обязаны быть зелёными
         failures = []
+        results = []
         for mid in st["battery"]:
             mut = MUTANTS[mid]
-            ok, note = apply_mutant(mut, root)
+            # Positive control: the detector MUST be green on the clean tree
+            # before injection; a red baseline means the environment, not the
+            # mutant, colours the detector.
+            green, why = detector_green(mut, root)
+            if not green:
+                failures.append(f"{mid}: BASELINE-RED (detector already failing: {why})")
+                continue
+            def detect():
+                killed, kind_of, tail = run_detector(mut, root)
+                if not killed:
+                    return {"result": "survived"}
+                if kind_of != "assert":
+                    return {"result": "env_fail", "kind": kind_of}
+                return {"result": "killed", "by": "assert"}
+            ok, note, outcome = with_mutant(mut, root, detect)
             if not ok:
                 failures.append(f"{mid}: inject failed: {note}")
                 continue
-            killed, tail = run_detector(mut, root)
-            if not killed:
-                failures.append(f"{mid}: SURVIVED (detector stayed green)")
-            apply_mutant(mut, root, revert=True)
-        verdict = {"killed": st["k"] - len([f for f in failures if "SURVIVED" in f]),
-                   "total": st["k"], "failures": failures}
+            if outcome["result"] != "killed":
+                failures.append(f"{mid}: {outcome['result'].upper()}"
+                                + (f" ({outcome.get('kind')})" if outcome.get("kind") else ""))
+            results.append({"mutant": mid, **outcome})
+        killed_n = sum(1 for r in results if r["result"] == "killed")
+        verdict = {"killed": killed_n, "total": st["k"], "results": results,
+                   "failures": failures}
         print(json.dumps(verdict, ensure_ascii=False, indent=2))
         sys.exit(1 if failures else 0)
     finally:
@@ -245,18 +289,111 @@ def do_reveal(args):
     sys.exit(0 if matches else 1)
 
 
+def do_anchors(args):
+    """Anchor-rot monitor: every catalogue anchor must occur exactly once
+    in HEAD. Rot (drifted/disappeared anchors) fails the gate."""
+    problems = []
+    for mid, mut in sorted(MUTANTS.items()):
+        path = os.path.join(REPO, mut["file"])
+        try:
+            with open(path) as fh:
+                text = fh.read()
+        except FileNotFoundError:
+            problems.append(f"{mid}: file missing {mut['file']}")
+            continue
+        n = text.count(mut["old"])
+        if n != 1:
+            problems.append(f"{mid}: anchor count {n} (expected 1) in {mut['file']}")
+    print(json.dumps({"anchors": len(MUTANTS), "problems": problems},
+                     ensure_ascii=False, indent=2))
+    sys.exit(1 if problems else 0)
+
+
+def do_selfapply(args):
+    """Self-application: mutants of the harness itself. Each one must be
+    caught by the protocol (selfcheck controls / external recompute);
+    an uncaught self-mutant is a hole in the harness."""
+    SELF_MUTANTS = {
+        "noop-inject": {
+            "old": "    if text.count(old) != 1:\n        return False, f\"anchor not found or ambiguous in {mut['file']}\"",
+            "new": "    if False:\n        return False, f\"anchor not found or ambiguous in {mut['file']}\"",
+            "how": "selfcheck must report SURVIVED (mutants never land)",
+        },
+        "always-killed": {
+            "old": "    markers = (\"panicked at\", \"AssertionError\", \"assert\", \"FAIL \", \"✖\", \"not ok\", \"FAILED\")\n    kind_of = \"green\" if proc.returncode == 0 else (\n        \"assert\" if any(m in out for m in markers) else \"env\")\n    return proc.returncode != 0, kind_of, out[-400:]",
+            "new": "    markers = (\"panicked at\", \"AssertionError\", \"assert\", \"FAIL \", \"✖\", \"not ok\", \"FAILED\")\n    kind_of = \"green\" if proc.returncode == 0 else (\n        \"assert\" if any(m in out for m in markers) else \"env\")\n    return True, 'assert', out[-400:]",
+            "how": "positive control turns red -> BASELINE-RED failure",
+        },
+        "reveal-always-true": {
+            "old": "    recomputed = hashlib.sha256((st[\"payload\"] + st[\"salt\"]).encode()).hexdigest()\n    matches = recomputed == st[\"plan_hash\"]",
+            "new": "    recomputed = hashlib.sha256((st[\"payload\"] + st[\"salt\"]).encode()).hexdigest()\n    matches = True",
+            "how": "with a tampered state, only an EXTERNAL recompute catches the lie",
+        },
+    }
+    harness_path = os.path.abspath(__file__)
+    backup = open(harness_path).read()
+    caught, holes = [], []
+    try:
+        for mid, sm in SELF_MUTANTS.items():
+            text = open(harness_path).read()
+            if text.count(sm["old"]) != 1:
+                holes.append({"self_mutant": mid, "note": "self-anchor rot"})
+                continue
+            open(harness_path, "w").write(text.replace(sm["old"], sm["new"]))
+            try:
+                if mid == "noop-inject":
+                    proc = subprocess.run([sys.executable, harness_path, "selfcheck"],
+                                          capture_output=True, text=True, timeout=1200)
+                    ok = proc.returncode != 0 and "SURVIVED" in proc.stdout
+                elif mid == "always-killed":
+                    proc = subprocess.run([sys.executable, harness_path, "selfcheck"],
+                                          capture_output=True, text=True, timeout=1200)
+                    ok = proc.returncode != 0 and "BASELINE-RED" in proc.stdout
+                else:
+                    # Tamper the committed plan, run the mutated reveal (it
+                    # lies "true"), then recompute externally: the auditor's
+                    # independent check is the only catcher by design.
+                    st = read_state()
+                    tampered = dict(st)
+                    tampered["payload"] = st["payload"] + "X"
+                    with open(STATE, "w") as fh:
+                        json.dump(tampered, fh)
+                    proc = subprocess.run([sys.executable, harness_path, "reveal"],
+                                          capture_output=True, text=True, timeout=60)
+                    revealed_true = '"matches": true' in proc.stdout
+                    recomputed = hashlib.sha256(
+                        (tampered["payload"] + tampered["salt"]).encode()).hexdigest()
+                    external_says_false = recomputed != tampered["plan_hash"]
+                    ok = revealed_true and external_says_false
+                    with open(STATE, "w") as fh:
+                        json.dump(st, fh)
+            finally:
+                open(harness_path, "w").write(backup)
+            entry = {"self_mutant": mid, "how": sm["how"]}
+            (caught if ok else holes).append(entry)
+        verdict = {"caught": [c["self_mutant"] for c in caught],
+                   "holes": holes, "detail": caught + holes}
+        print(json.dumps(verdict, ensure_ascii=False, indent=2))
+        sys.exit(1 if holes else 0)
+    finally:
+        open(harness_path, "w").write(backup)
+
+
 def main():
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("commit")
     sub.add_parser("battery")
     sub.add_parser("selfcheck")
+    sub.add_parser("selfapply")
+    sub.add_parser("anchors")
     a = sub.add_parser("audit")
     a.add_argument("--prepare", action="store_true")
     a.add_argument("--report", metavar="FILE")
     sub.add_parser("reveal")
     args = ap.parse_args()
     {"commit": do_commit, "battery": do_battery, "selfcheck": do_selfcheck,
+     "selfapply": do_selfapply, "anchors": do_anchors,
      "reveal": do_reveal}.get(args.cmd, lambda a: None)(args)
     if args.cmd == "audit":
         if args.prepare:
