@@ -122,11 +122,30 @@ export function modelProvider({url, key, model, test = false, chat_template_kwar
     if (egressUrl) {
       response = await fetch(new URL('v1/chat/completions', egressUrl),{method:'POST',redirect:'error',signal:AbortSignal.timeout(Number(process.env.ALASHI_EGRESS_TIMEOUT_MS) || 60_000),
         headers:{'Content-Type':'application/json','X-Alashi-Endpoint':url,'X-Alashi-Key-Env':process.env.ALASHI_EGRESS_KEY_ENV},body:payload});
+      // Zero-trust close-out (anonymous audit #4): in egress mode the SIGNED
+      // receipt is the only usage source, and its signature is verified.
+      // The provider body may say anything; it is no longer self-report.
       const receiptHeader = response.headers.get('x-alashi-receipt');
-      if (receiptHeader) attestation = JSON.parse(Buffer.from(receiptHeader,'base64').toString('utf8'));
-    } else {
-      response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:payload});
+      if (!receiptHeader) fail('attestation_missing');
+      attestation = JSON.parse(Buffer.from(receiptHeader,'base64').toString('utf8'));
+      const expectedPub = process.env.ALASHI_EGRESS_PUBKEY;
+      if (expectedPub !== undefined) {
+        if (!/^[0-9a-fA-F]{64}$/.test(expectedPub)) fail('egress_pubkey_invalid');
+        const { verifyReceipt } = await import('../egress-proxy/attest.mjs');
+        const verdict = verifyReceipt(JSON.stringify(attestation), Buffer.from(expectedPub, 'hex'));
+        if (!verdict.ok) fail('attestation_invalid');
+      }
+      const au = attestation.usage;
+      if (!au || ![au.input_fresh, au.input_cache_read, au.input_cache_write, au.output].every(v => v === null || (Number.isSafeInteger(v) && v >= 0))) fail('attestation_usage_invalid');
+      const prompt_tokens = (au.input_fresh ?? 0) + (au.input_cache_read ?? 0) + (au.input_cache_write ?? 0);
+      const text = await providerText(response);
+      let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
+      const attested = (au.input_fresh !== null || au.output !== null)
+        ? { prompt_tokens, completion_tokens: au.output ?? 0, total_tokens: prompt_tokens + (au.output ?? 0), cached_tokens: au.input_cache_read ?? 0 }
+        : null;
+      return {response_id:receiptId(raw.id),usage:attested,report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};
     }
+    response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:payload});
     const text = await providerText(response);
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
     return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};
@@ -375,7 +394,16 @@ export function solanaTrade({binary,keyPath,signature}) {
     if(run.status==='completed')return;
     const context=run.brief.trading;
     if(context.mode!=='solana')fail('trade_session_mismatch');
-    if(signature) {journal.trade={signature};save();}
+    if(signature !== undefined) {
+      // Anonymous-audit #5: an operator-supplied signature is accepted only
+      // in canonical base58 form (a 64-byte ed25519 signature is 87-88
+      // chars), and the journal records that the driver did NOT verify the
+      // cryptography - only the Solana network can. Garbage no longer
+      // reaches the arena as a trade receipt.
+      if (typeof signature !== 'string' || !(signature.length === 87 || signature.length === 88)
+          || !/^[1-9A-HJ-NP-Za-km-z]+$/.test(signature)) fail('trade_signature_invalid');
+      journal.trade={signature, provenance:'operator_supplied', signature_verified:false};save();
+    }
     if(!journal.trade) {
       if(!binary||!keyPath)fail('trade_signer_required');
       const key=readPrivate(keyPath);
@@ -390,7 +418,7 @@ export function solanaTrade({binary,keyPath,signature}) {
         child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify(run.calls.deliver.report));
       });
       if(typeof result.receipt?.signature!=='string')fail('trade_outcome_unknown');
-      journal.trade={signature:result.receipt.signature};save();
+      journal.trade={signature:result.receipt.signature, provenance:'local_signer', signature_verified:false};save();
     }
     if(!journal.trade.signature)fail('trade_outcome_unknown');
     await api.post(`/strategy-runs/${run.id}/trade-receipt`,{signature:journal.trade.signature});

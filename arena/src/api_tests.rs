@@ -272,6 +272,52 @@ fn sqlite_migration_refuses_to_swallow_an_unreadable_legacy_snapshot() {
 }
 
 #[test]
+fn legacy_plaintext_tokens_are_hashed_by_the_snapshot_migration() {
+    // Anonymous audit #8: a legacy snapshot carries bearer tokens in
+    // plaintext. After one load+save cycle the stored value must be a hash,
+    // and the original bearer must still authenticate.
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let bearer: String = joined["token"].as_str().unwrap().to_string();
+    save_snapshot(&state).unwrap();
+
+    // Forge a legacy snapshot: token stored in plaintext, no token_hashed.
+    {
+        let txt = std::fs::read_to_string(&state.snapshot_path).unwrap();
+        let mut doc: serde_json::Value = serde_json::from_str(&txt).unwrap();
+        let agent = &mut doc["games"][0]["agents"][0];
+        agent["token"] = serde_json::json!(bearer);
+        agent.as_object_mut().unwrap().remove("token_hashed");
+        std::fs::write(&state.snapshot_path, doc.to_string()).unwrap();
+    }
+
+    let restored = restore(&state);
+    {
+        let games = restored.games.lock().unwrap();
+        let stored = &games[&gid].agents[0].token;
+        assert_ne!(stored, &bearer, "plaintext must not persist in memory after load");
+        assert!(hex32(stored), "stored token must be the hash");
+    }
+    save_snapshot(&restored).unwrap();
+    let txt = std::fs::read_to_string(&state.snapshot_path).unwrap();
+    assert!(!txt.contains(&bearer), "plaintext must be gone from the snapshot file");
+
+    // The original bearer still works against the migrated hash.
+    assert_eq!(restored.games.lock().unwrap()[&gid].agents[0].token, {
+        use sha2::Digest;
+        hex_enc(&Sha256::digest(bearer.as_bytes()))
+    });
+    {
+        let mut games = restored.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    let act = h_act(&restored, gid, &json!({"token": bearer, "action": "produce"}));
+    assert_eq!(act["ok"], serde_json::json!(true), "bearer authenticates after migration: {act}");
+}
+
+#[test]
 fn phase_close_records_timed_out_factions() {
     let state = isolated();
     let gid = create(&state);
@@ -478,11 +524,14 @@ fn recovery_requires_secret_and_persists_only_its_hash() {
         // unknown_agent (чужая личность) или bad_recovery_secret (подбор)
         assert!(matches!(err, "bad_params" | "unknown_agent" | "bad_recovery_secret"), "{err}");
         assert_eq!(attack["ok"], false);
-        assert_eq!(state.games.lock().unwrap()[&gid].agents[0].token, token);
+        // Audit #8: the stored value is the hash of the issued bearer.
+        use sha2::Digest;
+        assert_eq!(state.games.lock().unwrap()[&gid].agents[0].token, hex_enc(&Sha256::digest(token.as_bytes())));
     }
     save_snapshot(&state).unwrap();
     let snapshot = std::fs::read_to_string(&state.snapshot_path).unwrap();
     assert!(!snapshot.contains(&client_secret));
+    assert!(!snapshot.contains(&token), "bearer plaintext must not sit in the snapshot");
     let restored = restore(&state);
     let recovered = h_join(&restored, gid, &json!({"name":"Victim", "model":"victim", "prompt":"public", "recover":true, "recovery_secret":client_secret}));
     assert_eq!(recovered["ok"], true);

@@ -77,6 +77,10 @@ pub struct AgentRec {
     pub owner_id: String,
     pub agent_record_id: Option<String>,
     pub token: String,
+    /// Анонимный аудит №8: в снапшоте хранится только хэш bearer-токена.
+    /// false бывает лишь у записей, загруженных из legacy-снапшота до
+    /// миграции (мигрируют хэшем при первом же load+save).
+    pub token_hashed: bool,
     pub session_expires_at: Option<i64>,
     pub recovery_hash: Option<String>,
     pub registration: Option<Receipt>,
@@ -270,7 +274,7 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
                 "agents": e.agents.iter().map(|a| serde_json::json!({
                     "name": a.name, "agent_id": a.agent_id, "character_id": a.character_id,
                     "owner_id": a.owner_id, "agent_record_id": a.agent_record_id,
-                    "token": a.token, "session_expires_at": a.session_expires_at,
+                    "token": a.token, "token_hashed": a.token_hashed, "session_expires_at": a.session_expires_at,
                     "model": a.model, "faction_idx": a.faction_idx, "recovery_hash": a.recovery_hash,
                     "registration": a.registration,
                 })).collect::<Vec<_>>(),
@@ -527,7 +531,15 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                         owner_id: a["owner_id"].as_str().unwrap_or("legacy").to_string(),
                         agent_record_id: a["agent_record_id"].as_str().map(str::to_string),
                         session_expires_at: a["session_expires_at"].as_i64(),
-                        token: a["token"].as_str()?.to_string(),
+                        token: {
+                            let raw = a["token"].as_str()?.to_string();
+                            if a["token_hashed"].as_bool().unwrap_or(false) {
+                                raw
+                            } else {
+                                sha256_hex(&raw)
+                            }
+                        },
+                        token_hashed: true,
                         recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
                         registration: match a.get("registration").filter(|v| !v.is_null()) {
                             Some(value) => Some(serde_json::from_value(value.clone()).ok()?),
@@ -761,12 +773,13 @@ fn sha256_hex(token: &str) -> String {
 }
 
 fn agent_token_matches(agent: &AgentRec, token: &str) -> bool {
+    // Аудит: сравнение только по хэшу; plaintext-ветки больше нет ни для
+    // каких записей (legacy хэшируется при загрузке снапшота).
+    let token_ok = hex32(token) && secret_matches(&agent.token, &sha256_hex(token));
     if agent.agent_record_id.is_some() {
-        agent.session_expires_at.is_some_and(|t| now() < t)
-            && hex32(token)
-            && secret_matches(&agent.token, &sha256_hex(token))
+        agent.session_expires_at.is_some_and(|t| now() < t) && token_ok
     } else {
-        secret_matches(&agent.token, token)
+        token_ok
     }
 }
 
@@ -1890,7 +1903,7 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
         entry.agents.push(AgentRec {
             name:name.to_string(), agent_id:strategy_hash.to_string(),
             character_id:record.character_id.clone(), owner_id:record.owner_id.clone(),
-            agent_record_id:Some(id.to_string()), token:sha256_hex(&token),
+            agent_record_id:Some(id.to_string()), token:sha256_hex(&token), token_hashed:true,
             session_expires_at:Some(expires), recovery_hash:None,
             registration:record.receipt.clone(), model:model.to_string(), faction_idx,
         });
@@ -2100,9 +2113,10 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
             let supplied = body.get("recovery_secret").and_then(|v| v.as_str()).unwrap_or("");
             let valid = match &agent.recovery_hash {
                 Some(expected) => recovery_hash(supplied).is_some_and(|hash| secret_matches(&hash, expected)),
-                // A legacy session can enroll only with its current bearer token.
+                // A legacy session can enroll only with its current bearer token
+                // (stored as a hash since the snapshot migration).
                 None => body.get("token").and_then(|v| v.as_str())
-                    .is_some_and(|current| secret_matches(current, &agent.token)),
+                    .is_some_and(|current| secret_matches(&sha256_hex(current), &agent.token)),
             };
             if !valid { return err_json("bad_recovery_secret", "recover требует секрет восстановления; для старой сессии нужен действующий token"); }
             // Recovery never upgrades or overwrites the persisted receipt.
@@ -2126,7 +2140,9 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
             let faction_idx = entry.agents[i].faction_idx;
             let stored_agent_id = entry.agents[i].agent_id.clone();
             let stored_owner_id = entry.agents[i].owner_id.clone();
-            entry.agents[i].token = token.clone();
+            // Issued bearers are stored as hashes only (audit #8).
+            entry.agents[i].token = sha256_hex(&token);
+            entry.agents[i].token_hashed = true;
             let v = state_json(game_id, entry);
             return serde_json::json!({
                 "ok": true, "recovered": true, "game_id": game_id,
@@ -2158,7 +2174,8 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
         agent_id: agent_id.clone(),
         character_id: character_id.clone(),
         owner_id: owner_id.clone(),
-        token: token.clone(),
+        token: sha256_hex(&token),
+        token_hashed: true,
         recovery_hash: recovery_hash(&recovery_secret),
         agent_record_id: None,
         session_expires_at: None,

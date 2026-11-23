@@ -39,16 +39,22 @@ test('thinking options are explicit, bounded, copied and sent without changing l
 
 test('egress mode routes through the attestation proxy without holding a key', async t => {
   const seen = [];
+  const { keyPairFromSeed, signReceipt } = await import('../egress-proxy/attest.mjs');
+  const SEED = 'b'.repeat(64);
+  const { pubRaw } = keyPairFromSeed(SEED);
+  const receipt = { receipt_id: '1-1', ts_ms: 1, model_id: 'example', endpoint_host: 'h', request_sha256: 'a', response_sha256: 'b', prompt_cache_prefix_sha256: 'c',
+    usage: { input_fresh: 20, input_cache_read: 80, input_cache_write: null, output: 10 }, latency_ms: 5, http_status: 200 };
+  const signed = { ...receipt, proxy_sig: signReceipt(receipt, keyPairFromSeed(SEED).priv) };
   t.mock.method(globalThis, 'fetch', async (target, options) => {
     seen.push({ target: String(target), headers: options.headers, body: JSON.parse(options.body) });
-    const receipt = Buffer.from(JSON.stringify({ receipt_id: '1-1', proxy_sig: 'sig', usage: { input_fresh: 2, input_cache_read: 0, input_cache_write: null, output: 1 }, prompt_cache_prefix_sha256: 'abc' })).toString('base64');
-    return new Response(JSON.stringify({id:'test',choices:[{message:{content:'{"ok":true}'}}],usage:{prompt_tokens:2,completion_tokens:1,total_tokens:3}}), { headers: { 'x-alashi-receipt': receipt } });
+    return new Response(JSON.stringify({id:'test',choices:[{message:{content:'{"ok":true}'}}],usage:{prompt_tokens:999,completion_tokens:999,total_tokens:1998}}), { headers: { 'x-alashi-receipt': Buffer.from(JSON.stringify(signed)).toString('base64') } });
   });
   const providerUrl = 'http://127.0.0.1:7778/v1/chat/completions';
   const config = {url: providerUrl, model: 'example'};
 
   // No egress env -> legacy direct call with Authorization when a key exists.
   delete process.env.ALASHI_EGRESS_URL;
+  delete process.env.ALASHI_EGRESS_PUBKEY;
   const direct = modelProvider({...config, key: 'k1'});
   await direct.complete([]);
   assert.equal(seen[0].target, providerUrl);
@@ -57,6 +63,7 @@ test('egress mode routes through the attestation proxy without holding a key', a
   // Egress env -> proxy URL, endpoint named in a header, no Authorization at all.
   process.env.ALASHI_EGRESS_URL = 'http://127.0.0.1:7799/';
   process.env.ALASHI_EGRESS_KEY_ENV = 'TEST_PROVIDER_KEY';
+  process.env.ALASHI_EGRESS_PUBKEY = pubRaw.toString('hex');
   const viaProxy = modelProvider(config);
   const result = await viaProxy.complete([]);
   assert.equal(seen.at(-1).target, 'http://127.0.0.1:7799/v1/chat/completions');
@@ -64,15 +71,23 @@ test('egress mode routes through the attestation proxy without holding a key', a
   assert.equal(seen.at(-1).headers['X-Alashi-Key-Env'], 'TEST_PROVIDER_KEY');
   assert.equal(Object.hasOwn(seen.at(-1).headers, 'Authorization'), false, 'driver must not hold or send a key in egress mode');
   assert.equal(result.attestation.receipt_id, '1-1');
-  assert.equal(result.attestation.prompt_cache_prefix_sha256, 'abc');
   assert.deepEqual(result.report, {ok: true});
+  // Zero-trust usage: numbers come from the SIGNED receipt (20+80 fresh+read,
+  // 10 out), not from the provider body which claims 999/999.
+  assert.deepEqual(result.usage, { prompt_tokens: 100, completion_tokens: 10, total_tokens: 110, cached_tokens: 80 });
 
-  // A key together with egress mode is a conflict, not a second channel.
-  assert.throws(() => modelProvider({...config, key: 'k1'}), /egress_key_conflict/);
-  // Egress without the key-env name is refused before any call.
-  delete process.env.ALASHI_EGRESS_KEY_ENV;
-  assert.throws(() => modelProvider(config), /egress_key_env_required/);
+  // A tampered signature must be refused before any usage is trusted.
+  const tampered = { ...signed, usage: { input_fresh: 0, input_cache_read: 0, input_cache_write: null, output: 1 } };
+  t.mock.method(globalThis, 'fetch', async () =>
+    new Response('{}', { headers: { 'x-alashi-receipt': Buffer.from(JSON.stringify(tampered)).toString('base64') } }));
+  await assert.rejects(() => modelProvider(config).complete([]), /attestation_invalid/);
+  delete process.env.ALASHI_EGRESS_PUBKEY;
+
+  // No receipt header at all -> hard refusal (the loop is broken).
+  t.mock.method(globalThis, 'fetch', async () => new Response('{}'));
+  await assert.rejects(() => modelProvider(config).complete([]), /attestation_missing/);
   delete process.env.ALASHI_EGRESS_URL;
+  delete process.env.ALASHI_EGRESS_KEY_ENV;
 });
 
 test('report POST body keys equal the frozen contract fixture (both sides freeze the same schema)', async t => {
@@ -129,10 +144,18 @@ test('trading tasks receive owner context and a real local state tool, without a
  assert.equal(JSON.parse(messages[1].content).owner,'owner-a');assert.ok(!messages[0].content.includes('headline'));
 });
 test('an ambiguous Solana submission never starts another signer; a supplied signature only reconciles',async()=>{
- let posts=0,saves=0;const request={api:{post:async(path,body)=>{posts++;assert.ok(path.endsWith('/trade-receipt'));assert.equal(body.signature,'known-signature');}},run:{id:'a'.repeat(64),status:'running',brief:{trading:{mode:'solana'}}},journal:{trade:{phase:'inflight'}},save:()=>saves++};
+ let posts=0,saves=0;const request={api:{post:async(path,body)=>{posts++;assert.ok(path.endsWith('/trade-receipt'));assert.equal(body.signature,VALID_SIG);}},run:{id:'a'.repeat(64),status:'running',brief:{trading:{mode:'solana'}}},journal:{trade:{phase:'inflight'}},save:()=>saves++};
  await assert.rejects(solanaTrade({binary:'/does-not-exist'})(request),/trade_outcome_unknown/);assert.equal(posts,0);
- await solanaTrade({signature:'known-signature'})(request);assert.equal(posts,1);assert.equal(saves,1);
+ await solanaTrade({signature:VALID_SIG})(request);assert.equal(posts,1);assert.equal(saves,1);
+ assert.equal(request.journal.trade.provenance,'operator_supplied');
+ assert.equal(request.journal.trade.signature_verified,false);
+ // Garbage must not reach the arena as a trade receipt.
+ for(const bad of ['known-signature', '', 'I'.repeat(88) + '0', 'l'.repeat(87), '0'.repeat(88)]) {
+   await assert.rejects(solanaTrade({signature:bad})(request), /trade_signature_invalid/);
+ }
+ assert.equal(posts, 1);
 });
+const VALID_SIG = '2' + 'k'.repeat(86); // 87 chars of canonical base58
 test('HTTP execution refuses another owner or another pending run before any request',async()=>{
  const dir=mkdtempSync(join(tmpdir(),'alashi-trade-scope-')),path=join(dir,'session');
  try{
