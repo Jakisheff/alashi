@@ -4,6 +4,7 @@
 
 ## Файлы
 
+- [20261117-blue-ocean-field-scout](../200_ZETTEL/20261117-blue-ocean-field-scout.md): полевая разведка голубого океана по болям покупателей (136 комм. HN + issues E2B/Daytona), гейты последовательности, гайд интервью и три оффера в research/blue-ocean-20261117/
 - [20261114-note-refereeing](../200_ZETTEL/20261114-note-refereeing.md): три враждебные рецензии на arXiv-note, вердикты без reject, норма площадки 5-9 семейств, план v1/v2, smoke-харнесс в пакете
 - [20261114-license-hire-bets](../200_ZETTEL/20261114-license-hire-bets.md): опоры сделок лицензия+найм проверены по EDGAR и текстам ворот Kaggle/OpenSpiel; пять ставок с evidence-gate и kill, риск-регистр, трекер чужих P1-P6
 - [Проверенный контрпример возвращается в память до её фиксации — идея 09.11.2026](../200_ZETTEL/20261109-memory-counterexample-feedback.md)
@@ -55,3 +56,6 @@
 - [A/B порядка блоков промпта: кэш и parse-ошибки](../research/prefix-order-ab-20261115/README.md)
 - [Аудит внешнего отчёта по harness engineering: факт против прогноза](../research/harness-audit-20261115/README.md)
 - [Среда решает, является ли кратчайший путь к награде целевым навыком](../200_ZETTEL/20261115-environment-decides-shortcut.md)
+- [Рента консолидируется персоной](../200_ZETTEL/20261118-renta-konsolidiruetsya-personoy.md): окно №15–21 у Zhambyl, два разных «победителя» в серии
+- [Пререгистрация ренты имени](../200_ZETTEL/20261118-rent-identity-prereg.md): перенос персональной репутации против сброса; 40 сим-партий на руку, без живых партий
+- [Дельта против AI Economist и NBER](../200_ZETTEL/20261118-delta-ai-economist.md): позиционирование с уровнями доказательности; питч «проверяет скрытое усмотрение» помечен как маркетинг

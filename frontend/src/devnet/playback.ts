@@ -1,4 +1,6 @@
 import { formatCash, type ChainEvent, type ChainFaction, type ChainSnapshot } from './client.ts'
+import { lawDisplayName } from '../rules/canon.ts'
+
 export type VisualAction = 'buy' | 'sell' | 'mule' | 'bribe' | 'vote' | 'victory'
 export type LiveCursor = { ready: boolean; tailId: string | null; seen: Set<string> }
 export function newLiveCursor(): LiveCursor { return { ready: false, tailId: null, seen: new Set() } }
@@ -25,10 +27,10 @@ export function visualAction(event: ChainEvent, faction: ChainFaction): VisualAc
 export function playerEvents(events: ChainEvent[], faction: ChainFaction): ChainEvent[] {
   return events.filter((e) => e.faction === faction.pda || e.from === faction.pda || e.wallet === faction.wallet || ['phase_advanced', 'law_drawn', 'law_result', 'settled', 'game_initialized', 'game_aborted'].includes(e.type))
 }
-// Card IDs mirror rules/src/constants.rs and arena/src/api.rs::law_name.
-const lawNames = ['Status quo', 'Tax 10%', 'Tax 20%', 'Production subsidy', 'Subsidy for the poorest', 'Subsidy for the richest', 'Embargo', 'Boom', 'Mutual offset']
+// Law card names come from the canonical rules crate via WASM (src/rules/canon.ts);
+// no card ids or name lists are mirrored here.
 export function eventLabel(event: ChainEvent, faction: ChainFaction): string {
-  if (event.type === 'law_drawn' || event.type === 'law_vetoed') return `Law ${event.type === 'law_drawn' ? 'drawn' : 'vetoed'} · ${event.card === undefined ? 'card unavailable' : lawNames[event.card] ?? `Card #${event.card}`}`
+  if (event.type === 'law_drawn' || event.type === 'law_vetoed') return `Law ${event.type === 'law_drawn' ? 'drawn' : 'vetoed'} · ${lawDisplayName(event.card)}`
   if (event.type === 'law_result') return `Law ${event.passed === undefined ? 'result' : event.passed ? 'passed' : 'rejected'}${event.yes !== undefined && event.no !== undefined ? ` · Yes ${event.yes} / No ${event.no}` : ''}`
   if (event.type === 'donkey_attempted') return `${faction.name} committed 5 in-game alashi + one Action · goods pending`
   if (event.type === 'donkey_resolved') return `${faction.name} · ${event.reason === 1 ? 'technical oracle abort · 0 goods · no random draw' : event.success === true && event.goods === 5 ? 'indexed draw · +5 goods' : event.success === false && event.goods === 0 ? 'indexed empty draw · 0 goods' : 'donkey result unavailable'}`

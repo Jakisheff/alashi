@@ -1,5 +1,6 @@
 import { ChainApiError, decodeSnapshot } from '../client.ts'
-import { DONKEY_TERMS, type DonkeyReceipt } from './model.ts'
+import { donkeyLimits, donkeyTerms } from '../../rules/canon.ts'
+import type { DonkeyReceipt } from './model.ts'
 
 export const DONKEY_CANDIDATE_SOURCE = '3a126d8f4aff5cfc7939fe453c7c367fb2ed9f31'
 export const DONKEY_CANDIDATE_SPEC_SHA256 = '73fc5c01fa4c5b77d9f7acd3df3aebfae595917f5fcd83c371fc5f2d33763eea'
@@ -16,19 +17,19 @@ export function decodeCandidateDonkeySnapshot(value: unknown, gamePda: string) {
     if (event.type !== 'donkey_attempted' && event.type !== 'donkey_resolved') return
     const e = raw[position]
     if (snapshot.epoch !== 2 || !event.faction || event.round === undefined ||
-        event.round < 1 || event.round > 5 || e.fee !== DONKEY_TERMS.feeUnits) invalid()
+        event.round < 1 || event.round > donkeyLimits().lastPlayableRound || e.fee !== donkeyTerms().feeUnits) invalid()
     const common = {
       epoch: 2 as const, game: gamePda, faction: event.faction!, round: event.round!,
       // Final candidate spec associates one attempt by this tuple; never invent a wire ID.
       attemptKey: `${gamePda}:${event.faction}:${event.round}`,
       id: event.id, signature: event.signature, slot: event.slot, logIndex: event.logIndex,
       // event_index restarts in each transaction. Preserve full public array position.
-      journalIndex: position, feeUnits: DONKEY_TERMS.feeUnits,
+      journalIndex: position, feeUnits: donkeyTerms().feeUnits,
     }
     if (event.type === 'donkey_attempted') receipts.push({ ...common, kind: 'attempt' })
     else {
       if (typeof e.success !== 'boolean' || (e.reason !== 0 && e.reason !== 1) ||
-          event.goods !== (e.success ? DONKEY_TERMS.goods : 0) ||
+          event.goods !== (e.success ? donkeyTerms().goods : 0) ||
           (e.reason === 1 && e.success)) invalid()
       receipts.push({ ...common, kind: 'resolution', reason: e.reason as 0 | 1, success: e.success as boolean, goods: event.goods! })
     }

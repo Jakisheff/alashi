@@ -740,7 +740,6 @@ uses a direct conditional after canonical Faction verification. The suite is
 sponsorship and low wallet balance has NOT been executed: it remains a required
 operator acceptance gate. The local routing test is HTTP proof, not that E2E.
 
-
 16.10.2026 11:20. Публикация локальных прототипов Degenie по поручению Амира.
 План: 0,5 часа, до 11:50. Критерий: исходники и результаты проверок доступны
 в GitHub; локальный runtime проходит проверки из новой рабочей папки.
@@ -886,26 +885,21 @@ source_defined. Изменён только исследовательский �
 
 25.10.2026 00:51. Проверка человеческой гипотезы через сравнение собственных версий. План: 1 час, до 01:51. Исходный main 02e27cc; отдельная ветка codex/human-hypothesis-comparison-20261025. Критерий: один владелец фиксирует вопрос и ожидаемый результат до двух независимых запусков на одном статичном рекламном брифе. Фактическая правка видна; оценка ограничена соответствием брифу. Приватные данные не попадают в публичные дуэли. Проверки: API/reload/runner recovery, frontend и обязательные проверки проекта. Живые партии и платные модельные вызовы не выполняются.
 
-
 ### 25 October 2026, human hypothesis comparison: progress (25.10 01:11 Almaty)
 
 Implementation is assembled in the isolated worktree: private comparison API, paired runner and owner form. Bootstrap suite passes 56 tests. Frontend comparison checks and production build passed. Integration and browser acceptance are running. Concurrent cold Rust builds exhausted disk space; only this task's generated target directories were removed. Checks now share a compact target and run sequentially. The existing SBF v1.54 installation is incomplete; its official reinstall also ran out of disk space. No real provider calls or transactions have been made.
-
 
 ### 25 October 2026, human hypothesis comparison: progress (01:20 Almaty)
 
 Full arena suite passed, including signed comparison HTTP acceptance and existing duel/game regressions. Local fixture acceptance made exactly two model requests, recovered a lost report without another call, and kept private versions and runs out of the public library. Browser form creation, normalized provider origin, paired preparation and saved owner decision were checked against synthetic local data; no console errors were observed. Frontend production build, comparison/strategy checks and real Vite proxy allowlist checks passed. A final multiline input change is queued for focused comparison recheck. Indexer tests are compiling with the shared compact target. README now describes human idea testing as the product direction and separates this local scenario from existing Solana execution.
 
-
 ### 25 October 2026, human hypothesis comparison: progress (01:30 Almaty)
 
 Indexer: PASS, 16 tests. Program host check: PASS. Final focused comparison checks: PASS, 7 tests, including multiline input, private-parent publication rules and signed HTTP recovery. A private child cannot be published until its parent is public; publication never happens automatically. Bots build and a full arena regression after this last guard are running sequentially. Browser QA is complete, screenshots saved, and the temporary preview was stopped. The task-local frontend dependencies were removed after the successful final build to preserve free space; source and built preview files remain. SBF validation is still blocked by the incomplete toolchain and storage limit.
 
-
 ### 25 October 2026, human hypothesis comparison: verification complete (01:34 Almaty)
 
 Final arena suite: PASS, 144 tests with one pre-existing ignored canonical-snapshot check. Rules: 40 passed; indexer: 16 passed; Node bootstrap: 56 passed. Frontend production build and comparison/strategy/proxy checks passed. Program host check and bots build passed. SBF build and program SBF tests remain unexecuted after the incomplete v1.54 toolchain failed to reinstall for lack of disk space. Private comparisons, replay-safe recovery and owner decisions are implemented for static English advertising briefs. General scenario packages and external human validation remain future work. Preparing branch publication; no site deployment, provider spending or transactions occurred.
-
 
 ### 25 October 2026, human hypothesis comparison: completed (01:36 Almaty)
 
@@ -913,26 +907,21 @@ Published draft PR https://github.com/Jakisheff/alashi/pull/60 on codex/human-hy
 
 План: 1 час, до 01:51. Факт: 0,75 часа (00:51-01:36, Алматы).
 
-
 ### 25 October 2026, RustSec CI repair (01:47 Almaty)
 
 План: 0,5 часа, до 02:17. Reproduce the failed RustSec job on PR #60, fix its verified cause and verify the audit on the updated commit. Existing feature checks, fresh SBF build/program tests and secret scan passed in CI run40130577454; only the audit failed. No dependency changes made yet.
-
 
 ### RustSec repair update, 25 October 2026 02:16 Almaty
 
 План: 1 час суммарно, до 02:47. Arena audit is clear. Indexer and bots audits now report zero vulnerabilities after precise ctutils/TLS patch updates. Root still needs crypto-bigint remediation: its only path is the host-side LiteSVM dev dependency via Solana secp256k1 recovery. A compatible adapter to patched RustCrypto is being prepared; independent review identified a high-S verification behavior change that must be guarded. No advisory ignores or weakened audit policy have been added.
 
-
 ### RustSec repair verification, 25 October 2026 02:24 Almaty
 
 All four lockfile audits now report zero blocking vulnerabilities. Precise ctutils and TLS updates fixed root/indexer/bots advisories. A root-only Solana recovery adapter upgrades host RustCrypto while preserving the original syscall block and high-S rejection. The same four fixed-vector tests pass against both upstream 3.3.0 and the adapter. Root normal program dependency tree does not contain crypto-bigint. The adapter is a workspace member, so CI runs its tests; optional frozen-ABI lock resolutions add informational warnings, recorded explicitly. No advisory ignores or CI audit relaxation were introduced. Publishing the fix for full CI validation.
 
-
 ### RustSec repair CI update, 25 October 2026 02:26 Almaty
 
 GitHub CI run40134150599 on commit7a7ca22: RustSec audit job120991979631 passed on all four lockfiles; secret scan passed. Frontend, full Rust tests and fresh SBF/program jobs are still running. Four compatibility tests passed on both original SDK and adapter. Waiting for the full compatibility result before closing the task.
-
 
 ### RustSec repair completed, 25 October 2026 02:32 Almaty
 
@@ -950,19 +939,15 @@ Fix commit7a7ca22 passed all five jobs in CI run40134150599: all-lockfile RustSe
 
 Факт: 0,27 часа (13:12-13:28, Алматы). План до 13:36 закрыт.
 
-
 ### 26 October 2026, comparison execution repairs
 
 13:54 Almaty. План: 0,8 часа, до 14:42. Fix the three defects reproduced in the targeted audit: private response/parser mismatch, stranded prepared reservation after a parallel failure, and duplicate model execution from separate journals. Acceptance: actual server serialization accepted by the frontend, interrupted attempts can reach an owner decision, and competing executors cannot both start the same call. Preserve saved receipts and uncertain usage. No provider spending or deployment.
 
-
 26.10.2026 14:10 Almaty. All three repairs are implemented. Fresh bootstrap suite passed 64 tests. Frontend comparison, strategy and trading checks passed. Actual HTTP responses pass the frontend parser, and the competing-journal HTTP case grants two calls for two variants. Full arena suite passed 148 tests with one pre-existing ignored snapshot check. Rules validation is running; remaining cold-build checks will use fresh CI because local disk is constrained. No deployment or paid provider calls.
-
 
 26.10.2026 14:19 Almaty. Comparison repairs completed. Commit e9b181c390269a73c54694587ca22b72a9e1702b is pushed to PR #60. CI run40297668440 passed all five jobs, including fresh SBF/program tests and all-lockfile RustSec audit. Local checks passed 148 arena tests (one pre-existing ignored), 40 rules tests and 64 bootstrap tests. Actual HTTP responses pass the frontend parser; competing independent journals cannot both claim a task. [Acceptance](docs/ops/HUMAN_COMPARISON_20261026_REPAIR.md) records migration and copied-journal limits. No deployment or real provider calls.
 
 План: 0,8 часа, до 14:42. Факт: 0,42 часа (13:54-14:19, Алматы).
-
 
 26.10.2026 14:26 Almaty. User explicitly requested deployment of the comparison repairs. План: 0,75 часа, до 15:11. Verify the current public deployment, prepare a separate build and staging check, preserve state and rollback artifacts, then publish the matched arena/frontend/runner version and verify public behavior. No new blockchain deployment or paid model test is required for these fixes.
 
@@ -1076,21 +1061,17 @@ Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after
 29.10.2026 16:18 Almaty. Public browser QA passed for main-a4e85f3-20261029. The loaded script uses that release prefix. Legacy act keeps the full hand in desktop and mobile frames. Thinking at paused 0.6 seconds shows unchanged text in the 15:04:16 and 16:15:18 captures; the clock jump prevents interpreting their difference as continuous observation time. Public map desktop/mobile positions at 9.7 seconds match the local fixed scene; replay start and pause were observed, with no JavaScript errors. GET and runtime verification passed. Physical-phone performance, browser reduced motion and new-viewer comprehension remain untested. Final documentation commit CI is pending.
 План уточнён ведущим агентом в 16:15: ещё 0,25 часа, до 16:30. Факт: 3,7 часа по часам ноутбука, 12:34→16:18, включая подтверждённый скачок примерно на 71 минуту. Активная длительность работы надёжно не измерена. Исправления и публикация завершены, план закрыт. Новая реальная игра не запускалась.
 
-
 ### 29.10 16:25 · Завершение CI отчёта анимаций
 
 План: ещё 0,25 часа, до 16:40. Gitleaks принял публичный SHA-256 chain_api за ключ доступа в JSON-поле с путём API. Значение сверено с опубликованным version.json и серверным файлом. Отчёт использует отдельные поля path/sha256; в .gitleaksignore добавлен только точный fingerprint исторической строки. Проверки staged diff и этого коммита проходят. Приложение и опубликованный релиз не меняются. Итог GitHub CI фиксируется в локальном evidence/latest-documentation-ci.json и сообщении владельцу.
-
 
 ### 29.10 16:58 · Управление повторами в стиле YouTube
 
 План: 1,5 часа, до 18:26. Зритель на странице devnet должен без поиска находить управление повтором. Панель должна быть удобной на телефоне и компьютере. Карта показывает секунды сокращённого повтора; персонаж показывает номера подтверждённых событий. Это разные часы, поэтому панели подписаны отдельно. Подтверждённые данные сохраняются. Приёмка включает повторы и обратную перемотку на архивном матче. Пауза и продолжение должны сохранять выбранное положение. Сцена не должна перекрываться. Проверяются frontend и CI.
 
-
 ### 29.10 17:12 · Уточнение владельца
 
 Амир выбрал основные кнопки без полноэкранного режима. Ранее подготовленное расширение удалено из обеих панелей; предыдущая запись об этом режиме относится к промежуточной версии. Chrome переподключён для дальнейшей проверки.
-
 
 Визуальная цель: элементы управления знакомы по YouTube. [Мобильный референс](https://web.dev/static/case-studies/better-youtube-web-part1/image/youtube-player-controls-9cafce0c55aab.png) показывает структуру плеера и не является кадром ALASHI. Панели расположены под сценами, чтобы не закрывать сцену и контакт предметов.
 
@@ -1155,7 +1136,6 @@ Clock correction: two fresh TZ=Asia/Almaty date calls returned 29.10 16:15 after
 
 [03.11 00:15] [ALASHI authority and budget] Новый ключ создан с правами 0600; публичный адрес копии совпадает, seed derivation проверен. Основной кошелёк Solana не менялся. AWS API подтвердил $15 MONTHLY и прежние письма 80%/100% с тем же получателем. Импорт двух записей в Apple Passwords выполняется; сохранение ещё не подтверждено.
 
-
 [03.11 00:35] [ALASHI authority and budget: завершение] Факт: 0,5 часа. План 0,5 часа до 00:37 закрыт. Отдельный ключ создан, seed derivation и публичный адрес копии проверены. Зашифрованная запись macOS login Keychain прочитана обратно: ключ и seed совпали побайтно. Apple Passwords зависли; Амир выбрал оставить проверенную копию в Связке ключей. Временные открытые seed/CSV и лишняя копия ключа удалены, рабочий файл 0600 сохранён. Независимая копия вне Mac не проверена. Публичный адрес доставлен Ивану строкой MIGRATION-20261102-AUTH в 19:17:09 UTC; ответ и передача прав пока не подтверждены. Read-only devnet query показывает прежнего владельца, транзакции агент не отправлял. AWS API подтвердил MONTHLY $15; пороги 80%/100% и получатель писем сохранены, предупреждения соответствуют $12/$15. Проверки: JSON/schema consistency, diff-check, FULL text cleaner и redacted secret scan. Rust/SBF не запускались: код приложения не менялся.
 10.10 19:21. Монета Alashi по выбранному концепту Амира.
 План: 0,5 часа, до 19:51. Основа: ALASHI_FOR_ALL_BRIEF_FOR_DIN_2026-10-10
@@ -1202,7 +1182,6 @@ https://github.com/Jakisheff/alashi/pull/25.
 Факт: 0,67 часа (40 минут с 20:10 до 20:50). План до 20:40 и дополнения
 до 20:46 и 20:52 закрыты.
 
-
 [07.11 16:05] Review and merge owner PRs. План: 2 часа, до 18:05. Review PRs authored by Jakisheff against current main and merge only ready changes. Prepare a separate PR for viewer findings 6/7, with production changes limited to viewer lifecycles. Earlier session/archive fixes stay on their existing branch. Client outcome: main receives verified changes while unresolved work remains identifiable. Mandatory Rust/SBF, frontend and relevant lifecycle checks, exact-head CI and visual evidence govern readiness. No game rules 3/5/8, live games, funds or deployment are included.
 
 [07.11 16:15] Owner PR review: PR68 merged after source/workflow review and five green exact-head CI jobs; no deployment trigger. PR59 preserve-both documentation resolution d90ca591 pushed, fresh CI pending. Viewer6/7 nine recovery checks and two controls pass on the separate branch; build passed and animation checks are running. Coin/Dance integration and PR67 reduced-motion browser acceptance continue. PR33 is already included in main by ancestry. Next: finish acceptance, publish viewer PR, merge only verified candidates and check finalmain.
@@ -1230,7 +1209,6 @@ https://github.com/Jakisheff/alashi/pull/25.
 [07.11 17:51] Session/archive PR: fresh behavioral RED reproduced on unchanged main production. Session rejection left pending; cached terminal archive remained unmarked after storage recovery. Logs: docs/ops/session-archive-20261107/finding-1-red.log and finding-2-red.log. Independent source and historical mutation reviews found no merge blocker. Next: restore minimal fixes, run fresh GREEN and mandatory CI.
 
 [07.11 18:01] Session/archive PR70 head1ac0315b: fresh local session19, indexer22 and rules40 tests passed. CI42374591154 has four successful jobs; the core job passed session_cli and is running indexer tests. Independent final scope review found no blocker. Next: archive full CI logs, validate the final PR revision, merge and verify main.
-
 
 12.11.2026. Поручение: закрыть zstd-advisory в audit-джобе CI
 

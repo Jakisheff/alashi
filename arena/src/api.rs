@@ -77,6 +77,15 @@ pub struct AgentRec {
     pub owner_id: String,
     pub agent_record_id: Option<String>,
     pub token: String,
+    /// Анонимный аудит №8: в снапшоте хранится только хэш bearer-токена.
+    /// false бывает лишь у записей, загруженных из legacy-снапшота до
+    /// миграции (мигрируют хэшем при первом же load+save).
+    /// Известное ограничение эвристики (double falsification): при
+    /// отсутствии метки v2-запись (agent_record_id) считается уже-хэшем;
+    /// снапшот, вручную правленный root-ом на v2+plaintext, загрузится
+    /// как есть и закрепится. Формат хэша и plaintext неотличимы; полная
+    /// защита — подпись снапшота, вне текущего контура.
+    pub token_hashed: bool,
     pub session_expires_at: Option<i64>,
     pub recovery_hash: Option<String>,
     pub registration: Option<Receipt>,
@@ -145,6 +154,11 @@ pub struct GameEntry {
     pub grace_s: i64,
     /// Полный протокол партии для /export: каждый ход с фазой и раундом.
     pub action_log: Vec<serde_json::Value>,
+    /// Diff 3 (Zero-Trust RFC v2): факт «фракция сходила в этой фазе» живёт
+    /// отдельно от вытесняемого action_log (максимум MAX_ACTION_LOG), чтобы
+    /// timed_out при закрытии фазы не оговаривал фракцию, чей ход вытеснен
+    /// отклонёнными повторами. Ключ — "round:phase".
+    pub phase_acted: HashMap<String, std::collections::HashSet<usize>>,
     pub op_state: HashMap<String, OpState>,
     /// Итоги закрытых фаз (закон: карта, да/нет, прошёл/вето).
     pub phase_log: Vec<serde_json::Value>,
@@ -180,6 +194,9 @@ pub struct AppState {
     proposal_key: Mutex<Option<String>>,
     snapshot_path: PathBuf,
     sequence_path: PathBuf,
+    /// D1 (ADR-001): атомарное SQLite WAL-хранилище. None — legacy-режим
+    /// пары плоских файлов (совместимость тестов и локальных прогонов).
+    db: Option<Mutex<rusqlite::Connection>>,
     // ponytail: one transaction gate for this single-file arena. Split persistence
     // per game if contention matters; every writer acquires this before games.
     snapshot_lock: Mutex<()>,
@@ -243,8 +260,7 @@ pub fn save_snapshot(state: &AppState) -> std::io::Result<()> {
 // Caller holds snapshot_lock for the full mutation -> save -> rollback cycle.
 pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     let games = state.games.lock().unwrap_or_else(|e| e.into_inner());
-    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());
-    let arr: Vec<serde_json::Value> = games
+    let completed = state.completed.lock().unwrap_or_else(|e| e.into_inner());    let arr: Vec<serde_json::Value> = games
         .iter()
         .map(|(gid, e)| {
             serde_json::json!({
@@ -263,12 +279,13 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
                 "agents": e.agents.iter().map(|a| serde_json::json!({
                     "name": a.name, "agent_id": a.agent_id, "character_id": a.character_id,
                     "owner_id": a.owner_id, "agent_record_id": a.agent_record_id,
-                    "token": a.token, "session_expires_at": a.session_expires_at,
+                    "token": a.token, "token_hashed": a.token_hashed, "session_expires_at": a.session_expires_at,
                     "model": a.model, "faction_idx": a.faction_idx, "recovery_hash": a.recovery_hash,
                     "registration": a.registration,
                 })).collect::<Vec<_>>(),
                 "insiders": e.insiders.iter().cloned().collect::<Vec<_>>(),
                 "action_log": e.action_log,
+                "phase_acted": &e.phase_acted,
                 "op_state": e.op_state,
                 "phase_log": e.phase_log,
             })
@@ -294,6 +311,25 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
     });
     drop(completed);
     drop(games);
+    let doc_text = doc.to_string();
+    if let Some(db) = &state.db {
+        // D1: снапшот и счётчик партий — одна транзакция. Номер расходуется
+        // только вместе с зафиксированным снапшотом; откат невозможен.
+        let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+        let tx = conn.unchecked_transaction()
+            .map_err(|e| std::io::Error::other(format!("db tx: {e}")))?;
+        db_kv_put(&tx, "snapshot", &doc_text)
+            .map_err(|e| std::io::Error::other(e))?;
+        let stored: u64 = db_kv_get(&tx, "party_no")
+            .map_err(|e| std::io::Error::other(e))?
+            .and_then(|s| s.trim().parse().ok())
+            .unwrap_or(18);
+        let observed = max_party_no_in_snapshot(&doc_text).unwrap_or(18);
+        db_kv_put(&tx, "party_no", &stored.max(observed).to_string())
+            .map_err(|e| std::io::Error::other(e))?;
+        tx.commit().map_err(|e| std::io::Error::other(format!("db commit: {e}")))?;
+        return Ok(());
+    }
     let p = &state.snapshot_path;
     if let Some(dir) = p.parent() {
         std::fs::create_dir_all(dir)?;
@@ -322,10 +358,22 @@ pub(super) fn save_snapshot_locked(state: &AppState) -> std::io::Result<()> {
 /// сохраняется рядом как .corrupt.<ts>, пустое состояние не подменяет
 /// данные. Вызывающая сторона (serve) обязана отказаться от старта.
 pub fn load_snapshot(state: &AppState) -> Result<(), String> {
-    let txt = match std::fs::read_to_string(&state.snapshot_path) {
-        Ok(txt) => txt,
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
-        Err(e) => return Err(format!("снимок не читается: {e}")),
+    // D1 (ADR-001): источник состояния — SQLite WAL, если он включён;
+    // в db-режиме пустая kv-ячейка snapshot = чистый старт (после миграции
+    // при открытии), битые записи невозможны по построению.
+    let txt = match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            match db_kv_get(&conn, "snapshot").map_err(|e| format!("снимок не читается: {e}"))? {
+                Some(txt) => txt,
+                None => return Ok(()),
+            }
+        }
+        None => match std::fs::read_to_string(&state.snapshot_path) {
+            Ok(txt) => txt,
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(()),
+            Err(e) => return Err(format!("снимок не читается: {e}")),
+        },
     };
     let backup_path = state
         .snapshot_path
@@ -488,7 +536,21 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                         owner_id: a["owner_id"].as_str().unwrap_or("legacy").to_string(),
                         agent_record_id: a["agent_record_id"].as_str().map(str::to_string),
                         session_expires_at: a["session_expires_at"].as_i64(),
-                        token: a["token"].as_str()?.to_string(),
+                        token: {
+                            let raw = a["token"].as_str()?.to_string();
+                            if a["token_hashed"].as_bool().unwrap_or(false) {
+                                raw
+                            } else if a["agent_record_id"].as_str().is_some() {
+                                // Pre-marker snapshots already stored the
+                                // sha256 for v2 agents (falsification A):
+                                // hashing again would break every live
+                                // bearer after the deploy.
+                                raw
+                            } else {
+                                sha256_hex(&raw)
+                            }
+                        },
+                        token_hashed: true,
                         recovery_hash: a["recovery_hash"].as_str().map(str::to_string),
                         registration: match a.get("registration").filter(|v| !v.is_null()) {
                             Some(value) => Some(serde_json::from_value(value.clone()).ok()?),
@@ -538,6 +600,27 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                     return fail(format!("партия {gid}: нарушен порядок op_state"));
                 }
             }
+            let phase_acted: HashMap<String, std::collections::HashSet<usize>> = match g.get("phase_acted") {
+                Some(value) => match serde_json::from_value(value.clone()) {
+                    Ok(state) => state, Err(_) => return fail(format!("партия {gid}: битые phase_acted")),
+                },
+                None => HashMap::new(),
+            };
+            // Upgrade path (hy4 falsification): a snapshot written before
+            // phase_acted must not accuse factions whose accepted moves were
+            // trimmed from action_log. Backfill the CURRENT phase from the
+            // retained log; closed phases are already in phase_log.
+            let mut phase_acted = phase_acted;
+            if phase_acted.is_empty() {
+                let key = format!("{}:{}", sim.game.round, phase_name(sim.game.phase));
+                let acted: std::collections::HashSet<usize> = action_log.iter()
+                    .filter(|a| a["round"].as_u64() == Some(u64::from(sim.game.round))
+                        && a["phase"].as_str() == Some(phase_name(sim.game.phase))
+                        && a["ok"].as_bool() == Some(true))
+                    .filter_map(|a| a["actor"].as_u64().map(|i| i as usize))
+                    .collect();
+                if !acted.is_empty() { phase_acted.insert(key, acted); }
+            }
             let entry = GameEntry {
                 sim,
                 entry_fee: g["entry_fee"].as_u64().unwrap_or(10 * PESO),
@@ -546,6 +629,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 created: g["created"].as_i64().unwrap_or(now()),
                 grace_s: g["grace_s"].as_i64().unwrap_or(3),
                 action_log,
+                phase_acted,
                 op_state,
                 phase_log: g["phase_log"].as_array().cloned().unwrap_or_default(),
                 party_no: g["party_no"].as_u64().unwrap_or(0),
@@ -612,6 +696,23 @@ fn next_party_no(path: &std::path::Path) -> std::io::Result<u64> {
     }
     std::fs::write(path, format!("{}", next))?;
     Ok(next)
+}
+
+/// D1 (ADR-001): в db-режиме номер только читается; расходуется он вместе
+/// со снапшотом в save_snapshot_locked (одна транзакция). Падение до
+/// коммита не тратит номер, откат счётчика невозможен в принципе.
+fn next_party_no_state(state: &AppState) -> std::io::Result<u64> {
+    match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            let last: u64 = db_kv_get(&conn, "party_no")
+                .map_err(std::io::Error::other)?
+                .and_then(|s| s.trim().parse().ok())
+                .unwrap_or(18);
+            Ok(last.saturating_add(1))
+        }
+        None => next_party_no(&state.sequence_path),
+    }
 }
 
 /// Аудит 27.09 (S3): секрет арены берётся из ОС, а не из времени.
@@ -683,12 +784,13 @@ fn sha256_hex(token: &str) -> String {
 }
 
 fn agent_token_matches(agent: &AgentRec, token: &str) -> bool {
+    // Аудит: сравнение только по хэшу; plaintext-ветки больше нет ни для
+    // каких записей (legacy хэшируется при загрузке снапшота).
+    let token_ok = hex32(token) && secret_matches(&agent.token, &sha256_hex(token));
     if agent.agent_record_id.is_some() {
-        agent.session_expires_at.is_some_and(|t| now() < t)
-            && hex32(token)
-            && secret_matches(&agent.token, &sha256_hex(token))
+        agent.session_expires_at.is_some_and(|t| now() < t) && token_ok
     } else {
-        secret_matches(&agent.token, token)
+        token_ok
     }
 }
 
@@ -742,6 +844,10 @@ pub fn new_state() -> Arc<AppState> {
 }
 
 pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: impl Into<PathBuf>) -> Arc<AppState> {
+    let snapshot_path = snapshot_path.into();
+    let sequence_path = sequence_path.into();
+    let db = db_from_env().map(|path| open_arena_db(&path, &snapshot_path, &sequence_path)
+        .unwrap_or_else(|e| panic!("arena db {path:?} unusable: {e}")));
     Arc::new(AppState {
         games: Mutex::new(HashMap::new()),
         next_id: AtomicU64::new(1),
@@ -759,13 +865,121 @@ pub fn new_state_with_files(snapshot_path: impl Into<PathBuf>, sequence_path: im
         chain_conversations: Mutex::new(chain_conversations::ConversationState::default()),
         chain_dialogue: Mutex::new(chain_dialogue::DialogueState::default()),
         proposal_key: Mutex::new(None),
-        snapshot_path: snapshot_path.into(),
-        sequence_path: sequence_path.into(),
+        snapshot_path,
+        sequence_path,
+        db: db.map(Mutex::new),
         snapshot_lock: Mutex::new(()),
         connections: Arc::new(AtomicU64::new(0)),
         waiters: Arc::new(AtomicU64::new(0)),
         confirmations: Arc::new(AtomicU64::new(0)),
     })
+}
+
+/// Тот же конструктор, но с явным путём к SQLite-хранилищу (тесты и явные
+/// конфигурации без чтения окружения).
+pub fn new_state_with_db(snapshot_path: impl Into<PathBuf>, sequence_path: impl Into<PathBuf>, db_path: impl Into<PathBuf>) -> Arc<AppState> {
+    let db_path = db_path.into();
+    let mut state = new_state_with_files(snapshot_path, sequence_path);
+    // new_state_with_files без ALASHI_DB_FILE строит legacy-состояние; заменяем
+    // хранилище на явно переданное (тесты не зависят от окружения).
+    let conn = open_arena_db(&db_path, &state.snapshot_path, &state.sequence_path)
+        .unwrap_or_else(|e| panic!("arena db {db_path:?} unusable: {e}"));
+    if let Some(s) = Arc::get_mut(&mut state) {
+        s.db = Some(Mutex::new(conn));
+    } else {
+        panic!("fresh state is uniquely owned");
+    }
+    state
+}
+
+fn db_from_env() -> Option<PathBuf> {
+    std::env::var("ALASHI_DB_FILE").ok().map(PathBuf::from)
+}
+
+/// D1 (ADR-001): единое атомарное SQLite WAL-хранилище вместо пары плоских
+/// файлов /data/arena_state.json + /data/arena_party_no.txt. Схема — одна
+/// kv-таблица: 'snapshot' (тот же JSON-документ) и 'party_no'. Битая запись
+/// невозможна (WAL + синхронные коммиты), счётчик партий не может молча
+/// откатиться к 18, снапшот и номер живут в одной транзакции.
+fn open_arena_db(db_path: &std::path::Path, legacy_snapshot: &std::path::Path, legacy_seq: &std::path::Path)
+    -> Result<rusqlite::Connection, String>
+{
+    use rusqlite::Connection;
+    if let Some(dir) = db_path.parent() {
+        std::fs::create_dir_all(dir).map_err(|e| format!("db dir: {e}"))?;
+    }
+    let conn = Connection::open(db_path).map_err(|e| format!("open: {e}"))?;
+    // Falsification A4 (+ blind round): busy_timeout FIRST, so a SQLITE_BUSY
+    // on the pragmas themselves (a second arenad during restart overlap)
+    // also waits instead of failing instantly.
+    conn.busy_timeout(std::time::Duration::from_millis(5000))
+        .map_err(|e| format!("busy_timeout: {e}"))?;
+    conn.pragma_update(None, "journal_mode", "WAL").map_err(|e| format!("wal: {e}"))?;
+    conn.pragma_update(None, "synchronous", "FULL").map_err(|e| format!("sync: {e}"))?;
+    conn.execute_batch(
+        "CREATE TABLE IF NOT EXISTS arena_kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);",
+    ).map_err(|e| format!("schema: {e}"))?;
+    let have: i64 = conn.query_row("SELECT COUNT(*) FROM arena_kv", [], |r| r.get(0))
+        .map_err(|e| format!("count: {e}"))?;
+    if have == 0 {
+        // Миграция из пары плоских файлов в одной транзакции. Fail-closed по
+        // данным игр (falsification A4): существующий, но нечитаемый снапшот —
+        // отказ старта, а не тихий старт с пустой ареной; seq-файл слабее:
+        // битое значение числа не рушит игры, счётчик берётся из снапшота.
+        let snapshot_txt = match std::fs::read_to_string(legacy_snapshot) {
+            Ok(txt) => Some(txt),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => None,
+            Err(e) => return Err(format!(
+                "legacy snapshot {legacy_snapshot:?} существует, но не читается: {e}; отказ старта (fail-closed)")),
+        };
+        if let Some(txt) = &snapshot_txt {
+            serde_json::from_str::<serde_json::Value>(txt).map_err(|e| format!(
+                "legacy snapshot {legacy_snapshot:?} не парсится как JSON: {e}; отказ старта (fail-closed)"))?;
+        }
+        let party_no = std::fs::read_to_string(legacy_seq).ok()
+            .and_then(|s| s.trim().parse::<u64>().ok());
+        let party_no = match (party_no, &snapshot_txt) {
+            (Some(n), _) => n,
+            (None, Some(txt)) => max_party_no_in_snapshot(txt).unwrap_or(18),
+            (None, None) => 18,
+        };
+        let tx = conn.unchecked_transaction().map_err(|e| format!("tx: {e}"))?;
+        if let Some(txt) = snapshot_txt {
+            tx.execute("INSERT OR REPLACE INTO arena_kv(key, value) VALUES('snapshot', ?1)",
+                [&txt]).map_err(|e| format!("migrate snapshot: {e}"))?;
+        }
+        tx.execute("INSERT OR REPLACE INTO arena_kv(key, value) VALUES('party_no', ?1)",
+            [party_no.to_string()]).map_err(|e| format!("migrate party_no: {e}"))?;
+        tx.commit().map_err(|e| format!("commit migration: {e}"))?;
+    }
+    Ok(conn)
+}
+
+fn max_party_no_in_snapshot(txt: &str) -> Option<u64> {
+    let doc: serde_json::Value = serde_json::from_str(txt).ok()?;
+    let games = doc.get("games")?.as_array()?;
+    let live = games.iter().filter_map(|g| g["party_no"].as_u64()).max();
+    let done = doc.get("completed")?.as_array()?
+        .iter().filter_map(|s| s.as_str())
+        .filter_map(|s| serde_json::from_str::<serde_json::Value>(s).ok())
+        .filter_map(|v| v["party_no"].as_u64()).max();
+    live.max(done)
+}
+
+fn db_kv_get(conn: &rusqlite::Connection, key: &str) -> Result<Option<String>, String> {
+    let mut stmt = conn.prepare("SELECT value FROM arena_kv WHERE key = ?1")
+        .map_err(|e| format!("select {key}: {e}"))?;
+    let mut rows = stmt.query([key]).map_err(|e| format!("query {key}: {e}"))?;
+    match rows.next() {
+        Ok(Some(row)) => Ok(Some(row.get::<_, String>(0).map_err(|e| format!("read {key}: {e}"))?)),
+        Ok(None) => Ok(None),
+        Err(e) => Err(format!("iterate {key}: {e}")),
+    }
+}
+
+fn db_kv_put(tx: &rusqlite::Transaction, key: &str, value: &str) -> Result<(), String> {
+    tx.execute("INSERT OR REPLACE INTO arena_kv(key, value) VALUES(?1, ?2)", rusqlite::params![key, value])
+        .map(|_| ()).map_err(|e| format!("put {key}: {e}"))
 }
 
 // ---------- служебное ----------
@@ -816,6 +1030,22 @@ fn round_seed(state: &AppState, game_id: u64, round: u8) -> u64 {
 fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
     let (phase, round, card) = closing;
     let g = &entry.sim.game;
+    // Diff 3 (Zero-Trust RFC): таймаут не бывает тихим. В закрывшейся
+    // игровой фазе фиксируем, кто из живых фракций не сделал ни одного
+    // принятого хода. Источник фактов — phase_acted (не вытесняется),
+    // а не action_log (ограничен MAX_ACTION_LOG). Лобби и терминальные
+    // фазы ходов не имеют.
+    let phase_key = format!("{round}:{}", phase_name(phase));
+    let timed_out: Option<Vec<usize>> = match phase {
+        Phase::Market | Phase::Action | Phase::Law => {
+            let acted = entry.phase_acted.remove(&phase_key).unwrap_or_default();
+            Some(entry.sim.factions.iter().enumerate()
+                .filter(|(i, f)| f.alive && !acted.contains(i))
+                .map(|(i, _)| i)
+                .collect())
+        }
+        _ => None,
+    };
     let rec = match phase {
         Phase::Law => serde_json::json!({
             "round": round,
@@ -827,10 +1057,12 @@ fn record_phase_close(entry: &mut GameEntry, closing: (Phase, u8, u8)) {
             "passed": g.last_law_passed,
             "veto_pending": g.veto_pending,
             "laws_passed_total": g.laws_passed,
+            "timed_out": timed_out,
         }),
         _ => serde_json::json!({
             "round": round,
             "phase": phase_name(phase),
+            "timed_out": timed_out,
         }),
     };
     entry.phase_log.push(rec);
@@ -1240,18 +1472,8 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
 }
 
 pub fn law_name(card: u8) -> &'static str {
-    match card {
-        LAW_STATUS_QUO => "status_quo",
-        LAW_TAX_10 => "tax_10",
-        LAW_TAX_20 => "tax_20",
-        LAW_SUBSIDY_PRODUCE => "subsidy_produce",
-        LAW_SUBSIDY_POOR => "subsidy_poor",
-        LAW_SUBSIDY_RICH => "subsidy_rich",
-        LAW_EMBARGO => "embargo",
-        LAW_BOOM => "boom",
-        8 => "vzaimozachet",
-        _ => "no_law",
-    }
+    // Канон имён карт живёт в rules (единственный источник); арена только ретранслирует.
+    alashi_rules::constants::law_wire_name(card)
 }
 
 // ---------- обработчики ----------
@@ -1350,7 +1572,7 @@ fn h_new_game_locked(state: &AppState, body: &serde_json::Value, managed_match: 
     // дефолт прежний phase_duration x LOBBY_MULT. Пола нет: тесты
     // и быстрые смоуки используют короткие фазы.
     sim.game.phase_ends_at = now() + lobby_duration;
-    let party_no = match next_party_no(&state.sequence_path) {
+    let party_no = match next_party_no_state(&state) {
         Ok(number) => number,
         Err(e) => {
             eprintln!("[ERROR] party sequence: {e}");
@@ -1370,6 +1592,7 @@ fn h_new_game_locked(state: &AppState, body: &serde_json::Value, managed_match: 
         created: now(),
         grace_s,
         action_log: vec![],
+        phase_acted: HashMap::new(),
         op_state: HashMap::new(),
         phase_log: vec![],
         insiders: Default::default(),
@@ -1696,7 +1919,7 @@ fn h_join_v2(state: &AppState, game_id: u64, body: &serde_json::Value) -> serde_
         entry.agents.push(AgentRec {
             name:name.to_string(), agent_id:strategy_hash.to_string(),
             character_id:record.character_id.clone(), owner_id:record.owner_id.clone(),
-            agent_record_id:Some(id.to_string()), token:sha256_hex(&token),
+            agent_record_id:Some(id.to_string()), token:sha256_hex(&token), token_hashed:true,
             session_expires_at:Some(expires), recovery_hash:None,
             registration:record.receipt.clone(), model:model.to_string(), faction_idx,
         });
@@ -1906,9 +2129,10 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
             let supplied = body.get("recovery_secret").and_then(|v| v.as_str()).unwrap_or("");
             let valid = match &agent.recovery_hash {
                 Some(expected) => recovery_hash(supplied).is_some_and(|hash| secret_matches(&hash, expected)),
-                // A legacy session can enroll only with its current bearer token.
+                // A legacy session can enroll only with its current bearer token
+                // (stored as a hash since the snapshot migration).
                 None => body.get("token").and_then(|v| v.as_str())
-                    .is_some_and(|current| secret_matches(current, &agent.token)),
+                    .is_some_and(|current| secret_matches(&sha256_hex(current), &agent.token)),
             };
             if !valid { return err_json("bad_recovery_secret", "recover требует секрет восстановления; для старой сессии нужен действующий token"); }
             // Recovery never upgrades or overwrites the persisted receipt.
@@ -1932,7 +2156,9 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
             let faction_idx = entry.agents[i].faction_idx;
             let stored_agent_id = entry.agents[i].agent_id.clone();
             let stored_owner_id = entry.agents[i].owner_id.clone();
-            entry.agents[i].token = token.clone();
+            // Issued bearers are stored as hashes only (audit #8).
+            entry.agents[i].token = sha256_hex(&token);
+            entry.agents[i].token_hashed = true;
             let v = state_json(game_id, entry);
             return serde_json::json!({
                 "ok": true, "recovered": true, "game_id": game_id,
@@ -1964,7 +2190,8 @@ fn h_join_inner(state: &AppState, game_id: u64, body: &serde_json::Value, proof:
         agent_id: agent_id.clone(),
         character_id: character_id.clone(),
         owner_id: owner_id.clone(),
-        token: token.clone(),
+        token: sha256_hex(&token),
+        token_hashed: true,
         recovery_hash: recovery_hash(&recovery_secret),
         agent_record_id: None,
         session_expires_at: None,
@@ -2522,6 +2749,14 @@ fn h_act_inner(state: &AppState, game_id: u64, body: &serde_json::Value) -> serd
     };
     let ok = log.ok;
     let err = log.err.clone();
+    // Diff 3: факт принятого хода фиксируется отдельно от вытесняемого
+    // action_log — timed_out при закрытии фазы читает его отсюда.
+    if ok {
+        entry.phase_acted
+            .entry(format!("{}:{}", entry.sim.game.round, phase_name(entry.sim.game.phase)))
+            .or_default()
+            .insert(idx);
+    }
     // протокол хода: фаза, раунд, актёр, действие, исход (для /export).
     // Аудит 27.09 (S2): у отклонённых действий параметры не сохраняются
     entry.action_log.push(serde_json::json!({
@@ -3530,7 +3765,14 @@ fn accept_connections(listener: TcpListener, state: Arc<AppState>) {
 // Public canonical runtime must never silently start with a fresh proposal key
 // or a reset party counter. Keep local development's clean-start behavior.
 fn validate_existing_state(state: &AppState, expected_key_hash: Option<&str>) -> std::io::Result<()> {
-    let txt = std::fs::read_to_string(&state.snapshot_path)?;
+    let txt = match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            db_kv_get(&conn, "snapshot").map_err(std::io::Error::other)?
+                .ok_or_else(|| std::io::Error::new(std::io::ErrorKind::NotFound, "no snapshot in db"))?
+        }
+        None => std::fs::read_to_string(&state.snapshot_path)?,
+    };
     let doc: serde_json::Value = serde_json::from_str(&txt)
         .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
     let key = doc.get("proposal_key").and_then(|v| v.as_str())
@@ -3544,8 +3786,24 @@ fn validate_existing_state(state: &AppState, expected_key_hash: Option<&str>) ->
                 "canonical proposal_key fingerprint mismatch"));
         }
     }
-    let seq = std::fs::read_to_string(&state.sequence_path)?;
-    if seq.trim().parse::<u64>().ok().filter(|n| (18..u64::MAX).contains(n)).is_none() {
+    let seq_ok = match &state.db {
+        Some(db) => {
+            let conn = db.lock().unwrap_or_else(|e| e.into_inner());
+            match db_kv_get(&conn, "party_no").map_err(std::io::Error::other)? {
+                Some(s) => s.trim().parse::<u64>().ok()
+                    .is_some_and(|n| (18..u64::MAX).contains(&n)),
+                None => return Err(std::io::Error::new(std::io::ErrorKind::NotFound,
+                    "no party_no row in db")),
+            }
+        }
+        None => {
+            // Отсутствие файла — NotFound (как раньше); битое содержимое — InvalidData.
+            let seq_txt = std::fs::read_to_string(&state.sequence_path)?;
+            seq_txt.trim().parse::<u64>().ok()
+                .is_some_and(|n| (18..u64::MAX).contains(&n))
+        }
+    };
+    if !seq_ok {
         return Err(std::io::Error::new(std::io::ErrorKind::InvalidData,
             "canonical party sequence is invalid"));
     }

@@ -18,6 +18,20 @@ Keep credentials, installed tools and reproducible caches out of Git. Preserve
 unrelated local changes. This authorization covers GitHub publication; merging
 and production deployment follow the current task's scope.
 
+## Agent work rules (DAI practices, 16.11.2026)
+
+- One writer per zone: in parallel work, each file or directory zone has
+  exactly one writer for the current task; a handoff names the zone, the
+  task, and a "done when" criterion.
+- Generated files (API clients from the contract, build artifacts, derived
+  docs) are never edited by hand. Regenerate them from the source; a commit
+  must not leave them different from a fresh regeneration.
+- Checks read expected numbers from input data or specs, not from hardcoded
+  constants.
+- Agent UI work runs against real response fixtures captured from the API,
+  with an explicit note that values will change; screens must not hardcode
+  counts observed in fixtures.
+
 ## Sources
 
 - Current user instructions take precedence over repository notes.

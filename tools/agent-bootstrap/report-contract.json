@@ -1,0 +1,15 @@
+{
+  "contract": "POST /strategy-runs/:id/report",
+  "owner": "arena/src/strategy_cycle.rs report_run -> fields(...)",
+  "consumer": "tools/agent-bootstrap/strategy-run.mjs runCycle -> api.post",
+  "frozen": "2026-11-22",
+  "fields": [
+    "task",
+    "response_id",
+    "usage",
+    "report",
+    "request_failed",
+    "execution_id"
+  ],
+  "note": "Closed field set. Both sides test against this file: the arena test asserts its allowlist equals these fields, the driver test asserts its POST body keys equal them. Changing either side without this file fails its own suite."
+}

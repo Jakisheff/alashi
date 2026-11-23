@@ -6,7 +6,6 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { spawn } from 'node:child_process';
-import { act as gameAct, lock as gameLock } from './alashi.mjs';
 
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 export function base58(bytes) {
@@ -98,6 +97,13 @@ function providerEndpoint(url, test) {
 export function modelProvider({url, key, model, test = false, chat_template_kwargs}) {
   const u = providerEndpoint(url, test);
   if (!model || model.length > 128) fail('invalid_provider_config');
+  // Diff 2 (Zero-Trust RFC v2): when ALASHI_EGRESS_URL is set, model calls
+  // leave through the attestation proxy. The driver then holds no key at
+  // all: the proxy owns provider credentials and returns a signed
+  // InferenceReceipt per call. Legacy direct mode is unchanged.
+  const egressUrl = process.env.ALASHI_EGRESS_URL ? providerEndpoint(process.env.ALASHI_EGRESS_URL, false) : null;
+  if (egressUrl && key) fail('egress_key_conflict');
+  if (egressUrl && !process.env.ALASHI_EGRESS_KEY_ENV) fail('egress_key_env_required');
   // Only the two known boolean thinking switches are supported, one per profile.
   // Copy before use so caller mutation cannot change a frozen experiment's request.
   let template;
@@ -110,10 +116,38 @@ export function modelProvider({url, key, model, test = false, chat_template_kwar
   const options = template === undefined ? {} : { chat_template_kwargs: template };
   return {source:test?'test_provider':'provider_reported',provider:u.origin,model,temperature:0,max_tokens:256,...options,async complete(messages) {
     // No retry, fallback model, or tools. Keep provider credentials out of arena receipts.
-    const response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:JSON.stringify({model,messages,max_tokens:256,temperature:0,...options})});
+    const payload = JSON.stringify({model,messages,max_tokens:256,temperature:0,...options});
+    let response, attestation = null;
+    if (egressUrl) {
+      response = await fetch(new URL('v1/chat/completions', egressUrl),{method:'POST',redirect:'error',signal:AbortSignal.timeout(Number(process.env.ALASHI_EGRESS_TIMEOUT_MS) || 60_000),
+        headers:{'Content-Type':'application/json','X-Alashi-Endpoint':url,'X-Alashi-Key-Env':process.env.ALASHI_EGRESS_KEY_ENV},body:payload});
+      // Zero-trust close-out (anonymous audit #4): in egress mode the SIGNED
+      // receipt is the only usage source, and its signature is verified.
+      // The provider body may say anything; it is no longer self-report.
+      const receiptHeader = response.headers.get('x-alashi-receipt');
+      if (!receiptHeader) fail('attestation_missing');
+      attestation = JSON.parse(Buffer.from(receiptHeader,'base64').toString('utf8'));
+      const expectedPub = process.env.ALASHI_EGRESS_PUBKEY;
+      if (expectedPub !== undefined) {
+        if (!/^[0-9a-fA-F]{64}$/.test(expectedPub)) fail('egress_pubkey_invalid');
+        const { verifyReceipt } = await import('../egress-proxy/attest.mjs');
+        const verdict = verifyReceipt(JSON.stringify(attestation), Buffer.from(expectedPub, 'hex'));
+        if (!verdict.ok) fail('attestation_invalid');
+      }
+      const au = attestation.usage;
+      if (!au || ![au.input_fresh, au.input_cache_read, au.input_cache_write, au.output].every(v => v === null || (Number.isSafeInteger(v) && v >= 0))) fail('attestation_usage_invalid');
+      const prompt_tokens = (au.input_fresh ?? 0) + (au.input_cache_read ?? 0) + (au.input_cache_write ?? 0);
+      const text = await providerText(response);
+      let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
+      const attested = (au.input_fresh !== null || au.output !== null)
+        ? { prompt_tokens, completion_tokens: au.output ?? 0, total_tokens: prompt_tokens + (au.output ?? 0), cached_tokens: au.input_cache_read ?? 0 }
+        : null;
+      return {response_id:receiptId(raw.id),usage:attested,report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};
+    }
+    response = await fetch(url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(60_000),headers:{'Content-Type':'application/json',...(key?{Authorization:'Bearer '+key}:{})},body:payload});
     const text = await providerText(response);
     let raw; try { raw = JSON.parse(text); } catch { raw = {}; }
-    return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok};
+    return {response_id:receiptId(raw.id),usage:providerUsage(raw.usage),report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};
   }};
 }
 export function messagesFor(run, version, task, reports) {
@@ -224,7 +258,10 @@ export async function runCycle({api,id,provider,journalPath,tools={},trade,onPro
         }
         save(journalPath,journal);
       }
-      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...entry.result,...(entry.execution_id?{execution_id:entry.execution_id}:{})});
+      // The arena report schema is a closed field set: attestation stays in
+      // the local journal only and must never leak into api.post.
+      const {attestation: _localOnly, ...reported} = entry.result ?? {};
+      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...reported,...(entry.execution_id?{execution_id:entry.execution_id}:{})});
       // Responses can arrive out of order. Merge only this task, never an older full snapshot.
       run.calls[spec.id]=receipt.run.calls[spec.id];
       reports[spec.id]=receipt.run.calls[spec.id].report;onProgress({task:spec.id,status:receipt.run.status,known_tokens:receipt.run.known_tokens});
@@ -338,12 +375,17 @@ export async function runComparison({api,id,clientId,provider,journalPrefix,onPr
 }
 export function httpTrade(sessionPath, fetcher=fetch) {
   return async({api,run})=>{
+    const session=readPrivate(sessionPath), context=run.brief.trading;
+    // Session validation first: refusals must not load the solana stack
+    // (tests and detectors run without node_modules by design).
+    if(context.mode!=='http'||String(session.game_id)!==context.game||session.agent_record_id!==api.record||!Number.isSafeInteger(session.next_op_id)||session.next_op_id<1)fail('trade_session_mismatch');
+    if(session.pending_act&&session.pending_act.action.strategy_run!==run.id)fail('other_trade_pending');
+    if(run.status==='completed'&&!session.pending_act)return;
+    // Lazy import: alashi.mjs pulls @solana/web3.js; only the real trade
+    // path needs it.
+    const { lock: gameLock, act: gameAct } = await import('./alashi.mjs');
     const release=gameLock(sessionPath);
     try {
-      const session=readPrivate(sessionPath), context=run.brief.trading;
-      if(context.mode!=='http'||String(session.game_id)!==context.game||session.agent_record_id!==api.record||!Number.isSafeInteger(session.next_op_id)||session.next_op_id<1)fail('trade_session_mismatch');
-      if(session.pending_act&&session.pending_act.action.strategy_run!==run.id)fail('other_trade_pending');
-      if(run.status==='completed'&&!session.pending_act)return;
       if(!session.pending_act)await api.post(`/strategy-runs/${run.id}/prepare-trade`,{});
       const raw=JSON.stringify({...run.calls.deliver.report,by:'llm',strategy_run:run.id});
       const result=await gameAct(api.base,session,sessionPath,raw,fetcher);
@@ -351,12 +393,40 @@ export function httpTrade(sessionPath, fetcher=fetch) {
     } finally {release();}
   };
 }
+// Falsification D: length+alphabet alone admits '1'.repeat(87) (decodes to
+// 87 zero bytes, not a signature) and could reject real 64-byte values that
+// render shorter. Decode and require exactly 64 bytes.
+const B58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+function base58Decode64(s) {
+  if (typeof s !== 'string' || !s.length || !/^[1-9A-HJ-NP-Za-km-z]+$/.test(s)) return null;
+  let num = 0n;
+  for (const ch of s) num = num * 58n + BigInt(B58_ALPHABET.indexOf(ch));
+  const bytes = [];
+  while (num > 0n) { bytes.unshift(Number(num & 0xffn)); num >>= 8n; }
+  let zeros = 0;
+  while (zeros < s.length && s[zeros] === '1') zeros++;
+  const full = new Array(zeros).fill(0).concat(bytes);
+  if (full.length !== 64) return null;
+  // Anonymous round 2: 64 zero bytes ('1'.repeat(64)) is not an ed25519
+  // signature; the arena would reject it later, but garbage must not even
+  // reach the journal as a receipt. Also bound the input length (the
+  // BigInt loop is quadratic): 64 bytes never render longer than 88 chars.
+  if (s.length > 120) return null;
+  if (full.every(b => b === 0)) return null;
+  return full;
+}
 export function solanaTrade({binary,keyPath,signature}) {
   return async({api,run,journal,save})=>{
     if(run.status==='completed')return;
     const context=run.brief.trading;
     if(context.mode!=='solana')fail('trade_session_mismatch');
-    if(signature) {journal.trade={signature};save();}
+    if(signature !== undefined) {
+      // Anonymous-audit #5: an operator-supplied signature must decode to
+      // exactly 64 bytes of ed25519 signature; the journal records that the
+      // driver did NOT verify the cryptography - only the Solana network can.
+      if (!base58Decode64(signature)) fail('trade_signature_invalid');
+      journal.trade={signature, provenance:'operator_supplied', signature_verified:false, game:context.game, round:context.round};save();
+    }
     if(!journal.trade) {
       if(!binary||!keyPath)fail('trade_signer_required');
       const key=readPrivate(keyPath);
@@ -371,7 +441,13 @@ export function solanaTrade({binary,keyPath,signature}) {
         child.stdin.on('error',()=>{});child.stdin.end(JSON.stringify(run.calls.deliver.report));
       });
       if(typeof result.receipt?.signature!=='string')fail('trade_outcome_unknown');
-      journal.trade={signature:result.receipt.signature};save();
+      journal.trade={signature:result.receipt.signature, provenance:'local_signer', signature_verified:false, game:context.game, round:context.round};save();
+    }
+    if(journal.trade && journal.trade.signature && journal.trade.game !== undefined
+       && (journal.trade.game !== context.game || journal.trade.round !== context.round)) {
+      // Anonymous round 2: a receipt left over from another game/round must
+      // not be replayed as this run's trade receipt.
+      fail('stale_trade_journal');
     }
     if(!journal.trade.signature)fail('trade_outcome_unknown');
     await api.post(`/strategy-runs/${run.id}/trade-receipt`,{signature:journal.trade.signature});

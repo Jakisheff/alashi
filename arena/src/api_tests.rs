@@ -134,6 +134,306 @@ fn invalid_creation_parameters_cannot_reach_the_crank() {
     assert_eq!(good["ok"], true);
 }
 
+fn isolated_db() -> (Arc<AppState>, std::path::PathBuf, std::path::PathBuf) {
+    static NEXT_DB: AtomicU64 = AtomicU64::new(1);
+    let dir = std::env::temp_dir().join(format!(
+        "alashi_demo_db_{}_{}_{}", std::process::id(),
+        SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos(),
+        NEXT_DB.fetch_add(1, Ordering::SeqCst),
+    ));
+    let snapshot = dir.join("state.json");
+    let seq = dir.join("seq");
+    let db = dir.join("arena.db");
+    (new_state_with_db(snapshot.clone(), seq.clone(), db.clone()), snapshot, seq)
+}
+
+#[test]
+fn sqlite_mode_persists_state_and_spends_party_no_only_with_snapshot() {
+    let (state, snapshot, seq) = isolated_db();
+    let gid = create(&state);
+    join(&state, gid, 0);
+    let first_no = state.games.lock().unwrap()[&gid].party_no;
+    assert!(first_no >= 19, "first party_no after canonical 18: {first_no}");
+
+    // Restart from the same db: the party and the counter survive together.
+    let restored = new_state_with_db(snapshot.clone(), seq.clone(), snapshot.parent().unwrap().join("arena.db"));
+    load_snapshot(&restored).unwrap();
+    assert!(restored.games.lock().unwrap().contains_key(&gid), "party survives in db");
+    let gid2 = create(&restored);
+    let second_no = restored.games.lock().unwrap()[&gid2].party_no;
+    assert_eq!(second_no, first_no + 1, "party_no spends monotonically");
+
+    // Flat files must not be written in db mode at all.
+    assert!(!snapshot.exists(), "legacy snapshot file must stay absent in db mode");
+    assert!(!seq.exists(), "legacy seq file must stay absent in db mode");
+}
+
+#[test]
+fn sqlite_mode_migrates_flat_files_in_one_shot() {
+    // Legacy state first: party + snapshot + seq file.
+    let dir = std::env::temp_dir().join(format!(
+        "alashi_migrate_{}_{}", std::process::id(),
+        SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos(),
+    ));
+    let snapshot = dir.join("state.json");
+    let seq = dir.join("seq");
+    let legacy = new_state_with_files(snapshot.clone(), seq.clone());
+    let gid = create(&legacy);
+    join(&legacy, gid, 0);
+    let legacy_no = legacy.games.lock().unwrap()[&gid].party_no;
+    assert!(snapshot.exists() && seq.exists());
+
+    // Opening the db migrates snapshot + party counter in one transaction.
+    let state = new_state_with_db(snapshot.clone(), seq.clone(), dir.join("arena.db"));
+    load_snapshot(&state).unwrap();
+    assert!(state.games.lock().unwrap().contains_key(&gid), "migrated party is visible");
+    let gid2 = create(&state);
+    assert_eq!(state.games.lock().unwrap()[&gid2].party_no, legacy_no + 1, "counter migrated from flat seq file");
+}
+
+#[test]
+fn sqlite_party_no_never_resets_after_a_corrupt_free_restart() {
+    let (state, snapshot, seq) = isolated_db();
+    let gid = create(&state);
+    join(&state, gid, 0);
+    let spent = state.games.lock().unwrap()[&gid].party_no;
+
+    // Simulate the old failure mode: a torn flat counter file (empty/partial
+    // write after OOM). In db mode the counter lives in the committed kv row
+    // and cannot fall back to 18.
+    std::fs::write(&seq, "").unwrap();
+    let restored = new_state_with_db(snapshot.clone(), seq.clone(), snapshot.parent().unwrap().join("arena.db"));
+    load_snapshot(&restored).unwrap();
+    let gid2 = create(&restored);
+    let next = restored.games.lock().unwrap()[&gid2].party_no;
+    assert_eq!(next, spent + 1, "counter must continue from the committed value, not reset to 19");
+}
+
+#[test]
+fn engine_step_latency_stays_under_the_adr_budget() {
+    // D6 (ADR-001 T4): the embedded in-process verifier must answer a move
+    // in < 10 ms so adversarial sweeps and paired seeds run before any LLM
+    // or devnet spend. Budget is per advance+apply on the largest legal
+    // rules configuration (MAX_FACTIONS); generous headroom included.
+    use std::time::Instant;
+    let mut sim = alashi_rules::sim::Simulator::new(
+        1,
+        PESO,
+        1,
+        alashi_rules::constants::ENTROPY_SLOTHASH,
+    );
+    let capacity = alashi_rules::constants::MAX_FACTIONS;
+    while sim.game.faction_count < capacity {
+        let wallet = alashi_rules::anchor_lang::prelude::Pubkey::new_from_array([sim.game.faction_count; 32]);
+        let _ = sim.join(wallet, "bench");
+    }
+    let mut budget_ms = 0.0_f64;
+    let mut steps = 0u32;
+    let mut applies = 0u32;
+    let start = Instant::now();
+    // Falsification R4: with a frozen wall clock every advance after the
+    // first is a TooEarly no-op, so the gate measured nothing. Virtual time
+    // advances one phase per step, so every iteration is a real transition
+    // (plus an agent action where the phase allows one).
+    let mut t = now();
+    while sim.game.phase != alashi_rules::state::Phase::Finished && steps < 2000 {
+        let seed = random_u64().unwrap_or(steps as u64);
+        let t0 = Instant::now();
+        if sim.game.phase == alashi_rules::state::Phase::Action && !sim.factions.is_empty() {
+            let _ = crate::runner::apply_action(&mut sim, 0, &crate::strategies::ActionAction::Produce);
+            applies += 1;
+        }
+        let _ = sim.advance(t, seed);
+        budget_ms += t0.elapsed().as_secs_f64() * 1000.0;
+        t += sim.game.phase_duration.max(1); // tied to the simulator's own field, not a magic 1
+        steps += 1;
+    }
+    // Unconditional on purpose (battery round, 23.11: the conditional form
+    // let frozen clocks burn the budget and pass; the earlier journal claim
+    // that this assert was unconditional turned out to be false).
+    assert_eq!(sim.game.phase, alashi_rules::state::Phase::Finished,
+        "the game must finish; burning the iteration budget means the clock is frozen again (steps={steps})");
+    assert!(applies > 0, "the gate must time at least one real agent action, not only transitions");
+    let total = start.elapsed().as_secs_f64() * 1000.0;
+    let per_step = if steps > 0 { budget_ms / steps as f64 } else { f64::INFINITY };
+    assert!(steps > 10, "engine must run a meaningful number of steps, got {steps}");
+    assert!(per_step < 10.0, "ADR-001 D6 budget blown: {per_step:.3} ms/step over {steps} steps ({total:.0} ms total)");
+}
+
+#[test]
+#[should_panic(expected = "fail-closed")]
+fn sqlite_migration_refuses_to_swallow_an_unreadable_legacy_snapshot() {
+    // Falsification A4: an existing-but-unreadable legacy snapshot must stop
+    // the startup instead of silently booting an empty arena.
+    let dir = std::env::temp_dir().join(format!(
+        "alashi_badlegacy_{}_{}", std::process::id(),
+        SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos(),
+    ));
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(dir.join("state.json"), b"{broken").unwrap();
+    std::fs::write(dir.join("seq"), b"25").unwrap();
+    let _ = new_state_with_db(dir.join("state.json"), dir.join("seq"), dir.join("arena.db"));
+}
+
+#[test]
+fn legacy_plaintext_tokens_are_hashed_by_the_snapshot_migration() {
+    // Anonymous audit #8: a legacy snapshot carries bearer tokens in
+    // plaintext. After one load+save cycle the stored value must be a hash,
+    // and the original bearer must still authenticate.
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let bearer: String = joined["token"].as_str().unwrap().to_string();
+    save_snapshot(&state).unwrap();
+
+    // Forge a legacy snapshot: token stored in plaintext, no token_hashed.
+    {
+        let txt = std::fs::read_to_string(&state.snapshot_path).unwrap();
+        let mut doc: serde_json::Value = serde_json::from_str(&txt).unwrap();
+        let agent = &mut doc["games"][0]["agents"][0];
+        agent["token"] = serde_json::json!(bearer);
+        agent.as_object_mut().unwrap().remove("token_hashed");
+        std::fs::write(&state.snapshot_path, doc.to_string()).unwrap();
+    }
+
+    let restored = restore(&state);
+    {
+        let games = restored.games.lock().unwrap();
+        let stored = &games[&gid].agents[0].token;
+        assert_ne!(stored, &bearer, "plaintext must not persist in memory after load");
+        assert!(hex32(stored), "stored token must be the hash");
+    }
+    save_snapshot(&restored).unwrap();
+    let txt = std::fs::read_to_string(&state.snapshot_path).unwrap();
+    assert!(!txt.contains(&bearer), "plaintext must be gone from the snapshot file");
+
+    // The original bearer still works against the migrated hash.
+    assert_eq!(restored.games.lock().unwrap()[&gid].agents[0].token, {
+        use sha2::Digest;
+        hex_enc(&Sha256::digest(bearer.as_bytes()))
+    });
+    {
+        let mut games = restored.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    let act = h_act(&restored, gid, &json!({"token": bearer, "action": "produce"}));
+    assert_eq!(act["ok"], serde_json::json!(true), "bearer authenticates after migration: {act}");
+}
+
+#[test]
+fn pre_marker_v2_snapshots_keep_their_hashed_bearers_working() {
+    // Falsification A (critical): snapshots written before token_hashed
+    // already stored sha256 for v2 agents. Re-hashing them on load would
+    // return bad_token to every live bearer after the deploy.
+    let state = isolated();
+    let gid = create(&state);
+    let joined = join(&state, gid, 0);
+    let bearer: String = joined["token"].as_str().unwrap().to_string();
+    save_snapshot(&state).unwrap();
+
+    // Build the exact pre-deploy v2 shape by hand: token already the
+    // sha256 of the bearer, agent_record_id present, session live,
+    // no token_hashed field anywhere yet.
+    let bearer_hash = {
+        use sha2::Digest;
+        hex_enc(&Sha256::digest(bearer.as_bytes()))
+    };
+    {
+        let txt = std::fs::read_to_string(&state.snapshot_path).unwrap();
+        let mut doc: serde_json::Value = serde_json::from_str(&txt).unwrap();
+        let agent = &mut doc["games"][0]["agents"][0];
+        agent["token"] = serde_json::json!(bearer_hash);
+        agent["agent_record_id"] = serde_json::json!("c".repeat(64));
+        agent["session_expires_at"] = serde_json::json!(now() + 3600);
+        agent.as_object_mut().unwrap().remove("token_hashed");
+        std::fs::write(&state.snapshot_path, doc.to_string()).unwrap();
+    }
+
+    let restored = restore(&state);
+    {
+        let mut games = restored.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    let act = h_act(&restored, gid, &json!({"token": bearer, "op_id": 1, "action": "produce"}));
+    assert_eq!(act["ok"], serde_json::json!(true), "pre-marker v2 bearer must keep working: {act}");
+}
+
+#[test]
+fn phase_close_records_timed_out_factions() {
+    let state = isolated();
+    let gid = create(&state);
+    let moved = join(&state, gid, 0);
+    for i in 1..6 { join(&state, gid, i); }
+    crank_once(&state); // Lobby -> Market
+    {
+        let mut games = state.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    assert_eq!(h_act(&state, gid, &json!({"token": moved["token"], "action": "produce"}))["ok"], true);
+    state.games.lock().unwrap().get_mut(&gid).unwrap().sim.game.phase_ends_at = 0;
+    crank_once(&state); // Action -> advance
+    let rec = state.games.lock().unwrap()[&gid].phase_log.last().cloned().unwrap();
+    assert_eq!(rec["phase"], "action", "{rec}");
+    // Diff 3 (Zero-Trust RFC): закрывшаяся фаза оставляет явный след,
+    // кто не сделал ни одного принятого хода — таймаут не бывает тихим.
+    assert_eq!(rec["timed_out"], json!([1, 2, 3, 4, 5]), "{rec}");
+    save_snapshot(&state).unwrap();
+    let restored = restore(&state);
+    let kept = restored.games.lock().unwrap()[&gid].phase_log.last().cloned().unwrap();
+    assert_eq!(kept["timed_out"], json!([1, 2, 3, 4, 5]));
+}
+
+#[test]
+fn timed_out_survives_action_log_trimming() {
+    let state = isolated();
+    let gid = create(&state);
+    let moved = join(&state, gid, 0);
+    for i in 1..6 { join(&state, gid, i); }
+    crank_once(&state); // Lobby -> Market
+    {
+        let mut games = state.games.lock().unwrap();
+        let sim = &mut games.get_mut(&gid).unwrap().sim;
+        sim.game.phase = Phase::Action;
+    }
+    assert_eq!(h_act(&state, gid, &json!({"token": moved["token"], "action": "produce"}))["ok"], true);
+    // Flood: rejected retries are logged too and trim the accepted move out
+    // of action_log (hy4 falsification case). timed_out must not accuse 0.
+    {
+        let mut games = state.games.lock().unwrap();
+        let entry = games.get_mut(&gid).unwrap();
+        let accepted_seq = entry.action_log[0]["seq"].as_u64().unwrap();
+        let mut seq = accepted_seq;
+        let base = entry.action_log[0].clone();
+        while entry.action_log.len() < 300 {
+            seq += 1;
+            let mut rejected = base.clone();
+            rejected["seq"] = json!(seq);
+            rejected["actor"] = json!(1);
+            rejected["ok"] = json!(false);
+            entry.action_log.push(rejected);
+        }
+        // The real h_act drain: the log keeps only the last MAX_ACTION_LOG
+        // entries, which removes faction 0's accepted move.
+        let excess = entry.action_log.len() - MAX_ACTION_LOG;
+        entry.action_log.drain(0..excess);
+        assert!(entry.action_log.iter().all(|a| a["actor"].as_u64() != Some(0)), "fixture must actually trim the accepted move");
+        assert!(entry.phase_acted.values().any(|s| s.contains(&0)), "phase_acted must retain the fact");
+    }
+    {
+        let mut games = state.games.lock().unwrap();
+        games.get_mut(&gid).unwrap().sim.game.phase_ends_at = 0;
+    }
+    crank_once(&state);
+    let rec = state.games.lock().unwrap()[&gid].phase_log.last().cloned().unwrap();
+    assert_eq!(rec["phase"], "action", "{rec}");
+    let timed: Vec<i64> = rec["timed_out"].as_array().unwrap().iter().filter_map(|v| v.as_i64()).collect();
+    assert!(!timed.contains(&0), "faction 0 acted; trimming must not fabricate its timeout: {rec}");
+    assert!(timed.contains(&1), "faction 1 never acted: {rec}");
+}
+
 #[test]
 fn recover_full_started_game_revokes_old_token_and_survives_restart() {
     let state = isolated();
@@ -267,11 +567,14 @@ fn recovery_requires_secret_and_persists_only_its_hash() {
         // unknown_agent (чужая личность) или bad_recovery_secret (подбор)
         assert!(matches!(err, "bad_params" | "unknown_agent" | "bad_recovery_secret"), "{err}");
         assert_eq!(attack["ok"], false);
-        assert_eq!(state.games.lock().unwrap()[&gid].agents[0].token, token);
+        // Audit #8: the stored value is the hash of the issued bearer.
+        use sha2::Digest;
+        assert_eq!(state.games.lock().unwrap()[&gid].agents[0].token, hex_enc(&Sha256::digest(token.as_bytes())));
     }
     save_snapshot(&state).unwrap();
     let snapshot = std::fs::read_to_string(&state.snapshot_path).unwrap();
     assert!(!snapshot.contains(&client_secret));
+    assert!(!snapshot.contains(&token), "bearer plaintext must not sit in the snapshot");
     let restored = restore(&state);
     let recovered = h_join(&restored, gid, &json!({"name":"Victim", "model":"victim", "prompt":"public", "recover":true, "recovery_secret":client_secret}));
     assert_eq!(recovered["ok"], true);
