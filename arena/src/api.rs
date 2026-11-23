@@ -911,6 +911,10 @@ fn open_arena_db(db_path: &std::path::Path, legacy_snapshot: &std::path::Path, l
     let conn = Connection::open(db_path).map_err(|e| format!("open: {e}"))?;
     conn.pragma_update(None, "journal_mode", "WAL").map_err(|e| format!("wal: {e}"))?;
     conn.pragma_update(None, "synchronous", "FULL").map_err(|e| format!("sync: {e}"))?;
+    // Falsification A4: a second arenad on the same db used to fail fast
+    // with SQLITE_BUSY; wait briefly instead so a restart overlap resolves.
+    conn.busy_timeout(std::time::Duration::from_millis(5000))
+        .map_err(|e| format!("busy_timeout: {e}"))?;
     conn.execute_batch(
         "CREATE TABLE IF NOT EXISTS arena_kv (key TEXT PRIMARY KEY, value TEXT NOT NULL);",
     ).map_err(|e| format!("schema: {e}"))?;

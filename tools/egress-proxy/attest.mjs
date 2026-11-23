@@ -101,3 +101,22 @@ export const REQUIRED_RECEIPT_FIELDS = [
   'receipt_id', 'ts_ms', 'model_id', 'endpoint_host', 'request_sha256',
   'response_sha256', 'prompt_cache_prefix_sha256', 'usage', 'latency_ms', 'http_status',
 ];
+
+// Receipt journal reader: transparently supports the legacy JSONL file and
+// the current sqlite store (receipts.jsonl.db).
+import { readFileSync } from 'node:fs';
+import { DatabaseSync } from 'node:sqlite';
+export function readJournalLines(journalPath) {
+  try {
+    return readFileSync(journalPath, 'utf8').split('\n').filter(l => l.trim());
+  } catch (e) {
+    if (e.code !== 'ENOENT') throw e;
+  }
+  const db = new DatabaseSync(journalPath + '.db', { readOnly: true });
+  try {
+    return db.prepare('SELECT receipt_json FROM receipts ORDER BY rowid').all()
+      .map(r => r.receipt_json);
+  } finally {
+    db.close();
+  }
+}

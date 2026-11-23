@@ -22,6 +22,7 @@
 
 import http from 'node:http';
 import { keyPairFromSeed, sha256Hex, normalizeUsage, promptCachePrefixSha256, signReceipt } from './attest.mjs';
+import { DatabaseSync } from 'node:sqlite';
 
 const env = name => process.env[name];
 
@@ -55,6 +56,41 @@ const maxCalls = Number(env('ALASHI_EGRESS_MAX_CALLS') || 0);
 let spentTokens = 0;
 let calls = 0;
 
+// Idempotent budget + durable receipt journal (falsification C closed):
+// one sqlite database holds the receipts AND the per-request spend, so a
+// retry of the same request body (same request_sha256) is served from the
+// committed record: no second provider accounting, no double budget spend.
+const store = new DatabaseSync(journalPath + '.db');
+store.exec('PRAGMA journal_mode = WAL;');
+store.exec(`CREATE TABLE IF NOT EXISTS receipts (
+  request_sha256 TEXT PRIMARY KEY,
+  receipt_json TEXT NOT NULL,
+  tokens INTEGER NOT NULL,
+  ts_ms INTEGER NOT NULL);`);
+
+function lookupRequest(requestSha) {
+  const row = store.prepare('SELECT receipt_json, tokens FROM receipts WHERE request_sha256 = ?').get(requestSha);
+  return row || null;
+}
+
+function commitReceipt(requestSha, receiptJson, tokens) {
+  // Fault-injection hook (tests only): a deterministic commit failure with
+  // an already-open RW descriptor cannot be triggered by chmod, and ENOSPC
+  // is not reproducible on demand. Explicitly gated by an env var.
+  if (env('ALASHI_EGRESS_FAIL_COMMIT') === '1') {
+    throw new Error('simulated receipt commit failure');
+  }
+  store.exec('BEGIN');
+  try {
+    store.prepare('INSERT OR REPLACE INTO receipts(request_sha256, receipt_json, tokens, ts_ms) VALUES(?, ?, ?, ?)')
+      .run(requestSha, receiptJson, tokens, Date.now());
+    store.exec('COMMIT');
+  } catch (e) {
+    store.exec('ROLLBACK');
+    throw e;
+  }
+}
+
 // Major fix (hy4 falsification): check-then-fetch-then-increment raced under
 // concurrent requests. All budget mutations and journal appends now run in
 // one serialized chain, so the counters are consistent per proxy process.
@@ -63,14 +99,6 @@ function serialized(task) {
   const run = queue.then(task, task);
   queue = run.then(() => {}, () => {});
   return run;
-}
-
-import { appendFileSync, mkdirSync } from 'node:fs';
-import { dirname } from 'node:path';
-function writeReceipt(receiptLine) {
-  const dir = dirname(journalPath);
-  mkdirSync(dir, { recursive: true });
-  appendFileSync(journalPath, receiptLine + '\n');
 }
 
 // Pre-flight guard: a session already over budget is cut before the provider
@@ -124,6 +152,18 @@ const server = http.createServer(async (req, res) => {
     const model = typeof body?.model === 'string' ? body.model : '';
 
     return serialized(async () => {
+      // Idempotency: the same request body retried is served from the
+      // committed record - no second provider call, no double budget spend
+      // (falsification C: a 500 + client retry used to spend twice).
+      const requestSha = sha256Hex(requestBody);
+      const prior = lookupRequest(requestSha);
+      if (prior) {
+        return json(res, 409, { error: 'duplicate_request',
+          message: 'this exact request body was already processed; receipt attached',
+          receipt: JSON.parse(prior.receipt_json) }, {
+          'x-alashi-receipt': Buffer.from(prior.receipt_json).toString('base64'),
+        });
+      }
       const over = budgetExceeded();
       if (over) return json(res, 429, { error: 'budget_exceeded', detail: over, calls, spent_tokens: spentTokens });
 
@@ -162,7 +202,7 @@ const server = http.createServer(async (req, res) => {
       };
       const proxy_sig = signReceipt(receipt, priv);
       try {
-        writeReceipt(JSON.stringify({ ...receipt, proxy_sig }));
+        commitReceipt(receipt.request_sha256, JSON.stringify({ ...receipt, proxy_sig }), total);
       } catch (e) {
         // The call completed without a durable receipt: say so AND hand the
         // signed receipt to the caller - in the BODY and in the header the

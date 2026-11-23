@@ -5,7 +5,7 @@
 //   node verify.mjs <journal.jsonl> [--pubkey <64-hex> | seed env ALASHI_EGRESS_SEED]
 // Exit 0 = every line verifies. Exit 1 = tampered, malformed or unsigned.
 
-import { readFileSync } from 'node:fs';
+import { readJournalLines } from './attest.mjs';
 import { verifyReceipt, keyPairFromSeed, REQUIRED_RECEIPT_FIELDS } from './attest.mjs';
 
 const args = process.argv.slice(2);
@@ -26,7 +26,7 @@ if (pubArg) {
   process.exit(2);
 }
 
-const lines = readFileSync(journal, 'utf8').split('\n').filter(l => l.trim());
+const lines = readJournalLines(journal);
 // Outside-judge fixes (hy4 falsification): an empty journal proves nothing,
 // a replayed line must not count twice, and unknown fields are not covered
 // by the signature, so they fail the strict field set.

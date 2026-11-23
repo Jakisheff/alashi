@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { readJournalLines } from './attest.mjs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import http from 'node:http';
@@ -25,7 +26,7 @@ function startProxy(env) {
     const chunker = d => d.toString().split('\n').forEach(onLine);
     child.stdout.on('data', chunker);
     child.on('exit', code => reject(new Error(`proxy exited ${code}`)));
-    setTimeout(() => reject(new Error('proxy start timeout')), 10000);
+    setTimeout(() => { child.kill('SIGKILL'); reject(new Error('proxy start timeout')); }, 10000);
   });
 }
 
@@ -59,7 +60,7 @@ async function callProxy(port, { endpoint, keyEnv, body, headers = {} }) {
       ...(keyEnv ? { 'x-alashi-key-env': keyEnv } : {}),
       ...headers,
     },
-    body: JSON.stringify(body ?? { model: 'test-model', messages: [{ role: 'system', content: 'sys-prompt' }, { role: 'user', content: 'hi' }] }),
+    body: JSON.stringify(body ?? { model: 'test-model', messages: [{ role: 'system', content: 'sys-prompt' }, { role: 'user', content: 'hi-' + Math.random().toString(36).slice(2) }] }),
   });
 }
 
@@ -125,7 +126,7 @@ test('receipts: signed, usage normalized, key never leaks, budget cuts off', asy
     assert.equal(provider.seen.calls, afterCap, 'over-budget call never reaches the provider');
 
     // 4. journal: exactly the completed calls, each line verifies standalone.
-    const lines = readFileSync(journal, 'utf8').trim().split('\n');
+    const lines = readJournalLines(journal);
     assert.equal(lines.length, 2, 'only successful calls are journaled');
     const verifyOut = execFileSync(process.execPath, [join(here, 'verify.mjs'), journal, '--pubkey', pubRaw.toString('hex')], { encoding: 'utf8' });
     const summary = JSON.parse(verifyOut.slice(verifyOut.indexOf('{')));
@@ -172,8 +173,43 @@ test('budget counters are serialized: concurrent calls cannot exceed the cap', a
     assert.equal(provider.seen.calls, 1, 'exactly one call may reach the provider under MAX_CALLS=1');
     assert.equal(results.filter(r => r.status === 200).length, 1);
     assert.equal(results.filter(r => r.status === 429).length, 2);
-    const lines = readFileSync(journal, 'utf8').trim().split('\n');
+    const lines = readJournalLines(journal);
     assert.equal(lines.length, 1);
+  } finally {
+    child.kill();
+    provider.server.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('idempotent budget: a retried request body is served from the record, not double-spent', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'alashi-egress-idem-'));
+  const journal = join(dir, 'receipts.jsonl');
+  const provider = await startMockProvider();
+  const { child, port } = await startProxy({
+    ALASHI_EGRESS_SEED: SEED,
+    ALASHI_EGRESS_JOURNAL: journal,
+    ALASHI_EGRESS_MAX_CALLS: '10',
+    ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
+    TEST_PROVIDER_KEY: PROVIDER_KEY,
+  });
+  try {
+    const target = `http://127.0.0.1:${provider.port}/v1/chat/completions`;
+    const sameBody = { model: 'test-model', messages: [{ role: 'system', content: 'sys-prompt' }, { role: 'user', content: 'identical' }] };
+    const r1 = await callProxy(port, { endpoint: target, keyEnv: 'TEST_PROVIDER_KEY', body: sameBody });
+    assert.equal(r1.status, 200);
+    assert.equal(provider.seen.calls, 1);
+    const rec1 = JSON.parse(Buffer.from(r1.headers.get('x-alashi-receipt'), 'base64').toString('utf8'));
+    // Exact same body retried (client lost the first response).
+    const r2 = await callProxy(port, { endpoint: target, keyEnv: 'TEST_PROVIDER_KEY', body: sameBody });
+    assert.equal(r2.status, 409, 'retry must be served as duplicate_request');
+    assert.equal((await r2.json()).error, 'duplicate_request');
+    const rec2 = JSON.parse(Buffer.from(r2.headers.get('x-alashi-receipt'), 'base64').toString('utf8'));
+    assert.equal(rec2.proxy_sig, rec1.proxy_sig, 'the committed receipt is returned');
+    assert.equal(provider.seen.calls, 1, 'the provider is called exactly once');
+    const health = await (await fetch(`http://127.0.0.1:${port}/healthz`)).json();
+    assert.equal(health.calls, 1, 'budget counts one call');
+    assert.equal(health.spent_tokens, 120, 'tokens spent exactly once');
   } finally {
     child.kill();
     provider.server.close();
@@ -183,14 +219,13 @@ test('budget counters are serialized: concurrent calls cannot exceed the cap', a
 
 test('a receipt-journal write failure returns the signed receipt in header and body', async t => {
   const dir = mkdtempSync(join(tmpdir(), 'alashi-egress-wfail-'));
-  const blocker = join(dir, 'blocker');
-  writeFileSync(blocker, 'x'); // a FILE where a directory would be needed
   const provider = await startMockProvider();
   const { child, port } = await startProxy({
     ALASHI_EGRESS_SEED: SEED,
-    ALASHI_EGRESS_JOURNAL: join(blocker, 'receipts.jsonl'), // ENOTDIR on write
+    ALASHI_EGRESS_JOURNAL: join(dir, 'receipts.jsonl'),
     ALASHI_EGRESS_ALLOWED_HOSTS: `127.0.0.1:${provider.port}`,
     TEST_PROVIDER_KEY: PROVIDER_KEY,
+    ALASHI_EGRESS_FAIL_COMMIT: '1',
   });
   try {
     const r = await callProxy(port, { endpoint: `http://127.0.0.1:${provider.port}/v1/chat/completions`, keyEnv: 'TEST_PROVIDER_KEY' });
@@ -198,14 +233,11 @@ test('a receipt-journal write failure returns the signed receipt in header and b
     const body = await r.json();
     assert.equal(body.error, 'receipt_write_failed');
     assert.ok(body.receipt && typeof body.receipt.proxy_sig === 'string');
-    // The header the driver reads must carry the same signed receipt, so a
-    // retry reconciles instead of double-spending (anonymous round 2).
     const header = r.headers.get('x-alashi-receipt');
     assert.ok(header, '500 must carry x-alashi-receipt');
     const fromHeader = JSON.parse(Buffer.from(header, 'base64').toString('utf8'));
     assert.equal(fromHeader.proxy_sig, body.receipt.proxy_sig);
-    const { keyPairFromSeed } = await import('./attest.mjs');
-    const { verifyReceipt } = await import('./attest.mjs');
+    const { keyPairFromSeed, verifyReceipt } = await import('./attest.mjs');
     assert.equal(verifyReceipt(JSON.stringify(fromHeader), keyPairFromSeed(SEED).pubRaw).ok, true);
     assert.equal(provider.seen.calls, 1, 'provider was called exactly once');
   } finally {
