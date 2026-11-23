@@ -6,7 +6,6 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { spawn } from 'node:child_process';
-import { act as gameAct, lock as gameLock } from './alashi.mjs';
 
 const alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 export function base58(bytes) {
@@ -376,6 +375,9 @@ export async function runComparison({api,id,clientId,provider,journalPrefix,onPr
 }
 export function httpTrade(sessionPath, fetcher=fetch) {
   return async({api,run})=>{
+    // Lazy import: alashi.mjs pulls @solana/web3.js; tests and detectors that
+    // never touch HTTP sessions must not require node_modules to load.
+    const { lock: gameLock, act: gameAct } = await import('./alashi.mjs');
     const release=gameLock(sessionPath);
     try {
       const session=readPrivate(sessionPath), context=run.brief.trading;

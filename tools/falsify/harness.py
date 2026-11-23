@@ -53,7 +53,7 @@ MUTANTS = {
         "file": "tools/agent-bootstrap/strategy-run.mjs",
         "old": "      return {response_id:receiptId(raw.id),usage:attested,report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};",
         "new": "      return {response_id:receiptId(raw.id),usage:attested ? JSON.stringify(attested) : attested,report:parseCompletion(raw.choices?.[0]?.message?.content),request_failed:!response.ok,attestation};",
-        "detector": ("cargo", ["test", "--locked", "--manifest-path", "arena/Cargo.toml", "--", "signed_"], None),
+        "detector": ("node", ["detectors/egress_usage_type.mjs"], "tools/falsify"),
     },
     "fail-open-migration": {
         "file": "arena/src/api.rs",
@@ -221,9 +221,9 @@ def do_selfcheck(args):
             def detect():
                 killed, kind_of, tail = run_detector(mut, root)
                 if not killed:
-                    return {"result": "survived"}
+                    return {"result": "survived", "tail": tail[-200:]}
                 if kind_of != "assert":
-                    return {"result": "env_fail", "kind": kind_of}
+                    return {"result": "env_fail", "kind": kind_of, "tail": tail[-200:]}
                 return {"result": "killed", "by": "assert"}
             ok, note, outcome = with_mutant(mut, root, detect)
             if not ok:
