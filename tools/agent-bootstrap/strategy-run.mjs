@@ -375,15 +375,17 @@ export async function runComparison({api,id,clientId,provider,journalPrefix,onPr
 }
 export function httpTrade(sessionPath, fetcher=fetch) {
   return async({api,run})=>{
-    // Lazy import: alashi.mjs pulls @solana/web3.js; tests and detectors that
-    // never touch HTTP sessions must not require node_modules to load.
+    const session=readPrivate(sessionPath), context=run.brief.trading;
+    // Session validation first: refusals must not load the solana stack
+    // (tests and detectors run without node_modules by design).
+    if(context.mode!=='http'||String(session.game_id)!==context.game||session.agent_record_id!==api.record||!Number.isSafeInteger(session.next_op_id)||session.next_op_id<1)fail('trade_session_mismatch');
+    if(session.pending_act&&session.pending_act.action.strategy_run!==run.id)fail('other_trade_pending');
+    if(run.status==='completed'&&!session.pending_act)return;
+    // Lazy import: alashi.mjs pulls @solana/web3.js; only the real trade
+    // path needs it.
     const { lock: gameLock, act: gameAct } = await import('./alashi.mjs');
     const release=gameLock(sessionPath);
     try {
-      const session=readPrivate(sessionPath), context=run.brief.trading;
-      if(context.mode!=='http'||String(session.game_id)!==context.game||session.agent_record_id!==api.record||!Number.isSafeInteger(session.next_op_id)||session.next_op_id<1)fail('trade_session_mismatch');
-      if(session.pending_act&&session.pending_act.action.strategy_run!==run.id)fail('other_trade_pending');
-      if(run.status==='completed'&&!session.pending_act)return;
       if(!session.pending_act)await api.post(`/strategy-runs/${run.id}/prepare-trade`,{});
       const raw=JSON.stringify({...run.calls.deliver.report,by:'llm',strategy_run:run.id});
       const result=await gameAct(api.base,session,sessionPath,raw,fetcher);

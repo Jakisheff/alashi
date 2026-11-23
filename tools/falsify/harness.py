@@ -71,7 +71,7 @@ MUTANTS = {
         "file": "tools/agent-bootstrap/strategy-run.mjs",
         "old": "      const {attestation: _localOnly, ...reported} = entry.result ?? {};\n      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...reported,",
         "new": "      const receipt=await api.post(`/strategy-runs/${id}/report`,{task:spec.id,...(entry.result??{}),",
-        "detector": ("node", ["detectors/egress_usage_type.mjs"], "tools/falsify"),
+        "detector": ("node", ["--test", "strategy-run.test.mjs"], "tools/agent-bootstrap"),
     },
     "negative-usage-passes": {
         "file": "tools/egress-proxy/attest.mjs",
@@ -118,8 +118,14 @@ def do_commit(args):
     payload = json.dumps({"ts": now_ms(), "catalog": catalog_ids, "k": BATTERY_K,
                           "repo_head": git("rev-parse", "HEAD")}, sort_keys=True)
     plan_hash = hashlib.sha256((payload + salt).encode()).hexdigest()
-    seed = plan_hash[:16]
+    # NoExtraction (closed by oracle-A finding): deriving the battery seed
+    # from the PUBLISHED plan_hash let anyone who saw the commitment predict
+    # the battery before the audit. The seed now comes from a separate
+    # UNPUBLISHED secret, revealed only with the plan.
+    audit_secret = hashlib.sha256(os.urandom(32)).hexdigest()
+    seed = hashlib.sha256((plan_hash + audit_secret).encode()).hexdigest()[:16]
     write_state({"plan_hash": plan_hash, "salt": salt, "payload": payload,
+                 "audit_secret": audit_secret,
                  "seed": seed, "k": BATTERY_K,
                  "battery": battery_for(seed, BATTERY_K)})
     print(json.dumps({"plan_hash": plan_hash, "seed": seed, "k": BATTERY_K,
@@ -272,8 +278,13 @@ def do_audit_prepare(args):
             injected.append(mid)
     prompt = AUDIT_PROMPT_NEUTRAL.format(
         tree=root, target=os.path.join(REPO, "target"))
+    dossier = {"plan_hash": st["plan_hash"], "payload": st["payload"],
+               "salt": st["salt"]}
     print(json.dumps({"audit_tree": root, "injected": injected,
-                      "note": "не раскрывай список аудитору",
+                      "commitment_dossier": dossier,
+                      "note": ["не раскрывай список аудитору",
+                               "после аудита сверь commitment внешне:",
+                               "python3 tools/falsify/external_check.py <файл state из dossier>"],
                       "prompt": prompt}, ensure_ascii=False, indent=2))
 
 
@@ -299,7 +310,8 @@ def do_reveal(args):
     # external_check.py, which recomputes independently.)
     recomputed = hashlib.sha256((st["payload"] + st["salt"]).encode()).hexdigest()
     matches = recomputed == st["plan_hash"]
-    print(json.dumps({"matches": matches, "plan_hash": st["plan_hash"]}))
+    print(json.dumps({"matches": matches, "plan_hash": st["plan_hash"],
+                      "audit_secret": st.get("audit_secret")}))
     sys.exit(0 if matches else 1)
 
 
