@@ -400,7 +400,7 @@ fn timed_out_survives_action_log_trimming() {
     }
     assert_eq!(h_act(&state, gid, &json!({"token": moved["token"], "action": "produce"}))["ok"], true);
     // Flood: rejected retries are logged too and trim the accepted move out
-    // of action_log (hy4 falsification case). timed_out must not accuse 0.
+    // of action_log (external falsification case). timed_out must not accuse 0.
     {
         let mut games = state.games.lock().unwrap();
         let entry = games.get_mut(&gid).unwrap();

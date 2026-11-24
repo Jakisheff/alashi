@@ -606,7 +606,7 @@ pub fn load_snapshot(state: &AppState) -> Result<(), String> {
                 },
                 None => HashMap::new(),
             };
-            // Upgrade path (hy4 falsification): a snapshot written before
+            // Upgrade path (external falsification): a snapshot written before
             // phase_acted must not accuse factions whose accepted moves were
             // trimmed from action_log. Backfill the CURRENT phase from the
             // retained log; closed phases are already in phase_log.
