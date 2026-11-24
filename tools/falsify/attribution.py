@@ -12,7 +12,8 @@ infra (инфраструктура процесса).
 """
 import subprocess, json, statistics
 
-REPO = "/Users/amir/Downloads/alashi"
+import os
+REPO = os.environ.get("ALASHI_REPO", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 def ts(ref):
     out = subprocess.run(["git", "-C", REPO, "log", "-1", "--format=%ct", ref],

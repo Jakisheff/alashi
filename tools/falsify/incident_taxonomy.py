@@ -10,7 +10,8 @@
 """
 import json, subprocess, statistics
 
-REPO = "/Users/amir/Downloads/alashi"
+import os
+REPO = os.environ.get("ALASHI_REPO", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 log = subprocess.run(["git","-C",REPO,"log","--format=%ct","--since=2026-11-22"],
                      capture_output=True,text=True).stdout.split()
 commits = len(log)
