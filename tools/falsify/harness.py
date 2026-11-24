@@ -31,6 +31,24 @@ STATE = os.path.join(REPO, ".falsify_state.json")
 # на чистом дереве. Новые записи — только из реальных находок.
 
 MUTANTS = {
+    "idempotency-key-body-only": {
+        "file": "tools/egress-proxy/server.mjs",
+        "old": "      const requestSha = sha256Hex(endpoint + '\\0' + keyEnv + '\\0' + requestBody.toString('utf8'));",
+        "new": "      const requestSha = sha256Hex(requestBody);",
+        "detector": ("node", ["--test", "server.test.mjs"], "tools/egress-proxy"),
+    },
+    "budget-from-receipts-not-charges": {
+        "file": "tools/egress-proxy/server.mjs",
+        "old": "  const row = store.prepare('SELECT COUNT(*) AS n, COALESCE(SUM(tokens), 0) AS tok FROM charges').get();",
+        "new": "  const row = store.prepare('SELECT COUNT(*) AS n, COALESCE(SUM(tokens), 0) AS tok FROM receipts').get();",
+        "detector": ("node", ["--test", "server.test.mjs"], "tools/egress-proxy"),
+    },
+    "reader-shadows-legacy": {
+        "file": "tools/egress-proxy/attest.mjs",
+        "old": "  const dbPath = journalPath + '.db';\n  if (existsSync(dbPath)) {",
+        "new": "  const dbPath = journalPath + '.db';\n  if (false) {",
+        "detector": ("node", ["--test", "server.test.mjs"], "tools/egress-proxy"),
+    },
     "verifier-accepts-replay": {
         "file": "tools/egress-proxy/verify.mjs",
         "old": "  if (seenIds.has(r.receipt.receipt_id)) { console.error(`FAIL ${r.receipt.receipt_id}: duplicate receipt_id (replayed line)`); bad += 1; }\n  seenIds.add(r.receipt.receipt_id);",
