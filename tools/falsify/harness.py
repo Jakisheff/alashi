@@ -133,6 +133,8 @@ def do_commit(args):
 
 
 def battery_for(seed, k):
+    if k <= 0:
+        return []
     rng = random.Random(seed)
     ids = sorted(MUTANTS)
     return rng.sample(ids, min(k, len(ids)))
@@ -156,8 +158,11 @@ def git(*argv, cwd=None):
 
 def apply_mutant(mut, root, revert=False):
     path = os.path.join(root, mut["file"])
-    with open(path) as fh:
-        text = fh.read()
+    try:
+        with open(path, encoding="utf-8") as fh:
+            text = fh.read()
+    except UnicodeDecodeError:
+        return False, f"binary file not supported: {mut['file']}"
     old, new = (mut["new"], mut["old"]) if revert else (mut["old"], mut["new"])
     if text.count(old) != 1:
         return False, f"anchor not found or ambiguous in {mut['file']}"
