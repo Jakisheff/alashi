@@ -1,0 +1,51 @@
+{
+  "status": "observed",
+  "release": "agentmd-5c1d881-20261124",
+  "origin": "https://alashi.network",
+  "scope": "agent guide text only: /agent.md",
+  "activated_at_utc": "2026-11-24T11:33:20.495979+00:00",
+  "reason": "audit 2026-11-24 finding 2: deployed agent.md lacked the client-rebuild warning for the fee update; prod backend already enforces the new 0.005/0.02 testSOL fees",
+  "source": {
+    "agent_md_commit": "5c1d8810c5bfa4216800a7b116cc95aecbe1335b",
+    "warning_introduced_by": "PR #85 merge 0d9a148f",
+    "fee_update_commit": "14c63b2952a74e9a0e8a2f375d398689553f5545",
+    "base_release": "about-ef6552d-20261031"
+  },
+  "publish": {
+    "method": "static_release.py publish via sudo on 32.236.8.133",
+    "state_dir": "/var/lib/alashi-publisher",
+    "files_changed": 2,
+    "files_changed_list": ["agent.md", "version.json"],
+    "javascript_rebuilt": false,
+    "services_restarted": false,
+    "backend_unchanged": "39bda6678ec787eaa47e8c7c2768646e6b2f9fa3"
+  },
+  "public": {
+    "/agent.md": {
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "310ffa393bf253ef486bfe065cc54545f3f157fe53ef856cff5889de16cf9041",
+      "matches_main": true,
+      "rebuild_warning_present": true
+    },
+    "/": {
+      "status": 200,
+      "sha256": "c3ad4f569c012d0988bd597da7e00256d4081c774523df07517a484b25403224",
+      "unchanged_from_previous_release": true
+    },
+    "/about/": 200,
+    "/strategies": 200,
+    "/deck/": 200,
+    "version.json": {
+      "release": "agentmd-5c1d881-20261124",
+      "previous_release": "about-ef6552d-20261031"
+    }
+  },
+  "rollback": "sudo python3 static_release.py rollback --state-dir /var/lib/alashi-publisher (previous pointer: about-ef6552d-20261031)",
+  "access_note": "SSH /32 rule in sg-0ffe42ee312f805c8 replaced per migration runbook: 89.218.88.98/32 revoked, 103.116.196.22/32 authorized; port 22 remains owner-IP-only",
+  "limits": [
+    "The old server's publisher journal was not present in /var/lib/alashi-publisher (only domain-backup-path); this publish started a fresh journal.jsonl. Continuity of pre-migration publish history is not recoverable from this server.",
+    "No authenticated owner write, paid provider call or blockchain transaction was performed.",
+    "First script attempt aborted at the diff-count check (diff exit code under pipefail) after copying the release; the directory was removed and the run repeated from scratch. Pointers were never switched in the aborted attempt."
+  ]
+}
