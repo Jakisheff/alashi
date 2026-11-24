@@ -1,0 +1,61 @@
+{
+  "status": "observed",
+  "release": "sitemap-34bb468-20261124",
+  "origin": "https://alashi.network",
+  "scope": "sitemap.xml only: /strategies added",
+  "reason": "audit finding 4 (sitemap omitted /strategies) resolved by owner decision to make the research workspace indexable",
+  "source": {
+    "sitemap_commit": "34bb468cb07477e567eb3068ce5f4300312b0c2d",
+    "base_release": "agentmd-5c1d881-20261124"
+  },
+  "nginx_change": {
+    "file": "/etc/nginx/sites-enabled/alashi.network",
+    "backup": "/etc/nginx/alashi.network.bak-20261124-sitemap",
+    "removed": "add_header X-Robots-Tag \"noindex\" from location = /strategies and location = /strategies/",
+    "kept": "/log and /graph keep their noindex",
+    "method": "systemctl reload nginx, no service restarts",
+    "note": "The noindex on /strategies had no documented decision anywhere in the repository; the SPA route itself sets no robots meta (unlike /log and /graph routes), so the header was the only indexer block. Owner chose to index."
+  },
+  "public": {
+    "/sitemap.xml": {
+      "status": 200,
+      "url_count": 4,
+      "urls": ["/", "/about/", "/deck/", "/strategies"],
+      "sha256": "5645e24a33ae6566b2fa884afe2346905d9197e72b3e6ff1aa755cd755926189",
+      "matches_main": true
+    },
+    "/strategies": {
+      "status": 200,
+      "x_robots_tag": "absent",
+      "hsts_and_csp": "present"
+    },
+    "/log": {
+      "x_robots_tag": "noindex (unchanged control)"
+    },
+    "/agent.md": {
+      "sha256_prefix": "310ffa393bf253ef",
+      "unchanged": true
+    },
+    "/": {
+      "sha256_prefix": "c3ad4f569c012d09",
+      "unchanged": true
+    },
+    "version.json": {
+      "release": "sitemap-34bb468-20261124",
+      "previous_release": "agentmd-5c1d881-20261124"
+    }
+  },
+  "publish": {
+    "method": "static_release.py publish via sudo on 32.236.8.133",
+    "state_dir": "/var/lib/alashi-publisher",
+    "files_changed": 2,
+    "files_changed_list": ["sitemap.xml", "version.json"],
+    "javascript_rebuilt": false,
+    "services_restarted": false
+  },
+  "rollback": "restore nginx backup + reload; static_release.py rollback --state-dir /var/lib/alashi-publisher",
+  "limits": [
+    "No authenticated owner write, paid provider call or blockchain transaction was performed.",
+    "Search-engine pickup of the sitemap change is outside this record; Search Console was not pinged."
+  ]
+}
