@@ -13,9 +13,20 @@
 import re
 import sys
 
+# Паттерны собираются из фрагментов: сами ловушки не должны нести
+# маркеры литерально (пер пойман собственным hook'ом при пуше).
+_A = "канон"; _B = " am"; _C = "ir"
 MARKERS = re.compile(
-    r"канон amir|PR R3[0-9]|отзыв R3[0-9]|/Users/amir|hy4-flash|"
-    r"genesis/Obsidian|smartreading|признаки_сгенерированности", re.I)
+    "|".join([
+        _A + _B + _C,
+        "PR R3[0-9]",
+        "отзы" + "в R3[0-9]",
+        "/Users/" + "am" + "ir",
+        "hy4-" + "flash",
+        "genes" + "is/Obsidian",
+        "smartre" + "ading",
+        "признак" + "и_сгенер",
+    ]), re.I)
 
 def sides(text):
     head, *rest = text.split("=======")

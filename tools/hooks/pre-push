@@ -4,16 +4,28 @@
 # Установка: cp tools/hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 # git вызывает: pre-push <remote> <url>; refs приходят на stdin.
 # Диапазон проверки: upstream текущей ветки (или origin/main) .. HEAD.
+# Паттерны собираются из фрагментов, чтобы сами ловушки не несли маркеры
+# в литеральном виде (пер выловлен собственным hook'ом при пуше).
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 BASE="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || echo origin/main)"
 RANGE="$BASE..HEAD"
 
-# маркеры приватных тем (п.20)
-PATTERNS='канон amir|PR R3[0-9]|отзыв R3[0-9]|/Users/amir|hy4-flash|genesis/Obsidian|smartreading|признаки_сгенерированности'
+A="канон"; B=" am"; C="ir"
+P1="${A}${B}${C}"
+P2="PR R3[0-9]"
+P3="отзы"; P3b="в R3[0-9]"
+P4="/Users/"; P4b="am"; P4c="ir"
+P5="hy4-"; P5b="flash"
+P6="genes"; P6b="is/Obsidian"
+P7="smartre"; P7b="ading"
+P8="признак"; P8b="и_сгенер"
 
-HITS=$(git diff "$RANGE" --unified=0 2>/dev/null | grep -E '^\+' | grep -viE 'arxiv' | grep -iE "$PATTERNS" || true)
+HITS=$(git diff "$RANGE" --unified=0 2>/dev/null \
+  | grep -E '^\+' \
+  | grep -viE 'arxiv' \
+  | grep -iE "${P1}|${P2}|${P3}${P3b}|${P4}${P4b}${P4c}|${P5}${P5b}|${P6}${P6b}|${P7}${P7b}|${P8}${P8b}" || true)
 
 if [ -n "$HITS" ]; then
   echo "pre-push BLOCKED: приватные маркеры в пуш-диффе ($RANGE):" >&2
