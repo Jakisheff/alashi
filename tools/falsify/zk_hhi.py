@@ -16,6 +16,7 @@ Protокол (Fiat-Shamir transformed Sigma-protocol над Zp*):
 Строки НЕ раскрываются; доказательство — non-interactive (Fiat-Shamir).
 """
 import hashlib
+import os
 import json
 import random
 import sys
@@ -144,7 +145,7 @@ def demo():
     from collections import Counter
 
     rows = pq.read_table(
-        "/Users/amir/Downloads/world-100-grid/data/decisions.parquet"
+        os.environ.get("WORLD100_DATA", "data/decisions.parquet")
     ).to_pylist()
     game = [r for r in rows if r["game"] == "l4-20261109-original"]
     counts = Counter(r["chosen"] for r in game)
