@@ -1,0 +1,48 @@
+{
+  "status": "observed",
+  "release": "server-c02ceb01a5ce5db4f63415e4fde9a2da8f361161",
+  "origin": "https://alashi.network",
+  "scope": "full: frontend dist + arena (arenad) + chain_api + match-host (bots) binaries",
+  "authorized_by": "owner decision 25.11 (audit finding 3 closed)",
+  "source": {
+    "commit": "c02ceb01a5ce5db4f63415e4fde9a2da8f361161",
+    "ci_run": 45498604933,
+    "ci_url": "https://github.com/Jakisheff/alashi/actions/runs/45498604933",
+    "artifact": "alashi-server-c02ceb01a5ce5db4f63415e4fde9a2da8f361161-linux-x86_64.tar.gz",
+    "artifact_sha256": "fa9bfd2e498281584686f0d1ce117660bdd754a857e0e419ce8f40b2efc6933e",
+    "sums_verified": "locally and on server, 0 non-OK lines",
+    "build": "rustc 1.89.0, node v22.18.0, BASE=/releases/server-c02ceb01.../"
+  },
+  "checks_before_deploy": {
+    "local": "bash tools/check_all.sh — ALL LOCAL CHECKS GREEN (25.11)",
+    "not_run": "SBF program build/tests (server release scope), gitleaks/RustSec (CI job of the main workflow)"
+  },
+  "deployed_since_last_binary_release": "arena-wal merge 32def74f (SQLite WAL support, report-contract, contract-gate, timed_out phase_log, egress-proxy, falsification fixes), frontend hidden-tab and rules-WASM term canon, journal/docs updates",
+  "publish": {
+    "method": "static_release.py publish (state-dir /var/lib/alashi-publisher)",
+    "from": "sitemap-34bb468-20261124",
+    "to": "server-c02ceb01a5ce5db4f63415e4fde9a2da8f361161",
+    "preserved_directories": ["deck", "downloads"],
+    "services_restarted": ["alashi-arena", "alashi-chain-api", "alashi-match-host"],
+    "storage_mode": "legacy flat files preserved (state.json, party-no.txt); ALASHI_DB_FILE not set — SQLite WAL switch deferred as a separate decision",
+    "binaries_replaced": ["/opt/alashi-arena/arenad", "/opt/alashi-chain-api/chain_api", "/opt/alashi-host/bots"]
+  },
+  "backups": {
+    "dir": "/var/backups/alashi-20261125",
+    "contents": ["arena state", "chain archive", "matches.funding.json", "all three old binaries"],
+    "old_binaries_on_host": "*.old-20261125 next to each binary",
+    "rollback": "static_release.py rollback + mv old binaries back + systemctl restart"
+  },
+  "public_verification": {
+    "routes": "14 routes 200 (/, /about/, /strategies, /deck/, /agent.md, robots, sitemap, version.json, /games, /strategy-library, /research-library, /chain/devnet/games/<id>, /devnet?game=..., /live)",
+    "browser": "5 pages, 0 console errors, canvases render, deck pagination 1/12 -> 2/12 under scoped CSP",
+    "agent_md_sha256": "310ffa393bf253ef486bfe065cc54545f3f157fe53ef856cff5889de16cf9041 (unchanged from main)",
+    "logs": "clean starts: arena :8095, match_host :8098, chain-api active"
+  },
+  "limits": [
+    "First-hit latency on cold cache up to 7.5 s (brotli compression of new assets); subsequent ~1.5 s",
+    "No authenticated owner flow, no paid provider call, no blockchain transaction was exercised",
+    "version.json comparison.runner_url still points to the 404 legacy archive (pre-existing since the 02.11 migration; owner decision pending)",
+    "alashi-close-settled.timer untouched"
+  ]
+}
