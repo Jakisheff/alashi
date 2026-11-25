@@ -9,8 +9,8 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, rmSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const [dir, workerArg, seedArg, agentsArg] = process.argv.slice(2);
-const worker = resolve(workerArg ?? '../../arena/target/debug/world_worker');
+const [dir, seedArg, agentsArg] = process.argv.slice(2);
+const worker = resolve(process.env.ES_WORKER ?? '../../arena/target/debug/world_worker');
 const seed = Number(seedArg ?? 20261125);
 const agents = Number(agentsArg ?? 6);
 const run = (args) => {

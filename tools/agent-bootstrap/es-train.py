@@ -31,10 +31,10 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 MODEL_NAME = sys.argv[1] if len(sys.argv) > 1 else "Qwen/Qwen2.5-0.5B-Instruct"
 ITERATIONS = int(sys.argv[2]) if len(sys.argv) > 2 else 100
 PORT = 7779
-POPULATION = 30
+POPULATION = 15
 SIGMA = 0.001
 ALPHA = 5e-4
-EPISODES_PER_MEMBER = 2
+EPISODES_PER_MEMBER = 1
 BASE_DIR = "/tmp/es-worlds"
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -59,7 +59,7 @@ class Handler(BaseHTTPRequestHandler):
             prompt = tokenizer.apply_chat_template(messages, tokenize=False,
                                                     add_generation_prompt=True, enable_thinking=False)
             inputs = tokenizer(prompt, return_tensors="pt").to(device)
-            out = model.generate(**inputs, max_new_tokens=256, do_sample=False,
+            out = model.generate(**inputs, max_new_tokens=64, do_sample=False,
                                  temperature=None, top_p=None, top_k=None)
             text = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
         n_in = inputs["input_ids"].shape[1]
@@ -120,7 +120,9 @@ def zscore(values):
 
 
 def payoff_of(record):
-    return (record.get("focal_payout") or 0) + (record.get("focal_cash") or 0) / 10_000_000_000
+    # Награда в миллионах: выплата + кэш. winner_takes_all даёт выплату только
+    # первому месту, кэш даёт непрерывный градиент ранга.
+    return ((record.get("focal_payout") or 0) + (record.get("focal_cash") or 0)) / 1_000_000
 
 
 def main():
