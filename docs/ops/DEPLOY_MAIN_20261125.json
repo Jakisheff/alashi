@@ -14,7 +14,7 @@
     "build": "rustc 1.89.0, node v22.18.0, BASE=/releases/server-c02ceb01.../"
   },
   "checks_before_deploy": {
-    "local": "bash tools/check_all.sh — ALL LOCAL CHECKS GREEN (25.11)",
+    "local": "bash tools/check_all.sh \u2014 ALL LOCAL CHECKS GREEN (25.11)",
     "not_run": "SBF program build/tests (server release scope), gitleaks/RustSec (CI job of the main workflow)"
   },
   "deployed_since_last_binary_release": "arena-wal merge 32def74f (SQLite WAL support, report-contract, contract-gate, timed_out phase_log, egress-proxy, falsification fixes), frontend hidden-tab and rules-WASM term canon, journal/docs updates",
@@ -22,14 +22,30 @@
     "method": "static_release.py publish (state-dir /var/lib/alashi-publisher)",
     "from": "sitemap-34bb468-20261124",
     "to": "server-c02ceb01a5ce5db4f63415e4fde9a2da8f361161",
-    "preserved_directories": ["deck", "downloads"],
-    "services_restarted": ["alashi-arena", "alashi-chain-api", "alashi-match-host"],
-    "storage_mode": "legacy flat files preserved (state.json, party-no.txt); ALASHI_DB_FILE not set — SQLite WAL switch deferred as a separate decision",
-    "binaries_replaced": ["/opt/alashi-arena/arenad", "/opt/alashi-chain-api/chain_api", "/opt/alashi-host/bots"]
+    "preserved_directories": [
+      "deck",
+      "downloads"
+    ],
+    "services_restarted": [
+      "alashi-arena",
+      "alashi-chain-api",
+      "alashi-match-host"
+    ],
+    "storage_mode": "legacy flat files preserved (state.json, party-no.txt); ALASHI_DB_FILE not set \u2014 SQLite WAL switch deferred as a separate decision",
+    "binaries_replaced": [
+      "/opt/alashi-arena/arenad",
+      "/opt/alashi-chain-api/chain_api",
+      "/opt/alashi-host/bots"
+    ]
   },
   "backups": {
     "dir": "/var/backups/alashi-20261125",
-    "contents": ["arena state", "chain archive", "matches.funding.json", "all three old binaries"],
+    "contents": [
+      "arena state",
+      "chain archive",
+      "matches.funding.json",
+      "all three old binaries"
+    ],
     "old_binaries_on_host": "*.old-20261125 next to each binary",
     "rollback": "static_release.py rollback + mv old binaries back + systemctl restart"
   },
@@ -44,5 +60,25 @@
     "No authenticated owner flow, no paid provider call, no blockchain transaction was exercised",
     "version.json comparison.runner_url still points to the 404 legacy archive (pre-existing since the 02.11 migration; owner decision pending)",
     "alashi-close-settled.timer untouched"
-  ]
+  ],
+  "post_deploy_falsification": {
+    "date": "2026-11-25",
+    "protocol": "blind external falsifier, 9 claims",
+    "findings_accepted": [
+      "local build path string inside the deployed rules-wasm asset (rule 20 leak) \u2014 fixed by rebuilding the artifact with remapped paths and republishing as release server-8ca4fe46... (this file updated); build script now refuses artifacts containing $HOME strings",
+      "wording: hidden-tab guards live in lazy chunks, not the main bundle; RULES_VERSION string is rules_version inside the wasm"
+    ],
+    "findings_refuted": [
+      "binary-replacement and arena-state claims were re-verified directly on the host after refreshing the owner SSH /32 rule (laptop IP drifts): binary sha256 match the CI artifact byte-for-byte, process exes point at the new binaries, party counter 20 preserved, state.json untouched (mtime 27.10), close-settled timer scheduled, .old binaries and backups present",
+      "ports 8095/8097/8098 are bound to 127.0.0.1 by design; external timeouts are expected, not an outage",
+      "'only comment changes between old and new backend' \u2014 19 commits touched arena/rules/indexer/bots between 39bda667 and 8ca4fe46"
+    ],
+    "followup_release": {
+      "release": "server-8ca4fe46a4320ce1926c2298ebef97fe0454ce8f",
+      "ci_run": 45562343047,
+      "binaries": "byte-identical to the previous artifact; services NOT restarted",
+      "wasm_asset": "alashi_rules_wasm_bg-CyRwUVg5.wasm, 0 local-path strings (verified on the live URL)",
+      "open_owner_decision": "the pre-fix wasm under the previous release's immutable URL still serves the old string; delete the c02ceb01 release directory once this release is accepted (previous pointer then moves at the next publish), or accept the low-sensitivity historical path"
+    }
+  }
 }
