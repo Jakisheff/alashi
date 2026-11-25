@@ -61,3 +61,45 @@ against them, never as bare failures (see world-100-grid DATACARD,
   package version it used.
 - Machine-readable export: parquet + checksums + verify.py; preprint
   reports the verify exit code for the cited snapshot.
+
+## Related work: evolution strategies at LLM scale (added 2026-11-25)
+
+Qiu, Gan, Hayes, Liang, Xu, Dailey, Meyerson, Hodjat, Miikkulainen,
+"Evolution Strategies at Scale: LLM Fine-Tuning Beyond Reinforcement
+Learning", ICML 2026 main, arXiv:2509.24372, code
+github.com/VsonicV/es-at-scale.
+
+Citation-ready facts (checked against the v3 full text):
+
+- First full-parameter ES fine-tuning of multi-billion-parameter LLMs
+  (Qwen-2.5 0.5B-7B, Llama-3 1B-8B, Qwen2.5-Math-7B, Qwen-2.5-14B) without
+  dimensionality reduction; population size 30 with one fixed hyperparameter
+  set across all runs, while RL baselines (PPO, GRPO, Dr.GRPO) received
+  per-experiment grid searches.
+- Countdown: ES above all RL variants on all seven models. Puzzles:
+  ARC-AGI 0.2 -> 29.5, Sudoku 2.5 -> 69.5. Math benchmarks competitive with
+  SOTA RL recipes.
+- Reward hacking: GRPO with low KL penalty hacked the conciseness reward;
+  ES never did, with no penalty. Mechanism stated by the authors: ES
+  optimizes a solution distribution, and a single hacked solution lacks a
+  high-quality neighborhood; RL optimizes one solution and token-level
+  action noise can sample a hacking action.
+- Mechanistic hypothesis: Gaussian noise in parameter space smooths jagged
+  outcome-only reward landscapes; action-space noise does not.
+
+Bridges for the pass^k preprint:
+
+1. Methodological kin: world-100 attack arms (GenomeBot ladder, evolved
+   genome adversaries) are evolutionary search over behavior against a
+   non-differentiable rules engine; this paper is evolutionary search over
+   parameters. Both optimize outcome-only rewards returned by an
+   environment. The paper's own framing (long horizon, outcome-only,
+   jagged rewards favor ES) describes the alashi environment structure.
+2. External, published mechanism for reward-hacking differences by
+   training paradigm; alashi measures analogous phenomena (bribe gaming,
+   adversary concentration up to the cap). Agent reliability under
+   economic pressure plausibly depends on post-training paradigm.
+3. Small populations at scale (N=30 over billions of parameters) support
+   the claim that large parallel agent worlds are cheap and informative
+   (world-100 as population evaluation; scripted doubles before model
+   agents mirrors ES population logic).
