@@ -103,3 +103,92 @@ Bridges for the pass^k preprint:
    the claim that large parallel agent worlds are cheap and informative
    (world-100 as population evaluation; scripted doubles before model
    agents mirrors ES population logic).
+
+## Verification pass on the ES-at-scale citation (2026-11-25)
+
+Checked before relying on the citation; sources are public.
+
+**1. Reproducibility surface.**
+- Code: github.com/VsonicV/es-at-scale — active (rewritten June 2026 on
+  Ray + vLLM, claims 0.5B-72B trained); original paper scripts preserved
+  in archive/ with run commands (accelerate launch; num_processes = GPUs).
+  Requirements: Linux, CUDA, Python 3.12. No checkpoints of the paper's
+  models found in the repo (HF links not verified this pass).
+- Cloud cost for the minimal repro (Qwen-2.5-0.5B, Countdown,
+  data_sample 200, N=30): order of 3-10 GPU-hours on a single rented
+  A10/RTX4090 class card, roughly $3-10 — feasible, not attempted here
+  (laptop has no CUDA).
+- One methodological disclosure found in the repo: the original
+  implementation used partially correlated noise; an i.i.d. variant was
+  added after community discussion #7. The paper (v3) reports i.i.d.
+  noise in the algorithm description.
+
+**2. Peer review (OpenReview forum i0P4ew9GpS, ICML 2026, checked
+2026-11-25 through the live page).**
+- Decision: Accept (regular). Meta-review: "the evaluation is somewhat
+  limited"; reviewer concerns about computational overhead addressed in
+  rebuttal.
+- Reviewer scores captured: Soundness/Presentation/Confidence around
+  3/3/4, 3/3/3, 2/2/2, 3/3/4. Main weaknesses raised: (a) Countdown
+  gains strong but math gains limited — generality question; (b) claims
+  that ES fixes RL's instability/cost lack direct empirical evidence.
+
+**3. Citation graph (searched 2026-11-25).**
+- Independent follow-ups: EGGROLL "Evolution Strategies at the
+  Hyperscale" (arXiv:2511.16652, different group: rank-r perturbations,
+  100x speed-up, high-dim convergence theory); DART-ES (arXiv:2610.06993);
+  a community fork testing ES on SSM architectures (Liquid LFM-2.5).
+- Author-side follow-ups: "Blessing of Dimensionality" (arXiv:2602.00170,
+  variance-curvature account of why N=30 works), "Overcoming Forgetting
+  in LLM Fine-Tuning with ES" (arXiv:2605.30148).
+- Critical recalibration by co-author Q. Liang (blog, 2026-11-04,
+  qiyaoliang.com): characterizes the original results as *mixed* against
+  RL; on 20 real tasks PG is ahead or tied because benchmarks sit at
+  short effective horizons; ES's advantage shows on long horizons
+  (Terminal-Bench: ES 12.1 -> 21.1% vs PG recipe 18.2% on Qwen3.5-4B,
+  preliminary, unmatched budgets).
+
+**Falsifiable core, status after verification:**
+- C1 "ES optimizes in billion-parameter spaces with tiny populations":
+  CONFIRMED at ecosystem level (independent groups, theory, tooling).
+- C2 "ES outperforms RL": CONDITIONAL. Honest form: ES >= RL on
+  long-horizon outcome-only tasks; on short effective horizons PG is
+  ahead or tied. Cite in the conditional form only.
+- C3 "ES resists reward hacking because it optimizes distributions":
+  single experiment (conciseness), mechanism explicitly a hypothesis;
+  follow-up theory exists, direct evidence pending.
+
+## Minimal discriminating experiment (design, not run)
+
+Question: does post-training paradigm change the pathologies alashi
+measures? If ES-tuned agents show fewer of them at equal payoff, the
+"training paradigm shapes agent reliability" bridge is evidence, not
+analogy.
+
+- Reward: alashi rules outcome, consumed in Python via wasmtime-py
+  loading the committed rules-wasm artifact (frontend/src/rules-wasm;
+  freshness-gated, browser-tested) — no new Rust code, canonical rules.
+- Environment: single Qwen-2.5-0.5B agent vs scripted doubles
+  (uniform and l4 GenomeBot arms from world-100), 6-round episodes,
+  payoff at settlement = reward (outcome-only, delayed).
+- Arms: (1) base model, (2) prompt-tuned baseline, (3) ES fine-tuned
+  (es-at-scale framework, N=30, fixed hypers per paper).
+- Horizon sweep: repeat at 2/6/12 rounds — the Liang effective-horizon
+  account predicts the ES advantage grows with rounds; this is a
+  pre-registered direction, not an assumption.
+- Metrics (existing, from world-100): invalid-action rate (compliance
+  cliff), bribe acceptance, donkey-style overholding; plus payoff.
+- Budget: ~$15-30 cloud GPU (0.5B, ~20-30 GPU-hours) + 1-2 days
+  harness work (wasmtime-py reward adapter).
+- Kill criterion: ES arm shows no reduction in invalid-action rate vs
+  base at equal payoff -> bridge stays a citation, the claim leaves the
+  preprint.
+
+## Pre-registered prediction (2026-11-25)
+
+If a vendor ships an agent post-trained with evolution strategies
+(vendor-stated or with a reproducible ES signature), alashi will measure
+a lower invalid-action and reward-hacking rate for it than for
+RL-post-trained peers of equal base capability, and the gap will widen
+with episode length. Refutable in the live arena; dated here before any
+such vendor release is known to us.
