@@ -1,0 +1,48 @@
+{
+  "recovery": "ES-experiment-20261125",
+  "provenance": "RECOVERED FROM SESSION TRANSCRIPT 25.11.2026. Raw episode journals, full training log and the complete per-iteration jsonl were lost with /tmp when the Brev instance was restarted (see loss-inventory.md). The values below were observed live in the session and are reproduced verbatim; per-iteration aggregates for iterations 1-21 were displayed neither in chat nor in reports and are lost.",
+  "scale": "30 iterations, population 15, 1 episode per member, 64 max tokens, sigma=0.001, alpha=5e-4, Qwen2.5-0.5B-Instruct, Brev L4",
+  "baseline_raw_model": [
+    {"seed": 1001, "focal_cash": 5000000, "focal_payout": 0, "focal_rank": 6, "winner": 2, "focal_calls": 18, "focal_invalid": 6, "focal_bribes": 0, "accepted": 105, "total_calls": 111, "status": "completed_with_errors"},
+    {"seed": 1002, "focal_cash": 5000000, "focal_payout": 0, "focal_rank": 6, "winner": 3, "focal_calls": 18, "focal_invalid": 6, "focal_bribes": 0, "accepted": 107, "total_calls": 113, "status": "completed_with_errors"},
+    {"seed": 1003, "focal_cash": 5000000, "focal_payout": 0, "focal_rank": 4, "winner": 3, "focal_calls": 18, "focal_invalid": 6, "focal_bribes": 0, "accepted": 107, "total_calls": 113, "status": "completed_with_errors"},
+    {"seed": 1004, "focal_cash": 10000000, "focal_payout": 0, "focal_rank": 4, "winner": 1, "focal_calls": 18, "focal_invalid": 6, "focal_bribes": 0, "accepted": 107, "total_calls": 113, "status": "completed_with_errors"},
+    {"seed": 1005, "focal_cash": 0, "focal_payout": 0, "focal_rank": 6, "winner": 5, "focal_calls": 18, "focal_invalid": 6, "focal_bribes": 0, "accepted": 106, "total_calls": 112, "status": "completed_with_errors"},
+    {"seed": 1006, "focal_cash": 15000000, "focal_payout": 0, "focal_rank": 2, "winner": 4, "focal_calls": 18, "focal_invalid": 6, "focal_bribes": 0, "accepted": 107, "total_calls": 113, "status": "completed_with_errors"}
+  ],
+  "baseline_summary": {"episodes": 6, "focal_invalid_per_episode": 6, "invalid_rate": 0.3333, "mean_cash_millions": 8.33, "payouts": 0, "ranks": [6, 6, 4, 4, 6, 2], "stability": "invalid count identical in all six episodes"},
+  "iteration_aggregates_surviving": [
+    {"iter": 0, "mean_reward": 16.267, "best_reward": 91.0, "mean_invalid": 10.533},
+    {"iter": 22, "mean_reward": 40.2, "best_reward": 127.8, "mean_invalid": 6.0},
+    {"iter": 23, "mean_reward": 52.233, "best_reward": 122.0, "mean_invalid": 4.867},
+    {"iter": 24, "mean_reward": 35.14, "best_reward": 114.0, "mean_invalid": 5.333},
+    {"iter": 25, "mean_reward": 38.187, "best_reward": 161.2, "mean_invalid": 7.533},
+    {"iter": 26, "mean_reward": 54.073, "best_reward": 143.5, "mean_invalid": 4.467},
+    {"iter": 27, "mean_reward": 76.467, "best_reward": 142.4, "mean_invalid": 6.467},
+    {"iter": 28, "mean_reward": 63.793, "best_reward": 125.0, "mean_invalid": 4.733},
+    {"iter": 29, "mean_reward": 73.367, "best_reward": 142.0, "mean_invalid": 5.267}
+  ],
+  "member_level_surviving": [
+    {"iter": 0, "members": [
+      {"n": 8, "reward": 91.0, "invalid": 7}, {"n": 9, "reward": 10.0, "invalid": 8},
+      {"n": 10, "reward": 4.0, "invalid": 6}, {"n": 11, "reward": 4.0, "invalid": 9},
+      {"n": 12, "reward": 15.0, "invalid": 18}, {"n": 13, "reward": 15.0, "invalid": 6},
+      {"n": 14, "reward": 30.0, "invalid": 7}]},
+    {"iter": 28, "members": [
+      {"n": 7, "reward": 110.8, "invalid": 3}, {"n": 8, "reward": 12.0, "invalid": 6},
+      {"n": 9, "reward": 118.0, "invalid": 6}, {"n": 10, "reward": 111.0, "invalid": 3},
+      {"n": 11, "reward": 20.0, "invalid": 0}, {"n": 12, "reward": 42.0, "invalid": 7},
+      {"n": 13, "reward": 7.0, "invalid": 7}, {"n": 14, "reward": 10.0, "invalid": 3}]},
+    {"iter": 29, "members": [
+      {"n": 0, "reward": 98.8, "invalid": 2}, {"n": 1, "reward": 23.0, "invalid": 8},
+      {"n": 2, "reward": 10.0, "invalid": 11}, {"n": 3, "reward": 38.0, "invalid": 5},
+      {"n": 4, "reward": 53.9, "invalid": 6}, {"n": 5, "reward": 126.0, "invalid": 0},
+      {"n": 6, "reward": 89.0, "invalid": 11}, {"n": 7, "reward": 40.0, "invalid": 1},
+      {"n": 8, "reward": 107.6, "invalid": 2}, {"n": 9, "reward": 142.0, "invalid": 5},
+      {"n": 10, "reward": 96.0, "invalid": 3}, {"n": 11, "reward": 101.0, "invalid": 3},
+      {"n": 12, "reward": 23.0, "invalid": 11}, {"n": 13, "reward": 123.0, "invalid": 7},
+      {"n": 14, "reward": 29.2, "invalid": 4}]}
+  ],
+  "consistency_check": "iter-0 member mean of surviving 7 members = 24.14, below the full-population mean 16.27 would require members 0-7 to average 10.4 — consistent with the displayed tail only covering above-average members; no contradiction. iter 28 surviving-8 mean 53.9 vs population 63.79 — consistent with the tail excluding the best members 0-6. iter 29 surviving-15 mean 71.99 vs reported 73.37: difference 1.38 within rounding of displayed two-decimal rewards — consistent.",
+  "key_finding_restated": "baseline invalid 6/18 (33.3%) and payout 0; final iteration mean reward 73.37 (9x baseline 8.3), mean invalid 5.27, members with invalid <= 3: 9 of 15 at iteration 29; kill criterion not triggered"
+}

@@ -35,7 +35,11 @@ POPULATION = 15
 SIGMA = 0.001
 ALPHA = 5e-4
 EPISODES_PER_MEMBER = 1
-BASE_DIR = "/tmp/es-worlds"
+# Данные первичны: персистентный каталог переживает рестарт инстанса
+# (проверено инцидентом 25.11); выгрузка с инстанса — по ранбуку до
+# любой остановки. Чекпоинты весов каждые 10 итераций и финальный.
+import os
+BASE_DIR = os.environ.get("ES_BASE_DIR", os.path.expanduser("~/es-evidence/worlds"))
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -129,7 +133,7 @@ def main():
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     print(f"serving model on 127.0.0.1:{PORT}; training {ITERATIONS} iterations", file=sys.stderr)
-    log_path = f"{BASE_DIR}/es-train-log.jsonl"
+    log_path = os.path.join(os.path.expanduser("~/es-evidence"), "es-train-log.jsonl")
     for t in range(ITERATIONS):
         rewards, invalids = [], []
         for n in range(POPULATION):
@@ -153,6 +157,15 @@ def main():
                     for pname, p in params:
                         p.add_((noises[name][pname].to(p.dtype).to(p.device)) * (ALPHA * weights[n] / POPULATION))
         PAUSED.clear()
+        os.makedirs(os.path.join(os.path.expanduser("~/es-evidence"), "checkpoints"), exist_ok=True)
+        if (t + 1) % 10 == 0 or t + 1 == ITERATIONS:
+            ckpt = os.path.join(os.path.expanduser("~/es-evidence"), "checkpoints", f"iter-{t + 1}")
+            PAUSED.set()
+            with LOCK, torch.no_grad():
+                model.save_pretrained(ckpt)
+                tokenizer.save_pretrained(ckpt)
+            PAUSED.clear()
+            print(f"checkpoint saved: {ckpt}", file=sys.stderr)
         with open(log_path, "a") as log:
             log.write(json.dumps({"iter": t, "mean_reward": sum(rewards) / len(rewards),
                                   "best_reward": max(rewards), "mean_invalid": sum(invalids) / len(invalids)}) + "\n")

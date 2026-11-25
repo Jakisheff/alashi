@@ -9,7 +9,11 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, rmSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const [dir, seedArg, agentsArg] = process.argv.slice(2);
+const [dirArg, seedArg, agentsArg] = process.argv.slice(2);
+// Данные первичны: эпизоды по умолчанию пишутся в персистентный домашний
+// каталог (пережил рестарт инстанса), а не в /tmp (см. loss-inventory.md).
+const home = process.env.HOME ?? '/tmp';
+const dir = dirArg?.startsWith('/') ? dirArg : `${home}/es-evidence/episodes/${dirArg ?? `e${seedArg ?? 'x'}`}`;
 const worker = resolve(process.env.ES_WORKER ?? '../../arena/target/debug/world_worker');
 const seed = Number(seedArg ?? 20261125);
 const agents = Number(agentsArg ?? 6);
