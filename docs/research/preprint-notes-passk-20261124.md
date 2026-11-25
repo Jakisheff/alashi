@@ -215,3 +215,32 @@ invalid), 30 iterations. Full-scale run is a follow-up decision.
 Kill criteria unchanged: if the ES arm does not reduce focal_invalid at
 equal or better payoff versus this baseline, the training-paradigm bridge
 stays a citation and the claim leaves the preprint.
+
+## First result (2026-11-25, reduced-scale run)
+
+Run: 30 iterations, population 15, 1 episode/member, 64 max tokens
+(recorded deviation), Brev L4, ~2.5 h wall clock. All 30 iterations
+completed; process exited normally.
+
+| Measure | Baseline (raw Qwen-0.5B) | Iteration 0 (start) | Iteration 29 (final) |
+|---|---|---|---|
+| mean reward (M units) | 8.3 | 16.3 | 73.4 |
+| best member reward | — | 91.0 | 142.0 |
+| mean invalid per episode (of 18) | 6.0 | 10.5 | 5.27 |
+| members with invalid <= 3 | 0 of 6 episodes | — | 9 of 15 members |
+
+Kill criterion NOT triggered: invalid actions fell below baseline while
+payoff rose ~9x. First positive evidence for the pre-registered bridge
+(training paradigm changes agent reliability, measured in the alashi
+environment). Late-iteration invalid is noisy (4.5-7.5 band across
+iterations 22-29); the reward gain is large and monotone in trend.
+
+Honest limits of this run:
+- Population means are evaluated under sigma=0.001 perturbation noise, a
+  conservative estimate of the trained center, not a clean center eval.
+- The trainer did not checkpoint the final weights: the run demonstrates
+  the training dynamics and population-level outcome; the trained
+  artifact itself was not preserved.
+- Single run, reduced scale, one base model. Follow-up (owner decision):
+  full-scale run with checkpointing and a sigma=0 evaluation of the
+  trained center, plus a prompt-tuned baseline arm.
