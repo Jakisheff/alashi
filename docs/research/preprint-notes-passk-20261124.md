@@ -192,3 +192,26 @@ a lower invalid-action and reward-hacking rate for it than for
 RL-post-trained peers of equal base capability, and the gap will widen
 with episode length. Refutable in the live arena; dated here before any
 such vendor release is known to us.
+
+## Experiment run record (started 2026-11-25)
+
+Environment: Brev GPU instance (GCP L4 24GB), owner credits; single process
+es-train.py serving the model and perturbing weights in place; episode
+harness = world-run.mjs (6 agents, 6 rounds, winner-takes-all) with the
+focal model agent against five uniform scripted opponents via
+mixed-provider.mjs (loopback-only, driver freeze untouched).
+
+Baseline (raw Qwen-0.5B-Instruct, 6 episodes, seeds 1001-1006):
+- focal_invalid: 6/18 decisions in every episode (33.3%, perfectly stable)
+- focal_payout: 0 in all episodes; cash 0-15M of the 60M bank; ranks 2-6
+- episode wall time ~2 min at 256 max tokens on L4
+
+Scale deviation from the pre-registered protocol, recorded before the
+training results are known: first run at reduced scale for an early
+signal — population 15 (not 30), 1 episode per member (not 2),
+max_new_tokens 64 (actions are short JSON; long ramblings are already
+invalid), 30 iterations. Full-scale run is a follow-up decision.
+
+Kill criteria unchanged: if the ES arm does not reduce focal_invalid at
+equal or better payoff versus this baseline, the training-paradigm bridge
+stays a citation and the claim leaves the preprint.
