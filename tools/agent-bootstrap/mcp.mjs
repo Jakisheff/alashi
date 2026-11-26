@@ -3,6 +3,11 @@
 //   claude mcp add alashi -- node /path/to/tools/agent-bootstrap/mcp.mjs
 // Private profile and game sessions stay where alashi.mjs keeps them; tool output is the CLI's sanitized JSON.
 // No SDK dependency: newline-delimited JSON-RPC 2.0 per the MCP stdio transport.
+// Output discipline (2026-11-26 audit): harnesses preview or truncate big MCP results
+// (Claude Code swaps >50k chars to a file and shows a ~2KB head; Codex caps tool output
+// at 10k tokens; caps measured in the three-harness teardown, rwilinski.ai). So tool
+// text is single-line JSON and the first key is mcp_payload with the full byte count,
+// so an agent that only saw a preview knows exactly how much it did not see.
 import { createInterface } from 'node:readline';
 import { run, publicError } from './alashi.mjs';
 
@@ -27,13 +32,14 @@ const TOOLS = [
   { name: 'alashi_retry', description: 'Retry the last saved unconfirmed action of a joined game without changing it.',
     inputSchema: { type: 'object', required: ['game'], properties: { game: { type: 'integer', minimum: 0 } } },
     call: a => run('retry', opts({ '--game': a.game })) },
-  { name: 'alashi_watch_devnet_game', description: 'Read-only public view of a Solana devnet game by its game account: confirmed snapshot and the agents\' recorded dialogue. No wallet needed.',
-    inputSchema: { type: 'object', required: ['game_pda'], properties: { game_pda: { type: 'string' } } },
+  { name: 'alashi_watch_devnet_game', description: 'Read-only public view of a Solana devnet game by its game account: confirmed snapshot and the agents\' recorded dialogue. No wallet needed. Dialogue pages at 100 entries: pass after = next_cursor of a previous page.',
+    inputSchema: { type: 'object', required: ['game_pda'], properties: { game_pda: { type: 'string', description: 'base58 game account' }, after: { type: 'string', description: 'dialogue cursor: next_cursor from a previous page (decimal seq string); default 0' } } },
     call: async a => {
       if (!PDA.test(a.game_pda || '')) return { ok: false, error: { code: 'invalid_game', message: 'game_pda must be a base58 account' } };
       const get = async path => (await fetch(PUBLIC + path, { redirect: 'error', signal: AbortSignal.timeout(15000) })).json();
       const g = encodeURIComponent(a.game_pda);
-      const [snapshot, dialogue] = await Promise.all([get(`/chain/devnet/games/${g}`), get(`/chain/devnet/games/${g}/dialogue?after=0&limit=100`)]);
+      const after = /^\d+$/.test(a.after || '0') ? a.after : '0';
+      const [snapshot, dialogue] = await Promise.all([get(`/chain/devnet/games/${g}`), get(`/chain/devnet/games/${g}/dialogue?after=${after}&limit=100`)]);
       return { ok: true, snapshot, dialogue, watch_url: `${PUBLIC}/devnet?game=${a.game_pda}` };
     } },
 ];
@@ -42,10 +48,22 @@ function opts(o) { // alashi.mjs takes --name value pairs; drop absent ones
   return Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null).map(([k, v]) => [k, String(v)]));
 }
 
+// Single-line tool text with a head marker: mcp_payload.bytes is the byte length of the
+// full JSON payload after the marker; complete=false would mean this server itself
+// truncated the payload (it never does today — no chunking — but the contract is fixed
+// now so any future pagination keeps the marker honest).
+function payloadText(result) {
+  if (result === null || typeof result !== 'object' || Array.isArray(result)) return JSON.stringify(result === undefined ? null : result);
+  const { mcp_payload: _overridden, ...rest } = result; // the server's marker always wins over tool output
+  const body = JSON.stringify(result);
+  return JSON.stringify({ mcp_payload: { bytes: body.length, complete: true,
+    note: 'bytes = full payload length after this marker. If you only saw a preview, ask for the rest before deciding.' }, ...rest });
+}
+
 async function handle(msg) {
   const { id, method, params } = msg;
   if (method === 'initialize') return { protocolVersion: params?.protocolVersion || '2025-06-18',
-    capabilities: { tools: {} }, serverInfo: { name: 'alashi', version: '0.1.0' } };
+    capabilities: { tools: {} }, serverInfo: { name: 'alashi', version: '0.2.0' } };
   if (method === 'ping') return {};
   if (method === 'tools/list') return { tools: TOOLS.map(({ call, ...t }) => t) };
   if (method === 'tools/call') {
@@ -53,7 +71,7 @@ async function handle(msg) {
     if (!tool) throw Object.assign(new Error('unknown tool'), { rpc: -32602 });
     let result;
     try { result = await tool.call(params.arguments || {}); } catch (error) { result = publicError(error); }
-    return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }], isError: result?.ok === false };
+    return { content: [{ type: 'text', text: payloadText(result) }], isError: result?.ok === false };
   }
   if (id === undefined) return undefined; // notification
   throw Object.assign(new Error('method not found'), { rpc: -32601 });
