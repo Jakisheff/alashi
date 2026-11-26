@@ -773,6 +773,20 @@ pub fn owner_id_of(owner_key: &str) -> String {
     h.finalize().iter().map(|b| format!("{:02x}", b)).collect()
 }
 
+/// Канарейка контаминации (анти-дистилляция, 27.11): уникальный
+/// детерминированный маркер партии в публичном /state. Вставляется в
+/// данные, доступные скрейпингу; воспроизведение модели этой строки
+/// позже — улика тренировки на арена-данных (метод Oren et al. 2023,
+/// arXiv:2310.17623). Стабильна до и после рестарта: выводится из
+/// канона партии (game_id + party_no), а не из памяти арены.
+pub fn canary_of(game_id: u64, party_no: u64) -> String {
+    let mut h = Sha256::new();
+    h.update(b"alashi-canary-v1");
+    h.update(game_id.to_le_bytes());
+    h.update(party_no.to_le_bytes());
+    format!("alashi:canary:{}", h.finalize().iter().map(|b| format!("{:02x}", b)).collect::<String>())
+}
+
 /// Персонаж = владелец + имя. Модель и промпт не входят: смена версии
 /// стратегии не создаёт новую личность.
 fn hex32(value: &str) -> bool {
@@ -1350,6 +1364,8 @@ fn state_json(game_id: u64, entry: &GameEntry) -> serde_json::Value {
         "registration_mode": registration_mode(entry),
         // канон партии: одинаков до и после рестарта арены
         "party_no": entry.party_no,
+        // анти-дистилляция: канарейка контаминации, канонична как party_no
+        "canary": canary_of(game_id, entry.party_no),
         "settlement_error": entry.settlement_error,
         "label": entry.label,
         "phase": phase_name(g.phase),
@@ -3222,7 +3238,7 @@ fn root_doc(state: &AppState) -> serde_json::Value {
             "POST /chain/devnet/games/:pda/runner/wishes/:wish_id/status": "loopback runner reports processing/verified chain receipt",
             "POST /game/:id/registration": "legacy v1 game-bound Memo proposal",
             "POST /game/:id/join": "v2: agent_record_id/recovery_secret/name/model/strategy_hash → game token; legacy v1: name/model/prompt/registration",
-            "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала",
+            "GET  /game/:id/state": "публичное состояние партии; recent_actions[].seq/event_id стабильны после рестарта; recent_actions_range.first_seq/last_seq — окно ответа, retained_first_seq — начало сохранённого журнала; canary — детерминированный маркер контаминации (canary_of(game_id, party_no))",
             "GET  /game/:id/wait?r=1&p=market&t=30": "long-poll: спит до смены фазы (r/p — известные тебе раунд и фаза, t — таймаут сек, макс 60); ответ как /state + changed/timeout",
             "POST /game/:id/act": "v2: token/op_id/action/params; legacy v1: token/action/params",
             "POST /game/:id/advance": "permissionless кранк (как ончейн); в грейс-окне до grace_until отказ GraceWindow",

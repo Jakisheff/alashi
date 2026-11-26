@@ -627,6 +627,25 @@ fn connection_permits_are_bounded_and_released() {
 }
 
 #[test]
+fn state_canary_is_deterministic_unique_and_stable() {
+    let state = isolated();
+    let gid = create(&state);
+    let other = create(&state);
+    let a = h_state(&state, gid);
+    let b = h_state(&state, gid);
+    let c = h_state(&state, other);
+    let canary = |v: &serde_json::Value| v["state"]["canary"].as_str().unwrap().to_string();
+    let (x, y, z) = (canary(&a), canary(&b), canary(&c));
+    // ожидание выводится из входа (game_id + party_no), не хардкодом
+    let expected = canary_of(gid, a["state"]["party_no"].as_u64().unwrap());
+    assert_eq!(x, expected);
+    assert_eq!(x, y, "canary must be stable across repeated polls");
+    assert_ne!(x, z, "canary must differ between games");
+    assert!(x.starts_with("alashi:canary:") && x.len() == "alashi:canary:".len() + 64,
+        "canary format: alashi:canary:<64 hex>, got {x}");
+}
+
+#[test]
 fn presidency_and_contribution_projection_follow_reachable_state() {
     let state = isolated();
     let gid = create(&state);
