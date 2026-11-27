@@ -7,6 +7,7 @@ pub mod actions;
 pub mod cadag;
 pub mod constants;
 pub mod error;
+pub mod laws;
 pub mod logic;
 pub mod sim;
 pub mod state;
@@ -15,6 +16,7 @@ pub mod transitions;
 pub use cadag::{
     branch, canonical_state_hash, merge, Branch, MergeConflict, MergeResult, StateHash,
 };
+pub use laws::*;
 pub use logic::*;
 pub use state::*;
 
