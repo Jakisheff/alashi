@@ -365,6 +365,9 @@ pub fn merge(ours: &Branch, theirs: &Branch, ancestor: &Branch) -> MergeResult {
                 mf!(vote_sold_to, "vote_sold_to");
                 mf!(bid, "bid");
                 mf!(insider, "insider");
+                // acted/voted_stamp: content (vote weight), must merge
+                mf!(acted_stamp, "acted_stamp");
+                mf!(voted_stamp, "voted_stamp");
                 merged_factions.push(merged);
             }
             (Some(o), Some(t), None) => {
