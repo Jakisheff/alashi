@@ -7,7 +7,7 @@
 //! Branching clones a game at a round boundary; merging computes
 //! the least upper bound of two branches when one exists.
 
-use crate::state::{Faction, Game, Phase, VoteChoice};
+use crate::state::{Faction, Game, Phase};
 use anchor_lang::prelude::Pubkey;
 use sha1::{Digest, Sha1};
 
@@ -43,26 +43,12 @@ fn feed_u64(h: &mut Sha1, label: &str, v: u64) {
     feed(h, label, &v.to_le_bytes());
 }
 
-fn feed_i64(h: &mut Sha1, label: &str, v: i64) {
-    feed(h, label, &v.to_le_bytes());
-}
-
 fn feed_i8(h: &mut Sha1, label: &str, v: i8) {
     feed(h, label, &v.to_le_bytes());
 }
 
 fn feed_bool(h: &mut Sha1, label: &str, v: bool) {
     feed_u8(h, label, v as u8);
-}
-
-fn feed_option_u64(h: &mut Sha1, label: &str, v: Option<u64>) {
-    match v {
-        Some(x) => {
-            feed_u8(h, &format!("{}.some", label), 1);
-            feed_u64(h, label, x);
-        }
-        None => feed_u8(h, &format!("{}.none", label), 0),
-    }
 }
 
 /// Compute the canonical content hash of a Game.
@@ -149,7 +135,8 @@ fn canonical_game_hash(game: &Game) -> [u8; 20] {
 fn canonical_faction_hash(f: &Faction) -> [u8; 20] {
     let mut h = Sha1::new();
     feed(&mut h, "wallet", f.wallet.as_ref());
-    feed(&mut h, "name", f.name.as_bytes());
+    // name: не читается ни одним правилом, это метка, не контент
+    // (фальсификация hy4: смена имени меняла хеш без политического эффекта)
     feed_u64(&mut h, "cash", f.cash);
     feed_u16(&mut h, "goods", f.goods);
     feed_u16(&mut h, "influence", f.influence);
@@ -168,6 +155,10 @@ fn canonical_faction_hash(f: &Faction) -> [u8; 20] {
     feed_u64(&mut h, "vote_offer_price", f.vote_offer_price);
     feed_u64(&mut h, "bid", f.bid);
     feed_bool(&mut h, "insider", f.insider);
+    // acted_stamp/voted_stamp: влияют на вес голоса (SKIP_VOTE_WEIGHT),
+    // это контент, не шум (фальсификация hy4)
+    feed_u16(&mut h, "acted_stamp", f.acted_stamp);
+    feed_u16(&mut h, "voted_stamp", f.voted_stamp);
     let d = h.finalize();
     let mut out = [0u8; 20];
     out.copy_from_slice(&d);
@@ -194,7 +185,8 @@ pub fn canonical_state_hash(game: &Game, factions: &[Faction]) -> StateHash {
 
 /// A branch point: the state at a specific round, cloneable.
 #[derive(Clone)]
-pub struct Branch {    pub game: Game,
+pub struct Branch {
+    pub game: Game,
     pub factions: Vec<Faction>,
     /// The round this branch was taken from.
     pub from_round: u8,
@@ -411,6 +403,7 @@ pub fn merge(ours: &Branch, theirs: &Branch, ancestor: &Branch) -> MergeResult {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::state::VoteChoice;
 
     fn mk_game(phase: Phase, round: u8) -> Game {
         let mut g = Game::default();
@@ -639,12 +632,14 @@ mod tests {
     }
 
     #[test]
-    fn different_name_different_hash() {
+    fn name_does_not_affect_hash() {
+        // фальсификация hy4: name не читается ни одним правилом,
+        // хеш не должен меняться от смены имени
         let g = mk_game(Phase::Market, 3);
         let f1 = vec![mk_faction("alice", 100)];
         let mut f2 = f1.clone();
         f2[0].name = "bob".to_string(); // same wallet, only name differs
-        assert_ne!(
+        assert_eq!(
             canonical_state_hash(&g, &f1),
             canonical_state_hash(&g, &f2)
         );
@@ -738,6 +733,20 @@ mod tests {
                 panic!("same change on both sides should merge, got {:?}", c);
             }
         }
+    }
+
+    #[test]
+    fn acted_stamp_affects_hash() {
+        // фальсификация hy4: acted_stamp определяет вес голоса,
+        // это контент, хеш должен меняться
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("a", 100)];
+        let mut f2 = f1.clone();
+        f2[0].acted_stamp = 5; // same wallet, only acted_stamp differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
     }
 
     #[test]
