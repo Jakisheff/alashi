@@ -181,7 +181,7 @@ pub fn canonical_state_hash(game: &Game, factions: &[Faction]) -> StateHash {
     feed(&mut h, "game", &gh);
     let mut sorted: Vec<_> = factions.iter().collect();
     sorted.sort_by_key(|f| f.wallet);
-    feed_u64(&mut h, "faction_count", sorted.len() as u64);
+    // faction_count is in the game hash; here we hash the faction list
     for f in sorted {
         let fh = canonical_faction_hash(f);
         feed(&mut h, "faction", &fh);
@@ -314,16 +314,8 @@ pub fn merge(ours: &Branch, theirs: &Branch, ancestor: &Branch) -> MergeResult {
         }
     }
 
-    // phases: if one finished and the other didn't, the merge prefers
-    // finished (the game is over); but if both finished differently,
-    // that's a conflict
-    if conflicts.iter().any(|c| matches!(c, MergeConflict::PhaseMismatch { .. })) {
-        // already flagged by merge_field
-    } else if ours.game.phase == Phase::Finished && theirs.game.phase != Phase::Finished {
-        merged_game.phase = Phase::Finished;
-    } else if theirs.game.phase == Phase::Finished && ours.game.phase != Phase::Finished {
-        merged_game.phase = Phase::Finished;
-    }
+    // phase is handled by merge_field above; the explicit Finished
+    // propagation was redundant (macro already covers it)
 
     // factions: union by wallet, tracking indices in both branches
     let mut merged_factions: Vec<Faction> = Vec::new();
@@ -462,7 +454,8 @@ mod tests {
     fn different_cash_different_hash() {
         let g = mk_game(Phase::Market, 3);
         let f1 = vec![mk_faction("a", 100)];
-        let f2 = vec![mk_faction("a", 300)];
+        let mut f2 = f1.clone();
+        f2[0].cash = 300; // same wallet, only cash differs
         assert_ne!(
             canonical_state_hash(&g, &f1),
             canonical_state_hash(&g, &f2)
@@ -553,6 +546,116 @@ mod tests {
                 assert_eq!(m.game.laws_passed, 5);
             }
             MergeResult::Conflict(c) => panic!("expected merge, got {:?}", c),
+        }
+    }
+
+    #[test]
+    fn merge_phase_finished_propagates() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100)];
+        let ancestor = branch(&g, &f, 3);
+
+        let mut ours = ancestor.clone();
+        ours.game.phase = Phase::Finished;
+
+        let theirs = ancestor.clone();
+
+        match merge(&ours, &theirs, &ancestor) {
+            MergeResult::Merged(m) => {
+                assert_eq!(m.game.phase, Phase::Finished);
+            }
+            MergeResult::Conflict(_) => panic!("expected merge"),
+        }
+    }
+
+    #[test]
+    fn merge_faction_count_correct() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100), mk_faction("b", 200)];
+        let ancestor = branch(&g, &f, 3);
+
+        let mut ours = ancestor.clone();
+        ours.factions[0].cash = 150;
+        let mut theirs = ancestor.clone();
+        theirs.factions[1].cash = 250;
+
+        match merge(&ours, &theirs, &ancestor) {
+            MergeResult::Merged(m) => {
+                assert_eq!(m.game.faction_count, 2);
+                assert_eq!(m.factions.len(), 2);
+            }
+            MergeResult::Conflict(_) => panic!("expected merge"),
+        }
+    }
+
+    #[test]
+    fn merge_is_symmetric() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100), mk_faction("b", 200)];
+        let ancestor = branch(&g, &f, 3);
+
+        let mut ours = ancestor.clone();
+        ours.factions[0].cash = 150;
+        let mut theirs = ancestor.clone();
+        theirs.factions[1].cash = 250;
+
+        let ab = merge(&ours, &theirs, &ancestor);
+        let ba = merge(&theirs, &ours, &ancestor);
+
+        match (ab, ba) {
+            (MergeResult::Merged(a), MergeResult::Merged(b)) => {
+                assert_eq!(
+                    canonical_state_hash(&a.game, &a.factions),
+                    canonical_state_hash(&b.game, &b.factions)
+                );
+            }
+            _ => panic!("expected both to merge"),
+        }
+    }
+
+    #[test]
+    fn different_name_different_hash() {
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("alice", 100)];
+        let mut f2 = f1.clone();
+        f2[0].name = "bob".to_string(); // same wallet, only name differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
+    }
+
+    #[test]
+    fn different_bid_different_hash() {
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("a", 100)];
+        let mut f2 = f1.clone();
+        f2[0].bid = 500; // same wallet, only bid differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
+    }
+
+    #[test]
+    fn merge_same_change_both_sides() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100)];
+        let ancestor = branch(&g, &f, 3);
+
+        // both branches make the SAME change
+        let mut ours = ancestor.clone();
+        ours.factions[0].cash = 150;
+        let mut theirs = ancestor.clone();
+        theirs.factions[0].cash = 150;
+
+        match merge(&ours, &theirs, &ancestor) {
+            MergeResult::Merged(m) => {
+                assert_eq!(m.factions[0].cash, 150);
+            }
+            MergeResult::Conflict(c) => {
+                panic!("same change on both sides should merge, got {:?}", c);
+            }
         }
     }
 
