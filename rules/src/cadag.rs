@@ -511,6 +511,31 @@ mod tests {
     }
 
     #[test]
+    fn merge_vote_changes_merge() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100), mk_faction("b", 200)];
+        let ancestor = branch(&g, &f, 3);
+
+        // ours: faction a votes yes; theirs: faction b votes no.
+        // Different factions, different vote changes: they commute → merge.
+        let mut ours = ancestor.clone();
+        ours.factions[0].vote = VoteChoice::Yes;
+        let mut theirs = ancestor.clone();
+        theirs.factions[1].vote = VoteChoice::No;
+
+        match merge(&ours, &theirs, &ancestor) {
+            MergeResult::Merged(m) => {
+                assert_eq!(m.factions[0].vote, VoteChoice::Yes);
+                assert_eq!(m.factions[1].vote, VoteChoice::No);
+                // untouched fields keep ancestor values
+                assert_eq!(m.factions[0].cash, 100);
+                assert_eq!(m.factions[1].cash, 200);
+            }
+            MergeResult::Conflict(c) => panic!("expected merge, got {:?}", c),
+        }
+    }
+
+    #[test]
     fn merge_conflicting_change() {
         let g = mk_game(Phase::Market, 3);
         let f = vec![mk_faction("a", 100)];
@@ -638,20 +663,76 @@ mod tests {
     }
 
     #[test]
+    fn different_vote_different_hash() {
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("a", 100)];
+        let mut f2 = f1.clone();
+        f2[0].vote = VoteChoice::Yes; // same wallet, only vote differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
+    }
+
+    #[test]
+    fn hash_includes_alive() {
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("a", 100)];
+        let mut f2 = f1.clone();
+        f2[0].alive = false; // same wallet, only alive differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
+    }
+
+    #[test]
+    fn hash_includes_promissory() {
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("a", 100)];
+        let mut f2 = f1.clone();
+        f2[0].promissory = 777; // same wallet, only promissory differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
+    }
+
+    #[test]
+    fn hash_includes_hard() {
+        let g = mk_game(Phase::Market, 3);
+        let f1 = vec![mk_faction("a", 100)];
+        let mut f2 = f1.clone();
+        f2[0].hard = 42; // same wallet, only hard differs
+        assert_ne!(
+            canonical_state_hash(&g, &f1),
+            canonical_state_hash(&g, &f2)
+        );
+    }
+
+    #[test]
     fn merge_same_change_both_sides() {
         let g = mk_game(Phase::Market, 3);
         let f = vec![mk_faction("a", 100)];
         let ancestor = branch(&g, &f, 3);
 
-        // both branches make the SAME change
+        // both branches make the SAME change: cash and vote on the
+        // faction, laws_passed on the game. Identical changes on both
+        // sides must merge, not be reported as a conflict.
         let mut ours = ancestor.clone();
         ours.factions[0].cash = 150;
+        ours.factions[0].vote = VoteChoice::Yes;
+        ours.game.laws_passed = 5;
         let mut theirs = ancestor.clone();
         theirs.factions[0].cash = 150;
+        theirs.factions[0].vote = VoteChoice::Yes;
+        theirs.game.laws_passed = 5;
 
         match merge(&ours, &theirs, &ancestor) {
             MergeResult::Merged(m) => {
                 assert_eq!(m.factions[0].cash, 150);
+                assert_eq!(m.factions[0].vote, VoteChoice::Yes);
+                assert_eq!(m.game.laws_passed, 5);
             }
             MergeResult::Conflict(c) => {
                 panic!("same change on both sides should merge, got {:?}", c);
@@ -673,6 +754,55 @@ mod tests {
         match merge(&ours, &theirs, &ancestor) {
             MergeResult::Merged(m) => {
                 assert_eq!(m.factions.len(), 2);
+            }
+            MergeResult::Conflict(c) => panic!("expected merge, got {:?}", c),
+        }
+    }
+
+    #[test]
+    fn merge_same_change_no_conflict() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100)];
+        let ancestor = branch(&g, &f, 3);
+
+        // Both branches make the SAME change: a game field and a
+        // faction field. An identical change on both sides is not a
+        // divergence; the merge must succeed and keep the new values.
+        let mut ours = ancestor.clone();
+        ours.game.laws_passed = 7;
+        ours.factions[0].cash = 150;
+
+        let mut theirs = ancestor.clone();
+        theirs.game.laws_passed = 7;
+        theirs.factions[0].cash = 150;
+
+        match merge(&ours, &theirs, &ancestor) {
+            MergeResult::Merged(m) => {
+                assert_eq!(m.game.laws_passed, 7);
+                assert_eq!(m.factions[0].cash, 150);
+            }
+            MergeResult::Conflict(c) => {
+                panic!("same change on both sides should merge, got {:?}", c);
+            }
+        }
+    }
+
+    #[test]
+    fn merge_vote_change_propagates() {
+        let g = mk_game(Phase::Market, 3);
+        let f = vec![mk_faction("a", 100)];
+        let ancestor = branch(&g, &f, 3);
+
+        // mk_faction starts at Abstain. Ours votes Yes, theirs does not
+        // touch the vote: the merged faction must carry the Yes vote.
+        let mut ours = ancestor.clone();
+        ours.factions[0].vote = VoteChoice::Yes;
+
+        let theirs = ancestor.clone();
+
+        match merge(&ours, &theirs, &ancestor) {
+            MergeResult::Merged(m) => {
+                assert_eq!(m.factions[0].vote, VoteChoice::Yes);
             }
             MergeResult::Conflict(c) => panic!("expected merge, got {:?}", c),
         }
