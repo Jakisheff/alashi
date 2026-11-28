@@ -3,9 +3,13 @@ name = "alashi-rules"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = ["cadag"]
+cadag = ["sha1"]
+
 [dependencies]
 anchor-lang = "1.1.2"
-sha1 = "0.10"
+sha1 = { version = "0.10", optional = true }
 
 [dev-dependencies]
 proptest = "1"

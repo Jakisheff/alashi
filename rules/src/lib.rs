@@ -4,6 +4,7 @@
 //! (ARCH_TRAINING_CAMP.md, слой L1).
 
 pub mod actions;
+#[cfg(feature = "cadag")]
 pub mod cadag;
 pub mod constants;
 pub mod error;
@@ -13,6 +14,7 @@ pub mod sim;
 pub mod state;
 pub mod transitions;
 
+#[cfg(feature = "cadag")]
 pub use cadag::{
     branch, canonical_state_hash, merge, Branch, MergeConflict, MergeResult, StateHash,
 };
